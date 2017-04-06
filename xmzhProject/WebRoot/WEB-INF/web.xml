@@ -5,6 +5,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	
+
+	
+	
+	
 	<filter>
 		<display-name>EncodingFilter</display-name>
 		<filter-name>EncodingFilter</filter-name>
@@ -75,6 +79,19 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
+	
+	<filter>
+		<display-name>struts2update</display-name>
+		<filter-name>struts2update</filter-name>
+		<filter-class>com.gotop.util.filter.Struts2Update</filter-class>
+</filter>
+	<filter-mapping>
+		<filter-name>struts2update</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	
 	<session-config>
 		<session-timeout>30</session-timeout>
