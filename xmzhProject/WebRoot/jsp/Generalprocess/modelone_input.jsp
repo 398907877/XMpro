@@ -197,30 +197,25 @@
       
        <tr>
         <td class="form_label" align="right" style="width:120px;">
-                                                 客户评级：
-        </td>
-        <td colspan="1">
-        <h:text property="modelOne.custGrade" id="custGrade"  style="width:130px;" />	
-        </td>
-        <td class="form_label" align="right" style="width:120px;">
                                                    基准利率浮动：
         </td>
         <td colspan="1">
-         <select    id="basisRateFloats"  >
-        <option value="">请选择</option>
-         <option value="1">上浮</option>
-         <option value="2">下浮</option>
-         <option value="3">不变</option>
-         </select> 
-         <h:hidden property="modelOne.basisRateFloat"  id="basisRateFloat" />
+         <d:select    id="basic_rate_float"  dictTypeId="PROCESS_BASICRATEFLOAT"  property="modelOne.basic_rate_float"  nullLabel="请选择"  ></d:select> 
         </td>
-      </tr>
-       <tr>
+        
         <td class="form_label" align="right" style="width:120px;">
                                                  利率浮动比例：
         </td>
         <td colspan="1">
-           <h:text property="modelOne.rateFloatScale" id="rateFloatScale" style="width:130px;" />	
+           <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:130px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"/>	
+        </td>
+      </tr>
+       <tr>
+       <td class="form_label" align="right" style="width:120px;">
+                                                 客户评级：
+        </td>
+        <td colspan="1">
+        <h:text id="cust_grade"  style="width:130px;"  property="modelOne.cust_grade"  />	
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                  
@@ -612,20 +607,31 @@ function initPlanCell20(){
 	 //value 为2 	提交
      function doSave(value){
     		$("#btnType").val(value);
-    		if(value!="1"){
+
+    		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
+    		if($("#basic_rate_float").val() != "" && $("#rate_float_scale").val() == ""){
+                alert("当前已选择基准利率浮动，请输入利率浮动比例!");
+                return false;
+	           }
+	
+	   		if($("#basic_rate_float").val() == "" && $("#rate_float_scale").val() != ""){
+	               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
+	               return false;
+	           }
+	           
+    		if(value!="1"){  //执行 提交
 
         		if($("#oneCategory").val($('#oneCategorys option:selected').val())==""||$("#oneCategory").val($('#oneCategorys option:selected').val())==null){
             		alert("请选择一级分类");
             		return false;
             		}
 
-        		if($("#loanCategory").val($('#loanCategorys option:selected').val())==""||    		$("#loanCategory").val($('#loanCategorys option:selected').val())==null){
+        		if($("#loanCategory").val($('#loanCategorys option:selected').val())==""|| $("#loanCategory").val($('#loanCategorys option:selected').val())==null){
         			alert("请选择贷种分类");
             		return false;
                 		}
 
         		$("#oneCategory").val($('#oneCategorys option:selected').val());
-
         		$("#loanCategory").val($('#loanCategorys option:selected').val())
         		
     			if(checkForm($id("form1"))){

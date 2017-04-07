@@ -189,6 +189,34 @@
 	     	 <h:text property="modelOne.comBorrSpouse_Unit" id="comBorrSpouse_Unit" validateAttr="allowNull=ture" style="width:250px;" />
      	</td>
       </tr>
+      <tr>
+        <td class="form_label" align="right" style="width:120px;">
+                                                   基准利率浮动：
+        </td>
+        <td colspan="1">
+         <d:select    id="basic_rate_float"  dictTypeId="PROCESS_BASICRATEFLOAT"  property="modelOne.basic_rate_float"  nullLabel="请选择"  ></d:select> 
+        </td>
+        
+        <td class="form_label" align="right" style="width:120px;">
+                                                 利率浮动比例：
+        </td>
+        <td colspan="1">
+           <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:130px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"/>	
+        </td>
+      </tr>
+       <tr>
+       <td class="form_label" align="right" style="width:120px;">
+                                                 客户评级：
+        </td>
+        <td colspan="1">
+        <h:text id="cust_grade"  style="width:130px;"  property="modelOne.cust_grade"  />	
+        </td>
+        <td class="form_label" align="right" style="width:120px;">
+                                                 
+        </td>
+        <td colspan="1">
+        </td>
+      </tr>
        <tr id="row11">
                 <td class="form_label" align="right">附件下载：</td>
                 <td colspan="3">
@@ -491,6 +519,18 @@ $(function (){
 
 		function doSave(value){   		
     		$("#btnType").val(value);
+
+    		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
+    		if($("#basic_rate_float").val() != "" && $("#rate_float_scale").val() == ""){
+                alert("当前已选择基准利率浮动，请输入利率浮动比例!");
+                return false;
+	           }
+	
+	   		if($("#basic_rate_float").val() == "" && $("#rate_float_scale").val() != ""){
+	               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
+	               return false;
+	           }
+	           
     		if(value!="1"){
     			if(checkForm($id("form1"))){
     			var strUrl = "/jbpm/jbpmDemoAction_toNextTaskConfig.action?taskAssgineeDto.executionId="+$id("executionId").value+"&taskAssgineeDto.definitionId=${taskAssgineeDto.definitionId}";
