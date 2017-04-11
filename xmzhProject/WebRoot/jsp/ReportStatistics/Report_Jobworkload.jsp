@@ -15,24 +15,25 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                                        <td class="form_label" align="right" width="20%">报单日期：</td>
-					<td colspan="1" width="30%">
+                                        <td class="form_label" align="right" >报单日期：</td>
+					<td colspan="1" >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeStrat" name="jobWorkload.appTimeStrat" 
 					property="jobWorkload.appTimeStrat" /> 
 					到
 					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeEnd" name="jobWorkload.appTimeEnd" 
 					property="jobWorkload.appTimeEnd" /></td>
-
-					
 					
 					<td class="form_label" align="right" >流程节点：</td>
 					<td >
-			     		                   
 						<h:text id="processNodeName" property="jobWorkload.processNodeName" readonly="true" name="jobWorkload.processNodeName"/>
 						<a href="#" onclick="showProcessrode();">选择</a>
 					</td>
 					
+					<td class="form_label" align="right" >操作人员姓名：</td>
+					<td >
+						<h:text id="personName" property="jobWorkload.personName"  name="jobWorkload.personName"/>
+					</td>
 					
 				</tr>
 				<tr class="form_bottom">
@@ -174,11 +175,13 @@
 			//清空JSP页面时间控件显示的值
 			$id("appTimeStrat_input").value="";
 			$id("appTimeEnd_input").value="";
-			$id("processNodeName").value="";
 
 			//清空传入后台的时间控件的值
 			$name("jobWorkload.appTimeStrat").value = "";
 			$name("jobWorkload.appTimeEnd").value = "";
+
+			$id("processNodeName").value="";
+			$id("personName").value="";
 
 		}
                 function search(){
@@ -206,6 +209,7 @@
      				var appTimeStrat = $id("appTimeStrat").value;
     				var appTimeEnd = $id("appTimeEnd").value;
     				var processNodeName = $id("processNodeName").value;
+    				var personName = $id("personName").value;
     			//	var loanCategory = $id("loanCategory").value;
     				
     				var url = "/reportjbpm/jobWorkloadAction_jobWorkloadExcel.action?";
@@ -216,7 +220,7 @@
     				if(appTimeEnd!=null){
     					url = url+"&jobWorkload.appTimeEnd="+appTimeEnd;
         				}	
-    	     		url = url+"&jobWorkload.processNodeName="+processNodeName;
+    	     		url = url+"&jobWorkload.processNodeName="+processNodeName+"&jobWorkload.personName="+personName;
     	     		//url = url+"&rateofreturnReport.loanCategory="+loanCategory;
     				window.location.href=url; 
 			

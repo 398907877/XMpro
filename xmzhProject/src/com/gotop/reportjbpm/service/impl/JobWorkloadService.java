@@ -72,6 +72,12 @@ public class JobWorkloadService implements IJobWorkloadService{
 				map.put("processNodeName", processNodeName);
 			}
 			
+			if(!"".equals(jobWorkload.getPersonName())  && jobWorkload.getPersonName()!=null){
+				
+				String personName=jobWorkload.getPersonName();
+				map.put("personName", personName);
+			}
+			
 		}
 		List<JobWorkload> list=jobWorkloadDao.jobWorkloadtList(map, page);
 		
@@ -106,6 +112,12 @@ public class JobWorkloadService implements IJobWorkloadService{
 				}
 				
 				map.put("processNodeName", processNodeName);
+			}
+			
+			if(!"".equals(jobWorkload.getPersonName())  && jobWorkload.getPersonName()!=null){
+				
+				String personName=jobWorkload.getPersonName();
+				map.put("personName", personName);
 			}
 
 		}
