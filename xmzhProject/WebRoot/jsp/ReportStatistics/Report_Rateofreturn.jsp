@@ -303,7 +303,7 @@
  			var strUrl ="";
  			var objName="";
  			var peArgument = [];
- 			var startOrgid= ${sessionScope.login_user.orgid}; 
+ 			var startOrgid= '${sessionScope.login_user.orgid}';
  			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1&changeTree.startOrgid="+startOrgid;
  			objName="选择受理支行";  
  			var paramEntity = new ParamEntity('Organization');
