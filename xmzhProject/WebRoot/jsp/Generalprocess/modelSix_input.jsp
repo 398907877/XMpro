@@ -217,10 +217,9 @@
         <td colspan="1" style="width:30%">
         
         <div id="yes_sel"  style="display:block">   <!-- 默认可选择 -->
-             <d:select  id="sel_basic_rate_float"   dictTypeId="PROCESS_BASICRATEFLOAT"   value="${modelSix.basic_rate_float }"    nullLabel="请选择" ></d:select> 
+             <d:select  id="basic_rate_float"   dictTypeId="PROCESS_BASICRATEFLOAT"   property="modelSix.basic_rate_float"     nullLabel="请选择"  onchange="rate_judge_fun()"></d:select> 
         </div>
         
-              <h:hidden  id="basic_rate_float"   property="modelSix.basic_rate_float" /> 
         <div id="no_sel"  style="display:none">   <!-- 当模式一输入该值，则只回显不可输入 -->
              <d:select  dictTypeId="PROCESS_BASICRATEFLOAT"  value="${modelSix.basic_rate_float }"   disabled="true"  ></d:select> 
         </div>
@@ -509,32 +508,41 @@ $(function(){
 		$("#btnType").val(value);
 		$("#yesOrNotRisk").val($("#ismortgage input[type='radio']:checked").val());
 
-		if($("#yes_sel").attr("style") == "display:block"){
-			$("#basic_rate_float").val($("#sel_basic_rate_float").val());
-		}
-		
-		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
-		if($("#basic_rate_float").val() != "" && $("#rate_float_scale").val() == ""){
-            alert("当前已选择基准利率浮动，请输入利率浮动比例!");
-            return false;
-           }
-
-   		if($("#basic_rate_float").val() == "" && $("#rate_float_scale").val() != ""){
-               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
-               return false;
-           }
-
 		if('${isStrat}'!=0){
 			$("#oneCategory").val($("#oneCategory1").val());
 			$("#loanCategory").val($("#loanCategory1").val());
 			}
-		if (value != "1") {
-			if (checkForm($id("form1"))) {
-			
 
+		if (checkForm($id("form1"))) {
+
+			var   reg = /\-|\+?/;  //匹配正负号
+			  var result = ($("#rate_float_scale").val()).match(reg);  //result可能为+、-、空，空值说明没带符号
+			 
+			  if(result != ""){ 
+				     $("#rate_float_scale").addClass("verify_failure");
+		             alert("利率浮动比例无需输入符号！");
+		             return false;
+	     	  }
+	 		
+	 		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
+	 		 if($("#basic_rate_float").val() != "" && ($("#rate_float_scale").val()).trim() == ""){
+
+	 			 $("#rate_float_scale").addClass("verify_failure");
+	 			 $("#rate_float_scale").focus();
+	             alert("当前已选择基准利率浮动，请输入利率浮动比例!");
+	             return false;
+		       }
+		
+		   		if($("#basic_rate_float").val() == "" && ($("#rate_float_scale").val()).trim() != ""){
+		   			  $("#basic_rate_float").focus();
+		               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
+		               return false;
+		          }
+		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim());
+		          
+			  if (value != "1") {
 				var flag={"mortgageTime":true,"custName":true,"receiveTime":true};
 		
-
 	    	     var mortgageTime= $("#mortgageTime_input").val();
 	    	     var custName= $("#custName").val();
 	    	     var receiveTime= $("#receiveTime_input").val();
@@ -591,16 +599,13 @@ $(function(){
 				showModalCenter(strUrl, null, taskAssigneeCallBack, 700, 400,
 						'节点选择');
 	    	     };
-			};
-		} else {
+		 } else {
 
-
-			
 			var _form = $id("form1");
 			url = "/Generalprocess/tGeneralprocessModelSixAction_handleModelSix.action";
-			_form.action = url
-			if (checkForm($id("form1")))
+			_form.action = url;
 				ajaxsubmitO(0);
+		 }
 		}
 	}
 
@@ -745,6 +750,17 @@ $(function(){
 	function delTr(id){
 		$("#"+id).remove();
 	}
-	
+
+	//判断利率浮动是否选择为“不变”
+	function rate_judge_fun(){
+		
+       if($("#basic_rate_float").val()=="0"){ //若浮动方向为“不变”，则无需输入比例，默认为0
+    	   $("#rate_float_scale").attr("readonly","true");
+    	   $("#rate_float_scale").val(0);
+       }else{  //其他为可输入
+    	   $("#rate_float_scale").attr("readonly","");
+    	   $("#rate_float_scale").val("");
+       }
+	}
 </script>
 </html>

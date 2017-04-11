@@ -70,6 +70,9 @@
     <result column="begin_empid" property="beginOrgId" jdbcType="VARCHAR" />
     <result column="operator_type" property="operator_type" jdbcType="VARCHAR" />
     <result column="operater_date" property="operater_date" jdbcType="VARCHAR" />
+    
+    <result column="BASIC_RATE_FLOAT" property="basic_rate_float" jdbcType="VARCHAR" />
+    <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="VARCHAR" />
 </resultMap>
   
   	<!-- 查询营销人员机构 -->
@@ -315,6 +318,13 @@ FROM
                             t4.cust_name,
                             t4.onecategory,
                             t4.loancategory,
+                            t4.basic_rate_float, 
+                            t4.rate_float_scale,
+                            case
+				               when t4.basic_rate_float='0' then 0 
+				               when t4.basic_rate_float='1' then abs(t4.rate_float_scale)
+				               when t4.basic_rate_float='2' then (-1)*abs(t4.rate_float_scale)
+				             end as basic_rate,
                             t4.currency,
                             t4.apply_bal/10000 AS apply_bal,
                             t4.orgcodeOne,
@@ -349,6 +359,8 @@ FROM
                            			max(os.cust_name) as cust_name, 
                            			max(os.onecategory) as onecategory, 
                            			max(os.loancategory) as loancategory,
+                           			max(os.basic_rate_float) as basic_rate_float,
+                           			max(os.rate_float_scale) as rate_float_scale,
                                		max(os.currency) as currency, 
                                		max(os.apply_bal) as apply_bal, 
                                		max(os.orgcodeOne) as orgcodeOne, 
@@ -359,6 +371,8 @@ FROM
                                        decode(g1.cust_name, NULL, g6.cust_name, g1.cust_name) AS cust_name,
                                        decode(g1.onecategory, NULL, g6.onecategory, g1.onecategory) AS onecategory,
                                        decode(g1.loancategory, NULL, g6.loancategory, g1.loancategory) AS loancategory,
+                                       decode(g1.basic_rate_float, NULL, g6.basic_rate_float, g1.basic_rate_float) AS basic_rate_float,
+                                       decode(g1.rate_float_scale, NULL, g6.rate_float_scale, g1.rate_float_scale) AS rate_float_scale,
                                        decode(g1.currency, NULL, g6.support_moneytype, g1.currency) AS currency,
                                        decode(g1.apply_bal, NULL, g6.support_money, g1.apply_bal) AS apply_bal,
                                        g1.orgcodeOne,
@@ -497,6 +511,12 @@ where beginOrgname is not null
       		</isNotNull>
            <isNotNull prepend="and" property="processName" >
            t17.process_name like '%'||'$processName$'||'%'
+      		</isNotNull>
+      		<isNotNull prepend="and" property="rate_min" >
+			t17.basic_rate >= $rate_min$
+      		</isNotNull>
+      		<isNotNull prepend="and" property="rate_max" >
+			<![CDATA[   t17.basic_rate <= $rate_max$  ]]>
       		</isNotNull>
       	order by case t17.currentactivityName when '结束' then 1 else 0 end
   </select>

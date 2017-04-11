@@ -111,7 +111,7 @@ public class ProcessModelSix  extends ProcessModel  implements  Serializable {
      * @author lmt
      */
 	@GeneralprocessField(name="利率浮动比例",type="text")
-	private String   rate_float_scale;
+	private Double   rate_float_scale;
 	
 	
     /**
@@ -306,13 +306,15 @@ public class ProcessModelSix  extends ProcessModel  implements  Serializable {
 		this.basic_rate_float = basic_rate_float;
 	}
 
-	public String getRate_float_scale() {
+	public Double getRate_float_scale() {
 		return rate_float_scale;
 	}
 
-	public void setRate_float_scale(String rate_float_scale) {
+	public void setRate_float_scale(Double rate_float_scale) {
 		this.rate_float_scale = rate_float_scale;
 	}
+
+	
 	
 	
 	

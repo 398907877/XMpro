@@ -107,7 +107,7 @@
         <result column="YXRYJG" property="yxryjg" jdbcType="VARCHAR" />
         <result column="CUST_GRADE" property="cust_grade" jdbcType="VARCHAR" />
         <result column="BASIC_RATE_FLOAT" property="basic_rate_float" jdbcType="VARCHAR" />
-        <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="VARCHAR" />
+        <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="DECIMAL" />
 	</resultMap>
 	
 
@@ -128,7 +128,7 @@
       LOANCATEGORY = #loanCategory:VARCHAR#,
       CUST_GRADE = #cust_grade:VARCHAR#,
       BASIC_RATE_FLOAT = #basic_rate_float:VARCHAR#,
-      RATE_FLOAT_SCALE = #rate_float_scale:VARCHAR#,
+      RATE_FLOAT_SCALE = abs(#rate_float_scale:DECIMAL#),
       DYWX_NAME = #dywx_Name:VARCHAR#,
       COORGANIZATION = #coOrganization:VARCHAR#,
       SURVEY_TIME = #survey_Time:VARCHAR#,
@@ -268,7 +268,7 @@
     values (#processModelId:DECIMAL:-9999#, #flow_Id:DECIMAL:-9999#, #orgCodeOne:VARCHAR#,
       #orgCodeTwo:VARCHAR#, #creator:VARCHAR#, #fdxdy:VARCHAR#, #yxzg:VARCHAR#, #yxry:VARCHAR#,
       #currency:VARCHAR#, #apply_bal:VARCHAR#, #oneCategory:VARCHAR#, #loanCategory:VARCHAR#,
-      #cust_grade:VARCHAR#, #basic_rate_float:VARCHAR#, #rate_float_scale:VARCHAR#, 
+      #cust_grade:VARCHAR#, #basic_rate_float:VARCHAR#, abs(#rate_float_scale:DECIMAL#), 
       #dywx_Name:VARCHAR#, #coOrganization:VARCHAR#, #survey_Time:VARCHAR#, #content:VARCHAR#,
       #cust_Name:VARCHAR#, #create_Date:VARCHAR#, #create_time:VARCHAR#, #create_name:VARCHAR#,
       #last_up_date:VARCHAR#, #last_up_time:VARCHAR#, #last_up_name:VARCHAR#,#taskName:VARCHAR#,#hanldOption:VARCHAR#,
