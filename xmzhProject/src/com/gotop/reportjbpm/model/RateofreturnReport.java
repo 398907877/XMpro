@@ -23,11 +23,17 @@ public class RateofreturnReport {
 	 //贷种分类
 	private String  loanCategory;
 	
-	//区支行
+	//区支行  机构名称
 	private String orgNameOne;
 	
-	//二级支行
+	//一级支行  机构号
+	private String orgCodeOne;
+	
+	//二级支行 机构名称
 	private String orgNameTwo;
+	
+	//二级支行 机构号
+		private String orgCodeTwo;
 	
 	//本月审批通过笔数
 	private String passNumber;
@@ -123,6 +129,18 @@ public class RateofreturnReport {
 	}
 	public void setBackFour(Float backFour) {
 		this.backFour = backFour;
+	}
+	public String getOrgCodeOne() {
+		return orgCodeOne;
+	}
+	public void setOrgCodeOne(String orgCodeOne) {
+		this.orgCodeOne = orgCodeOne;
+	}
+	public String getOrgCodeTwo() {
+		return orgCodeTwo;
+	}
+	public void setOrgCodeTwo(String orgCodeTwo) {
+		this.orgCodeTwo = orgCodeTwo;
 	}
 	
 	

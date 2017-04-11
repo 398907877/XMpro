@@ -70,6 +70,18 @@ public class RateofreturnReportService implements IRateofreturnReportService {
 			
 			}
 			
+			 if(!"".equals(rateofreturnReport.getOrgCodeOne()) && rateofreturnReport.getOrgCodeOne()!=null){
+
+				   String orgCodeOne=rateofreturnReport.getOrgCodeOne();
+					map.put("orgCodeOne", orgCodeOne);
+			}
+			 
+			 if(!"".equals(rateofreturnReport.getOrgCodeTwo()) && rateofreturnReport.getOrgCodeTwo()!=null){
+
+				   String orgCodeTwo=rateofreturnReport.getOrgCodeTwo();
+					map.put("orgCodeTwo", orgCodeTwo);
+			}
+			
 		}
 		
 		List list=rateofreturnReportDao.rateofreturnReportList(map, page);
@@ -115,6 +127,18 @@ public class RateofreturnReportService implements IRateofreturnReportService {
 				}
 				 map.put("loanCategory",loanCategory);
 			
+			}
+			
+			 if(!"".equals(rateofreturnReport.getOrgCodeOne()) && rateofreturnReport.getOrgCodeOne()!=null){
+
+				   String orgCodeOne=rateofreturnReport.getOrgCodeOne();
+					map.put("orgCodeOne", orgCodeOne);
+			}
+			 
+			 if(!"".equals(rateofreturnReport.getOrgCodeTwo()) && rateofreturnReport.getOrgCodeTwo()!=null){
+
+				   String orgCodeTwo=rateofreturnReport.getOrgCodeTwo();
+					map.put("orgCodeTwo", orgCodeTwo);
 			}
 
 		}
@@ -166,6 +190,18 @@ public class RateofreturnReportService implements IRateofreturnReportService {
 				}
 				 map.put("loanCategory",loanCategory);
 			
+			}
+			
+			 if(!"".equals(rateofreturnReport.getOrgCodeOne()) && rateofreturnReport.getOrgCodeOne()!=null){
+
+				   String orgCodeOne=rateofreturnReport.getOrgCodeOne();
+					map.put("orgCodeOne", orgCodeOne);
+			}
+			 
+			 if(!"".equals(rateofreturnReport.getOrgCodeTwo()) && rateofreturnReport.getOrgCodeTwo()!=null){
+
+				   String orgCodeTwo=rateofreturnReport.getOrgCodeTwo();
+					map.put("orgCodeTwo", orgCodeTwo);
 			}
 			
 		}
