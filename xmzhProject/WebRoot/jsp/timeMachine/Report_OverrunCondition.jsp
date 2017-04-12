@@ -16,30 +16,40 @@
 				
 				<%-- <h:hidden id="request_id" property="overTimeReport.request_id" /> --%>
 				<tr>
-					<td class="form_label" align="right" width="20%">客户名称：</td>
-					<td colspan="1" width="30%">
+					<td class="form_label" align="right" >超限环节：</td>
+					<td colspan="1" >
+						<h:text   id="taskName" property="overTimeReport.taskName"   readonly="true"/>
+						<a href="#" onclick="select_taskname();">选择</a>
+					</td>	
+					
+					<td class="form_label" align="right" >超限人员：</td>
+					<td colspan="1" >
+						<h:text   id="empname" property="overTimeReport.empname" />
+					</td>
+					
+					<td class="form_label" align="right" >超限次数：</td>
+					<td colspan="1" >
+						<h:select id="overcount"  property="overTimeReport.overcount" >
+							<h:option label="请选择"  value=""  />
+							<h:option label="一次超限"  value="1"  />
+							<h:option label="二次及以上"  value="2"  />
+						</h:select>
+					</td>	
+				</tr>
+				<tr>
+					<td class="form_label" align="right" >客户名称：</td>
+					<td colspan="1" >
 						<h:text   id="custName" property="overTimeReport.custName" />
 					</td>
 					
-					<td class="form_label" align="right" width="20%">超限人员：</td>
-					<td colspan="1" width="30%">
-						<h:text   id="empname" property="overTimeReport.empname" />
-					</td>
-				</tr>
-				<tr>
-					<td class="form_label" align="right" width="20%">报单日期：</td>
-					<td  width="30%">
+					<td class="form_label" align="right" >报单日期：</td>
+					<td  >
 						从
 						<w:date  id="reportStarttime"  property="overTimeReport.reportStarttime" /> 
 						到
 						<w:date id="reportEndtime"  property="overTimeReport.reportEndtime" />
 					</td>
-					
-					<td class="form_label" align="right" width="20%">超限环节：</td>
-					<td colspan="1" width="30%">
-						<h:text   id="taskName" property="overTimeReport.taskName"   readonly="true"/>
-						<a href="#" onclick="select_taskname();">选择</a>
-					</td>					
+					<td colspan="2"></td>
 				</tr>
 				<tr class="form_bottom">
 						<td colspan="6" class="form_bottom">
@@ -219,6 +229,7 @@
 			$id("custName").value="";
 			$id("empname").value="";
 			$id("taskName").value="";
+			$id("overcount").value="";
 			
 			//清除JSP页面时间控件的值
 			$id("reportStarttime_input").value="";
@@ -236,10 +247,11 @@
 			var custName = $id("custName").value;
 			var empname = $id("empname").value;
 			var taskName = $id("taskName").value;
+			var overcount = $id("overcount").value;
 			
 			var url = "/timeMachine/tModelTimedayAction_queryOvertimeReportExcel.action?";
      		url += "overTimeReport.reportStarttime="+reportStarttime+"&overTimeReport.reportEndtime="+reportEndtime;
-			url += "&overTimeReport.custName="+custName+"&overTimeReport.empname="+empname+"&overTimeReport.taskName="+taskName;
+			url += "&overTimeReport.custName="+custName+"&overTimeReport.empname="+empname+"&overTimeReport.taskName="+taskName+"&overTimeReport.overcount="+overcount;
 			window.location.href=url; 
 		} 
 

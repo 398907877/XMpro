@@ -2,6 +2,8 @@ package com.gotop.timeMachine.model;
 
 import java.io.Serializable;
 
+import com.fr.third.org.apache.poi.hssf.record.formula.functions.Int;
+
 public class OverTimeReport  implements Serializable{
 
 	private Long id; //主键
@@ -25,6 +27,8 @@ public class OverTimeReport  implements Serializable{
 	private String empname;//超限人员
 	
 	private Double overtime;//超限时长（单位：小时）
+	
+	private String overcount;//超限次数(1:一次超限，2：二次及以上超限)
 	
 	private String remark;//备注
 	
@@ -251,7 +255,13 @@ public class OverTimeReport  implements Serializable{
 		this.oneCategory_name = oneCategory_name;
 	}
 
-	
+	public String getOvercount() {
+		return overcount;
+	}
+
+	public void setOvercount(String overcount) {
+		this.overcount = overcount;
+	}
 
 	
 }
