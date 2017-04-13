@@ -129,12 +129,6 @@ public class GeneralprocessDto{
 	private String   loanCategoryTxt;
 	
 	/**
-	 * 利率区间
-	 */
-	private Double rate_min;
-	private Double rate_max;
-	
-	/**
 	 * 主调信贷员
 	 */
 	private String  creator;
@@ -577,22 +571,6 @@ public class GeneralprocessDto{
 
 	public void setProcessName(String processName) {
 		this.processName = processName;
-	}
-
-	public Double getRate_min() {
-		return rate_min;
-	}
-
-	public void setRate_min(Double rate_min) {
-		this.rate_min = rate_min;
-	}
-
-	public Double getRate_max() {
-		return rate_max;
-	}
-
-	public void setRate_max(Double rate_max) {
-		this.rate_max = rate_max;
 	}
     
     

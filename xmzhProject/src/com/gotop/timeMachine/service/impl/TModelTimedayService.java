@@ -189,11 +189,6 @@ public class TModelTimedayService implements ITModelTimedayService {
 				
 				map.put("taskName", taskName);
 			}
-			
-			//超限次数
-			if(overTimeReport.getOvercount()!= null && !"".equals(overTimeReport.getOvercount())){
-				map.put("overcount", overTimeReport.getOvercount());
-			}
 		}
 		List list = this.tModelTimedayDAO.queryOverTimeReportWithPage(map, page);
 		return list;
@@ -243,11 +238,6 @@ public class TModelTimedayService implements ITModelTimedayService {
 				}
 				
 				map.put("taskName", taskName);
-			}
-			
-			//超限次数
-			if(overTimeReport.getOvercount()!= null && !"".equals(overTimeReport.getOvercount())){
-				map.put("overcount", overTimeReport.getOvercount());
 			}
 		}
 		

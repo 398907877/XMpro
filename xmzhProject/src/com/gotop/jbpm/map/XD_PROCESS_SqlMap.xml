@@ -184,40 +184,41 @@
    </select>
    
     <select id="queryTimeDiff" resultClass="java.util.HashMap" parameterClass="java.lang.String" >
-   select A9.execution_,
-       to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss') as start_time,
-       to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss') as end_time,
+   select A8.execution_,
+       to_char(A8.start_, 'yyyy/mm/dd hh24:mi:ss') as start_time,
+       to_char(A8.end_, 'yyyy/mm/dd hh24:mi:ss') as end_time,
        to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss') as curr_time,
        case
-         when A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
-          round(to_date(to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss'),
+         when A8.PRE_TASK_NAME = '受理调查' and A8.NEXT_TASK_NAME = '审查一' then
+          round(to_date(to_char(A8.end_, 'yyyy/mm/dd hh24:mi:ss'),
                         'yyyy/mm/dd hh24:mi:ss') -
-                to_date(to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss'),
+                to_date(to_char(A8.start_, 'yyyy/mm/dd hh24:mi:ss'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2)
        end as time_Diff1,
        case
-         when A9.PRE_TASK_NAME = '受理调查' then
-          round(sysdate - to_date(to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss'),
+         when A8.PRE_TASK_NAME = '受理调查' then
+          round(sysdate - to_date(to_char(A8.start_, 'yyyy/mm/dd hh24:mi:ss'),
                                   'yyyy/mm/dd hh24:mi:ss'),
                 2)
        end as time_Diff2,
-       round(to_date(to_char(A9.start_, 'yyyy/mm/dd'),
+       round(to_date(to_char(A8.start_, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss')+1 -
-                to_date(to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss'),
+                to_date(to_char(A8.start_, 'yyyy/mm/dd hh24:mi:ss'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2) as startD_diff,
-        round(to_date(to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss'),
+        round(to_date(to_char(A8.end_, 'yyyy/mm/dd hh24:mi:ss'),
                         'yyyy/mm/dd hh24:mi:ss') - 
-                to_date(to_char(A9.end_, 'yyyy/mm/dd'),
+                to_date(to_char(A8.end_, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2) as endD_diff,
          round(sysdate - 
                 to_date(to_char(sysdate, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2) as currD_diff
-  from (select A7.*, A8.activity_name_ as NEXT_TASK_NAME
-    from (select A5.*, A6.activity_name_ as PRE_TASK_NAME
+  from (select A5.*,
+               A6.activity_name_ as PRE_TASK_NAME,
+               A7.activity_name_ as NEXT_TASK_NAME
           from (select A3.*, A4.NEXT_TASK_ID
                   from (select A1.*, A2.Pre_Task_Id
                           from (select A.*
@@ -232,11 +233,13 @@
                            and A1.HTASK_ = A2.NEXT_TASK_ID) A3
                   left join T_PROCESS_TASK_ASSIGNEE A4
                     on A3.execution_ = A4.execution_id
-                   and A3.HTASK_ = A4.PRE_TASK_ID) A5
-               left join JBPM4_HIST_ACTINST A6 
-               on A5.execution_ = A6.execution_ and A5.PRE_TASK_ID = A6.HTASK_) A7
-             left join  JBPM4_HIST_ACTINST A8  
-             on A7.execution_ = A8.execution_  and A7.NEXT_TASK_ID = A8.HTASK_ ) A9
+                   and A3.HTASK_ = A4.PRE_TASK_ID) A5,
+               JBPM4_HIST_ACTINST A6,
+               JBPM4_HIST_ACTINST A7
+         where A5.execution_ = A6.execution_
+           and A5.PRE_TASK_ID = A6.HTASK_
+           and A5.execution_ = A7.execution_
+           and A5.NEXT_TASK_ID = A7.HTASK_) A8
    </select>
    
    

@@ -134,8 +134,6 @@ public class TGeneralprocessModelsixAction extends BaseAction {
 	 */
 	private ProcessModelSix modelSix;
 	
-	private ProcessModelOne modelOne;
-	
 	/**
 	 * 页面传输对象
 	 */
@@ -286,21 +284,8 @@ public class TGeneralprocessModelsixAction extends BaseAction {
     				{
     					modelSix.setOneCategory(modelOne1.getOneCategory());
     					modelSix.setLoanCategory(modelOne1.getLoanCategory());
-
-    					if(modelOne1.getCust_grade() != null){
-    						modelSix.setCust_grade(modelOne1.getCust_grade());
-    					}
-    					if(modelOne1.getBasic_rate_float() != null){
-    						modelSix.setBasic_rate_float(modelOne1.getBasic_rate_float());
-    					}
-    					if(modelOne1.getRate_float_scale() != null){
-    						modelSix.setRate_float_scale(modelOne1.getRate_float_scale());
-    					}
-    					
     					isStrat="1";
-    					this.setModelOne(modelOne1);
     				}
-    				
     				
     			}
     			//获取模式一的一级分类以及贷种分类
@@ -433,16 +418,6 @@ public class TGeneralprocessModelsixAction extends BaseAction {
 
 	public void setModelSix(ProcessModelSix modelSix) {
 		this.modelSix = modelSix;
-	}
-
-	
-	
-	public ProcessModelOne getModelOne() {
-		return modelOne;
-	}
-
-	public void setModelOne(ProcessModelOne modelOne) {
-		this.modelOne = modelOne;
 	}
 
 	public TaskAssgineeDto getTaskAssgineeDto() {

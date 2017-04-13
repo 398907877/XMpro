@@ -8,13 +8,11 @@ public class ReportRefusalrate implements Serializable{
 	private String stratdate;
 	private String enddate;
 	private String oneCategory;
-	private String oneCategoryTxt;
+	private String  oneCategoryTxt;
 	private String loanCategory;
-	private String loanCategoryTxt;
-	private String orgCodeOne;
-	private String orgNameOne;
-	private String orgCodeTwo;
-	private String orgNameTwo;
+	private String   loanCategoryTxt;
+	private String orgname;
+	private String orgnametwo;
 	private String EA_number;
 	private String rejection_number;
 	private String refusalrate;
@@ -56,10 +54,10 @@ public class ReportRefusalrate implements Serializable{
 	public String getLoanCategory() {
 		return loanCategory;
 	}
-	
-	public void setLoanCategory(String loanCategory) {
+	public void setLoanCategoryId(String loanCategory) {
 		this.loanCategory = loanCategory;
 	}
+	
 	public String getEA_number() {
 		return EA_number;
 	}
@@ -90,7 +88,18 @@ public class ReportRefusalrate implements Serializable{
 	public void setLoanCategoryTxt(String loanCategoryTxt) {
 		this.loanCategoryTxt = loanCategoryTxt;
 	}
-	
+	public String getOrgname() {
+		return orgname;
+	}
+	public void setOrgname(String orgname) {
+		this.orgname = orgname;
+	}
+	public String getOrgnametwo() {
+		return orgnametwo;
+	}
+	public void setOrgnametwo(String orgnametwo) {
+		this.orgnametwo = orgnametwo;
+	}
 	public String getStratdate() {
 		return stratdate;
 	}
@@ -103,30 +112,8 @@ public class ReportRefusalrate implements Serializable{
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
-	public String getOrgNameOne() {
-		return orgNameOne;
-	}
-	public void setOrgNameOne(String orgNameOne) {
-		this.orgNameOne = orgNameOne;
-	}
-	public String getOrgNameTwo() {
-		return orgNameTwo;
-	}
-	public void setOrgNameTwo(String orgNameTwo) {
-		this.orgNameTwo = orgNameTwo;
-	}
-	public String getOrgCodeOne() {
-		return orgCodeOne;
-	}
-	public void setOrgCodeOne(String orgCodeOne) {
-		this.orgCodeOne = orgCodeOne;
-	}
-	public String getOrgCodeTwo() {
-		return orgCodeTwo;
-	}
-	public void setOrgCodeTwo(String orgCodeTwo) {
-		this.orgCodeTwo = orgCodeTwo;
-	}
+	
+	
 	
 
 }

@@ -882,12 +882,6 @@ public class GeneralprocessService implements IGeneralprocessService {
 				}
 				map.put("loanCategory",loanCategory);
 			}
-			if(generalprocessDto.getRate_min() != null && !"".equals(generalprocessDto.getRate_min())){
-				map.put("rate_min", generalprocessDto.getRate_min());
-			}
-			if(generalprocessDto.getRate_max() != null && !"".equals(generalprocessDto.getRate_max())){
-				map.put("rate_max", generalprocessDto.getRate_max());
-			}
 			if(generalprocessDto.getMinoperaterDateStrat()!=null && !"".equals(generalprocessDto.getMinoperaterDateStrat())){
 				map.put("minoperaterDateStrat", generalprocessDto.getMinoperaterDateStrat());
 			}

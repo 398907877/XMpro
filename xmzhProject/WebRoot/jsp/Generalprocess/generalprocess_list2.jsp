@@ -10,7 +10,7 @@
 <title>流程列表</title>
 </head>
 <body topmargin="0" leftmargin="0">
-	<h:form id="appQuery" name="appQuery"
+	<h:form name="appQuery"
 		action="/Generalprocess/generalProcessAction_queryGeneralprocessList2.action"
 		method="post" >
 		<h:hidden property="nameString" id="nameString" />
@@ -142,16 +142,6 @@
 					<d:checkbox perrow="4" id="oneCategory"    name="generalprocessDto.loanCategory" dictTypeId="PROCESS_credit_type" property="generalprocessDto.loanCategory"  seperator=","  />
 					</td>
 				</tr> --%>
-				<tr>
-				<td class="form_label" align="right" >利率区间：</td>
-					<td colspan="1" >
-					<h:text id="rate_min"   style="width:70px;"   property="generalprocessDto.rate_min"  validateAttr="type=double;"  />
-					到
-					<h:text id="rate_max"   style="width:70px;"   property="generalprocessDto.rate_max"  validateAttr="type=double;"  />
-					</td>
-					<td class="form_label" align="right" ></td>
-					<td colspan="1" ></td>
-				</tr>
 				<tr class="form_bottom">
 					<td colspan="4" class="form_bottom"><b:message
 							key="l_display_per_page"></b:message> <h:text size="2"
@@ -159,7 +149,7 @@
 							validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 						<input type="hidden" name="page.begin" value="0"> 
 						<input type="hidden" name="page.isCount" value="true"> 
-						<input id="querys" type="button" value="查 询" class="button" onclick="search();"> 
+						<input id="querys" type="submit" value="查 询" class="button" onclick="search();"> 
 						<input type="button" value="清 空" class="button" onclick="clears();">
 						<input id="downexl" type="submit" class="button" value="导出列表" onclick="downExl();"></td>
 				</tr>
@@ -212,8 +202,6 @@
 						<th nowrap="nowrap">币种</th>
 						<th nowrap="nowrap">申请/支用金额（万元）</th>
 						<th nowrap="nowrap">支用类别</th>
-						<th nowrap="nowrap">基准利率浮动方向</th>
-						<th nowrap="nowrap">利率浮动比例</th>
 						<th nowrap="nowrap">当前节点名称</th>
 						<th nowrap="nowrap">当前节点办理人</th>
 						<th nowrap="nowrap">当前处理人机构</th>
@@ -282,10 +270,6 @@
 								<td nowrap="nowrap">
 								<d:write dictTypeId="PROCESS_pay" property="supportCategory" iterateId="id1"/>
 								</td>
-								<td nowrap="nowrap">
-								<d:write dictTypeId="PROCESS_BASICRATEFLOAT" property="basic_rate_float" iterateId="id1"/>
-								</td>
-								<td nowrap="nowrap"><b:write iterateId="id1" property="rate_float_scale" /></td>
 								<td nowrap="nowrap"><b:write iterateId="id1" property="currentActivityName" /></td>
 								<td nowrap="nowrap"><b:write iterateId="id1" property="currentAssingee" /></td>
 								<td nowrap="nowrap"><b:write iterateId="id1" property="currentAssingeeOrgname" /></td>
@@ -480,31 +464,7 @@
 
 		function search(){
 			$("#isExport").val("");
-
-			var form = $id("appQuery");
-			
-			 if(checkForm(form)){
-				 var   reg = /\+?/;  //匹配正号
-				  var rate_min = ($("#rate_min").val()).match(reg);  //结果可能为+、-、空，空值说明没带符号
-				  var rate_max = ($("#rate_max").val()).match(reg);  //结果可能为+、-、空，空值说明没带符号
-				 
-				  if(rate_min == "+"){ 
-					     $("#rate_min").addClass("verify_failure");
-			             alert("利率为正数时无需输入“+”号！");
-			             return false;
-		     	  }
-
-				  if(rate_max == "+"){ 
-					     $("#rate_max").addClass("verify_failure");
-			             alert("利率为正数时无需输入“+”号！");
-			             return false;
-		     	  }
-					form.submit();
-				  
-			 }
-			
-		}
-		
+			}
 		function downExl() {
 			$("#isExport").val("1");
 		}

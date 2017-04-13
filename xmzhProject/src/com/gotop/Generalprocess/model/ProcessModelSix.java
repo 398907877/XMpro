@@ -91,29 +91,6 @@ public class ProcessModelSix  extends ProcessModel  implements  Serializable {
 	@GeneralprocessField(name="贷种分类",type="text")
 	private String   loanCategory;
 	
-
-	/**
-     * 客户评级 
-     * @author lmt
-     */
-	@GeneralprocessField(name="客户评级",type="text")
-	private String   cust_grade;
-	
-	/**
-     * 基准利率浮动
-     * @author lmt
-     */
-	@GeneralprocessField(name="基准利率浮动",type="dic",dicname="PROCESS_BASICRATEFLOAT")
-	private String   basic_rate_float;
-	
-	/**
-     * 利率浮动比例
-     * @author lmt
-     */
-	@GeneralprocessField(name="利率浮动比例",type="text")
-	private Double   rate_float_scale;
-	
-	
     /**
      * 支用类别 .
      * @abatorgenerated
@@ -289,32 +266,6 @@ public class ProcessModelSix  extends ProcessModel  implements  Serializable {
 	public void setSupportMoneyType(String supportMoneyType) {
 		this.supportMoneyType = supportMoneyType;
 	}
-
-	public String getCust_grade() {
-		return cust_grade;
-	}
-
-	public void setCust_grade(String cust_grade) {
-		this.cust_grade = cust_grade;
-	}
-
-	public String getBasic_rate_float() {
-		return basic_rate_float;
-	}
-
-	public void setBasic_rate_float(String basic_rate_float) {
-		this.basic_rate_float = basic_rate_float;
-	}
-
-	public Double getRate_float_scale() {
-		return rate_float_scale;
-	}
-
-	public void setRate_float_scale(Double rate_float_scale) {
-		this.rate_float_scale = rate_float_scale;
-	}
-
-	
 	
 	
 	

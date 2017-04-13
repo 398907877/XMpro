@@ -97,17 +97,15 @@
     	<result column="LAST_UP_TIME" property="last_up_time" jdbcType="VARCHAR" />
     	<result column="LAST_UP_NAME" property="last_up_name" jdbcType="VARCHAR" />
     	<result column="TASKNAME" property="taskName" jdbcType="VARCHAR" />
-    	<result column="HANLDOPTION" property="hanldOption" jdbcType="VARCHAR" />
+    	     <result column="HANLDOPTION" property="hanldOption" jdbcType="VARCHAR" />
         <result column="OLD_CUST" property="old_Cust" jdbcType="VARCHAR" nullValue="  "/>
         <result column="BORR_UNIT" property="borr_Unit" jdbcType="VARCHAR" />
         <result column="BORRSPOUSE_UNIT" property="borrSpouse_Unit" jdbcType="VARCHAR" />
         <result column="COMBORR_UNIT" property="comBorr_Unit" jdbcType="VARCHAR" />
         <result column="COMBORRSPOUSE_UNIT" property="comBorrSpouse_Unit" jdbcType="VARCHAR" />
         <result column="PROCESSMODELID" property="fileCont" jdbcType="VARCHAR" />
-        <result column="YXRYJG" property="yxryjg" jdbcType="VARCHAR" />
-        <result column="CUST_GRADE" property="cust_grade" jdbcType="VARCHAR" />
-        <result column="BASIC_RATE_FLOAT" property="basic_rate_float" jdbcType="VARCHAR" />
-        <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="DECIMAL" />
+          <result column="YXRYJG" property="yxryjg" jdbcType="VARCHAR" />
+        
 	</resultMap>
 	
 
@@ -126,9 +124,6 @@
       APPLY_BAL = #apply_bal:VARCHAR#,
       ONECATEGORY = #oneCategory:VARCHAR#,
       LOANCATEGORY = #loanCategory:VARCHAR#,
-      CUST_GRADE = #cust_grade:VARCHAR#,
-      BASIC_RATE_FLOAT = #basic_rate_float:VARCHAR#,
-      RATE_FLOAT_SCALE = abs(#rate_float_scale:DECIMAL#),
       DYWX_NAME = #dywx_Name:VARCHAR#,
       COORGANIZATION = #coOrganization:VARCHAR#,
       SURVEY_TIME = #survey_Time:VARCHAR#,
@@ -177,16 +172,13 @@
        		T.LAST_UP_TIME,
        		T.LAST_UP_NAME,
        		T.TASKNAME,
-       		 T.HANLDOPTION,
+       		      T.HANLDOPTION,
        		 T.OLD_CUST,
        		 T.BORR_UNIT,
        		 T.BORRSPOUSE_UNIT,
        		 T.COMBORR_UNIT,
        		 T.COMBORRSPOUSE_UNIT,
-       		 T.YXRYJG,
-       		 T.CUST_GRADE,
-       		 T.BASIC_RATE_FLOAT,
-       		 T.RATE_FLOAT_SCALE
+       		 T.YXRYJG
   		FROM T_GENERALPROCESS_MODELONE T,
   		OM_ORGANIZATION O1,
   		OM_ORGANIZATION O2,
@@ -241,10 +233,7 @@
        		T.BORRSPOUSE_UNIT,
        		T.COMBORR_UNIT,
        		T.COMBORRSPOUSE_UNIT,
-       		T.YXRYJG,
-       		T.CUST_GRADE,
-       		T.BASIC_RATE_FLOAT,
-       		T.RATE_FLOAT_SCALE
+       		T.YXRYJG
   		FROM T_GENERALPROCESS_MODELONE T,
   		OM_ORGANIZATION O1,
   		OM_ORGANIZATION O2,
@@ -262,13 +251,12 @@
 			SELECT SEQ_T_GENERALPROCESS_MODELONE.NEXTVAL AS VALUE FROM DUAL
 		</selectKey>
   	insert into T_GENERALPROCESS_MODELONE (PROCESSMODELID, FLOW_ID, ORGCODEONE, ORGCODETWO,
-      CREATOR, FDXDY, YXZG, YXRY, CURRENCY, APPLY_BAL, ONECATEGORY, LOANCATEGORY, CUST_GRADE, BASIC_RATE_FLOAT, RATE_FLOAT_SCALE,
-      DYWX_NAME, COORGANIZATION, SURVEY_TIME, CONTENT, CUST_NAME, CREATE_DATE, CREATE_TIME, CREATE_NAME,
+      CREATOR, FDXDY, YXZG, YXRY, CURRENCY, APPLY_BAL, ONECATEGORY, LOANCATEGORY, DYWX_NAME,
+      COORGANIZATION, SURVEY_TIME, CONTENT, CUST_NAME, CREATE_DATE, CREATE_TIME, CREATE_NAME,
       LAST_UP_DATE, LAST_UP_TIME, LAST_UP_NAME,TASKNAME, HANLDOPTION,OLD_CUST,BORR_UNIT,BORRSPOUSE_UNIT,COMBORR_UNIT,COMBORRSPOUSE_UNIT,YXRYJG)
     values (#processModelId:DECIMAL:-9999#, #flow_Id:DECIMAL:-9999#, #orgCodeOne:VARCHAR#,
       #orgCodeTwo:VARCHAR#, #creator:VARCHAR#, #fdxdy:VARCHAR#, #yxzg:VARCHAR#, #yxry:VARCHAR#,
       #currency:VARCHAR#, #apply_bal:VARCHAR#, #oneCategory:VARCHAR#, #loanCategory:VARCHAR#,
-      #cust_grade:VARCHAR#, #basic_rate_float:VARCHAR#, abs(#rate_float_scale:DECIMAL#), 
       #dywx_Name:VARCHAR#, #coOrganization:VARCHAR#, #survey_Time:VARCHAR#, #content:VARCHAR#,
       #cust_Name:VARCHAR#, #create_Date:VARCHAR#, #create_time:VARCHAR#, #create_name:VARCHAR#,
       #last_up_date:VARCHAR#, #last_up_time:VARCHAR#, #last_up_name:VARCHAR#,#taskName:VARCHAR#,#hanldOption:VARCHAR#,

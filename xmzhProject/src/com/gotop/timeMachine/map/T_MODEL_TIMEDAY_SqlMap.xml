@@ -264,12 +264,6 @@ select operatorname from ac_operator where operatorid =
 	<isNotNull prepend="and" property="taskName" >
 		taskName in ($taskName$)
 	</isNotNull>
-	<isEqual prepend="and"  property="overcount"  compareValue="1">
-		rn = 1
-	</isEqual>
-	<isEqual prepend="and"  property="overcount"  compareValue="2">
-		rn >= 2
-	</isEqual>
 	order by REPORTTIME, PROCESS_NAME, CUSTNAME, STARTTIME, ENDTIME
   </select> 
   

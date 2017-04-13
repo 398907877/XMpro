@@ -67,18 +67,6 @@ public class ReportRefusalRateService implements TReportRefusalrateService{
 				map.put("loanCategory",loanCategory);
 			}
 			
-			 if(!"".equals(reportRefusalrate.getOrgCodeOne()) && reportRefusalrate.getOrgCodeOne()!=null){
-
-				   String orgCodeOne=reportRefusalrate.getOrgCodeOne();
-					map.put("orgCodeOne", orgCodeOne);
-			}
-			 
-			 if(!"".equals(reportRefusalrate.getOrgCodeTwo()) && reportRefusalrate.getOrgCodeTwo()!=null){
-
-				   String orgCodeTwo=reportRefusalrate.getOrgCodeTwo();
-					map.put("orgCodeTwo", orgCodeTwo);
-			}
-			
 		}
 		
 		return reportRefusalrateDao.selectReportRefusalRate(map,page);
@@ -119,18 +107,6 @@ public class ReportRefusalRateService implements TReportRefusalrateService{
 					e.printStackTrace();
 				}
 				map.put("loanCategory",loanCategory);
-			}
-			
-			 if(!"".equals(reportRefusalrate.getOrgCodeOne()) && reportRefusalrate.getOrgCodeOne()!=null){
-
-				   String orgCodeOne=reportRefusalrate.getOrgCodeOne();
-					map.put("orgCodeOne", orgCodeOne);
-			}
-			 
-			 if(!"".equals(reportRefusalrate.getOrgCodeTwo()) && reportRefusalrate.getOrgCodeTwo()!=null){
-
-				   String orgCodeTwo=reportRefusalrate.getOrgCodeTwo();
-					map.put("orgCodeTwo", orgCodeTwo);
 			}
 			
 		}
@@ -177,18 +153,6 @@ public class ReportRefusalRateService implements TReportRefusalrateService{
 					e.printStackTrace();
 				}
 				map.put("loanCategory",loanCategory);
-			}
-			
-			 if(!"".equals(reportRefusalrate.getOrgCodeOne()) && reportRefusalrate.getOrgCodeOne()!=null){
-
-				   String orgCodeOne=reportRefusalrate.getOrgCodeOne();
-					map.put("orgCodeOne", orgCodeOne);
-			}
-			 
-			 if(!"".equals(reportRefusalrate.getOrgCodeTwo()) && reportRefusalrate.getOrgCodeTwo()!=null){
-
-				   String orgCodeTwo=reportRefusalrate.getOrgCodeTwo();
-					map.put("orgCodeTwo", orgCodeTwo);
 			}
 			
 		}
