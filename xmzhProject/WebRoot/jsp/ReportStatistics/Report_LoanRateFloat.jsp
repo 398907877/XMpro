@@ -42,14 +42,14 @@
 				<tr>	
 					<td class="form_label" align="right" >一级分类：</td>
 					<td >
-			     		<h:hidden id="oneCategoryId" />  
+			     		<h:hidden id="oneCategoryId" property="loanRateFloatReport.oneCategoryId" />  
 						<h:text id="oneCategory" property="loanRateFloatReport.oneCategory" readonly="true"  style="width:130px;"/>
 						<a href="#" onclick="showoneCategory();">选择</a>
 					</td>
 					
 					<td class="form_label" align="right" >贷种分类：</td>
 					<td >
-						<h:hidden id="loanCategoryId"/>
+						<h:hidden id="loanCategoryId" property="loanRateFloatReport.loanCategoryId"/>
 						<h:text id="loanCategory" property="loanRateFloatReport.loanCategory" readonly="true"   style="width:130px;"/>
 						<a href="#" onclick="showloanCategory();">选择</a>
 					</td>
@@ -129,7 +129,7 @@
 								金额
 							</th>
 						</tr>
-                           <l:iterate property="errorStatisticList" id="id1">
+                           <l:iterate property="loanRateFloatReportList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1"    property="makeLoansDate" />
@@ -245,8 +245,12 @@
     				var orgCodeTwo = $id("orgCodeTwo").value;
 					//一级分类
     				var oneCategory = $id("oneCategory").value;
+    				var oneCategoryId = $id("oneCategoryId").value;
+    				
     				//贷种分类
     				var loanCategory = $id("loanCategory").value;
+    				//贷种分类id
+    				var loanCategoryId= $id("loanCategoryId").value;
     				//主调信贷员
     				var creatorName = $id("creatorName").value;
     				//营业主管
@@ -262,7 +266,9 @@
     				if(orgNameOne != ""){strUrl=strUrl+"&loanRateFloatReport.orgNameOne="+orgNameOne+"&loanRateFloatReport.orgCodeOne="+orgCodeOne;}
     				if(orgNameTwo != ""){strUrl=strUrl+"&loanRateFloatReport.orgNameTwo="+orgNameTwo+"&loanRateFloatReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&loanRateFloatReport.oneCategory="+oneCategory;} 
+    				if(oneCategoryId != ""){strUrl=strUrl+"&loanRateFloatReport.oneCategoryId="+oneCategoryId;} 
     				if(loanCategory != ""){strUrl=strUrl+"&loanRateFloatReport.loanCategory="+loanCategory;} 
+    				if(loanCategoryId != ""){strUrl=strUrl+"&loanRateFloatReport.loanCategoryId="+loanCategoryId;} 
     				if(creatorName != ""){strUrl=strUrl+"&loanRateFloatReport.creatorName="+creatorName;} 
     				if(yyzg != ""){strUrl=strUrl+"&loanRateFloatReport.yyzg="+yyzg;} 
     				if(rateStart != ""){strUrl=strUrl+"&loanRateFloatReport.rateStart="+rateStart;} 

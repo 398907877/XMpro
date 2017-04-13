@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_LOANRATEFLOATREPORT_SqlMap">
+ <resultMap id="LoanRateFloatReport" class="com.gotop.reportjbpm.model.LoanRateFloatReport" >
+    <!--Bean方式返回全表-->
+    <result column="END_" property="makeLoansDate" jdbcType="VARCHAR" />
+    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
+    <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
+    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="NEXT_OPR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="YXZG" property="yyzg" jdbcType="VARCHAR" />
+    <result column="SUPPORT_MONEY" property="amount" jdbcType="VARCHAR" />
+  </resultMap>
+	
+	<!-- 查询贷款利率浮动统计 -->
+	<select id="queryLoanRateFloatReport" parameterClass="java.util.HashMap" resultMap="LoanRateFloatReport">
+	SELECT
+          EXECUTION_,
+          ACTIVITY_NAME_,
+          substr(to_char(END_, 'yyyy-mm-dd hh24miss') ,0,10) as END_,
+          OPERATORNAME,
+          ORGCODEONE,
+          ORGCODETWO,
+          CREATOR,
+          YXZG,
+          ONECATEGORY,
+          LOANCATEGORY,
+          RATE_FLOAT_SCALE,
+          SUPPORT_MONEY,
+          NEXT_OPR_NAME,
+          ( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODEONE) AS ORGNAMEONE,
+          ( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODETWO) AS ORGNAMETWO
+         
+        FROM
+          (
+            SELECT
+              tt.EXECUTION_,
+              tt.ACTIVITY_NAME_,
+              tt.END_,
+              t2.OPERATORNAME,
+              t3.ORGCODEONE,
+              t3.ORGCODETWO,
+              t3.CREATOR,
+              t3.YXZG,
+              t3.ONECATEGORY,
+              t3.LOANCATEGORY,
+              t4.RATE_FLOAT_SCALE,
+              t4.SUPPORT_MONEY,
+              t5.EMPNAME as NEXT_OPR_NAME
+           
+            FROM
+              JBPM4_HIST_ACTINST tt
+            LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
+            LEFT JOIN ac_operator t2 ON t1.ASSIGNEE_ = t2.OPERATORID
+            LEFT JOIN T_GENERALPROCESS_MODELONE t3 ON tt.EXECUTION_ = t3.flow_id
+            LEFT JOIN T_GENERALPROCESS_MODELSIX t4 ON tt.EXECUTION_ = t4.flow_id
+            LEFT JOIN OM_EMPLOYEE t5 ON t3.CREATOR = t5.EMPID
+            WHERE
+              HPROCI_ IN (
+                SELECT
+                  DBID_
+                FROM
+                  JBPM4_HIST_PROCINST T
+                WHERE
+                  T .PROCDEFID_ IN (
+                    SELECT
+                      DEFINITION_ID
+                    FROM
+                      T_PROCESS_CONFIG T
+                    WHERE
+                      BUSINESS_TYPE = '88'
+                  )
+              )
+          )
+        WHERE
+          end_ IS NOT NULL
+          and  ACTIVITY_NAME_   =  '放款操作'
+	   <isNotNull prepend="and" property="startTime" >
+         <![CDATA[
+            END_ >= to_date('$startTime$','yyyy-mm-dd')
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="endTime" >
+        <![CDATA[
+            END_ <= to_date('$endTime$','yyyy-mm-dd')
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+           ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+           ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
+      <isNotNull prepend="and" property="oneCategory" >
+            ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
+           	 and dic.dictid in($oneCategory$))
+      </isNotNull>
+      <isNotNull prepend="and" property="loanCategory" >
+          LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
+           	 and dic.dictid in($loanCategory$))
+      </isNotNull>
+      <isNotNull prepend="and" property="creatorName" >
+           NEXT_OPR_NAME like '%'||'$creatorName$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="yxzg" >
+           YXZG like '%'||'$yxzg$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="rateStart" >
+         <![CDATA[RATE_FLOAT_SCALE>=#rateStart#]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="rateEnd" >
+         <![CDATA[RATE_FLOAT_SCALE<=#rateEnd#]]>
+      </isNotNull>
+      ORDER BY  END_, LOANCATEGORY ASC
+	</select>
+
+</sqlMap>

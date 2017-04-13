@@ -33,4 +33,7 @@
     <property name="jobWorkloadDao" ref="jobWorkloadDao" />
   </bean>
   
+   <bean id="loanRateFloatReportService" class="com.gotop.reportjbpm.service.impl.LoanRateFloatReportService" >
+    <property name="loanRateFloatReportDao" ref="loanRateFloatReportDao" />
+    </bean>
 </beans>

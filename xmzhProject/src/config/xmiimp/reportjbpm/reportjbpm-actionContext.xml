@@ -47,5 +47,11 @@
       <bean name="jobWorkloadAction" id="jobWorkloadAction" class="com.gotop.reportjbpm.action.JobWorkloadAction" singleton="false" >
          <property name="jobWorkloadService" ref="jobWorkloadService" />
      </bean>
+     
+  <bean name="loanRateFloatReport" id="loanRateFloatReport" class="com.gotop.reportjbpm.model.LoanRateFloatReport" singleton="false" ></bean>
+  <bean name="loanRateFloatReportAction" id="loanRateFloatReportAction" class="com.gotop.reportjbpm.action.LoanRateFloatReportAction" singleton="false" >
+    <property name="loanRateFloatReportService" ref="loanRateFloatReportService" />
+    <property name="loanRateFloatReport" ref="loanRateFloatReport" />
+  </bean>
 
 </beans>

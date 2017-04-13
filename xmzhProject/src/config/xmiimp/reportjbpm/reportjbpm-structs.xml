@@ -101,7 +101,14 @@
 
 		</action>
 		
-		
+		<action name="loanRateFloatReportAction_*" class="loanRateFloatReportAction" method="{1}" >
+      <result name="LoanRateFloatReportList" >
+        /jsp/ReportStatistics/Report_LoanRateFloat.jsp
+      </result>
+      <result name="LoanRateFloatReportListExcel" >
+        /jsp/ReportStatistics/Report_LoanRateFloatReportAction_excel.jsp
+      </result>   
+    </action>
 
 
 	</package>
