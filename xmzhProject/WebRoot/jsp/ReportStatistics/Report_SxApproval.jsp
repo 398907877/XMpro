@@ -46,14 +46,17 @@
 				<h:form name="page_form"
 					action="/reportjbpm/sxApprovalReportAction_sxApprovalReportList.action" method="post">
 			 <h:hiddendata property="sxApprovalReport"/>  
-
+            <input id="sxApprovalReportList" name="{sxApprovalReportList" value="3">
             <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
 		    <h:hidden property="page.count"/>
 		    <h:hidden property="page.isCount"/>
+		 
 		    
 					<table align="center" border="0" width="100%" class="EOS_table">
 		           <tr>
+		           
+		     
 							<l:empty property="sxApprovalReportTitleList">
 							
 							<th nowrap="nowrap">
@@ -78,7 +81,7 @@
 							</th>
 							</tr>
 							<tr>
-							
+		
                            <l:iterate property="sxApprovalReportTitleList" id="id1">
 							<th nowrap="nowrap" rowspan="1"   colspan="2">
 							<b:write iterateId="id1" property="oneCategory" />
@@ -102,42 +105,22 @@
 							<l:iterate property="sxApprovalReportOrgNameOneList" id="id3">
 							<tr  >
 							<!-- 一级支行 -->
-							<%if %>
-								<td nowrap="nowrap" rowspan='<b:write property="3" />'> 
+							
+								<td nowrap="nowrap" > 
 								<b:write iterateId="id3" property="orgNameOne" />
-							<!-- 二级支行 -->
+									<!-- 二级支行 -->
 								<td nowrap="nowrap" > 
 								1111
 								</td>
 								<!-- 类型值 -->
+								<l:iterate property="sxApprovalReportTitleList" id="id4">
 								<td nowrap="nowrap" > 
 								222
 								</td>
 								<td nowrap="nowrap" > 
 								2223
 								</td>
-							</tr>
-							<tr  >
-								<td nowrap="nowrap" > 
-								1111
-								</td>
-								<td nowrap="nowrap" > 
-								222
-								</td>
-								<td nowrap="nowrap" > 
-								2223
-								</td>
-							</tr>
-							<tr  >
-								<td nowrap="nowrap" > 
-								1111
-								</td>
-								<td nowrap="nowrap" > 
-								222
-								</td>
-								<td nowrap="nowrap" > 
-								2223
-								</td>
+								</l:iterate>
 							</tr>
 							</l:iterate>
 							
@@ -177,6 +160,12 @@
 			</w:panel>		
 		</DIV>
 		<script type="text/javascript">
+    
+    
+    
+ 
+   
+
 
 		//清空
 		function clears(){
@@ -192,7 +181,8 @@
 		
             function search(){
             	var frm = $name("appQuery");
-                frm.submit();
+              frm.submit();
+              
 			}
 
     		//导出excel 	
