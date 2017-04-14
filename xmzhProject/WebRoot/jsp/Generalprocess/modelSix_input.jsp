@@ -123,7 +123,7 @@
 							
 							</td>
 				</tr>
-				<tr id='notmodelOne'>
+				<tr id='havemodelOne'>
 					<td class="form_label" align="right" style="width:20%;">
 			                                                 一级分类：
 			        </td>
@@ -137,7 +137,7 @@
 			        	<h:text  id="loanCategory1"  readonly="true"/>
 			        </td>
 			        </tr>
-				<tr id='havemodelOne'>
+				<tr id='notmodelOne'>
 			        <td class="form_label" align="right" style="width:20%;">
 			                                                 一级分类：
 			        </td>
@@ -208,39 +208,48 @@
         	<h:text id="supportMoney" property="modelSix.supportMoney"   validateAttr="type=float"/>元
         </td>
       </tr>
+		
+		<!-- <div id="havemodelOne2"> -->
 		 <tr>
-		 <td class="form_label" align="right" style="width:20%;">
-                                                 客户评级：
-        </td>
-        <td colspan="1" style="width:30%">
-        <h:text property="modelSix.custGrade" id="custGrade"  style="width:130px;" />	
-        </td>
         <td class="form_label" align="right" style="width:20%;">
                                                    基准利率浮动：
         </td>
         <td colspan="1" style="width:30%">
-         <select    id="basisRateFloats"  >
-        <option value="">请选择</option>
-         <option value="1">上浮</option>
-         <option value="2">下浮</option>
-         <option value="3">不变</option>
-         </select> 
-         <h:hidden property="modelSix.basisRateFloat"  id="basisRateFloat" />
+        
+        <div id="yes_sel"  style="display:block">   <!-- 默认可选择 -->
+             <d:select  id="basic_rate_float"   dictTypeId="PROCESS_BASICRATEFLOAT"   property="modelSix.basic_rate_float"     nullLabel="请选择"  onchange="rate_judge_fun()"></d:select> 
+        </div>
+        
+        <div id="no_sel"  style="display:none">   <!-- 当模式一输入该值，则只回显不可输入 -->
+             <d:select  dictTypeId="PROCESS_BASICRATEFLOAT"  value="${modelSix.basic_rate_float }"   disabled="true"  ></d:select> 
+        </div>
+        
         </td>
-      </tr>
-       <tr>
+        
         <td class="form_label" align="right" style="width:20%;">
                                                  利率浮动比例：
         </td>
         <td colspan="1"  style="width:30%">
-           <h:text property="modelSix.rateFloatScale" id="rateFloatScale"  style="width:130px;" />	
+           <h:text id="rate_float_scale"  style="width:130px;"  property="modelSix.rate_float_scale"  validateAttr="type=double;fracDigit=2;allowNull=true;" />	
         </td>
+      </tr>
+       <tr>
+        <td class="form_label" align="right" style="width:20%;">
+                                                 客户评级：
+        </td>
+        <td colspan="1" style="width:30%">
+              <h:text id="cust_grade"   style="width:130px;"  property="modelSix.cust_grade"    />	
+        </td>
+        
         <td class="form_label" align="right" style="width:20%;">
                                                  
         </td>
         <td colspan="1"  style="width:30%">
         </td>
       </tr> 
+      <!-- </div> -->
+      
+      
 				
       <tr id="row1">
         <td class="form_label" align="right">附件下载：</td>
@@ -448,19 +457,31 @@ $(function(){
 		$("#save1").hide();
 		$("#smit").hide();
 	}
-	if('${isStrat}'==0){
-		$("#notmodelOne").hide();
+	if('${isStrat}'==0){  //没有经过模式一
+		$("#havemodelOne").hide();
 		setOneSelect('${taskAssgineeDto.processName}');
 		 if('${modelSix.oneCategory}'!=""){
 			 $("#oneCategory").val('${modelSix.oneCategory}');
 			 var oneCategory='${modelSix.oneCategory}';
 			 setLcselect(oneCategory);
 		 }
-		}else{
-			$("#havemodelOne").hide();
+		}else{  //经过模式一
+			$("#notmodelOne").hide();
 			$("#oneCategory1").val('${modelSix.oneCategory}');
 			$("#loanCategory1").val('${modelSix.loanCategory}');
+			
+			if('${modelOne.cust_grade}' != ""){//客户等级
+				$("#cust_grade").attr("readonly","true");
 			}
+			if('${modelOne.basic_rate_float}' != ""){//基准利率浮动方向
+				$("#no_sel").attr("style","display:block");
+				$("#yes_sel").attr("style","display:none");
+			}	
+			if('${modelOne.rate_float_scale}' != ""){//利率比例
+				$("#rate_float_scale").attr("readonly","true");
+			}		
+
+		}
 	var ismortgage='${modelSix.yesOrNotRisk}';
 	if(ismortgage==null||ismortgage==""||ismortgage=="2"){
 		$("#ismortgage input[type='radio']").get(1).checked = true;
@@ -486,17 +507,42 @@ $(function(){
 	function doSave(value) {
 		$("#btnType").val(value);
 		$("#yesOrNotRisk").val($("#ismortgage input[type='radio']:checked").val());
+
 		if('${isStrat}'!=0){
 			$("#oneCategory").val($("#oneCategory1").val());
 			$("#loanCategory").val($("#loanCategory1").val());
 			}
-		if (value != "1") {
-			if (checkForm($id("form1"))) {
-			
 
+		if (checkForm($id("form1"))) {
+
+			var   reg = /\-|\+?/;  //匹配正负号
+			  var result = ($("#rate_float_scale").val()).match(reg);  //result可能为+、-、空，空值说明没带符号
+			 
+			  if(result != ""){ 
+				     $("#rate_float_scale").addClass("verify_failure");
+		             alert("利率浮动比例无需输入符号！");
+		             return false;
+	     	  }
+	 		
+	 		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
+	 		 if($("#basic_rate_float").val() != "" && ($("#rate_float_scale").val()).trim() == ""){
+
+	 			 $("#rate_float_scale").addClass("verify_failure");
+	 			 $("#rate_float_scale").focus();
+	             alert("当前已选择基准利率浮动，请输入利率浮动比例!");
+	             return false;
+		       }
+		
+		   		if($("#basic_rate_float").val() == "" && ($("#rate_float_scale").val()).trim() != ""){
+		   			  $("#basic_rate_float").focus();
+		               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
+		               return false;
+		          }
+		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim());
+		          
+			  if (value != "1") {
 				var flag={"mortgageTime":true,"custName":true,"receiveTime":true};
 		
-
 	    	     var mortgageTime= $("#mortgageTime_input").val();
 	    	     var custName= $("#custName").val();
 	    	     var receiveTime= $("#receiveTime_input").val();
@@ -553,16 +599,13 @@ $(function(){
 				showModalCenter(strUrl, null, taskAssigneeCallBack, 700, 400,
 						'节点选择');
 	    	     };
-			};
-		} else {
+		 } else {
 
-
-			
 			var _form = $id("form1");
 			url = "/Generalprocess/tGeneralprocessModelSixAction_handleModelSix.action";
-			_form.action = url
-			if (checkForm($id("form1")))
+			_form.action = url;
 				ajaxsubmitO(0);
+		 }
 		}
 	}
 
@@ -573,10 +616,6 @@ $(function(){
 					+ arg;
 			_form.action = url;
 	
-
-
-
-			
 			// 异步提交请求 
 			ajaxsubmitO(1);
 		}
@@ -711,6 +750,17 @@ $(function(){
 	function delTr(id){
 		$("#"+id).remove();
 	}
-	
+
+	//判断利率浮动是否选择为“不变”
+	function rate_judge_fun(){
+		
+       if($("#basic_rate_float").val()=="0"){ //若浮动方向为“不变”，则无需输入比例，默认为0
+    	   $("#rate_float_scale").attr("readonly","true");
+    	   $("#rate_float_scale").val(0);
+       }else{  //其他为可输入
+    	   $("#rate_float_scale").attr("readonly","");
+    	   $("#rate_float_scale").val("");
+       }
+	}
 </script>
 </html>

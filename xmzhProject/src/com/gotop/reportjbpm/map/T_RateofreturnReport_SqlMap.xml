@@ -6,9 +6,11 @@
     
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="ORGNAME" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ORGCODEONE" property="orgCodeOne" jdbcType="VARCHAR" />
+    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ORGCODETWO" property="orgCodeTwo" jdbcType="VARCHAR" />
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
-        <result column="passNumber" property="passNumber" jdbcType="VARCHAR" />
+    <result column="passNumber" property="passNumber" jdbcType="VARCHAR" />
     <result column="backOne" property="backOne" jdbcType="FLOAT" />
     <result column="backTwo" property="backTwo" jdbcType="FLOAT" />
     <result column="backThree" property="backThree" jdbcType="FLOAT" />
@@ -31,7 +33,9 @@
 SELECT
 	ONECATEGORY,
 	LOANCATEGORY,
-	ORGNAME,
+	ORGCODEONE,
+	ORGNAMEONE,
+	ORGCODETWO,
 	ORGNAMETWO,
 	M passNumber,
  backOne,
@@ -42,7 +46,9 @@ FROM
 	(
 		SELECT
 			LOANCATEGORY,
-			ORGNAME,
+			ORGCODEONE,
+			ORGNAMEONE,
+			ORGCODETWO,
 			ORGNAMETWO,
 			M,
 			ONECATEGORY,
@@ -54,7 +60,9 @@ FROM
 			(
 				SELECT
 					tm.LOANCATEGORY,
-					tm.ORGNAME,
+					tm.ORGCODEONE,
+					tm.ORGNAMEONE,
+					tm.ORGCODETWO,
 					tm.ORGNAMETWO,
 					tm. M,
 					tm.ONECATEGORY,
@@ -67,7 +75,9 @@ FROM
 						SELECT
 							COUNT (*) M,
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							ONECATEGORY
 						FROM
@@ -75,7 +85,9 @@ FROM
 								SELECT
 									t1.LOANCATEGORY,
 									t1.ONECATEGORY,
-									t2.ORGNAME,
+									t2.ORGCODEONE,
+									t2.ORGNAMEONE,
+									t3.ORGCODETWO,
 									t3.ORGNAMETWO,
 									t5.end_
 								FROM
@@ -91,11 +103,11 @@ FROM
 									) t1
 								JOIN (
 									SELECT
-										ORGCODE,
-										ORGNAME
+										ORGCODE as ORGCODEONE,
+										ORGNAME as ORGNAMEONE
 									FROM
 										OM_ORGANIZATION
-								) t2 ON t1.ORGCODEONE = t2.ORGCODE
+								) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 								LEFT JOIN (
 									SELECT
 										ORGCODE AS ORGCODETWO,
@@ -153,9 +165,17 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 						GROUP BY
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							ONECATEGORY
 					) tm
@@ -163,7 +183,9 @@ FROM
 					SELECT
 						COUNT (*) n1,
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
@@ -171,7 +193,9 @@ FROM
 						(
 							SELECT
 								ttn.LOANCATEGORY,
-								ttn.ORGNAME,
+								ttn.ORGCODEONE,
+								ttn.ORGNAMEONE,
+								ttn.ORGCODETWO,
 								ttn.ORGNAMETWO,
 								ttn.reportcnt,
 								ttn.flow_id,
@@ -183,7 +207,9 @@ FROM
 										t1.flow_id,
 										t1.LOANCATEGORY,
 										t1.ONECATEGORY,
-										t2.ORGNAME,
+										t2.ORGCODEONE,
+										t2.ORGNAMEONE,
+										t3.ORGCODETWO,
 										t3.ORGNAMETWO,
 										t5.reportcnt,
 										t6.end_
@@ -200,11 +226,11 @@ FROM
 										) t1
 									JOIN (
 										SELECT
-											ORGCODE,
-											ORGNAME
+											ORGCODE as ORGCODEONE,
+											ORGNAME as ORGNAMEONE
 										FROM
 											OM_ORGANIZATION
-									) t2 ON t1.ORGCODEONE = t2.ORGCODE
+									) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 									LEFT JOIN (
 										SELECT
 											ORGCODE AS ORGCODETWO,
@@ -270,14 +296,22 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 					GROUP BY
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
 				) tn1 ON tm.LOANCATEGORY = tn1.LOANCATEGORY
-				AND tm.ORGNAME = tn1.ORGNAME
+				AND tm.ORGNAMEONE = tn1.ORGNAMEONE
 				AND tm.ONECATEGORY = tn1.ONECATEGORY
 				AND (
 					tn1.ORGNAMETWO IS NOT NULL
@@ -287,7 +321,9 @@ FROM
 					SELECT
 						COUNT (*) n2,
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
@@ -295,7 +331,9 @@ FROM
 						(
 							SELECT
 								ttn.LOANCATEGORY,
-								ttn.ORGNAME,
+								ttn.ORGCODEONE,
+								ttn.ORGNAMEONE,
+								ttn.ORGCODETWO,
 								ttn.ORGNAMETWO,
 								ttn.reportcnt,
 								ttn.flow_id,
@@ -307,7 +345,9 @@ FROM
 										t1.flow_id,
 										t1.LOANCATEGORY,
 										t1.ONECATEGORY,
-										t2.ORGNAME,
+										t2.ORGCODEONE,
+										t2.ORGNAMEONE,
+										t3.ORGCODETWO,
 										t3.ORGNAMETWO,
 										t5.reportcnt,
 										t6.end_
@@ -324,11 +364,11 @@ FROM
 										) t1
 									JOIN (
 										SELECT
-											ORGCODE,
-											ORGNAME
+											ORGCODE AS ORGCODEONE ,
+											ORGNAME AS ORGNAMEONE
 										FROM
 											OM_ORGANIZATION
-									) t2 ON t1.ORGCODEONE = t2.ORGCODE
+									) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 									LEFT JOIN (
 										SELECT
 											ORGCODE AS ORGCODETWO,
@@ -388,20 +428,22 @@ FROM
        <isNotNull prepend="and" property="appTimeEnd" >                                    
                 <![CDATA[end_  <=(#appTimeEnd#)]]>
       </isNotNull>
-      <isNotNull prepend="and" property="oneCategory" >
-                 ONECATEGORY  in($oneCategory$)
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
       </isNotNull>
-      <isNotNull prepend="and" property="loanCategory" >
-                 LOANCATEGORY in($loanCategory$)
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
       </isNotNull>
 					GROUP BY
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
 				) tn2 ON tm.LOANCATEGORY = tn2.LOANCATEGORY
-				AND tm.ORGNAME = tn2.ORGNAME
+				AND tm.ORGNAMEONE = tn2.ORGNAMEONE
 				AND tm.ONECATEGORY = tn2.ONECATEGORY
 				AND (
 					tn2.ORGNAMETWO IS NOT NULL
@@ -411,7 +453,9 @@ FROM
 					SELECT
 						COUNT (*) n3,
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
@@ -419,7 +463,9 @@ FROM
 						(
 							SELECT
 								ttn.LOANCATEGORY,
-								ttn.ORGNAME,
+								ttn.ORGCODEONE,
+								ttn.ORGNAMEONE,
+								ttn.ORGCODETWO,
 								ttn.ORGNAMETWO,
 								ttn.reportcnt,
 								ttn.flow_id,
@@ -431,7 +477,9 @@ FROM
 										t1.flow_id,
 										t1.LOANCATEGORY,
 										t1.ONECATEGORY,
-										t2.ORGNAME,
+										t2.ORGCODEONE,
+										t2.ORGNAMEONE,
+										t3.ORGCODETWO,
 										t3.ORGNAMETWO,
 										t5.reportcnt,
 										t6.end_
@@ -448,11 +496,11 @@ FROM
 										) t1
 									JOIN (
 										SELECT
-											ORGCODE,
-											ORGNAME
+											ORGCODE AS ORGCODEONE,
+											ORGNAME AS ORGNAMEONE
 										FROM
 											OM_ORGANIZATION
-									) t2 ON t1.ORGCODEONE = t2.ORGCODE
+									) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 									LEFT JOIN (
 										SELECT
 											ORGCODE AS ORGCODETWO,
@@ -512,20 +560,22 @@ FROM
        <isNotNull prepend="and" property="appTimeEnd" >                                    
                 <![CDATA[end_  <=(#appTimeEnd#)]]>
       </isNotNull>
-      <isNotNull prepend="and" property="oneCategory" >
-                 ONECATEGORY  in($oneCategory$)
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
       </isNotNull>
-      <isNotNull prepend="and" property="loanCategory" >
-                 LOANCATEGORY in($loanCategory$)
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
       </isNotNull>
 					GROUP BY
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
 				) tn3 ON tm.LOANCATEGORY = tn3.LOANCATEGORY
-				AND tm.ORGNAME = tn3.ORGNAME
+				AND tm.ORGNAMEONE = tn3.ORGNAMEONE
 				AND tm.ONECATEGORY = tn3.ONECATEGORY
 				AND (
 					tn3.ORGNAMETWO IS NOT NULL
@@ -535,7 +585,9 @@ FROM
 					SELECT
 						COUNT (*) n4,
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
@@ -543,7 +595,9 @@ FROM
 						(
 							SELECT
 								ttn.LOANCATEGORY,
-								ttn.ORGNAME,
+								ttn.ORGCODEONE,
+								ttn.ORGNAMEONE,
+								ttn.ORGCODETWO,
 								ttn.ORGNAMETWO,
 								ttn.reportcnt,
 								ttn.flow_id,
@@ -555,7 +609,9 @@ FROM
 										t1.flow_id,
 										t1.LOANCATEGORY,
 										t1.ONECATEGORY,
-										t2.ORGNAME,
+										t2.ORGCODEONE,
+										t2.ORGNAMEONE,
+										t3.ORGCODETWO,
 										t3.ORGNAMETWO,
 										t5.reportcnt,
 										t6.end_
@@ -572,11 +628,11 @@ FROM
 										) t1
 									JOIN (
 										SELECT
-											ORGCODE,
-											ORGNAME
+											ORGCODE AS ORGCODEONE,
+											ORGNAME AS ORGNAMEONE
 										FROM
 											OM_ORGANIZATION
-									) t2 ON t1.ORGCODEONE = t2.ORGCODE
+									) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 									LEFT JOIN (
 										SELECT
 											ORGCODE AS ORGCODETWO,
@@ -642,14 +698,22 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 					GROUP BY
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						reportcnt,
 						ONECATEGORY
 				) tn4 ON tm.LOANCATEGORY = tn4.LOANCATEGORY
-				AND tm.ORGNAME = tn4.ORGNAME
+				AND tm.ORGNAMEONE = tn4.ORGNAMEONE
 				AND tm.ONECATEGORY = tn4.ONECATEGORY
 				AND (
 					tn4.ORGNAMETWO IS NOT NULL
@@ -659,7 +723,9 @@ FROM
 		UNION
 			SELECT
 				LOANCATEGORY,
-				ORGNAME,
+				ORGCODEONE,
+				ORGNAMEONE,
+				ORGCODETWO,
 				ORGNAMETWO,
 				M,
 				ONECATEGORY,
@@ -671,7 +737,9 @@ FROM
 				(
 					SELECT
 						tm.LOANCATEGORY,
-						tm.ORGNAME,
+						tm.ORGCODEONE,
+						tm.ORGNAMEONE,
+						tm.ORGCODETWO,
 						tm.ORGNAMETWO,
 						tm. M,
 						tm.ONECATEGORY,
@@ -684,7 +752,9 @@ FROM
 							SELECT
 								COUNT (*) M,
 								LOANCATEGORY,
-								ORGNAME,
+								ORGCODEONE,
+								ORGNAMEONE,
+								ORGCODETWO,
 								ORGNAMETWO,
 								ONECATEGORY
 							FROM
@@ -692,7 +762,9 @@ FROM
 									SELECT
 										t1.LOANCATEGORY,
 										t1.ONECATEGORY,
-										t2.ORGNAME,
+										t2.ORGCODEONE,
+										t2.ORGNAMEONE,
+										t3.ORGCODETWO,
 										t3.ORGNAMETWO,
 										t5.end_
 									FROM
@@ -708,11 +780,11 @@ FROM
 										) t1
 									JOIN (
 										SELECT
-											ORGCODE,
-											ORGNAME
+											ORGCODE AS ORGCODEONE,
+											ORGNAME AS ORGNAMEONE
 										FROM
 											OM_ORGANIZATION
-									) t2 ON t1.ORGCODEONE = t2.ORGCODE
+									) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 									LEFT JOIN (
 										SELECT
 											ORGCODE AS ORGCODETWO,
@@ -770,9 +842,17 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 							GROUP BY
 								LOANCATEGORY,
-								ORGNAME,
+								ORGCODEONE,
+								ORGNAMEONE,
+								ORGCODETWO,
 								ORGNAMETWO,
 								ONECATEGORY
 						) tm
@@ -780,7 +860,9 @@ FROM
 						SELECT
 							COUNT (*) n1,
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
@@ -788,7 +870,9 @@ FROM
 							(
 								SELECT
 									ttn.LOANCATEGORY,
-									ttn.ORGNAME,
+									ttn.ORGCODEONE,
+									ttn.ORGNAMEONE,
+									ttn.ORGCODETWO,
 									ttn.ORGNAMETWO,
 									ttn.reportcnt,
 									ttn.flow_id,
@@ -800,7 +884,9 @@ FROM
 											t1.flow_id,
 											t1.LOANCATEGORY,
 											t1.ONECATEGORY,
-											t2.ORGNAME,
+											t2.ORGCODEONE,
+											t2.ORGNAMEONE,
+											t3.ORGCODETWO,
 											t3.ORGNAMETWO,
 											t5.reportcnt,
 											t6.end_
@@ -817,11 +903,11 @@ FROM
 											) t1
 										JOIN (
 											SELECT
-												ORGCODE,
-												ORGNAME
+												ORGCODE AS ORGCODEONE,
+												ORGNAME AS ORGNAMEONE
 											FROM
 												OM_ORGANIZATION
-										) t2 ON t1.ORGCODEONE = t2.ORGCODE
+										) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 										LEFT JOIN (
 											SELECT
 												ORGCODE AS ORGCODETWO,
@@ -888,21 +974,31 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 						GROUP BY
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
 					) tn1 ON tm.LOANCATEGORY = tn1.LOANCATEGORY
-					AND tm.ORGNAME = tn1.ORGNAME
+					AND tm.ORGNAMEONE = tn1.ORGNAMEONE
 					AND tm.ONECATEGORY = tn1.ONECATEGORY
 					AND tn1.ORGNAMETWO IS NULL
 					LEFT JOIN (
 						SELECT
 							COUNT (*) n2,
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
@@ -910,7 +1006,9 @@ FROM
 							(
 								SELECT
 									ttn.LOANCATEGORY,
-									ttn.ORGNAME,
+									ttn.ORGCODEONE,
+									ttn.ORGNAMEONE,
+									ttn.ORGCODETWO,
 									ttn.ORGNAMETWO,
 									ttn.reportcnt,
 									ttn.flow_id,
@@ -922,7 +1020,9 @@ FROM
 											t1.flow_id,
 											t1.LOANCATEGORY,
 											t1.ONECATEGORY,
-											t2.ORGNAME,
+											t2.ORGCODEONE,
+											t2.ORGNAMEONE,
+											t3.ORGCODETWO,
 											t3.ORGNAMETWO,
 											t5.reportcnt,
 											t6.end_
@@ -939,11 +1039,11 @@ FROM
 											) t1
 										JOIN (
 											SELECT
-												ORGCODE,
-												ORGNAME
+												ORGCODE AS ORGCODEONE,
+												ORGNAME AS ORGNAMEONE
 											FROM
 												OM_ORGANIZATION
-										) t2 ON t1.ORGCODEONE = t2.ORGCODE
+										) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 										LEFT JOIN (
 											SELECT
 												ORGCODE AS ORGCODETWO,
@@ -1009,21 +1109,31 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 						GROUP BY
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
 					) tn2 ON tm.LOANCATEGORY = tn2.LOANCATEGORY
-					AND tm.ORGNAME = tn2.ORGNAME
+					AND tm.ORGNAMEONE = tn2.ORGNAMEONE
 					AND tm.ONECATEGORY = tn2.ONECATEGORY
 					AND tn2.ORGNAMETWO IS NULL
 					LEFT JOIN (
 						SELECT
 							COUNT (*) n3,
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 				
@@ -1032,7 +1142,9 @@ FROM
 							(
 								SELECT
 									ttn.LOANCATEGORY,
-									ttn.ORGNAME,
+									ttn.ORGCODEONE,
+									ttn.ORGNAMEONE,
+									ttn.ORGCODETWO,
 									ttn.ORGNAMETWO,
 									ttn.reportcnt,
 									ttn.flow_id,
@@ -1044,7 +1156,9 @@ FROM
 											t1.flow_id,
 											t1.LOANCATEGORY,
 											t1.ONECATEGORY,
-											t2.ORGNAME,
+											t2.ORGCODEONE,
+											t2.ORGNAMEONE,
+											t3.ORGCODETWO,
 											t3.ORGNAMETWO,
 											t5.reportcnt,
 											t6.end_
@@ -1061,11 +1175,11 @@ FROM
 											) t1
 										JOIN (
 											SELECT
-												ORGCODE,
-												ORGNAME
+												ORGCODE AS ORGCODEONE,
+												ORGNAME AS ORGNAMEONE
 											FROM
 												OM_ORGANIZATION
-										) t2 ON t1.ORGCODEONE = t2.ORGCODE
+										) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 										LEFT JOIN (
 											SELECT
 												ORGCODE AS ORGCODETWO,
@@ -1131,21 +1245,31 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 						GROUP BY
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
 					) tn3 ON tm.LOANCATEGORY = tn3.LOANCATEGORY
-					AND tm.ORGNAME = tn3.ORGNAME
+					AND tm.ORGNAMEONE = tn3.ORGNAMEONE
 					AND tm.ONECATEGORY = tn3.ONECATEGORY
 					AND tn3.ORGNAMETWO IS NULL
 					LEFT JOIN (
 						SELECT
 							COUNT (*) n4,
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
@@ -1153,7 +1277,9 @@ FROM
 							(
 								SELECT
 									ttn.LOANCATEGORY,
-									ttn.ORGNAME,
+									ttn.ORGCODEONE,
+									ttn.ORGNAMEONE,
+									ttn.ORGCODETWO,
 									ttn.ORGNAMETWO,
 									ttn.reportcnt,
 									ttn.flow_id,
@@ -1165,7 +1291,9 @@ FROM
 											t1.flow_id,
 											t1.LOANCATEGORY,
 											t1.ONECATEGORY,
-											t2.ORGNAME,
+											t2.ORGCODEONE,
+											t2.ORGNAMEONE,
+											t3.ORGCODETWO,
 											t3.ORGNAMETWO,
 											t5.reportcnt,
 											t6.end_
@@ -1182,11 +1310,11 @@ FROM
 											) t1
 										JOIN (
 											SELECT
-												ORGCODE,
-												ORGNAME
+												ORGCODE AS ORGCODEONE,
+												ORGNAME AS ORGNAMEONE
 											FROM
 												OM_ORGANIZATION
-										) t2 ON t1.ORGCODEONE = t2.ORGCODE
+										) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 										LEFT JOIN (
 											SELECT
 												ORGCODE AS ORGCODETWO,
@@ -1252,14 +1380,22 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 						GROUP BY
 							LOANCATEGORY,
-							ORGNAME,
+							ORGCODEONE,
+							ORGNAMEONE,
+							ORGCODETWO,
 							ORGNAMETWO,
 							reportcnt,
 							ONECATEGORY
 					) tn4 ON tm.LOANCATEGORY = tn4.LOANCATEGORY
-					AND tm.ORGNAME = tn4.ORGNAME
+					AND tm.ORGNAMEONE = tn4.ORGNAMEONE
 					AND tm.ONECATEGORY = tn4.ONECATEGORY
 					AND tn4.ORGNAMETWO IS NULL
 				)
@@ -1288,7 +1424,9 @@ from
 (
 SELECT
 	tm.LOANCATEGORY,
-	tm.ORGNAME,
+	tm.ORGCODEONE,
+	tm.ORGNAMEONE,
+	tm.ORGCODETWO,
 	tm.ORGNAMETWO,
 	tm. M,
 	tm.ONECATEGORY,
@@ -1301,7 +1439,9 @@ FROM
 		SELECT
 			COUNT (*) M,
 			LOANCATEGORY,
-			ORGNAME,
+			ORGCODEONE,
+			ORGNAMEONE,
+			ORGCODETWO,
 			ORGNAMETWO,
 			ONECATEGORY
 		FROM
@@ -1309,7 +1449,9 @@ FROM
 				SELECT
 					t1.LOANCATEGORY,
 					t1.ONECATEGORY,
-					t2.ORGNAME,
+					t2.ORGCODEONE,
+					t2.ORGNAMEONE,
+					t3.ORGCODETWO,
 					t3.ORGNAMETWO,
 					t5.end_
 				FROM
@@ -1325,11 +1467,11 @@ FROM
 					) t1
 				JOIN (
 					SELECT
-						ORGCODE,
-						ORGNAME
+						ORGCODE AS ORGCODEONE,
+						ORGNAME AS ORGNAMEONE
 					FROM
 						OM_ORGANIZATION
-				) t2 ON t1.ORGCODEONE = t2.ORGCODE
+				) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 				LEFT JOIN (
 					SELECT
 						ORGCODE AS ORGCODETWO,
@@ -1387,9 +1529,17 @@ FROM
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 		GROUP BY
 			LOANCATEGORY,
-			ORGNAME,
+			ORGCODEONE,
+			ORGNAMEONE,
+			ORGCODETWO,
 			ORGNAMETWO,
 			ONECATEGORY
 	) tm
@@ -1397,7 +1547,9 @@ LEFT JOIN (
 	SELECT
 		COUNT (*) n1,
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
@@ -1405,7 +1557,9 @@ LEFT JOIN (
 		(
 			SELECT
 				ttn.LOANCATEGORY,
-				ttn.ORGNAME,
+				ttn.ORGCODEONE,
+				ttn.ORGNAMEONE,
+				ttn.ORGCODETWO,
 				ttn.ORGNAMETWO,
 				ttn.reportcnt,
 				ttn.flow_id,
@@ -1417,7 +1571,9 @@ LEFT JOIN (
 						t1.flow_id,
 						t1.LOANCATEGORY,
 						t1.ONECATEGORY,
-						t2.ORGNAME,
+						t2.ORGCODEONE,
+						t2.ORGNAMEONE,
+						t3.ORGCODETWO,
 						t3.ORGNAMETWO,
 						t5.reportcnt,
 						t6.end_
@@ -1434,11 +1590,11 @@ LEFT JOIN (
 						) t1
 					JOIN (
 						SELECT
-							ORGCODE,
-							ORGNAME
+							ORGCODE AS ORGCODEONE,
+							ORGNAME AS ORGNAMEONE
 						FROM
 							OM_ORGANIZATION
-					) t2 ON t1.ORGCODEONE = t2.ORGCODE
+					) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 					LEFT JOIN (
 						SELECT
 							ORGCODE AS ORGCODETWO,
@@ -1504,14 +1660,22 @@ LEFT JOIN (
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 	GROUP BY
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
 ) tn1 ON tm.LOANCATEGORY = tn1.LOANCATEGORY
-AND tm.ORGNAME = tn1.ORGNAME
+AND tm.ORGNAMEONE = tn1.ORGNAMEONE
 AND tm.ONECATEGORY = tn1.ONECATEGORY
 AND (
 	tn1.ORGNAMETWO IS NOT NULL
@@ -1521,7 +1685,9 @@ LEFT JOIN (
 	SELECT
 		COUNT (*) n2,
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
@@ -1529,7 +1695,9 @@ LEFT JOIN (
 		(
 			SELECT
 				ttn.LOANCATEGORY,
-				ttn.ORGNAME,
+				ttn.ORGCODEONE,
+				ttn.ORGNAMEONE,
+				ttn.ORGCODETWO,
 				ttn.ORGNAMETWO,
 				ttn.reportcnt,
 				ttn.flow_id,
@@ -1541,7 +1709,9 @@ LEFT JOIN (
 						t1.flow_id,
 						t1.LOANCATEGORY,
 						t1.ONECATEGORY,
-						t2.ORGNAME,
+						t2.ORGCODEONE,
+						t2.ORGNAMEONE,
+						t3.ORGCODETWO,
 						t3.ORGNAMETWO,
 						t5.reportcnt,
 						t6.end_
@@ -1558,11 +1728,11 @@ LEFT JOIN (
 						) t1
 					JOIN (
 						SELECT
-							ORGCODE,
-							ORGNAME
+							ORGCODE AS ORGCODEONE,
+							ORGNAME AS ORGNAMEONE
 						FROM
 							OM_ORGANIZATION
-					) t2 ON t1.ORGCODEONE = t2.ORGCODE
+					) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 					LEFT JOIN (
 						SELECT
 							ORGCODE AS ORGCODETWO,
@@ -1628,14 +1798,22 @@ LEFT JOIN (
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 	GROUP BY
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
 ) tn2 ON tm.LOANCATEGORY = tn2.LOANCATEGORY
-AND tm.ORGNAME = tn2.ORGNAME
+AND tm.ORGNAMEONE = tn2.ORGNAMEONE
 AND tm.ONECATEGORY = tn2.ONECATEGORY
 AND (
 	tn2.ORGNAMETWO IS NOT NULL
@@ -1645,7 +1823,9 @@ LEFT JOIN (
 	SELECT
 		COUNT (*) n3,
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
@@ -1653,7 +1833,9 @@ LEFT JOIN (
 		(
 			SELECT
 				ttn.LOANCATEGORY,
-				ttn.ORGNAME,
+				ttn.ORGCODEONE,
+				ttn.ORGNAMEONE,
+				ttn.ORGCODETWO,
 				ttn.ORGNAMETWO,
 				ttn.reportcnt,
 				ttn.flow_id,
@@ -1665,7 +1847,9 @@ LEFT JOIN (
 						t1.flow_id,
 						t1.LOANCATEGORY,
 						t1.ONECATEGORY,
-						t2.ORGNAME,
+						t2.ORGCODEONE,
+						t2.ORGNAMEONE,
+						t3.ORGCODETWO,
 						t3.ORGNAMETWO,
 						t5.reportcnt,
 						t6.end_
@@ -1682,11 +1866,11 @@ LEFT JOIN (
 						) t1
 					JOIN (
 						SELECT
-							ORGCODE,
-							ORGNAME
+							ORGCODE AS ORGCODEONE,
+							ORGNAME AS ORGNAMEONE
 						FROM
 							OM_ORGANIZATION
-					) t2 ON t1.ORGCODEONE = t2.ORGCODE
+					) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 					LEFT JOIN (
 						SELECT
 							ORGCODE AS ORGCODETWO,
@@ -1752,14 +1936,22 @@ LEFT JOIN (
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 	GROUP BY
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
 ) tn3 ON tm.LOANCATEGORY = tn3.LOANCATEGORY
-AND tm.ORGNAME = tn3.ORGNAME
+AND tm.ORGNAMEONE = tn3.ORGNAMEONE
 AND tm.ONECATEGORY = tn3.ONECATEGORY
 AND (
 	tn3.ORGNAMETWO IS NOT NULL
@@ -1769,7 +1961,9 @@ LEFT JOIN (
 	SELECT
 		COUNT (*) n4,
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
@@ -1777,7 +1971,9 @@ LEFT JOIN (
 		(
 			SELECT
 				ttn.LOANCATEGORY,
-				ttn.ORGNAME,
+				ttn.ORGCODEONE,
+				ttn.ORGNAMEONE,
+				ttn.ORGCODETWO,
 				ttn.ORGNAMETWO,
 				ttn.reportcnt,
 				ttn.flow_id,
@@ -1789,7 +1985,9 @@ LEFT JOIN (
 						t1.flow_id,
 						t1.LOANCATEGORY,
 						t1.ONECATEGORY,
-						t2.ORGNAME,
+						t2.ORGCODEONE,
+						t2.ORGNAMEONE,
+						t3.ORGCODETWO,
 						t3.ORGNAMETWO,
 						t5.reportcnt,
 						t6.end_
@@ -1806,11 +2004,11 @@ LEFT JOIN (
 						) t1
 					JOIN (
 						SELECT
-							ORGCODE,
-							ORGNAME
+							ORGCODE AS ORGCODEONE,
+							ORGNAME AS ORGNAMEONE
 						FROM
 							OM_ORGANIZATION
-					) t2 ON t1.ORGCODEONE = t2.ORGCODE
+					) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 					LEFT JOIN (
 						SELECT
 							ORGCODE AS ORGCODETWO,
@@ -1876,14 +2074,22 @@ LEFT JOIN (
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 	GROUP BY
 		LOANCATEGORY,
-		ORGNAME,
+		ORGCODEONE,
+		ORGNAMEONE,
+		ORGCODETWO,
 		ORGNAMETWO,
 		reportcnt,
 		ONECATEGORY
 ) tn4 ON tm.LOANCATEGORY = tn4.LOANCATEGORY
-AND tm.ORGNAME = tn4.ORGNAME
+AND tm.ORGNAMEONE = tn4.ORGNAMEONE
 AND tm.ONECATEGORY = tn4.ONECATEGORY
 AND (
 	tn4.ORGNAMETWO IS NOT NULL
@@ -1892,7 +2098,9 @@ AND (
 UNION
 			SELECT
 				tm.LOANCATEGORY,
-				tm.ORGNAME,
+				tm.ORGCODEONE,
+				tm.ORGNAMEONE,
+				tm.ORGCODETWO,
 				tm.ORGNAMETWO,
 				tm. M,
 				tm.ONECATEGORY,
@@ -1905,7 +2113,9 @@ UNION
 					SELECT
 						COUNT (*) M,
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						ONECATEGORY
 					FROM
@@ -1913,7 +2123,9 @@ UNION
 							SELECT
 								t1.LOANCATEGORY,
 								t1.ONECATEGORY,
-								t2.ORGNAME,
+								t2.ORGCODEONE,
+								t2.ORGNAMEONE,
+								t3.ORGCODETWO,
 								t3.ORGNAMETWO,
 								t5.end_
 							FROM
@@ -1929,11 +2141,11 @@ UNION
 								) t1
 							JOIN (
 								SELECT
-									ORGCODE,
-									ORGNAME
+									ORGCODE AS ORGCODEONE,
+									ORGNAME AS ORGNAMEONE
 								FROM
 									OM_ORGANIZATION
-							) t2 ON t1.ORGCODEONE = t2.ORGCODE
+							) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 							LEFT JOIN (
 								SELECT
 									ORGCODE AS ORGCODETWO,
@@ -1991,9 +2203,17 @@ UNION
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 					GROUP BY
 						LOANCATEGORY,
-						ORGNAME,
+						ORGCODEONE,
+						ORGNAMEONE,
+						ORGCODETWO,
 						ORGNAMETWO,
 						ONECATEGORY
 				) tm
@@ -2001,7 +2221,9 @@ UNION
 				SELECT
 					COUNT (*) n1,
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
@@ -2009,7 +2231,9 @@ UNION
 					(
 						SELECT
 							ttn.LOANCATEGORY,
-							ttn.ORGNAME,
+							ttn.ORGCODEONE,
+							ttn.ORGNAMEONE,
+							ttn.ORGCODETWO,
 							ttn.ORGNAMETWO,
 							ttn.reportcnt,
 							ttn.flow_id,
@@ -2021,7 +2245,9 @@ UNION
 									t1.flow_id,
 									t1.LOANCATEGORY,
 									t1.ONECATEGORY,
-									t2.ORGNAME,
+									t2.ORGCODEONE,
+									t2.ORGNAMEONE,
+									t3.ORGCODETWO,
 									t3.ORGNAMETWO,
 									t5.reportcnt,
 									t6.end_
@@ -2038,11 +2264,11 @@ UNION
 									) t1
 								JOIN (
 									SELECT
-										ORGCODE,
-										ORGNAME
+										ORGCODE AS ORGCODEONE,
+										ORGNAME AS ORGNAMEONE
 									FROM
 										OM_ORGANIZATION
-								) t2 ON t1.ORGCODEONE = t2.ORGCODE
+								) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 								LEFT JOIN (
 									SELECT
 										ORGCODE AS ORGCODETWO,
@@ -2108,21 +2334,31 @@ UNION
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 				GROUP BY
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
 			) tn1 ON tm.LOANCATEGORY = tn1.LOANCATEGORY
-			AND tm.ORGNAME = tn1.ORGNAME
+			AND tm.ORGNAMEONE = tn1.ORGNAMEONE
 			AND tm.ONECATEGORY = tn1.ONECATEGORY
 			AND tn1.ORGNAMETWO IS NULL
 			LEFT JOIN (
 				SELECT
 					COUNT (*) n2,
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
@@ -2130,7 +2366,9 @@ UNION
 					(
 						SELECT
 							ttn.LOANCATEGORY,
-							ttn.ORGNAME,
+							ttn.ORGCODEONE,
+							ttn.ORGNAMEONE,
+							ttn.ORGCODETWO,
 							ttn.ORGNAMETWO,
 							ttn.reportcnt,
 							ttn.flow_id,
@@ -2142,7 +2380,9 @@ UNION
 									t1.flow_id,
 									t1.LOANCATEGORY,
 									t1.ONECATEGORY,
-									t2.ORGNAME,
+									t2.ORGCODEONE,
+									t2.ORGNAMEONE,
+									t3.ORGCODETWO,
 									t3.ORGNAMETWO,
 									t5.reportcnt,
 									t6.end_
@@ -2159,11 +2399,11 @@ UNION
 									) t1
 								JOIN (
 									SELECT
-										ORGCODE,
-										ORGNAME
+										ORGCODE AS ORGCODEONE,
+										ORGNAME AS ORGNAMEONE
 									FROM
 										OM_ORGANIZATION
-								) t2 ON t1.ORGCODEONE = t2.ORGCODE
+								) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 								LEFT JOIN (
 									SELECT
 										ORGCODE AS ORGCODETWO,
@@ -2229,21 +2469,31 @@ UNION
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 				GROUP BY
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
 			) tn2 ON tm.LOANCATEGORY = tn2.LOANCATEGORY
-			AND tm.ORGNAME = tn2.ORGNAME
+			AND tm.ORGNAMEONE = tn2.ORGNAMEONE
 			AND tm.ONECATEGORY = tn2.ONECATEGORY
 			AND tn2.ORGNAMETWO IS NULL
 			LEFT JOIN (
 				SELECT
 					COUNT (*) n3,
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
@@ -2251,7 +2501,9 @@ UNION
 					(
 						SELECT
 							ttn.LOANCATEGORY,
-							ttn.ORGNAME,
+							ttn.ORGCODEONE,
+							ttn.ORGNAMEONE,
+							ttn.ORGCODETWO,
 							ttn.ORGNAMETWO,
 							ttn.reportcnt,
 							ttn.flow_id,
@@ -2263,7 +2515,9 @@ UNION
 									t1.flow_id,
 									t1.LOANCATEGORY,
 									t1.ONECATEGORY,
-									t2.ORGNAME,
+									t2.ORGCODEONE,
+									t2.ORGNAMEONE,
+									t3.ORGCODETWO,
 									t3.ORGNAMETWO,
 									t5.reportcnt,
 									t6.end_
@@ -2280,11 +2534,11 @@ UNION
 									) t1
 								JOIN (
 									SELECT
-										ORGCODE,
-										ORGNAME
+										ORGCODE AS ORGCODEONE,
+										ORGNAME AS ORGNAMEONE
 									FROM
 										OM_ORGANIZATION
-								) t2 ON t1.ORGCODEONE = t2.ORGCODE
+								) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 								LEFT JOIN (
 									SELECT
 										ORGCODE AS ORGCODETWO,
@@ -2350,21 +2604,31 @@ UNION
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 				GROUP BY
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
 			) tn3 ON tm.LOANCATEGORY = tn3.LOANCATEGORY
-			AND tm.ORGNAME = tn3.ORGNAME
+			AND tm.ORGNAMEONE = tn3.ORGNAMEONE
 			AND tm.ONECATEGORY = tn3.ONECATEGORY
 			AND tn3.ORGNAMETWO IS NULL
 			LEFT JOIN (
 				SELECT
 					COUNT (*) n4,
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
@@ -2372,7 +2636,9 @@ UNION
 					(
 						SELECT
 							ttn.LOANCATEGORY,
-							ttn.ORGNAME,
+							ttn.ORGCODEONE,
+							ttn.ORGNAMEONE,
+							ttn.ORGCODETWO,
 							ttn.ORGNAMETWO,
 							ttn.reportcnt,
 							ttn.flow_id,
@@ -2384,7 +2650,9 @@ UNION
 									t1.flow_id,
 									t1.LOANCATEGORY,
 									t1.ONECATEGORY,
-									t2.ORGNAME,
+									t2.ORGCODEONE,
+									t2.ORGNAMEONE,
+									t3.ORGCODETWO,
 									t3.ORGNAMETWO,
 									t5.reportcnt,
 									t6.end_
@@ -2401,11 +2669,11 @@ UNION
 									) t1
 								JOIN (
 									SELECT
-										ORGCODE,
-										ORGNAME
+										ORGCODE AS ORGCODEONE,
+										ORGNAME AS ORGNAMEONE
 									FROM
 										OM_ORGANIZATION
-								) t2 ON t1.ORGCODEONE = t2.ORGCODE
+								) t2 ON t1.ORGCODEONE = t2.ORGCODEONE
 								LEFT JOIN (
 									SELECT
 										ORGCODE AS ORGCODETWO,
@@ -2471,14 +2739,22 @@ UNION
       <isNotNull prepend="and" property="loanCategory" >
                  LOANCATEGORY in($loanCategory$)
       </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+                 ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+                 ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
 				GROUP BY
 					LOANCATEGORY,
-					ORGNAME,
+					ORGCODEONE,
+					ORGNAMEONE,
+					ORGCODETWO,
 					ORGNAMETWO,
 					reportcnt,
 					ONECATEGORY
 			) tn4 ON tm.LOANCATEGORY = tn4.LOANCATEGORY
-			AND tm.ORGNAME = tn4.ORGNAME
+			AND tm.ORGNAMEONE = tn4.ORGNAMEONE
 			AND tm.ONECATEGORY = tn4.ONECATEGORY
 			AND tn4.ORGNAMETWO IS NULL
 )

@@ -197,30 +197,25 @@
       
        <tr>
         <td class="form_label" align="right" style="width:120px;">
-                                                 客户评级：
+                                                 基准利率浮动：
         </td>
         <td colspan="1">
-        <h:text property="modelOne.custGrade" id="custGrade"  style="width:130px;" />	
+        <d:select    id="basic_rate_float"  dictTypeId="PROCESS_BASICRATEFLOAT"  property="modelOne.basic_rate_float"  nullLabel="请选择"  onchange="rate_judge_fun()"></d:select> 
         </td>
+        
         <td class="form_label" align="right" style="width:120px;">
-                                                   基准利率浮动：
+                                                  利率浮动比例：
         </td>
         <td colspan="1">
-         <select    id="basisRateFloats"  >
-        <option value="">请选择</option>
-         <option value="1">上浮</option>
-         <option value="2">下浮</option>
-         <option value="3">不变</option>
-         </select> 
-         <h:hidden property="modelOne.basisRateFloat"  id="basisRateFloat" />
+         <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:130px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"  />	
         </td>
       </tr>
        <tr>
         <td class="form_label" align="right" style="width:120px;">
-                                                 利率浮动比例：
+                                                 客户评级：
         </td>
         <td colspan="1">
-           <h:text property="modelOne.rateFloatScale" id="rateFloatScale" style="width:130px;" />	
+            <h:text id="cust_grade"  style="width:130px;"  property="modelOne.cust_grade"  />	
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                  
@@ -493,7 +488,7 @@
  show('${taskAssgineeDto.fxJson}');
  $(document).ready(function(){
 	 //获取当前登录者的上级机构code
-	 var orgcode = '${sessionScope.login_user.orgcode}'
+	 var orgcode = '${sessionScope.login_user.orgcode}';
 	 $.ajax({
 	        url: '/Generalprocess/generalProcessAction_isHaveParentOrgId.action',
 	        async: false,
@@ -612,40 +607,66 @@ function initPlanCell20(){
 	 //value 为2 	提交
      function doSave(value){
     		$("#btnType").val(value);
-    		if(value!="1"){
+
+    		if(checkForm($id("form1"))){
+    			  var   reg = /\-|\+?/;  //匹配正负号
+    			  var result = ($("#rate_float_scale").val()).match(reg);  //result可能为+、-、空，空值说明没带符号
+    			 
+    			  if(result != ""){ 
+    				     $("#rate_float_scale").addClass("verify_failure");
+    		             alert("利率浮动比例无需输入符号！");
+    		             return false;
+    	     	  }
+
+    		 		
+    	 		//基准利率浮动 和 率浮动比例  必须-->两个要么都不写， 要么都写
+    	 		 if($("#basic_rate_float").val() != "" && ($("#rate_float_scale").val()).trim() == ""){
+
+    	 			 $("#rate_float_scale").addClass("verify_failure");
+    	 			 $("#rate_float_scale").focus();
+    	             alert("当前已选择基准利率浮动，请输入利率浮动比例!");
+    	             return false;
+    		       }
+    		
+    		   		if($("#basic_rate_float").val() == "" && ($("#rate_float_scale").val()).trim() != ""){
+    		   			  $("#basic_rate_float").focus();
+    		               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
+    		               return false;
+    		          }
+
+    		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim());
+    		             
+    	    		if(value!="1"){  //执行 提交
 
         		if($("#oneCategory").val($('#oneCategorys option:selected').val())==""||$("#oneCategory").val($('#oneCategorys option:selected').val())==null){
             		alert("请选择一级分类");
             		return false;
             		}
 
-        		if($("#loanCategory").val($('#loanCategorys option:selected').val())==""||    		$("#loanCategory").val($('#loanCategorys option:selected').val())==null){
+        		if($("#loanCategory").val($('#loanCategorys option:selected').val())=="" || $("#loanCategory").val($('#loanCategorys option:selected').val())==null){
         			alert("请选择贷种分类");
             		return false;
                 		}
 
         		$("#oneCategory").val($('#oneCategorys option:selected').val());
-
-        		$("#loanCategory").val($('#loanCategorys option:selected').val())
+        		$("#loanCategory").val($('#loanCategorys option:selected').val());
         		
-    			if(checkForm($id("form1"))){
     			var strUrl = "/jbpm/jbpmDemoAction_toNextTaskConfig.action?taskAssgineeDto.executionId="+$id("executionId").value+"&taskAssgineeDto.beginOrg="+$("#beginOrg").val()+"&taskAssgineeDto.beginAssingee="+$("#beginAssingee").val()+"&taskAssgineeDto.definitionId=${taskAssgineeDto.definitionId}";
     			showModalCenter(strUrl, null, taskAssigneeCallBack, 700, 400, '节点选择');
-    			}
     		}else{
     			var _form = $id("form1");
     	  	  	url="/Generalprocess/generalProcessAction_handleModelOne.action";	
-    	  	  	_form.action =url
-    	  	  	if(checkForm($id("form1")))
+    	  	  	_form.action =url;
     			    ajaxsubmitO(0);
-    	  	 	}
+    	  	 }
+    	}
      }
 
  	function taskAssigneeCallBack(arg){
   	 	var _form = $id("form1");
   	 	if(arg!=""){
   	  	 	url="/Generalprocess/generalProcessAction_handleModelOne.action?"+arg;	
-  	  	    _form.action =url
+  	  	    _form.action =url;
   	        // 异步提交请求 
   	  	    ajaxsubmitO(1);
   	 	}
@@ -659,7 +680,7 @@ function initPlanCell20(){
   			  	success : function(data){
   					try {  
   					  	if(data.indexOf("success")>=0){
-      					  	alert("操作成功!")
+      					  	alert("操作成功!");
   					  		unMaskTop();
       					  if(flag==1)
       					  WEB.turnMainFrame();
@@ -836,6 +857,18 @@ function initPlanCell20(){
 						$("#oneCategory").val($('#oneCategorys option:selected').val());
 						 setLcselect($("#oneCategory").val());
 				    }
+		}
+
+		//判断利率浮动是否选择为“不变”
+		function rate_judge_fun(){
+			
+           if($("#basic_rate_float").val()=="0"){ //若浮动方向为“不变”，则无需输入比例，默认为0
+        	   $("#rate_float_scale").attr("readonly","true");
+        	   $("#rate_float_scale").val(0);
+           }else{  //其他为可输入
+        	   $("#rate_float_scale").attr("readonly","");
+        	   $("#rate_float_scale").val("");
+           }
 		}
  </script>
 </html>
