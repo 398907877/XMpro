@@ -52,4 +52,12 @@
     <property name="sqlMapClient" ref="sqlMapClient" />
 
   </bean>
+  
+   <bean id="passRateReportDao" class="com.gotop.reportjbpm.dao.impl.PassRateReportDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+   <bean id="bjErrorNumReportDao" class="com.gotop.reportjbpm.dao.impl.BjErrorNumReportDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
 </beans>

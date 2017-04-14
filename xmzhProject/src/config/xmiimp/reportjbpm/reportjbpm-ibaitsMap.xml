@@ -23,10 +23,17 @@
 
     <sqlMap resource="com/gotop/reportjbpm/map/T_LOANRATEFLOATREPORT_SqlMap.xml" />
 
+
     <sqlMap resource="com/gotop/reportjbpm/map/T_PROCESSUSEDTIMEREPORT_SqlMap.xml" />
     
     <sqlMap resource="com/gotop/reportjbpm/map/T_TIMELIMITCONDITIONREPORT_SqlMap.xml" />
     
     <sqlMap resource="com/gotop/reportjbpm/map/T_SXAPPROVALREPORT_SqlMap.xml" />
+
+    
+    <sqlMap resource="com/gotop/reportjbpm/map/T_PASSRATEREPORT_SqlMap.xml" />
+    
+    <sqlMap resource="com/gotop/reportjbpm/map/T_BJERRORNUMREPORT_SqlMap.xml" />
+
 
 </sqlMapConfig>

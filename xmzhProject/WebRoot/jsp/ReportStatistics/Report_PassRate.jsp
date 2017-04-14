@@ -10,12 +10,12 @@
 		<title>通过率统计表</title>
 	</head>
 	<body topmargin="0" leftmargin="0">
-	<h:form name="appQuery"	action="/reportjbpm/passRateReportAction_passRateReportList.action" method="post">
+	<h:form name="appQuery"	action="/reportjbpm/passRateReportAction_queryPassRateReportList.action" method="post">
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                     <td class="form_label" align="right" >报单日期：</td>
+                     <td class="form_label" align="right" >派单日期：</td>
 					<td >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="repTimeStart" name="passRateReport.repTimeStart" 
@@ -42,14 +42,14 @@
 				<tr>	
 					<td class="form_label" align="right" >一级分类：</td>
 					<td >
-			     		<h:hidden id="oneCategoryId" />  
+			     		<h:hidden id="oneCategoryId" property="passRateReport.oneCategoryId"/>  
 						<h:text id="oneCategory" property="passRateReport.oneCategory" readonly="true"  style="width:130px;"/>
 						<a href="#" onclick="showoneCategory();">选择</a>
 					</td>
 					
 					<td class="form_label" align="right" >贷种分类：</td>
 					<td colspan="3">
-						<h:hidden id="loanCategoryId"/>
+						<h:hidden id="loanCategoryId" property="passRateReport.loanCategoryId"/>
 						<h:text id="loanCategory" property="passRateReport.loanCategory" readonly="true"   style="width:130px;"/>
 						<a href="#" onclick="showloanCategory();">选择</a>
 					</td>
@@ -73,7 +73,7 @@
 			<w:panel id="panel" width="100%" title="通过率统计列表">
 				<viewlist id="e2c61865-3b56-470d-bd42-fff792fb9493">
 				<h:form name="page_form"
-					action="/reportjbpm/passRateReportAction_passRateReportList.action" method="post">
+					action="/reportjbpm/passRateReportAction_queryPassRateReportList.action" method="post">
 			 <h:hiddendata property="passRateReport"/>  
 
             <h:hidden property="page.begin"/>
@@ -111,7 +111,7 @@
 								三次以上通过率
 							</th>
 						</tr>
-                           <l:iterate property="errorStatisticList" id="id1">
+                           <l:iterate property="passRateReportList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="orgNameOne" />
@@ -220,18 +220,26 @@
     				var orgNameTwo = $id("orgNameTwo").value;
     				//二级支行 code
     				var orgCodeTwo = $id("orgCodeTwo").value;
-					//一级分类
+					//一级分类名称
     				var oneCategory = $id("oneCategory").value;
-    				//贷种分类
+    				//一级分类id
+    				var oneCategoryId = $id("oneCategoryId").value;
+    				//贷种分类名称
     				var loanCategory = $id("loanCategory").value;
+    				//带种分类id
+    				var loanCategoryId = $id("loanCategoryId").value;
     				
-    				var strUrl = "/reportjbpm/passRateReportAction_passRateReportExcel.action?";
+    				
+    				var strUrl = "/reportjbpm/passRateReportAction_queryPassRateReportListForExcel.action?";
     				if(repTimeStart != null){strUrl=strUrl+"&passRateReport.repTimeStart="+repTimeStart;}
     	    		if(repTimeEnd != null){strUrl=strUrl+"&passRateReport.repTimeEnd="+repTimeEnd;} 
     				if(orgNameOne != ""){strUrl=strUrl+"&passRateReport.orgNameOne="+orgNameOne+"&passRateReport.orgCodeOne="+orgCodeOne;}
     				if(orgNameTwo != ""){strUrl=strUrl+"&passRateReport.orgNameTwo="+orgNameTwo+"&passRateReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&passRateReport.oneCategory="+oneCategory;} 
+    				if(oneCategoryId != ""){strUrl=strUrl+"&passRateReport.oneCategoryId="+oneCategoryId;} 
     				if(loanCategory != ""){strUrl=strUrl+"&passRateReport.loanCategory="+loanCategory;} 
+    				if(loanCategoryId != ""){strUrl=strUrl+"&passRateReport.loanCategoryId="+loanCategoryId;} 
+    				
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}

@@ -111,6 +111,15 @@
         /jsp/ReportStatistics/Report_LoanRateFloatReportAction_excel.jsp
       </result>   
     </action>
+     <action name="passRateReportAction_*" class="passRateReportAction" method="{1}" >
+      <result name="QueryPassRateReportList" >
+        /jsp/ReportStatistics/Report_PassRate.jsp
+      </result>
+      <result name="QueryPassRateReportForExcel" >
+        /jsp/ReportStatistics/Report_PassRateReportAction_excel.jsp
+      </result>   
+    </action>
+
 
 		<action name="processUsedTimeReportAction_*" class="processUsedTimeReportAction"
 			method="{1}">
@@ -137,6 +146,16 @@
 			</result>
 
 		</action>
+
+   <action name="bjErrorNumReportAction_*" class="bjErrorNumReportAction" method="{1}" >
+      <result name="QueryBjErrorNumReportList" >
+        /jsp/ReportStatistics/Report_BjErrorNum.jsp
+      </result>
+      <result name="QueryBjErrorNumReportForExcel" >
+        /jsp/ReportStatistics/Report_BjErrorNumAction_excel.jsp
+      </result>   
+    </action>
+
 	</package>
 
 </struts>

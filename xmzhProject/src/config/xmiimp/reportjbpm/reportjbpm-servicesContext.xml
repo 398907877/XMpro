@@ -51,4 +51,13 @@
     <property name="sxApprovalReportDao" ref="sxApprovalReportDao" />
   </bean>
 
+    
+     <bean id="passRateReportService" class="com.gotop.reportjbpm.service.impl.PassRateReportService" >
+    <property name="passRateReportDao" ref="passRateReportDao" />
+  </bean>
+  
+   <bean id="bjErrorNumReportService" class="com.gotop.reportjbpm.service.impl.BjErrorNumReportService" >
+    <property name="bjErrorNumReportDao" ref="bjErrorNumReportDao" />
+  </bean>
+
 </beans>
