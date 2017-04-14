@@ -16,4 +16,12 @@ public interface IErrorStatisticDao {
 
 	List<ErrorStatistic> querytaskNameList();
 
+
+	List<ErrorStatistic> queryErrorStatisticSummary(Map<String, Object> map,
+			Page page);
+
+
+	List<ErrorStatistic> queryErrorStatisticSummaryForExcel(
+			Map<String, Object> map);
+
 }

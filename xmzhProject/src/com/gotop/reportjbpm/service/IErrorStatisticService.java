@@ -16,4 +16,12 @@ public interface IErrorStatisticService {
 
 	List<ErrorStatistic> queryErrorStatisticExcel(ErrorStatistic errorStatistic);
 
+
+	List<ErrorStatistic> queryErrorStatisticSummary(
+			ErrorStatistic errorStatistic, Page page);
+
+
+	List<ErrorStatistic> queryErrorStatisticSummaryForExcel(
+			ErrorStatistic errorStatistic);
+
 }

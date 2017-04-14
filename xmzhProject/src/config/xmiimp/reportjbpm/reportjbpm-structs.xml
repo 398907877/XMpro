@@ -23,7 +23,9 @@
       <result name="querytaskNameList" >
         /jsp/ReportStatistics/Report_taskNameList.jsp
       </result>
-      
+      <result name="ErrorStatisticSummaryListExcel" >
+        /jsp/ReportStatistics/Report_ErrorConditionSummary_excel.jsp
+      </result>
     </action>
 
      <action name="reportRefusalrateAction_*" class="reportRefusalrateAction" method="{1}" >

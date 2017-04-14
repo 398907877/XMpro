@@ -15,24 +15,26 @@
 <table width="98%" border="1" cellspacing="1" cellpadding="1">
 	<tr height="34">
 		<th height="34" width="100" align="center" class="form_label">一级支行</th>
+		<th height="34" width="100" align="center" class="form_label">二级支行</th>
 		<th height="34" width="100" align="center" class="form_label">一级分类</th>
 		<th height="34" width="100" align="center" class="form_label">贷种</th>
 		<th height="34" width="100" align="center" class="form_label">客户名称</th>
 		<th height="34" width="200" align="center" class="form_label">主调信贷员</th>
 		<th height="34" width="100" align="center" class="form_label">辅调信贷员</th>
 		<th height="34" width="100" align="center" class="form_label">营业主管</th>
-		<th height="34" width="100" align="center" class="form_label">差错情况</th>
-		<th height="34" width="100" align="center" class="form_label">扣罚金额</th>
-		<th height="34" width="100" align="center" class="form_label">差错次数</th>
 		<th height="34" width="100" align="center" class="form_label">差错环节</th>
 		<th height="34" width="100" align="center" class="form_label">提出差错人</th>
-		<th height="34" width="100" align="center" class="form_label">提出差错时间</th>
+		<th height="34" width="100" align="center" class="form_label">差错次数</th>
+		<th height="34" width="100" align="center" class="form_label">扣罚金额</th>
 		
 	</tr>
 	<l:iterate property="errorStatisticList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="orgNameOne"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			    	<b:write iterateId="id1" property="orgNameTwo"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="oneCategory"/>
@@ -52,23 +54,17 @@
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="yxzg"/>
 			  </td>
-			    <td style="vnd.ms-excel.numberformat:@">
-			   <b:write iterateId="id1" property="mistakeContent"/>
-			  </td>
-			   <td>
-			   <b:write iterateId="id1" property="punishBal"/>
-			  </td>
-			   <td>
-			    <b:write iterateId="id1" property="mistakeNumber"/>
-			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="taskName"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="empName"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="addTime"/>
+			  <td>
+			    <b:write iterateId="id1" property="mistakeNumber"/>
+			  </td>
+			   <td>
+			   <b:write iterateId="id1" property="punishBal"/>
 			  </td>
 			</tr>
 			</l:iterate>

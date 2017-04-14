@@ -33,4 +33,22 @@ public class ErrorStatisticDao extends SqlMapClientDao implements IErrorStatisti
 		return queryForList("T_ERRORSTATISTIC_SqlMap.querytaskNameList", new HashMap());
 	}
 
+
+
+	@Override
+	public List<ErrorStatistic> queryErrorStatisticSummary(
+			Map<String, Object> map, Page page) {
+		
+		return queryForList("T_ERRORSTATISTIC_SqlMap.queryErrorStatisticSummary",map,page);
+	}
+
+
+
+	@Override
+	public List<ErrorStatistic> queryErrorStatisticSummaryForExcel(
+			Map<String, Object> map) {
+		
+		return queryForList("T_ERRORSTATISTIC_SqlMap.queryErrorStatisticSummary",map);
+	}
+
 }

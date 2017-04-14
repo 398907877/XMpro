@@ -10,10 +10,21 @@ public class ErrorStatistic implements Serializable{
 	private String endTime;
 //	机构名称
 	private String nextOrgName;
-//	贷种
-	private String loancategory;
+//	一级分类 名称
+	private String oneCategory;
+	//	贷种分类 名称
+	private String loanCategory;
+//	一级支行 机构号
+	private String orgCodeOne;
+//	一级支行 机构名
+	private String orgNameOne;
+//	二级支行 机构号
+	private String orgCodeTwo;
+//	二级支行 机构名
+	private String orgNameTwo;
+
 //	主调信贷员
-	private String nextOprName;
+	private String creatorName;
 //	辅调信贷员
 	private String fdxdy;
 //	营业主管
@@ -53,18 +64,7 @@ public class ErrorStatistic implements Serializable{
 	public void setNextOrgName(String nextOrgName) {
 		this.nextOrgName = nextOrgName;
 	}
-	public String getLoancategory() {
-		return loancategory;
-	}
-	public void setLoancategory(String loancategory) {
-		this.loancategory = loancategory;
-	}
-	public String getNextOprName() {
-		return nextOprName;
-	}
-	public void setNextOprName(String nextOprName) {
-		this.nextOprName = nextOprName;
-	}
+	
 	public String getFdxdy() {
 		return fdxdy;
 	}
@@ -126,9 +126,57 @@ public class ErrorStatistic implements Serializable{
 		this.reportTime = reportTime;
 	}
 	
+	public String getOneCategory() {
+		return oneCategory;
+	}
+	public void setOneCategory(String oneCategory) {
+		this.oneCategory = oneCategory;
+	}
+	public String getLoanCategory() {
+		return loanCategory;
+	}
+	public void setLoanCategory(String loanCategory) {
+		this.loanCategory = loanCategory;
+	}
+	public String getOrgCodeOne() {
+		return orgCodeOne;
+	}
+	public void setOrgCodeOne(String orgCodeOne) {
+		this.orgCodeOne = orgCodeOne;
+	}
+	public String getOrgNameOne() {
+		return orgNameOne;
+	}
+	public void setOrgNameOne(String orgNameOne) {
+		this.orgNameOne = orgNameOne;
+	}
+	public String getOrgCodeTwo() {
+		return orgCodeTwo;
+	}
+	public void setOrgCodeTwo(String orgCodeTwo) {
+		this.orgCodeTwo = orgCodeTwo;
+	}
+	public String getOrgNameTwo() {
+		return orgNameTwo;
+	}
+	public void setOrgNameTwo(String orgNameTwo) {
+		this.orgNameTwo = orgNameTwo;
+	}
+	public String getCreatorName() {
+		return creatorName;
+	}
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
 	
-	
-	
+	private Integer count;
+
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	
 
 }

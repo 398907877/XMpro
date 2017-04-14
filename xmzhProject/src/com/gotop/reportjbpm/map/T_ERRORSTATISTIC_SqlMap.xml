@@ -3,9 +3,10 @@
 <sqlMap namespace="T_ERRORSTATISTIC_SqlMap">
  <resultMap id="ErrorStatistic" class="com.gotop.reportjbpm.model.ErrorStatistic" >
     <!--Bean方式返回全表-->
-    <result column="NEXT_ORG_NAME" property="nextOrgName" jdbcType="VARCHAR" />
-    <result column="NEXT_OPR_NAME" property="nextOprName" jdbcType="VARCHAR" />
-    <result column="LOANCATEGORY" property="loancategory" jdbcType="VARCHAR" />
+    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
+    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
     <result column="FDXDY" property="fdxdy" jdbcType="VARCHAR" />
     <result column="YXZG" property="yxzg" jdbcType="VARCHAR" />
     <result column="MISTAKE_CONTENT" property="mistakeContent" jdbcType="VARCHAR" />
@@ -19,6 +20,21 @@
    <resultMap id="ErrorStatistic1" class="com.gotop.reportjbpm.model.ErrorStatistic" >
     <!--Bean方式返回全表-->
     <result column="TASKNAME" property="taskName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ErrorStatisticSummary"  class="com.gotop.reportjbpm.model.ErrorStatistic" >
+    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
+    <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
+    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="FDXDY" property="fdxdy" jdbcType="VARCHAR" />
+    <result column="YXZG" property="yxzg" jdbcType="VARCHAR" />
+    <result column="TASKNAME" property="taskName" jdbcType="VARCHAR" />
+    <result column="EMPNAME" property="empName" jdbcType="VARCHAR" />
+    <result column="PUNISH_BAL" property="punishBal" jdbcType="VARCHAR" />
+    <result column="MISTAKE_NUMBER" property="mistakeNumber" jdbcType="VARCHAR" />
   </resultMap>
   
   	<select id="querytaskNameList" parameterClass="java.util.HashMap" resultMap="ErrorStatistic1">
@@ -37,8 +53,11 @@
 	<!-- 查询差错情况统计 -->
 	<select id="queryErrorStatistic" parameterClass="java.util.HashMap" resultMap="ErrorStatistic">
 	SELECT *
-  FROM (select G.ORGNAME AS NEXT_ORG_NAME,
+  FROM (select G.ORGNAME AS ORGNAMEONE,
                E.Flow_Id,
+               E.ORGCODEONE,
+               E.ORGCODETWO,
+               E.ONECATEGORY,
                E.LOANCATEGORY,
                E.FDXDY,
                E.YXZG,
@@ -58,7 +77,7 @@
            and t.flow_id = m.flow_id
            and p.empid = t.empid
            AND E.ORGCODEONE = G.ORGCODE) A1
-  LEFT JOIN (select P.EMPNAME as NEXT_OPR_NAME, E.FLOW_ID
+  LEFT JOIN (select P.EMPNAME as CREATOR_NAME, E.FLOW_ID
                FROM OM_EMPLOYEE P, T_GENERALPROCESS_MODELONE E
               where E.CREATOR = P.EMPID) A2
     on A1.FLOW_ID = A2.FLOW_ID where 1=1
@@ -78,7 +97,121 @@
       <isNotNull prepend="and" property="endTime" >
        <![CDATA[A1.REPORTTIME<=#endTime#]]>
       </isNotNull>
+      
+      <isNotNull prepend="and" property="yxzg" >
+        A1.YXZG like '%'||'$yxzg$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="creatorName" >
+        A2.CREATOR_NAME like  '%'||'$creatorName$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="oneCategory" >
+        A1.ONECATEGORY in($oneCategory$)
+      </isNotNull>
+      <isNotNull prepend="and" property="loanCategory" >
+        A1.LOANCATEGORY in($loanCategory$)
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+        A1.ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+        A1.ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
     ORDER BY  REPORTTIME, LOANCATEGORY,CUST_NAME,ADD_TIME ASC
+	</select>
+	
+	<select id="queryErrorStatisticSummary"  parameterClass="java.util.HashMap" resultMap="ErrorStatisticSummary">
+	select ORGNAMEONE,
+       ORGNAMETWO,
+       ONECATEGORY,
+       LOANCATEGORY,
+       CUST_NAME,
+       CREATOR_NAME,
+       FDXDY,
+       YXZG,
+       TASKNAME,
+       EMPNAME,
+       count(*) as MISTAKE_NUMBER,
+       sum(PUNISH_BAL) as PUNISH_BAL
+  from (select TT.*, O.ORGNAME as ORGNAMETWO
+          from ( SELECT *
+                  FROM (select G.ORGNAME AS ORGNAMEONE,
+                                E.Flow_Id,
+                                E.ORGCODEONE,
+                                E.ORGCODETWO,
+                                E.ONECATEGORY,
+                                E.LOANCATEGORY,
+                                E.FDXDY,
+                                E.YXZG,
+                                T.MISTAKE_CONTENT,
+                                T.PUNISH_BAL,
+                                T.TASKNAME,
+                                M.REPORTTIME,
+                                E.CUST_NAME,
+                                P.EMPNAME,
+                                substr(T.ADD_TIME, 0, 4) || '-' ||
+                                substr(T.ADD_TIME, 5, 2) || '-' ||
+                                substr(T.ADD_TIME, 7, 2) || ' ' ||
+                                substr(T.ADD_TIME, 9, 2) || ':' ||
+                                substr(T.ADD_TIME, 11, 2) || ':' ||
+                                substr(T.ADD_TIME, 5, 2) ADD_TIME
+                           FROM T_GENERALPROCESS_MODELONE   E,
+                                T_GENERALPROCESS_MISTAKE    T,
+                                T_GENERALPROCESS_MODELTHREE M,
+                                OM_ORGANIZATION             G,
+                                OM_EMPLOYEE                 P
+                          where e.flow_id = t.flow_id
+                            and t.flow_id = m.flow_id
+                            and p.empid = t.empid
+                            AND E.ORGCODEONE = G.ORGCODE) A1
+                  LEFT JOIN (select P.EMPNAME as CREATOR_NAME, E.FLOW_ID
+                               FROM OM_EMPLOYEE P, T_GENERALPROCESS_MODELONE E
+                              where E.CREATOR = P.EMPID) A2
+                    on A1.FLOW_ID = A2.FLOW_ID 
+                    where 1 = 1
+                    
+      <isNotNull prepend="and" property="custName" >
+        A1.CUST_NAME   like '%$custName$%'
+      </isNotNull>
+      <isNotNull prepend="and" property="taskName" >
+        A1.TASKNAME in($taskName$)
+      </isNotNull>
+      <isNotNull prepend="and" property="startTime" >
+        <![CDATA[A1.REPORTTIME>=#startTime#]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="endTime" >
+       <![CDATA[A1.REPORTTIME<=#endTime#]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="yxzg" >
+        A1.YXZG like '%'||'$yxzg$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="creatorName" >
+        A2.CREATOR_NAME like  '%'||'$creatorName$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="oneCategory" >
+        A1.ONECATEGORY in($oneCategory$)
+      </isNotNull>
+      <isNotNull prepend="and" property="loanCategory" >
+        A1.LOANCATEGORY in($loanCategory$)
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeOne" >
+        A1.ORGCODEONE = '$orgCodeOne$'
+      </isNotNull>
+      <isNotNull prepend="and" property="orgCodeTwo" >
+        A1.ORGCODETWO = '$orgCodeTwo$'
+      </isNotNull>
+                    ) TT
+          left join OM_ORGANIZATION O
+            on TT.ORGCODETWO = O.ORGCODE)
+ group by ORGNAMEONE,
+          ORGNAMETWO,
+          ONECATEGORY,
+          LOANCATEGORY,
+          CUST_NAME,
+          CREATOR_NAME,
+          FDXDY,
+          YXZG,
+          TASKNAME,
+          EMPNAME
 	</select>
 
 </sqlMap>
