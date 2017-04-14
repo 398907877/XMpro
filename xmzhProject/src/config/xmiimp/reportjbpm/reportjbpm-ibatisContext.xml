@@ -37,7 +37,7 @@
 
    <bean id="loanRateFloatReportDao" class="com.gotop.reportjbpm.dao.impl.LoanRateFloatReportDao" >
    <property name="sqlMapClient" ref="sqlMapClient" />
-
+   </bean>
     <bean id="processUsedTimeReportDao" class="com.gotop.reportjbpm.dao.impl.ProcessUsedTimeReportDao" >
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
