@@ -60,6 +60,7 @@ FROM
         SELECT
           EXECUTION_,
           ACTIVITY_NAME_,
+          END_,
           OPERATORNAME,
           ORGCODEONE,
           ORGCODETWO,
