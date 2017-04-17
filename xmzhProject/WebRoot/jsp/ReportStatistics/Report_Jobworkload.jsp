@@ -15,14 +15,23 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                                        <td class="form_label" align="right" >报单日期：</td>
+                     <%-- <td class="form_label" align="right" >报单日期：</td>
 					<td colspan="1" >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeStrat" name="jobWorkload.appTimeStrat" 
 					property="jobWorkload.appTimeStrat" /> 
 					到
 					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeEnd" name="jobWorkload.appTimeEnd" 
-					property="jobWorkload.appTimeEnd" /></td>
+					property="jobWorkload.appTimeEnd" /></td> --%>
+					
+					<td class="form_label" align="right" >第一次派单时间：</td>
+					<td colspan="1" >
+					从
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="pdtimeOne_start" name="jobWorkload.pdtimeOne_start" 
+					property="jobWorkload.pdtimeOne_start" /> 
+					到
+					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="pdtimeOne_end" name="jobWorkload.pdtimeOne_end" 
+					property="jobWorkload.pdtimeOne_end" /></td>
 					
 					<td class="form_label" align="right" >流程节点：</td>
 					<td >
@@ -65,7 +74,7 @@
 		    
 						<tr>					
 							<th nowrap="nowrap" >
-								时    间
+								第一次派单时间
 							</th>
 							<th nowrap="nowrap">
 								一级分类
@@ -99,8 +108,11 @@
 						<w:radioGroup id="group1">
                            <l:iterate property="jobWorkloadList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
-							 <td nowrap="nowrap"> 
+							 <%-- <td nowrap="nowrap"> 
 							     ${starttime}      ${endtime} 
+								</td> --%>
+								<td nowrap="nowrap"> 
+							     <b:write iterateId="id1" property="pdtimeOne" />
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="oneCategory" />
@@ -172,20 +184,28 @@
 		
 		//清空
 		function clears(){
-			//清空JSP页面时间控件显示的值
+			/* //清空JSP页面时间控件显示的值
 			$id("appTimeStrat_input").value="";
 			$id("appTimeEnd_input").value="";
 
 			//清空传入后台的时间控件的值
 			$name("jobWorkload.appTimeStrat").value = "";
-			$name("jobWorkload.appTimeEnd").value = "";
+			$name("jobWorkload.appTimeEnd").value = ""; */
+
+			//清空JSP页面时间控件显示的值
+			$id("pdtimeOne_start_input").value="";
+			$id("pdtimeOne_end_input").value="";
+
+			//清空传入后台的时间控件的值
+			$name("jobWorkload.pdtimeOne_start").value = "";
+			$name("jobWorkload.pdtimeOne_end").value = ""; 
 
 			$id("processNodeName").value="";
 			$id("personName").value="";
 
 		}
                 function search(){
-       	   		 var appTimeStrat = $id("appTimeStrat").value;
+       	   		 /* var appTimeStrat = $id("appTimeStrat").value;
     		     var appTimeEnd = $id("appTimeEnd").value;  
        	         if((appTimeStrat!=null && appTimeStrat!="") && (appTimeEnd!=null && appTimeEnd!="")){
     	             
@@ -197,8 +217,20 @@
     	                 // $id("appTimeEnd_input").value="";
     	                  return;
     	                  }
-    	         }
-
+    	         } */
+                 var pdtimeOne_start = $id("pdtimeOne_start").value;
+       		     var pdtimeOne_end = $id("pdtimeOne_end").value;  
+          	     if((pdtimeOne_start!=null && pdtimeOne_start!="") && (pdtimeOne_end!=null && pdtimeOne_end!="")){
+       	             
+       	    	     var star=pdtimeOne_start.replaceAll("-","");
+       	    	     var end=pdtimeOne_end.replaceAll("-","");
+       	              if(star>end){
+       	                  alert("开始时间大于结束时间,请重新输入！");
+       	                 // $id("appTimeEnd_input").value="";
+       	                 // $id("appTimeEnd_input").value="";
+       	                  return;
+       	                  }
+       	         } 
                     
         			var frm = $name("appQuery");
                     frm.submit();
@@ -206,20 +238,39 @@
                     return;
 			}
                 function downExl() {
-     				var appTimeStrat = $id("appTimeStrat").value;
-    				var appTimeEnd = $id("appTimeEnd").value;
+     				/* var appTimeStrat = $id("appTimeStrat").value;
+    				var appTimeEnd = $id("appTimeEnd").value; */
+    				var pdtimeOne_start = $id("pdtimeOne_start").value;
+          		    var pdtimeOne_end = $id("pdtimeOne_end").value; 
+          		  if((pdtimeOne_start!=null && pdtimeOne_start!="") && (pdtimeOne_end!=null && pdtimeOne_end!="")){
+        	             
+        	    	     var star=pdtimeOne_start.replaceAll("-","");
+        	    	     var end=pdtimeOne_end.replaceAll("-","");
+        	              if(star>end){
+        	                  alert("开始时间大于结束时间,请重新输入！");
+        	                 // $id("appTimeEnd_input").value="";
+        	                 // $id("appTimeEnd_input").value="";
+        	                  return;
+        	                  }
+        	         } 
     				var processNodeName = $id("processNodeName").value;
     				var personName = $id("personName").value;
     			//	var loanCategory = $id("loanCategory").value;
     				
     				var url = "/reportjbpm/jobWorkloadAction_jobWorkloadExcel.action?";
 
-                     if(appTimeStrat!=null){
+                    /*  if(appTimeStrat!=null){
                     	 url = url+"&jobWorkload.appTimeStrat="+appTimeStrat;
                          }
     				if(appTimeEnd!=null){
     					url = url+"&jobWorkload.appTimeEnd="+appTimeEnd;
-        				}	
+        				} */
+    				 if(pdtimeOne_start!=null){
+                    	 url = url+"&jobWorkload.pdtimeOne_start="+pdtimeOne_start;
+                         }
+    				if(pdtimeOne_end!=null){
+    					url = url+"&jobWorkload.pdtimeOne_end="+pdtimeOne_end;
+        				} 	
     	     		url = url+"&jobWorkload.processNodeName="+processNodeName+"&jobWorkload.personName="+personName;
     	     		//url = url+"&rateofreturnReport.loanCategory="+loanCategory;
     				window.location.href=url; 

@@ -5,7 +5,7 @@
  <resultMap id="JobWorkload" class="com.gotop.reportjbpm.model.JobWorkload" >
  
      <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
-    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" /> 
     <result column="ACTIVITY_NAME_" property="processNodeName" jdbcType="VARCHAR" />
     <result column="OPERATORNAME" property="personName" jdbcType="VARCHAR" />
     <result column="businessNumberOne" property="businessNumberOne" jdbcType="VARCHAR" />
@@ -13,7 +13,7 @@
     <result column="businessNumberThree" property="businessNumberThree" jdbcType="VARCHAR" />
     <result column="businessNumberFour" property="businessNumberFour" jdbcType="VARCHAR" />
     <result column="businessNumberFive" property="businessNumberFive" jdbcType="VARCHAR" />
-
+    <result column="PDTIME_ONE" property="pdtimeOne" jdbcType="VARCHAR" />
   </resultMap>
 
  <resultMap id="JobWorkload1" class="com.gotop.reportjbpm.model.JobWorkload" >
@@ -34,13 +34,13 @@ SELECT DISTINCT ACTIVITY_NAME
   <!-- 岗位工作量统计 -->
   	<select id="jobWorkloadtList" parameterClass="java.util.HashMap" resultMap="JobWorkload">
 SELECT 
-ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME,
+ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, PDTIME_ONE,
 sum(businessNumberOne) businessNumberOne,sum(businessNumberTwo) businessNumberTwo,sum(businessNumberThree) businessNumberThree,
 sum(businessNumberFour) businessNumberFour,sum(businessNumberFive)businessNumberFive
 from 
 (
 
-SELECT  ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, 
+SELECT  ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, PDTIME_ONE,
 CASE WHEN cnt = 1 THEN  1 ELSE  0 END businessNumberOne,  
 CASE WHEN cnt = 2 THEN  1 ELSE  0 END businessNumberTwo,  
 CASE WHEN cnt = 3 THEN  1 ELSE  0 END businessNumberThree,  
@@ -54,7 +54,8 @@ FROM
 			LOANCATEGORY,
 			ACTIVITY_NAME_,
 			OPERATORNAME,
-			COUNT (ACTIVITY_NAME_) cnt
+			COUNT (ACTIVITY_NAME_) cnt,
+			PDTIME_ONE
 		FROM
 			(
 				SELECT
@@ -64,17 +65,19 @@ FROM
 					OPERATORNAME,
 					ONECATEGORY,
 					LOANCATEGORY,
-					REPORTTIME
+					REPORTTIME,
+					pdtime_one
 				FROM
-					(
-						SELECT
+					(select t5.*, t6.pdtime_one
+						from (SELECT
 							tt.EXECUTION_,
 							tt.ACTIVITY_NAME_,
 							tt.END_,
 							t2.OPERATORNAME,
 							t3.ONECATEGORY,
 							t3.LOANCATEGORY,
-							t4.REPORTTIME
+							t4.REPORTTIME,
+							tt.dbid_
 						FROM
 							JBPM4_HIST_ACTINST tt
 						LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
@@ -97,14 +100,47 @@ FROM
 											BUSINESS_TYPE = '88'
 									)
 							)
+						) t5	
+						left join ( /* 计算第一次派单时间，只有上个节点叫'受理调查'下个节点叫'审查一'的'收单派单节点'，取第一条记录的结束时间=第一次派单时间 */
+										select dbid_, execution_,
+										case when z3.RN=1 and  z3.PRE_TASK_NAME = '受理调查' and z3.NEXT_TASK_NAME = '审查一' then 
+										  to_char(z3.end_, 'yyyy/mm/dd hh24:mi:ss')
+										   else null end as pdtime_one
+										 from 
+										(select distinct z2.dbid_, z2.execution_, z2.activity_name_, z2.pre_task_name, z2.next_task_name, z2.start_, z2.end_,
+										 ROW_NUMBER() OVER(PARTITION BY z2.execution_,z2.pre_task_name,z2.next_task_name ORDER BY z2.START_) RN 
+										from (select z1.*, j2.activity_name_ as pre_task_name, j3.activity_name_ as next_task_name from 
+										 (SELECT  j1.dbid_, j1.execution_, j1.activity_name_, j1.htask_, j1.start_, j1.end_, p1.pre_task_id , p2.next_task_id  
+										   FROM JBPM4_HIST_ACTINST      j1,       
+										        T_PROCESS_TASK_ASSIGNEE p1,
+										        T_PROCESS_TASK_ASSIGNEE p2
+										  where j1.activity_name_ = '收单派单'
+										  and j1.execution_ = p1.execution_id
+										  and j1.htask_ = p1.next_task_id
+										  and j1.execution_ = p2.execution_id
+										  and j1.htask_ = p2.pre_task_id ) z1, 
+										  JBPM4_HIST_ACTINST j2, 
+										  JBPM4_HIST_ACTINST j3
+										  where z1.execution_ = j2.execution_ 
+										  and z1.pre_task_id = j2.htask_
+										  and z1.execution_ = j3.execution_ 
+										  and z1.next_task_id = j3.htask_) z2 order by z2.execution_, z2.start_
+										 )z3 
+									) t6 on t5.dbid_ = t6.dbid_
 					)
 				WHERE
 					end_ IS NOT NULL
-						    <isNotNull prepend="and" property="appTimeStrat" >
+						  <!--   <isNotNull prepend="and" property="appTimeStrat" >
                                         <![CDATA[REPORTTIME  >= #appTimeStrat#]]>
                               </isNotNull>
                              <isNotNull prepend="and" property="appTimeEnd" >                                    
                                         <![CDATA[REPORTTIME  <=(#appTimeEnd#)]]>
+                              </isNotNull> -->
+                              <isNotNull prepend="and" property="pdtimeOne_start" >
+                                        <![CDATA[pdtime_one  >= to_char(to_date('$pdtimeOne_start$', 'yyyy/mm/dd hh24:mi:ss'), 'yyyy/mm/dd hh24:mi:ss' )  ]]>
+                              </isNotNull>
+                             <isNotNull prepend="and" property="pdtimeOne_end" >                                    
+                                        <![CDATA[pdtime_one  <= to_char(to_date('$pdtimeOne_end$', 'yyyy/mm/dd hh24:mi:ss'), 'yyyy/mm/dd hh24:mi:ss' )  ]]>
                               </isNotNull>
 							<isNotNull prepend="and" property="processNodeName" >
                                         ACTIVITY_NAME_   in  ($processNodeName$)
@@ -118,11 +154,12 @@ FROM
 			ONECATEGORY,
 			LOANCATEGORY,
 			ACTIVITY_NAME_,
-			OPERATORNAME
+			OPERATORNAME,
+			PDTIME_ONE
 )
 )
 GROUP BY
-ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME
+ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME,PDTIME_ONE
 
   
 	</select>

@@ -48,7 +48,7 @@ public class JobWorkloadService implements IJobWorkloadService{
 		
 		if(jobWorkload!=null){
 			
-			if(!"".equals(jobWorkload.getAppTimeStrat())  &&  jobWorkload.getAppTimeStrat()!=null){
+			/*if(!"".equals(jobWorkload.getAppTimeStrat())  &&  jobWorkload.getAppTimeStrat()!=null){
 				
 				String appTimeStrat=jobWorkload.getAppTimeStrat();
 				map.put("appTimeStrat", appTimeStrat);
@@ -57,6 +57,17 @@ public class JobWorkloadService implements IJobWorkloadService{
 				
 				String appTimeEnd=jobWorkload.getAppTimeEnd();
 				map.put("appTimeEnd", appTimeEnd);
+			}*/
+			
+			if(!"".equals(jobWorkload.getPdtimeOne_start())  &&  jobWorkload.getPdtimeOne_start()!=null){
+				
+				String pdtimeOne_start=jobWorkload.getPdtimeOne_start();
+				map.put("pdtimeOne_start", pdtimeOne_start);
+			}
+			if(!"".equals(jobWorkload.getPdtimeOne_end())  && jobWorkload.getPdtimeOne_end()!=null){
+				
+				String pdtimeOne_end=jobWorkload.getPdtimeOne_end();
+				map.put("pdtimeOne_end", pdtimeOne_end);
 			}
 			
 			if(!"".equals(jobWorkload.getProcessNodeName())  &&  jobWorkload.getProcessNodeName()!=null){
@@ -91,7 +102,7 @@ public class JobWorkloadService implements IJobWorkloadService{
 		
 		if(jobWorkload!=null){
 			
-			if(!"".equals(jobWorkload.getAppTimeStrat())  &&  jobWorkload.getAppTimeStrat()!=null){
+			/*if(!"".equals(jobWorkload.getAppTimeStrat())  &&  jobWorkload.getAppTimeStrat()!=null){
 				
 				String appTimeStrat=jobWorkload.getAppTimeStrat();
 				map.put("appTimeStrat", appTimeStrat);
@@ -100,7 +111,19 @@ public class JobWorkloadService implements IJobWorkloadService{
 				
 				String appTimeEnd=jobWorkload.getAppTimeEnd();
 				map.put("appTimeEnd", appTimeEnd);
+			}*/
+			
+			if(!"".equals(jobWorkload.getPdtimeOne_start())  &&  jobWorkload.getPdtimeOne_start()!=null){
+				
+				String pdtimeOne_start=jobWorkload.getPdtimeOne_start();
+				map.put("pdtimeOne_start", pdtimeOne_start);
 			}
+			if(!"".equals(jobWorkload.getPdtimeOne_end())  && jobWorkload.getPdtimeOne_end()!=null){
+				
+				String pdtimeOne_end=jobWorkload.getPdtimeOne_end();
+				map.put("pdtimeOne_end", pdtimeOne_end);
+			}
+			
 			if(!"".equals(jobWorkload.getProcessNodeName())  &&  jobWorkload.getProcessNodeName()!=null){
 				
 				String[] processNodeNames=jobWorkload.getProcessNodeName().split(",");

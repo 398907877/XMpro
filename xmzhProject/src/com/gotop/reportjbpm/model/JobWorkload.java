@@ -14,6 +14,15 @@ public class JobWorkload {
 	private String appTimeStrat;
 	//结束时间
 	private String appTimeEnd;
+	
+	//第一次派单时间 开始
+	private String pdtimeOne_start;
+	//第一次派单时间 结束
+	private String pdtimeOne_end;
+	
+	//第一次派单时间
+	private String pdtimeOne;
+		
    //一级分类
 	private String oneCategory;
 	//贷种分类
@@ -97,6 +106,24 @@ public class JobWorkload {
 	}
 	public void setBusinessNumberFive(String businessNumberFive) {
 		this.businessNumberFive = businessNumberFive;
+	}
+	public String getPdtimeOne_start() {
+		return pdtimeOne_start;
+	}
+	public void setPdtimeOne_start(String pdtimeOne_start) {
+		this.pdtimeOne_start = pdtimeOne_start;
+	}
+	public String getPdtimeOne_end() {
+		return pdtimeOne_end;
+	}
+	public void setPdtimeOne_end(String pdtimeOne_end) {
+		this.pdtimeOne_end = pdtimeOne_end;
+	}
+	public String getPdtimeOne() {
+		return pdtimeOne;
+	}
+	public void setPdtimeOne(String pdtimeOne) {
+		this.pdtimeOne = pdtimeOne;
 	}
 	
 	

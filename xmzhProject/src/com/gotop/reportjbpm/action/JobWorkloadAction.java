@@ -57,8 +57,10 @@ public class JobWorkloadAction extends BaseAction{
 		jobWorkloadList=jobWorkloadService.jobWorkloadList(jobWorkload, this.getPage());
 		
 		if(jobWorkload!=null){
-			starttime=jobWorkload.getAppTimeStrat();
-			endtime=jobWorkload.getAppTimeEnd();	
+			/*starttime=jobWorkload.getAppTimeStrat();
+			endtime=jobWorkload.getAppTimeEnd();	*/
+			starttime=jobWorkload.getPdtimeOne_start();
+			endtime=jobWorkload.getPdtimeOne_end();	
 		}
 		
 		this.setJobWorkloadList(jobWorkloadList);	
@@ -78,8 +80,10 @@ public class JobWorkloadAction extends BaseAction{
 		jobWorkloadList=jobWorkloadService.jobWorkloadListExcel(jobWorkload);
 		
 		if(jobWorkload!=null){
-			starttime=jobWorkload.getAppTimeStrat();
-			endtime=jobWorkload.getAppTimeEnd();	
+			/*starttime=jobWorkload.getAppTimeStrat();
+			endtime=jobWorkload.getAppTimeEnd();*/	
+			starttime=jobWorkload.getPdtimeOne_start();
+			endtime=jobWorkload.getPdtimeOne_end();	
 		}
 		this.setJobWorkloadList(jobWorkloadList);
 		return "jobWorkloadExcel";
