@@ -55,7 +55,7 @@
     <property name="loanRateFloatReport" ref="loanRateFloatReport" />
   </bean>
 
-<<<<<<< Updated upstream
+
 
  <bean name="processUsedTimeReport" id="processUsedTimeReport" class="com.gotop.reportjbpm.model.ProcessUsedTimeReport" singleton="false" ></bean> 
   <bean name="processUsedTimeReportAction" id="processUsedTimeReportAction" class="com.gotop.reportjbpm.action.ProcessUsedTimeReportAction" singleton="false" >

@@ -15,8 +15,8 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                    <td class="form_label" align="right" >审批时间：</td>
-					<td colspan="1" >
+                    <td class="form_label" align="right" width="20%">审批时间：</td>
+					<td colspan="1" width="30%">
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeStrat" name="rateofreturnReport.appTimeStrat" 
 					property="rateofreturnReport.appTimeStrat" /> 
@@ -24,6 +24,10 @@
 					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="appTimeEnd" name="rateofreturnReport.appTimeEnd" 
 					property="rateofreturnReport.appTimeEnd" /></td>				
 
+
+
+				
+					
 					<td class="form_label" align="right" >一级分类：</td>
 					<td >
 			     		<h:hidden id="oneCategoryId" />  
@@ -38,23 +42,6 @@
 						<a href="#" onclick="showloanCategory();">选择</a>
 					</td>
 				</tr>
-				
-				<tr>
-					<td class="form_label" align="right" >一级支行：</td>
-					<td>
-					    <h:text id="orgNameOne" property="rateofreturnReport.orgNameOne" readonly="true"  style="width:130px;"/>
-						<h:hidden id="orgCodeOne" property="rateofreturnReport.orgCodeOne" />
-					    <a href="#" onclick="open_slzhej_fun(1)">选择</a>
-		            </td>	
-		            
-		            <td class="form_label" align="right" >二级支行：</td>
-					<td>
-					    <h:text id="orgNameTwo" property="rateofreturnReport.orgNameTwo" readonly="true"  style="width:130px;"/>
-						<h:hidden id="orgCodeTwo" property="rateofreturnReport.orgCodeTwo" />
-					    <a href="#" onclick="open_slzhej_fun(2)">选择</a>
-		            </td>	
-				</tr>
-				
 				<tr class="form_bottom">
 						<td colspan="6" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
@@ -209,15 +196,10 @@
 			//清空JSP页面时间控件显示的值
 			$id("appTimeStrat_input").value="";
 			$id("appTimeEnd_input").value="";
-			
 			$id("oneCategory").value="";
 			$id("oneCategoryId").value="";
 			$id("loanCategory").value="";
 			$id("loanCategoryId").value="";
-			$id("orgCodeOne").value="";
-			$id("orgNameOne").value="";
-			$id("orgCodeTwo").value="";
-			$id("orgNameTwo").value="";
 
 			//清空传入后台的时间控件的值
 			$name("rateofreturnReport.appTimeStrat").value = "";
@@ -246,8 +228,6 @@
 				var appTimeEnd = $id("appTimeEnd").value;
 				var oneCategory = $id("oneCategory").value;
 				var loanCategory = $id("loanCategory").value;
-				var orgCodeOne = $id("orgCodeOne").value;
-				var orgCodeTwo = $id("orgCodeTwo").value;
 				
 				var url = "/reportjbpm/rateofreturnReportAction_exportExcel.action?";
 				if(appTimeStrat!=null){
@@ -256,7 +236,8 @@
 				if(appTimeEnd!=null){
 	     		url = url+"&rateofreturnReport.appTimeEnd="+appTimeEnd;
 				}
-	     		url = url+"&rateofreturnReport.oneCategory="+oneCategory+"&rateofreturnReport.loanCategory="+loanCategory+"&rateofreturnReport.orgCodeOne="+orgCodeOne+"&rateofreturnReport.orgCodeTwo="+orgCodeTwo;
+	     		url = url+"&rateofreturnReport.oneCategory="+oneCategory;
+	     		url = url+"&rateofreturnReport.loanCategory="+loanCategory;
 				window.location.href=url; 
 		}
 		
@@ -297,64 +278,7 @@
 			}
 		}
 
-
-		 //选择	受理支行 
- 		function open_slzhej_fun(param){
- 			var strUrl ="";
- 			var objName="";
- 			var peArgument = [];
- 			var startOrgid= '${sessionScope.login_user.orgid}';
- 			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1&changeTree.startOrgid="+startOrgid;
- 			objName="选择受理支行";  
- 			var paramEntity = new ParamEntity('Organization');
-     			if(param==1){
-     				paramEntity.setProperty('orgname',$id("orgNameOne").value);
-     				paramEntity.setProperty('orgcode',$id("orgCodeOne").value);
-     				peArgument[3]=[paramEntity,'orgname','orgcode',"orgid"];	
-     						
-     				showModalCenter(strUrl,peArgument,open_slzhej_callback1,600,430,objName);  //一级支行 机构树回调
-             	}else{
-             		paramEntity.setProperty('orgname',$id("orgNameTwo").value);
-     				paramEntity.setProperty('orgcode',$id("orgCodeTwo").value);
-     				peArgument[3]=[paramEntity,'orgname','orgcode',"orgid"];	
-     				
-             		showModalCenter(strUrl,peArgument,open_slzhej_callback2,600,430,objName);  //二级支行 机构树回调
-             	}
- 			}
-
- 		//一级支行	回调方法
-		function open_slzhej_callback1(arg){//回调方法
-
-			if(arg!=''){
-		    	if(arg['Organization']){ //原写法无需判断是否为空
-				  		var sorgidArra  = arg['Organization'].slice(0);//人员数组
-				  		argRes=[[],[],[],[]];
-						for(var i=0;i<sorgidArra.length;i++){
-							argRes[0].push(sorgidArra[i].getProperty("orgcode"));
-							argRes[1].push(sorgidArra[i].getProperty("orgname"));
-						}
-						$id("orgNameOne").value = argRes[1];
-						$id("orgCodeOne").value = argRes[0];
-					}
-		    	}
-			}
-
-		//二级支行	回调方法
-		function open_slzhej_callback2(arg){//回调方法
-
-			if(arg!=''){
-		    	if(arg['Organization']){ //原写法无需判断是否为空
-				  		var sorgidArra  = arg['Organization'].slice(0);//人员数组
-				  		argRes=[[],[],[],[]];
-						for(var i=0;i<sorgidArra.length;i++){
-							argRes[0].push(sorgidArra[i].getProperty("orgcode"));
-							argRes[1].push(sorgidArra[i].getProperty("orgname"));
-						}
-						$id("orgNameTwo").value = argRes[1];
-						$id("orgCodeTwo").value = argRes[0];
-					}
-		    	}
-			}
+  
 
 		
 		</script>

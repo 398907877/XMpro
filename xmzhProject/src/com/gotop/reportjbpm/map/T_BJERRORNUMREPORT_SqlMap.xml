@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_BJERRORNUMREPORT_SqlMap">
+ <resultMap id="BjErrorNumReport" class="com.gotop.reportjbpm.model.BjErrorNumReport" >
+    <!--Bean方式返回全表-->
+    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
+    <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
+    <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
+    <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="oneBjErrorNum" property="oneBjErrorNum" jdbcType="VARCHAR" />
+    <result column="oneBjNums" property="oneBjNums" jdbcType="VARCHAR" />
+  </resultMap>
+	
+	<!-- 笔均差错数统计 -->
+	<select id="queryBjErrorNumReport" parameterClass="java.util.HashMap" resultMap="BjErrorNumReport">
+	SELECT 
+( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODEONE) AS ORGNAMEONE,
+( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODETWO) AS ORGNAMETWO,
+ORGCODEONE,
+ORGCODETWO,
+ONECATEGORY,
+LOANCATEGORY,
+sum(CntNumberOne) oneBjNums,
+sum(CseNumberOne) oneBjErrorNum
+from 
+(
+
+SELECT  
+ORGCODEONE,
+ORGCODETWO,
+ONECATEGORY,
+LOANCATEGORY,
+ACTIVITY_NAME_,
+CASE WHEN cnt >= 1 THEN  1 ELSE  0 END CntNumberOne,
+CASE WHEN cse >= 1 THEN  1 ELSE  0 END CseNumberOne
+FROM
+  (
+    SELECT
+      EXECUTION_,
+      
+      ORGCODEONE,
+      ORGCODETWO,
+      ONECATEGORY,
+      LOANCATEGORY,
+      ACTIVITY_NAME_,
+      TASKNAME,
+      COUNT (ACTIVITY_NAME_) cnt,
+      COUNT (TASKNAME) cse
+    FROM
+      (
+        SELECT
+          EXECUTION_,
+          ACTIVITY_NAME_,
+          END_,
+          OPERATORNAME,
+          
+          ORGCODEONE,
+          ORGCODETWO,
+          
+          ONECATEGORY,
+          LOANCATEGORY,
+          REPORTTIME,
+          TASKNAME
+        FROM
+          (
+            SELECT
+              tt.EXECUTION_,
+              tt.ACTIVITY_NAME_,
+              tt.END_,
+              t2.OPERATORNAME,
+              
+              t3.ORGCODEONE,
+              t3.ORGCODETWO,
+              
+              t3.ONECATEGORY,
+              t3.LOANCATEGORY,
+              t4.REPORTTIME,
+              t5.taskname
+            FROM
+              JBPM4_HIST_ACTINST tt
+            LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
+            LEFT JOIN ac_operator t2 ON t1.ASSIGNEE_ = t2.OPERATORID
+            LEFT JOIN T_GENERALPROCESS_MODELONE t3 ON tt.EXECUTION_ = t3.flow_id
+            LEFT JOIN T_GENERALPROCESS_MISTAKE t5 ON t3.flow_id = t5.flow_id
+            LEFT JOIN T_GENERALPROCESS_MODELTHREE t4 ON t4.flow_id = tt.EXECUTION_
+            WHERE
+              HPROCI_ IN (
+                SELECT
+                  DBID_
+                FROM
+                  JBPM4_HIST_PROCINST T
+                WHERE
+                  T .PROCDEFID_ IN (
+                    SELECT
+                      DEFINITION_ID
+                    FROM
+                      T_PROCESS_CONFIG T
+                    WHERE
+                      BUSINESS_TYPE = '88'
+                  )
+              )
+          )
+        WHERE
+          end_ IS NOT NULL
+          and ACTIVITY_NAME_   in  ('发起合同预审')
+               <isNotNull prepend="and" property="repTimeStrat" >
+                    <![CDATA[REPORTTIME  >= '$repTimeStrat$']]>
+               </isNotNull>
+               <isNotNull prepend="and" property="repTimeEnd" >                                    
+                    <![CDATA[REPORTTIME  <= '$repTimeEnd$']]>
+               </isNotNull>
+               <isNotNull prepend="and" property="orgCodeOne" >
+                    ORGCODEONE = '$orgCodeOne$'
+               </isNotNull>
+              <isNotNull prepend="and" property="orgCodeTwo" >
+                   ORGCODETWO = '$orgCodeTwo$'
+              </isNotNull>
+              <isNotNull prepend="and" property="oneCategory" >
+                    ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
+                     and dic.dictid in($oneCategory$))
+              </isNotNull>
+              <isNotNull prepend="and" property="loanCategory" >
+                  LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
+                     and dic.dictid in($loanCategory$))
+              </isNotNull>
+      )
+    GROUP BY
+      EXECUTION_,
+      ORGCODEONE,
+      ORGCODETWO,
+      ONECATEGORY,
+      LOANCATEGORY,
+      ACTIVITY_NAME_,
+      TASKNAME
+    
+)
+)
+GROUP BY
+ORGCODEONE,ORGCODETWO,ONECATEGORY,  LOANCATEGORY
+	</select>
+
+</sqlMap>

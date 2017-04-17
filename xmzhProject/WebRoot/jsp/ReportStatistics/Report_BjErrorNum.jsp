@@ -42,14 +42,14 @@
 				<tr>	
 					<td class="form_label" align="right" >一级分类：</td>
 					<td >
-			     		<h:hidden id="oneCategoryId" />  
+			     		<h:hidden id="oneCategoryId" property="bjErrorNumReport.oneCategoryId"/>  
 						<h:text id="oneCategory" property="bjErrorNumReport.oneCategory" readonly="true"  style="width:130px;"/>
 						<a href="#" onclick="showoneCategory();">选择</a>
 					</td>
 					
 					<td class="form_label" align="right" >贷种分类：</td>
 					<td colspan="3">
-						<h:hidden id="loanCategoryId"/>
+						<h:hidden id="loanCategoryId" property="bjErrorNumReport.loanCategoryId"/>
 						<h:text id="loanCategory" property="bjErrorNumReport.loanCategory" readonly="true"   style="width:130px;"/>
 						<a href="#" onclick="showloanCategory();">选择</a>
 					</td>
@@ -99,7 +99,7 @@
 								笔均差错数
 							</th>
 						</tr>
-                           <l:iterate property="errorStatisticList" id="id1">
+                           <l:iterate property="bjErrorNumReportList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="orgNameOne" />
@@ -197,8 +197,12 @@
     				var orgCodeTwo = $id("orgCodeTwo").value;
 					//一级分类
     				var oneCategory = $id("oneCategory").value;
+    				//一级分类id
+    				var oneCategoryId = $id("oneCategoryId").value;
     				//贷种分类
     				var loanCategory = $id("loanCategory").value;
+    				//贷种分类id
+    				var loanCategoryId = $id("loanCategoryId").value;
     				
     				var strUrl = "/reportjbpm/bjErrorNumReportAction_bjErrorNumReportExcel.action?";
     				if(repTimeStart != null){strUrl=strUrl+"&bjErrorNumReport.repTimeStart="+repTimeStart;}
@@ -206,7 +210,9 @@
     				if(orgNameOne != ""){strUrl=strUrl+"&bjErrorNumReport.orgNameOne="+orgNameOne+"&bjErrorNumReport.orgCodeOne="+orgCodeOne;}
     				if(orgNameTwo != ""){strUrl=strUrl+"&bjErrorNumReport.orgNameTwo="+orgNameTwo+"&bjErrorNumReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&bjErrorNumReport.oneCategory="+oneCategory;} 
+    				if(oneCategoryId != ""){strUrl=strUrl+"&bjErrorNumReport.oneCategoryId="+oneCategoryId;} 
     				if(loanCategory != ""){strUrl=strUrl+"&bjErrorNumReport.loanCategory="+loanCategory;} 
+    				if(loanCategoryId != ""){strUrl=strUrl+"&bjErrorNumReport.loanCategoryId="+loanCategoryId;} 
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}
