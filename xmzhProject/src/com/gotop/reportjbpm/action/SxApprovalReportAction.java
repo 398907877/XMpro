@@ -57,15 +57,20 @@ public class SxApprovalReportAction extends BaseAction {
 	}
 	public String sxApprovalReportList(){
 		sxApprovalReportTitleList=sxApprovalReportService.querySxApprovalReportTitleList(sxApprovalReport);
-		sxApprovalReportOrgNameOneList=sxApprovalReportService.querySxApprovalReportOrgNameOneList(sxApprovalReport, this.getPage());
 		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportList(sxApprovalReport, this.getPage(),sxApprovalReportTitleList);
-		this.setSxApprovalReportTitleList(sxApprovalReportTitleList);
 		this.setSxApprovalReportList(sxApprovalReportList);
-		this.setSxApprovalReportOrgNameOneList(sxApprovalReportOrgNameOneList);
+		this.setSxApprovalReportTitleList(sxApprovalReportTitleList);
 		this.setPage(page);
-		System.out.println("111122");
-		System.out.println("3333333333");
+
 
 		return "sxApprovalReportList";
+	}
+	
+	public String sxApprovalReportExcel(){
+		sxApprovalReportTitleList=sxApprovalReportService.querySxApprovalReportTitleList(sxApprovalReport);
+		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportListForExcel(sxApprovalReport,sxApprovalReportTitleList);
+		this.setSxApprovalReportTitleList(sxApprovalReportTitleList);
+		this.setSxApprovalReportList(sxApprovalReportList);
+		return "sxApprovalReportExcel";
 	}
 }

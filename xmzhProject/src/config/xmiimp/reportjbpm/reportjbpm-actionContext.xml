@@ -77,17 +77,17 @@
     <property name="sxApprovalReport" ref="sxApprovalReport" />
   </bean>
 
-
+ 
  <bean name="passRateReport" id="passRateReport" class="com.gotop.reportjbpm.model.PassRateReport" singleton="false" ></bean>
   <bean name="passRateReportAction" id="passRateReportAction" class="com.gotop.reportjbpm.action.PassRateReportAction" singleton="false" >
     <property name="passRateReportService" ref="passRateReportService" />
     <property name="passRateReport" ref="passRateReport" />
   </bean>
-  
-   <bean name="bjErrorNumReport" id="bjErrorNumReport" class="com.gotop.reportjbpm.model.BjErrorNumReport" singleton="false" ></bean>
+ <!--   
+ <bean name="bjErrorNumReport" id="bjErrorNumReport" class="com.gotop.reportjbpm.model.BjErrorNumReport" singleton="false" ></bean>
   <bean name="bjErrorNumReportAction" id="bjErrorNumReportAction" class="com.gotop.reportjbpm.action.BjErrorNumReportAction" singleton="false" >
     <property name="bjErrorNumReportService" ref="bjErrorNumReportService" />
     <property name="bjErrorNumReport" ref="bjErrorNumReport" />
-  </bean>
+  </bean> -->
 
 </beans>

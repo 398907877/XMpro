@@ -7,13 +7,16 @@
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="ZDCUSTMANAGER" property="zdCustManager" jdbcType="VARCHAR" />
-    <result column="ZHGPDTIME" property="zhgpdTime" jdbcType="VARCHAR" />
-    <result column="REVIEWAPPROVALONETIME" property="reviewApprovalOneTime" jdbcType="VARCHAR" />
-    <result column="REVIEWAPPROVALTHREEORMORETIME" property="reviewApprovalThreeOrMoreTime" jdbcType="VARCHAR" />
-    <result column="ALLPROCESSTIMEONE" property="allProcessTimeOne" jdbcType="VARCHAR" />
-    <result column="ALLPROCESSTIMETWO" property="allProcessTimeTwo" jdbcType="VARCHAR" />
-    <result column="ZLWZHAPPROVALTIME" property="zlwzhApprovalTime" jdbcType="VARCHAR" />
+    <result column="ZDCUSTMANAGER" property="zdCustManager" jdbcType="NUMBER" />
+    <result column="ZHGPDTIMEONE" property="zhgpdTimeOne" jdbcType="NUMBER" />
+    <result column="ZHGPDTIMETWO" property="zhgpdTimeTwo" jdbcType="NUMBER" />
+    <result column="ZHGPDTIMETHREE" property="zhgpdTimeThree" jdbcType="NUMBER" />
+    <result column="REVIEWAPPROVALONETIME" property="reviewApprovalOneTime" jdbcType="NUMBER" />
+    <result column="REVIEWAPPROVALTWOTIME" property="reviewApprovalTwoTime" jdbcType="NUMBER" />
+    <result column="REVIEWAPPROVALTHREEORMORETIME" property="reviewApprovalThreeOrMoreTime" jdbcType="NUMBER" />
+    <result column="ALLPROCESSTIMEONE" property="allProcessTimeOne" jdbcType="NUMBER" />
+    <result column="ALLPROCESSTIMETWO" property="allProcessTimeTwo" jdbcType="NUMBER" />
+    <result column="ZLWZHAPPROVALTIME" property="zlwzhApprovalTime" jdbcType="NUMBER" />
   </resultMap>
   
   
@@ -21,35 +24,184 @@
   	<!-- 查询时限情况统计报表 -->
 	<select id="queryTimeLimitConditionReportList" parameterClass="java.util.HashMap" resultMap="timeLimitConditionReport">
 	SELECT ORGNAMEONE,
+       ORGCODEONE,
        ORGCODETWO,
        ORGNAMETWO,
+       DISPLAYORDERONE,
+       DISPLAYORDERTWO,
        ONECATEGORY,
        LOANCATEGORY,
-       '天' as ZDCUSTMANAGER,
-       '天' as ZHGPDTIME,
-       '天' as REVIEWAPPROVALONETIME,
-       '天' as REVIEWAPPROVALTHREEORMORETIME,
-       '天' as ALLPROCESSTIMEONE,
-       '天' as ALLPROCESSTIMETWO,
-       '天' as ZLWZHAPPROVALTIME
-  FROM (SELECT O1.ORGNAME AS ORGNAMEONE,
-               T.ORGCODETWO,
-               O2.ORGNAME AS ORGNAMETWO,
-               T.ONECATEGORY,
-               T.LOANCATEGORY,
-               CEIL(TO_DATE(P1.PRE_TASK_TIME, 'yyyy-mm-dd hh24:mi:ss') -
-                    TO_DATE(T.CREATE_TIME, 'yyyy-mm-dd hh24:mi:ss')) TMP_TIME
-          FROM T_GENERALPROCESS_MODELONE T,
-               OM_ORGANIZATION           O1,
-               OM_ORGANIZATION           O2,
-               OM_EMPLOYEE               E1,
-               T_PROCESS_TASK_ASSIGNEE   P1
-         WHERE T.ORGCODEONE = O1.ORGCODE
-           AND T.ORGCODETWO = O2.ORGCODE(+)
-           AND T.CREATOR = E1.EMPID
-           AND T.FLOW_ID = P1.EXECUTION_ID
-           AND P1.NEXT_ACTIVITY_NAME = '结束')
- GROUP BY ORGNAMEONE, ORGCODETWO, ORGNAMETWO, ONECATEGORY, LOANCATEGORY
+       CREATORNAME ZDCUSTMANAGER,
+       MAX(PDONE) ZHGPDTIMEONE,
+       MAX(PDTWO) ZHGPDTIMETWO,
+       MAX(PDTHREE) ZHGPDTIMETHREE,
+       
+       MAX(REVIEWAPPROVALONETIME) REVIEWAPPROVALONETIME,
+       MAX(REVIEWAPPROVALTWOTIME) REVIEWAPPROVALTWOTIME,
+       MAX(REVIEWAPPROVALTHREEORMORETIME) REVIEWAPPROVALTHREEORMORETIME,
+            
+       MAX(ALLPROCESSTIMEONE) ALLPROCESSTIMEONE,
+       MAX(ALLPROCESSTIMETWO) ALLPROCESSTIMETWO,
+       MAX(ZLWZHAPPROVALTIME) ZLWZHAPPROVALTIME
+  FROM (SELECT ORGNAMEONE,
+               ORGCODEONE,
+               ORGCODETWO,
+               DISPLAYORDERONE,
+               DISPLAYORDERTWO,
+               ORGNAMETWO,
+               ONECATEGORY,
+               LOANCATEGORY,
+               CREATORNAME,
+               (CASE
+                 WHEN rn = 1 AND NEXT_ACTIVITY_NAME = '审查一' AND
+                      activity_name_two = '受理调查' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) PDONE,
+               (CASE
+                 WHEN rn = 2 AND NEXT_ACTIVITY_NAME = '审查一' AND
+                      activity_name_two = '受理调查' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) PDtwo,
+               (CASE
+                 WHEN rn = 3 AND NEXT_ACTIVITY_NAME = '审查一' AND
+                      activity_name_two = '受理调查' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) PDthree,
+               
+               
+               
+               (CASE
+                 WHEN rn = 1 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '审查一' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) REVIEWAPPROVALONETIME,
+               (CASE
+                 WHEN rn = 2 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '审查一' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) REVIEWAPPROVALTWOTIME,
+               (CASE
+                 WHEN rn = 3 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '审查一' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) REVIEWAPPROVALTHREEORMORETIME,
+               
+               
+                 (CASE
+                 WHEN rn = 1 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '受理调查' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) ALLPROCESSTIMEONE,
+               (CASE
+                 WHEN rn = 1 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '收单派单' and activity_name_one='审查一' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) ALLPROCESSTIMETWO,
+               (CASE
+                 WHEN rn >1 AND NEXT_ACTIVITY_NAME = '发起合同预审' AND
+                      activity_name_two = '受理调查' and activity_name_one='收单派单' THEN
+                  ROUND(TO_NUMBER(END_ - START_) * 24,2)
+                 ELSE
+                  0
+               END) ZLWZHAPPROVALTIME,
+               
+               
+               
+               FLOW_ID,
+               NEXT_ACTIVITY_NAME,
+               activity_name_two,
+               activity_name_one,
+               RN
+          FROM (SELECT distinct O1.ORGNAME AS ORGNAMEONE,
+                                T.ORGCODEONE,
+                                T.ORGCODETWO,
+                                O1.DISPLAYORDER AS DISPLAYORDERONE,
+                                O2.DISPLAYORDER AS DISPLAYORDERTWO,
+                                O2.ORGNAME AS ORGNAMETWO,
+                                T.ONECATEGORY,
+                                T.LOANCATEGORY,
+                                E1.EMPNAME AS CREATORNAME,
+                                to_date(to_char(j1.start_, 'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss') start_,
+                                to_date(to_char(j1.end_, 'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss') end_,
+                                T.FLOW_ID,
+                                P1.NEXT_ACTIVITY_NAME,
+                                j2.activity_name_ activity_name_two,
+                                J1.ACTIVITY_NAME_ activity_name_one,
+                                ROW_NUMBER() OVER(PARTITION BY T.ORGCODEONE, T.ORGCODETWO, T.ONECATEGORY, T.LOANCATEGORY, P1.NEXT_ACTIVITY_NAME, E1.EMPNAME, j2.activity_name_, J1.ACTIVITY_NAME_ ORDER BY j1.START_) RN
+                  FROM  t_process_business b,
+                  T_GENERALPROCESS_MODELONE T,
+                       OM_ORGANIZATION           O1,
+                       OM_ORGANIZATION           O2,
+                       OM_EMPLOYEE               E1,
+                       T_PROCESS_TASK_ASSIGNEE   P1,
+                       T_PROCESS_TASK_ASSIGNEE   p2,
+                       JBPM4_HIST_ACTINST        J1,
+                       JBPM4_HIST_ACTINST        j2,
+                       T_GENERALPROCESS_MODELTHREE T3
+                 WHERE B.EXECUTION_ID=T.FLOW_ID
+                    AND T.ORGCODEONE = O1.ORGCODE
+                   AND T.ORGCODETWO = O2.ORGCODE(+)
+                   AND T.CREATOR = E1.EMPID
+                   AND T.FLOW_ID = P1.EXECUTION_ID
+                   AND T.FLOW_ID = P2.EXECUTION_ID
+                   AND B.EXECUTION_ID=T3.FLOW_ID
+                   AND P1.BUSINESS_TYPE = '88'
+                   AND t.flow_id = j1.execution_
+                   AND t.flow_id = j2.execution_
+                   and j1.HTASK_ = p1.PRE_TASK_ID
+                   and j1.htask_ = p2.next_task_id
+                   and j2.htask_ = p2.pre_task_id
+                   
+                   <isNotNull prepend="and" property="repTimeStart">
+					   <![CDATA[T3.REPORTTIME>=#repTimeStart#]]>
+				  </isNotNull> 
+				   <isNotNull prepend="and" property="repTimeEnd" >                                    
+                      <![CDATA[T3.REPORTTIME  <=(#repTimeEnd#)]]>
+                   </isNotNull>
+                   
+                    <isNotNull prepend="and" property="orgCodeOne">
+					  T.orgCodeOne='$orgCodeOne$'
+				  </isNotNull>
+				  <isNotNull prepend="and" property="orgCodeTwo">
+					  T.orgCodeTwo='$orgCodeTwo$'
+				  </isNotNull>
+				  
+                   <isNotNull prepend="and" property="oneCategory">
+					  T.ONECATEGORY in ($oneCategory$)
+				  </isNotNull>
+				  <isNotNull prepend="and" property="loanCategory">
+					  T.LOANCATEGORY in ($loanCategory$)
+				  </isNotNull>
+				  <isNotNull prepend="and" property="zdCustManager" >
+                      E1.EMPNAME   like '%$zdCustManager$%'
+                  </isNotNull>
+                ))
+ GROUP BY ORGNAMEONE,
+          ORGCODEONE,
+          DISPLAYORDERONE,
+          DISPLAYORDERTWO,
+          ORGCODETWO,
+          ORGNAMETWO,
+          ONECATEGORY,
+          LOANCATEGORY,
+          CREATORNAME
+ order by DISPLAYORDERONE,DISPLAYORDERTWO
 	
 	</select>
       

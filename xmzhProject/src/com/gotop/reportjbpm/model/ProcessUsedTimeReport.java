@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ProcessUsedTimeReport implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private String orgCodeOne;
+	private String orgCodeTwo;
 	private String orgNameOne;
 	private String orgNameTwo;
 	private String oneCategory;
@@ -12,6 +14,33 @@ public class ProcessUsedTimeReport implements Serializable {
 	private String onedaysDealNum;
 	private String twodaysDealNum;
 	private String threedaysDealNum;
+	private String repTimeStart;
+	private String repTimeEnd;
+
+	public String getOrgCodeOne() {
+		return orgCodeOne;
+	}
+	public void setOrgCodeOne(String orgCodeOne) {
+		this.orgCodeOne = orgCodeOne;
+	}
+	public String getOrgCodeTwo() {
+		return orgCodeTwo;
+	}
+	public void setOrgCodeTwo(String orgCodeTwo) {
+		this.orgCodeTwo = orgCodeTwo;
+	}
+	public String getRepTimeStart() {
+		return repTimeStart;
+	}
+	public void setRepTimeStart(String repTimeStart) {
+		this.repTimeStart = repTimeStart;
+	}
+	public String getRepTimeEnd() {
+		return repTimeEnd;
+	}
+	public void setRepTimeEnd(String repTimeEnd) {
+		this.repTimeEnd = repTimeEnd;
+	}
 	public String getOrgNameOne() {
 		return orgNameOne;
 	}

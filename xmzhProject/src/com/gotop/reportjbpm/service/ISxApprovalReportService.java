@@ -28,16 +28,9 @@ public interface ISxApprovalReportService {
 	 * @param page
 	 * @return
 	 */
-	List<SxApprovalReport> querySxApprovalReportListForExcel(SxApprovalReport sxApprovalReport);
+	List<SxApprovalReport> querySxApprovalReportListForExcel(SxApprovalReport sxApprovalReport,List<SxApprovalReport> sxApprovalReportTitleList);
 	
 
-	/**
-	 * 查询一级机构列名
-	 * @param approval
-	 * @param page
-	 * @return
-	 */
-	List<SxApprovalReport> querySxApprovalReportOrgNameOneList(SxApprovalReport sxApprovalReport, Page page);
 	
 
 }

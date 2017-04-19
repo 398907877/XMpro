@@ -19,7 +19,7 @@ public class TimeLimitConditionReportDao extends SqlMapClientDao implements ITim
 	@Override
 	public List<TimeLimitConditionReport> queryTimeLimitConditionReportListForExcel(
 			Map<String, Object> map) {
-		return this.queryForList("T_APPROVAL_SqlMap.queryApprovalList", map);
+		return this.queryForList("T_TIMELIMITCONDITIONREPORT_SqlMap.queryTimeLimitConditionReportList", map);
 	}
 
 	

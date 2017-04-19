@@ -36,8 +36,12 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportList(processUsedTimeReport, this.getPage());
 		this.setPage(page);
 		this.setProcessUsedTimeReportList(processUsedTimeReportList);
-		System.out.println("1111");
-		System.out.println("3333333333");
 		return "processUsedTimeReportList";
+	}
+	
+	public String processUsedTimeReportExcel(){
+		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportListForExcel(processUsedTimeReport);
+		this.setProcessUsedTimeReportList(processUsedTimeReportList);
+		return "processUsedTimeReportExcel";
 	}
 }

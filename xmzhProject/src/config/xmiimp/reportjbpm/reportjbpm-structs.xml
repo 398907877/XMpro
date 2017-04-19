@@ -126,6 +126,9 @@
 			<result name="processUsedTimeReportList">
 				/jsp/ReportStatistics/Report_ProcessUsedTime.jsp
 			</result>
+			<result name="processUsedTimeReportExcel">
+				/jsp/ReportStatistics/Report_ProcessUsedTime_excel.jsp
+			</result>
 
 		</action>
 		
@@ -133,6 +136,10 @@
 			method="{1}">
 			<result name="timeLimitConditionReportList">
 				/jsp/ReportStatistics/Report_TimeLimitCondition.jsp
+			</result>
+			
+			<result name="timeLimitConditionReportExcel">
+				/jsp/ReportStatistics/Report_TimeLimitCondition_excel.jsp
 			</result>
 
 		</action>
@@ -145,6 +152,9 @@
 				/jsp/ReportStatistics/Report_SxApproval.jsp
 			</result>
 
+			<result name="sxApprovalReportExcel">
+				/jsp/ReportStatistics/Report_SxApproval_excel.jsp
+			</result>
 		</action>
 
    <action name="bjErrorNumReportAction_*" class="bjErrorNumReportAction" method="{1}" >

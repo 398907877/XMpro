@@ -12,7 +12,7 @@ public interface ISxApprovalReportDao {
  * @param page
  * @return
  */
-	List<SxApprovalReport> querySxApprovalReportList(Map<String, Object> map);
+	List<SxApprovalReport> querySxApprovalReportList(Map<String, Object> map,Page page);
 	/**
 	 * 授信审批报表标题头
 	 * @param approval
@@ -28,12 +28,5 @@ public interface ISxApprovalReportDao {
 	 */
 	List<SxApprovalReport> querySxApprovalReportListForExcel(Map<String, Object> map);
 	
-	/**
-	 * 查询一级机构列名
-	 * @param map
-	 * @param page
-	 * @return
-	 */
-	List<SxApprovalReport> querySxApprovalReportOrgNameOneList(Map<String, Object> map, Page page);
 
 }

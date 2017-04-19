@@ -35,8 +35,12 @@ public class TimeLimitConditionReportAction extends BaseAction {
 		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportList(timeLimitConditionReport, this.getPage());
 		this.setPage(page);
 		this.setTimeLimitConditionReportList(timeLimitConditionReportList);
-		System.out.println("111122");
-		System.out.println("3333333333");
 		return "timeLimitConditionReportList";
+	}
+	
+	public String timeLimitConditionReportExcel(){
+		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportListForExcel(timeLimitConditionReport);
+		this.setTimeLimitConditionReportList(timeLimitConditionReportList);
+		return "timeLimitConditionReportExcel";
 	}
 }

@@ -12,14 +12,14 @@ public class SxApprovalReportDao extends SqlMapClientDao implements ISxApprovalR
 
 	@Override
 	public List<SxApprovalReport> querySxApprovalReportList(
-			Map<String, Object> map) {
-		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportList", map);
+			Map<String, Object> map, Page page) {
+		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportList", map,page);
 	}
 
 	@Override
 	public List<SxApprovalReport> querySxApprovalReportListForExcel(
 			Map<String, Object> map) {
-		return this.queryForList("T_APPROVAL_SqlMap.queryApprovalList", map);
+		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportListForExcel", map);
 	}
 
 	@Override
@@ -29,11 +29,6 @@ public class SxApprovalReportDao extends SqlMapClientDao implements ISxApprovalR
 		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportTitleList", map);
 	}
 
-	@Override
-	public List<SxApprovalReport> querySxApprovalReportOrgNameOneList(
-			Map<String, Object> map, Page page) {
-		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportOrgNameOneList", map,page);
-	}
 
 	
 

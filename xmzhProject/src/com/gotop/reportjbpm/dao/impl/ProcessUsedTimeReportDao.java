@@ -16,7 +16,7 @@ public class ProcessUsedTimeReportDao extends SqlMapClientDao implements IProces
 
 	@Override
 	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportListForExcel(Map<String, Object> map) {
-		return this.queryForList("T_APPROVAL_SqlMap.queryApprovalList", map);
+		return this.queryForList("T_PROCESSUSEDTIMEREPORT_SqlMap.queryProcessUsedTimeReportList", map);
 	}
 
 }
