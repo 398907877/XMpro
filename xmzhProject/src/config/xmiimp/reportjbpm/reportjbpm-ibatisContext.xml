@@ -7,7 +7,7 @@
 
   <bean id="reportRefusalrateDao" class="com.gotop.reportjbpm.dao.impl.ReportRefusalrateDao" >
     <property name="sqlMapClient" ref="sqlMapClient" />
-  </bean>
+  </bean> 
   <bean id="errorStatisticDao" class="com.gotop.reportjbpm.dao.impl.ErrorStatisticDao" >
 
     <property name="sqlMapClient" ref="sqlMapClient" />

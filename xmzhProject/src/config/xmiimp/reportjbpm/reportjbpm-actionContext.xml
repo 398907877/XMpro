@@ -88,6 +88,7 @@
   <bean name="bjErrorNumReportAction" id="bjErrorNumReportAction" class="com.gotop.reportjbpm.action.BjErrorNumReportAction" singleton="false" >
     <property name="bjErrorNumReportService" ref="bjErrorNumReportService" />
     <property name="bjErrorNumReport" ref="bjErrorNumReport" />
-  </bean> 
+
+  </bean>
 
 </beans>
