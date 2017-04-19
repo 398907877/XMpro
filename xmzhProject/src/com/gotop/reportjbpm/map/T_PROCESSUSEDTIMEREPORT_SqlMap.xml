@@ -48,17 +48,42 @@
                T.LOANCATEGORY,
                CEIL(TO_DATE(P1.PRE_TASK_TIME, 'yyyy-mm-dd hh24:mi:ss') -
                     TO_DATE(T.CREATE_TIME, 'yyyy-mm-dd hh24:mi:ss')) TMP_TIME
-          FROM T_GENERALPROCESS_MODELONE T,
+          FROM t_process_business   B,
+               T_GENERALPROCESS_MODELONE T,
                OM_ORGANIZATION           O1,
                OM_ORGANIZATION           O2,
                OM_EMPLOYEE               E1,
-               T_PROCESS_TASK_ASSIGNEE   P1
-         WHERE T.ORGCODEONE = O1.ORGCODE
+               T_PROCESS_TASK_ASSIGNEE   P1,
+               T_GENERALPROCESS_MODELTHREE T3
+         WHERE B.EXECUTION_ID=T.FLOW_ID
+           AND T.ORGCODEONE = O1.ORGCODE
            AND T.ORGCODETWO = O2.ORGCODE(+)
            AND T.CREATOR = E1.EMPID
            AND T.FLOW_ID = P1.EXECUTION_ID
+           AND B.EXECUTION_ID=T3.FLOW_ID
            AND P1.NEXT_ACTIVITY_NAME = '结束'
-           AND P1.business_type = '88')
+           AND P1.business_type = '88'
+           <isNotNull prepend="and" property="repTimeStart">
+			   <![CDATA[T3.REPORTTIME>=#repTimeStart#]]>
+		  </isNotNull> 
+		   <isNotNull prepend="and" property="repTimeEnd" >                                    
+                    <![CDATA[T3.REPORTTIME  <=(#repTimeEnd#)]]>
+            </isNotNull>
+                 
+           <isNotNull prepend="and" property="orgCodeOne">
+			  T.orgCodeOne='$orgCodeOne$'
+		  </isNotNull>
+		  <isNotNull prepend="and" property="orgCodeTwo">
+			  T.orgCodeTwo='$orgCodeTwo$'
+		  </isNotNull>
+		  
+          <isNotNull prepend="and" property="oneCategory">
+			  T.ONECATEGORY in ($oneCategory$)
+		  </isNotNull>
+		  <isNotNull prepend="and" property="loanCategory">
+			  T.LOANCATEGORY in ($loanCategory$)
+		  </isNotNull>
+           )
  GROUP BY ORGNAMEONE, ORGCODETWO, ORGNAMETWO, ONECATEGORY, LOANCATEGORY
 	
 	</select>

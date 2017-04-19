@@ -46,7 +46,6 @@
 				<h:form name="page_form"
 					action="/reportjbpm/sxApprovalReportAction_sxApprovalReportList.action" method="post">
 			 <h:hiddendata property="sxApprovalReport"/>  
-            <input id="sxApprovalReportList" name="{sxApprovalReportList" value="3">
             <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
 		    <h:hidden property="page.count"/>
@@ -101,24 +100,23 @@
 							
 						</tr>
 							</l:notEmpty>
-							<b:write property="orgNameOne" />
-							<l:iterate property="sxApprovalReportOrgNameOneList" id="id3">
+							<l:iterate property="sxApprovalReportList" id="id5">
 							<tr  >
 							<!-- 一级支行 -->
 							
 								<td nowrap="nowrap" > 
-								<b:write iterateId="id3" property="orgNameOne" />
+								<b:write iterateId="id5" property="ORGNAMEONE" />
 									<!-- 二级支行 -->
 								<td nowrap="nowrap" > 
-								1111
+								<b:write iterateId="id5" property="ORGNAMETWO" />
 								</td>
 								<!-- 类型值 -->
 								<l:iterate property="sxApprovalReportTitleList" id="id4">
 								<td nowrap="nowrap" > 
-								222
+								<b:write iterateId="id5" property='${id4.oneCategoryNum }' />
 								</td>
 								<td nowrap="nowrap" > 
-								2223
+								<b:write iterateId="id5" property='${id4.oneCategoryMoney }' />
 								</td>
 								</l:iterate>
 							</tr>

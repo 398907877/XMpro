@@ -4,13 +4,16 @@
  <resultMap id="sxApprovalReport" class="com.gotop.reportjbpm.model.SxApprovalReport" >
     <!--Bean方式返回全表-->
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
+    <result column="ONECATEGORYNAME" property="oneCategoryName" jdbcType="VARCHAR" />
+    <result column="ONECATEGORYNUM" property="oneCategoryNum" jdbcType="VARCHAR" />
+    <result column="ONECATEGORYMONEY" property="oneCategoryMoney" jdbcType="VARCHAR" />
   </resultMap>
   
   
   
   	<!-- 查询时限情况统计报表标题头 -->
 	<select id="querySxApprovalReportTitleList" parameterClass="java.util.HashMap" resultMap="sxApprovalReport">
-	SELECT DISTINCT DICTTYPEID || DICTID||'Num' oneCategoryNum,DICTTYPEID || DICTID||'Moneny' oneCategoryMoney, ONECATEGORY
+	SELECT DISTINCT upper(DICTTYPEID || DICTID||'_NUM') oneCategoryNum,upper(DICTTYPEID || DICTID||'_MONENY') oneCategoryMoney, ONECATEGORY,upper(DICTTYPEID || DICTID) ONECATEGORYNAME
    FROM T_GENERALPROCESS_MODELONE T,
         T_PROCESS_TASK_ASSIGNEE   P1,
         EOS_DICT_ENTRY            E
@@ -30,83 +33,180 @@
   
   	<!-- 查询时限情况统计报表 -->
 	<select id="querySxApprovalReportList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
-	SELECT ORGCODEONE,
-       DECODE(GROUPING(ORGCODEONE) + GROUPING(ORGCODETWO),
-              1,
-              '小计',
-              2,
-              '合计',
-              ORGCODETWO),
-      $fourParams$
-  FROM (SELECT T.ORGCODEONE,
-               T.ORGCODETWO,
-               T.ONECATEGORY,
-               NVL(V_NUM, 0) V_NUM,
-               NVL(AMT, 0) AMT
-          FROM (SELECT A.ORGCODEONE, A.ORGCODETWO, B.ONECATEGORY
-                  FROM (SELECT DISTINCT ORGCODEONE, ORGCODETWO
-                          FROM T_GENERALPROCESS_MODELONE) A,
-                       (SELECT DISTINCT ONECATEGORY
-                          FROM T_GENERALPROCESS_MODELONE) B) T
-          LEFT JOIN (SELECT T.ORGCODEONE,
-                           T.ORGCODETWO,
-                           T.ONECATEGORY,
-                           COUNT(*) V_NUM,
-                           SUM(T.APPLY_BAL) AMT
-                      FROM T_GENERALPROCESS_MODELONE T,
-                           OM_EMPLOYEE               E1,
-                           T_PROCESS_TASK_ASSIGNEE   P1
-                     WHERE T.CREATOR = E1.EMPID
-                       AND T.FLOW_ID = P1.EXECUTION_ID
-                       AND P1.NEXT_ACTIVITY_NAME = '结束'
-                       AND P1.BUSINESS_TYPE = '88'
-                     GROUP BY T.ORGCODEONE, T.ORGCODETWO, T.ONECATEGORY) TT
-            ON CONCAT(CONCAT(T.ORGCODEONE, T.ORGCODETWO), T.ONECATEGORY) =
-               CONCAT(CONCAT(TT.ORGCODEONE, TT.ORGCODETWO), TT.ONECATEGORY))
-PIVOT(SUM(V_NUM) A, SUM(AMT) B
-   FOR ONECATEGORY IN($oneParams$))
- GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO,$threeParams$),(ORGCODEONE),())
- ORDER BY ORGCODEONE, ORGCODETWO
-	</select>
-
-
-
+	
  
-	 
-	 <resultMap id="sxApprovalReport2" class="com.gotop.reportjbpm.model.SxApprovalReport" >
-    <!--Bean方式返回全表-->
-    <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
-    <result column="ORGCODEONE" property="orgCodeOne" jdbcType="VARCHAR" />
-    <result column="orgCodeTwoRows" property="orgCodeTwoRows" jdbcType="VARCHAR" />
-  </resultMap>
-  
-  
-  
-  	<!-- 查询时限情况统计报表一级支行列名 -->
-	<select id="querySxApprovalReportOrgNameOneList" parameterClass="java.util.HashMap" resultMap="sxApprovalReport2">
-		SELECT DECODE(GROUPING(T.ORGNAMEONE), 1, '合计', T.ORGNAMEONE) ORGNAMEONE,
-       T.DISPLAYORDER,
-       T.ORGCODE ORGCODEONE,
-       DECODE(GROUPING(TOTAL), 1, SUM(NVL(TT.TOTAL, 0)), NVL(TOTAL, 0)) ORGCODETWOROWS
-  FROM (SELECT O1.ORGNAME AS ORGNAMEONE, O1.DISPLAYORDER, O1.ORGCODE
-          FROM T_GENERALPROCESS_MODELONE T,
-               OM_ORGANIZATION           O1,
-               T_PROCESS_TASK_ASSIGNEE   P1
-         WHERE T.ORGCODEONE = O1.ORGCODE
-           AND T.FLOW_ID = P1.EXECUTION_ID
-           AND P1.NEXT_ACTIVITY_NAME = '结束'
-           AND P1.BUSINESS_TYPE = '88'
-         GROUP BY O1.ORGNAME, O1.DISPLAYORDER, O1.ORGCODE) T,
-       (SELECT ORGCODEONE, COUNT(*) TOTAL
-          FROM (SELECT ORGCODEONE
+ 
+ SELECT S.ORGCODEONE,
+       O1.ORGNAME ORGNAMEONE,
+       O1.DISPLAYORDER DISPLAYORDERONE,
+       S.ORGCODETWO,
+       O2.ORGNAME ORGNAMETWO,
+       O2.DISPLAYORDER DISPLAYORDERTWO,
+       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALTWO, 0)) ORGCOUNT,
+       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALONE, 0) + 1) ROWCOUNT,
+       $threeParams$
+  FROM (SELECT ORGCODEONE,
+               DECODE(GROUPING(ORGCODEONE) + GROUPING(ORGCODETWO),
+                      1,
+                      '小计',
+                      2,
+                      '合计',
+                      ORGCODETWO) ORGCODETWO,
+               $fourParams$
+          FROM (SELECT T.ORGCODEONE,
+                       T.ORGCODETWO,
+                       T.ONECATEGORY,
+                       NVL(V_NUM, 0) V_NUM,
+                       NVL(AMT, 0) AMT
+                  FROM (SELECT A.ORGCODEONE, A.ORGCODETWO, B.ONECATEGORY
+                          FROM (SELECT DISTINCT ORGCODEONE, ORGCODETWO
+                                  FROM T_GENERALPROCESS_MODELONE) A,
+                               (SELECT DISTINCT ONECATEGORY
+                                  FROM T_GENERALPROCESS_MODELONE) B) T
+                  LEFT JOIN (SELECT T.ORGCODEONE,
+                                   T.ORGCODETWO,
+                                   T.ONECATEGORY,
+                                   COUNT(*) V_NUM,
+                                   SUM(T.APPLY_BAL) AMT
+                              FROM T_GENERALPROCESS_MODELONE T,
+                                   OM_EMPLOYEE               E1,
+                                   T_PROCESS_TASK_ASSIGNEE   P1,
+                                   T_APPROVE_OPNINION_GP    p2
+                             WHERE T.CREATOR = E1.EMPID
+                               AND T.FLOW_ID = P1.EXECUTION_ID
+                               AND T.FLOW_ID=P2.FLOW_ID
+                               AND P1.NEXT_ACTIVITY_NAME = '结束'
+                               AND P1.BUSINESS_TYPE = '88'
+                               AND P2.resource_type = '88'
+                               <isNotNull prepend="and" property="approvalTimeStart" >
+					           	<![CDATA[
+					           		P2.operator_type = '提交发起合同预审' 
+					           		and P2.operater_date >= '$approvalTimeStart$'
+					               ]]>
+      						</isNotNull>
+				           <isNotNull prepend="and" property="approvalTimeEnd" >
+				           	<![CDATA[
+				            	P2.operator_type = '提交发起合同预审' 
+				           		and P2.operater_date <= '$approvalTimeEnd$'
+				               ]]>
+				      		</isNotNull>
+                               
+                             GROUP BY T.ORGCODEONE,
+                                      T.ORGCODETWO,
+                                      T.ONECATEGORY) TT
+                    ON CONCAT(CONCAT(T.ORGCODEONE, T.ORGCODETWO),
+                              T.ONECATEGORY) =
+                       CONCAT(CONCAT(TT.ORGCODEONE, TT.ORGCODETWO),
+                              TT.ONECATEGORY))
+        PIVOT(SUM(V_NUM) NUM, SUM(AMT) MONENY
+           FOR ONECATEGORY IN($oneParams$))
+         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$),(ORGCODEONE),())) S,
+       OM_ORGANIZATION O1,
+       OM_ORGANIZATION O2,
+       (SELECT ORGCODEONE,
+               COUNT(ORGCODEONE) TOTALONE,
+               COUNT(ORGCODETWO) TOTALTWO
+          FROM (SELECT ORGCODEONE, ORGCODETWO
                   FROM T_GENERALPROCESS_MODELONE
-                 WHERE LENGTH(ORGCODETWO) = 8
                  GROUP BY ORGCODEONE, ORGCODETWO)
          GROUP BY ORGCODEONE) TT
- WHERE T.ORGCODE = TT.ORGCODEONE(+)
- GROUP BY GROUPING SETS((ORGNAMEONE, ORGCODE, DISPLAYORDER, TOTAL),())
- order by DISPLAYORDER
-	 
-	
+ WHERE S.ORGCODEONE = O1.ORGCODE(+)
+   AND S.ORGCODETWO = O2.ORGCODE(+)
+   AND S.ORGCODEONE = TT.ORGCODEONE(+)
+ ORDER BY DISPLAYORDERONE,DISPLAYORDERTWO
+ 
+ 
 	</select>
+
+
+  
+  	<!-- 查询时限情况统计报表 -->
+	<select id="querySxApprovalReportListForExcel" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	
+ select * from (
+ 
+ SELECT S.ORGCODEONE,
+       O1.ORGNAME ORGNAMEONE,
+       O1.DISPLAYORDER DISPLAYORDERONE,
+       S.ORGCODETWO,
+       O2.ORGNAME ORGNAMETWO,
+       O2.DISPLAYORDER DISPLAYORDERTWO,
+       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALTWO, 0)) ORGCOUNT,
+       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALONE, 0) + 1) ROWCOUNT,
+       $threeParams$
+  FROM (SELECT ORGCODEONE,
+               DECODE(GROUPING(ORGCODEONE) + GROUPING(ORGCODETWO),
+                      1,
+                      '小计',
+                      2,
+                      '合计',
+                      ORGCODETWO) ORGCODETWO,
+               $fourParams$
+          FROM (SELECT T.ORGCODEONE,
+                       T.ORGCODETWO,
+                       T.ONECATEGORY,
+                       NVL(V_NUM, 0) V_NUM,
+                       NVL(AMT, 0) AMT
+                  FROM (SELECT A.ORGCODEONE, A.ORGCODETWO, B.ONECATEGORY
+                          FROM (SELECT DISTINCT ORGCODEONE, ORGCODETWO
+                                  FROM T_GENERALPROCESS_MODELONE) A,
+                               (SELECT DISTINCT ONECATEGORY
+                                  FROM T_GENERALPROCESS_MODELONE) B) T
+                  LEFT JOIN (SELECT T.ORGCODEONE,
+                                   T.ORGCODETWO,
+                                   T.ONECATEGORY,
+                                   COUNT(*) V_NUM,
+                                   SUM(T.APPLY_BAL) AMT
+                              FROM T_GENERALPROCESS_MODELONE T,
+                                   OM_EMPLOYEE               E1,
+                                   T_PROCESS_TASK_ASSIGNEE   P1,
+                                   T_APPROVE_OPNINION_GP    p2
+                             WHERE T.CREATOR = E1.EMPID
+                               AND T.FLOW_ID = P1.EXECUTION_ID
+                               AND T.FLOW_ID=P2.FLOW_ID
+                               AND P1.NEXT_ACTIVITY_NAME = '结束'
+                               AND P1.BUSINESS_TYPE = '88'
+                               AND P2.resource_type = '88'
+                               <isNotNull prepend="and" property="approvalTimeStart" >
+					           	<![CDATA[
+					           		P2.operator_type = '提交发起合同预审' 
+					           		and P2.operater_date >= '$approvalTimeStart$'
+					               ]]>
+      						</isNotNull>
+				           <isNotNull prepend="and" property="approvalTimeEnd" >
+				           	<![CDATA[
+				            	P2.operator_type = '提交发起合同预审' 
+				           		and P2.operater_date <= '$approvalTimeEnd$'
+				               ]]>
+				      		</isNotNull>
+                               
+                             GROUP BY T.ORGCODEONE,
+                                      T.ORGCODETWO,
+                                      T.ONECATEGORY) TT
+                    ON CONCAT(CONCAT(T.ORGCODEONE, T.ORGCODETWO),
+                              T.ONECATEGORY) =
+                       CONCAT(CONCAT(TT.ORGCODEONE, TT.ORGCODETWO),
+                              TT.ONECATEGORY))
+        PIVOT(SUM(V_NUM) NUM, SUM(AMT) MONENY
+           FOR ONECATEGORY IN($oneParams$))
+         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$),(ORGCODEONE),())) S,
+       OM_ORGANIZATION O1,
+       OM_ORGANIZATION O2,
+       (SELECT ORGCODEONE,
+               COUNT(ORGCODEONE) TOTALONE,
+               COUNT(ORGCODETWO) TOTALTWO
+          FROM (SELECT ORGCODEONE, ORGCODETWO
+                  FROM T_GENERALPROCESS_MODELONE
+                 GROUP BY ORGCODEONE, ORGCODETWO)
+         GROUP BY ORGCODEONE) TT
+ WHERE S.ORGCODEONE = O1.ORGCODE(+)
+   AND S.ORGCODETWO = O2.ORGCODE(+)
+   AND S.ORGCODEONE = TT.ORGCODEONE(+)
+    )
+ ORDER BY DISPLAYORDERONE,DISPLAYORDERTWO
+ 
+ 
+	</select>
+
+ 
 </sqlMap>

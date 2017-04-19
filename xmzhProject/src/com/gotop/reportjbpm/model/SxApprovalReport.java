@@ -11,15 +11,30 @@ public class SxApprovalReport implements Serializable {
 	private String oneCategoryMoney;//金额
 	private String orgCodeOne;
 	private String orgCodeTwoRows;
-	private String A1_A;
-	public String getA1_A() {
-		return A1_A;
+	private String oneCategoryName;
+	private String approvalTimeStart;
+	private String approvalTimeEnd;
+	
+	public String getOneCategoryName() {
+		return oneCategoryName;
 	}
-	public void setA1_A(String a1_A) {
-		A1_A = a1_A;
+	public void setOneCategoryName(String oneCategoryName) {
+		this.oneCategoryName = oneCategoryName;
 	}
 	public String getOrgCodeTwoRows() {
 		return orgCodeTwoRows;
+	}
+	public String getApprovalTimeStart() {
+		return approvalTimeStart;
+	}
+	public void setApprovalTimeStart(String approvalTimeStart) {
+		this.approvalTimeStart = approvalTimeStart;
+	}
+	public String getApprovalTimeEnd() {
+		return approvalTimeEnd;
+	}
+	public void setApprovalTimeEnd(String approvalTimeEnd) {
+		this.approvalTimeEnd = approvalTimeEnd;
 	}
 	public void setOrgCodeTwoRows(String orgCodeTwoRows) {
 		this.orgCodeTwoRows = orgCodeTwoRows;
@@ -54,10 +69,7 @@ public class SxApprovalReport implements Serializable {
 	public void setOneCategoryMoney(String oneCategoryMoney) {
 		this.oneCategoryMoney = oneCategoryMoney;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	public String getOneCategory() {
 		return oneCategory;
 	}

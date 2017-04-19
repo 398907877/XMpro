@@ -56,7 +56,7 @@
 					
 					<td class="form_label" align="right" >主调信贷员：</td>
 					<td>
-					 <h:text property="timeLimitConditionReport.creatorName" id="creatorName" style="width:130px;" />	
+					 <h:text property="timeLimitConditionReport.zdCustManager" id="zdCustManager" style="width:130px;" />	
 					</td>	
 				</tr>
 				
@@ -103,25 +103,31 @@
 							<th nowrap="nowrap">
 								主调客户经理
 							</th>
+							<th  nowrap="nowrap">
+								综合岗一次派单时间(小时)
+					       </th>
+							<th  nowrap="nowrap">
+								综合岗二次派单时间(小时)
+					       </th>
+							<th  nowrap="nowrap">
+								综合岗三次派单时间(小时)
+					       </th>
 							<th nowrap="nowrap">
-								综合岗派单时间
+								审查审批一次作业时间(小时)
 					       </th>
-							<th>
-								审查审批一次作业时间
-					       </th>
-					       <th>
-								审查审批二次作业时间
+					       <th nowrap="nowrap">
+								审查审批二次作业时间(小时)
 							</th>
-                            <th>
-								审查审批三次以上作业时间
+                            <th nowrap="nowrap">
+								审查审批三次以上作业时间(小时)
 							</th>
-							<th>
-								全流程作业时间1
+							<th nowrap="nowrap">
+								全流程作业时间1(小时)
 							</th>
-							<th>
-								全流程作业时间2
+							<th nowrap="nowrap">
+								全流程作业时间2(小时)
 							</th>
-							<th>
+							<th nowrap="nowrap">
 								资料完整后审批时间
 							</th>
 						</tr>
@@ -143,7 +149,13 @@
 									<b:write iterateId="id1" property="zdCustManager" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="zhgpdTime" />
+									<b:write iterateId="id1" property="zhgpdTimeOne" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="zhgpdTimeTwo" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="zhgpdTimeThree" />
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="reviewApprovalOneTime" />
@@ -220,7 +232,7 @@
 			$("#oneCategoryId").val("");
 			$("#loanCategory").val("");
 			$("#loanCategoryId").val("");
-			$("#creatorName").val("");
+			$("#zdCustManager").val("");
 			
 		}
 
@@ -249,8 +261,7 @@
     				//贷种分类
     				var loanCategory = $id("loanCategory").value;
     				//主调信贷员
-    				var creatorName = $id("creatorName").value;
-    				
+    				var zdCustManager = $id("zdCustManager").value;
     				var strUrl = "/reportjbpm/timeLimitConditionReportAction_timeLimitConditionReportExcel.action?";
     				if(repTimeStart != null){strUrl=strUrl+"&timeLimitConditionReport.repTimeStart="+repTimeStart;}
     	    		if(repTimeEnd != null){strUrl=strUrl+"&timeLimitConditionReport.repTimeEnd="+repTimeEnd;} 
@@ -258,7 +269,7 @@
     				if(orgNameTwo != ""){strUrl=strUrl+"&timeLimitConditionReport.orgNameTwo="+orgNameTwo+"&timeLimitConditionReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&timeLimitConditionReport.oneCategory="+oneCategory;} 
     				if(loanCategory != ""){strUrl=strUrl+"&timeLimitConditionReport.loanCategory="+loanCategory;} 
-    				if(creatorName != ""){strUrl=strUrl+"&timeLimitConditionReport.creatorName="+creatorName;}
+    				if(zdCustManager != ""){strUrl=strUrl+"&timeLimitConditionReport.zdCustManager="+zdCustManager;}
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}
