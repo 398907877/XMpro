@@ -88,7 +88,15 @@
   <bean name="bjErrorNumReportAction" id="bjErrorNumReportAction" class="com.gotop.reportjbpm.action.BjErrorNumReportAction" singleton="false" >
     <property name="bjErrorNumReportService" ref="bjErrorNumReportService" />
     <property name="bjErrorNumReport" ref="bjErrorNumReport" />
-
   </bean>
+  
+  
+  <bean name="myUtil" id="myUtil" class=" com.gotop.reportjbpm.MyUtil" singleton="false" >
+      <property name="tModelTimedayService" ref="tModelTimedayService" />
+  </bean>
+  
+  
+  
+   
 
 </beans>

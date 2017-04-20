@@ -185,9 +185,25 @@
    
     <select id="queryTimeDiff" resultClass="java.util.HashMap" parameterClass="java.lang.String" >
    select A9.execution_,
-       to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss') as start_time,
+       
+       case
+         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
+          to_char(A9.start_, 'yyyymmddhh24miss')
+       end as start_time,
+       
+       case
+         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
+          to_char(A9.end_, 'yyyymmddhh24miss')
+       end as end_time,
+       
+       case
+         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
+          to_char(sysdate, 'yyyymmddhh24miss')
+       end as curr_time
+       
+<!--  to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss') as start_time,
        to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss') as end_time,
-       to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss') as curr_time,
+       to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss') as curr_time ,
        case
          when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
           round(to_date(to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss'),
@@ -215,7 +231,7 @@
          round(sysdate - 
                 to_date(to_char(sysdate, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss'),
-                2) as currD_diff
+                2) as currD_diff -->
   from ( select  AA.*,  ROW_NUMBER() OVER(PARTITION BY execution_, PRE_TASK_NAME, next_task_name  ORDER BY  START_) RN  from 
   (select A7.*, A8.activity_name_ as NEXT_TASK_NAME
     from (select A5.*, A6.activity_name_ as PRE_TASK_NAME

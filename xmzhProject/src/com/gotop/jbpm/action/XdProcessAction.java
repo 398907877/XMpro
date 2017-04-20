@@ -1,5 +1,6 @@
 package com.gotop.jbpm.action;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import org.apache.derby.tools.sysinfo;
 
+import com.gotop.Generalprocess.util.SpringContextUtil;
 import com.gotop.Generalprocess.util.SpringPropertyResourceReader;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.jbpm.model.WaterInfo;
@@ -234,6 +236,12 @@ public class XdProcessAction   extends BaseAction {
     	//查询待办列表
 		List<XdProcessTaskAssignee> xdProcessTaskAssignees = this.xdProcessService.queryXdMyToDoList(relationids,xdProcessTaskAssignee,this.getPage());
 		
+		//前提需要在对应的actionContext这个spring文件里 配置MyUtil
+		Object bean = SpringContextUtil.getBean("myUtil"); 
+		Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
+		Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forDays", String.class,String.class);
+				
+		
 		//循环分页的10条记录，每条查出其派单时长和流程时长
 		for (XdProcessTaskAssignee xdProcessTaskAssignee : xdProcessTaskAssignees) {
 			String executionId = xdProcessTaskAssignee.getExecutionId();
@@ -241,30 +249,34 @@ public class XdProcessAction   extends BaseAction {
 			 if(map != null){
 				 
 				 //计算派单时长
-				 if((BigDecimal) map.get("TIME_DIFF1") != null){
-					 double time_Diff1 = ((BigDecimal) map.get("TIME_DIFF1")).doubleValue();  //派单时间差timeDiff1 = 派单时间(收单派单的end_) - 报单时间(收单派单的start_)
+			//	 if((BigDecimal) map.get("TIME_DIFF1") != null){
+					/* double time_Diff1 = ((BigDecimal) map.get("TIME_DIFF1")).doubleValue();  //派单时间差timeDiff1 = 派单时间(收单派单的end_) - 报单时间(收单派单的start_)
 					 double startD_diff = ((BigDecimal) map.get("STARTD_DIFF")).doubleValue();  //开始时间 那天的时间所占多少天
-					 double endD_diff = ((BigDecimal) map.get("ENDD_DIFF")).doubleValue();  //结束时间 那天的时间所占多少天
+					 double endD_diff = ((BigDecimal) map.get("ENDD_DIFF")).doubleValue();  //结束时间 那天的时间所占多少天*/	
+				 
 					 String start_time =  (String) map.get("START_TIME") ; 
 					 String end_time =  (String) map.get("END_TIME") ; 
 					 
 					//派单时长（单位：工作日）=（派单时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
-					 double pdTimeLen = getTimeLen(start_time, end_time, time_Diff1, startD_diff, endD_diff);
+					 //double pdTimeLen = getTimeLen(start_time, end_time, time_Diff1, startD_diff, endD_diff);
+					 double pdTimeLen = (Double) thismethod.invoke(bean, start_time,end_time);
 					 xdProcessTaskAssignee.setPdTimeLen(pdTimeLen);
-				 }
+		//		 }
 				 
 				 //计算流程时长
-				 if((BigDecimal) map.get("TIME_DIFF2") != null){
-					 double time_Diff2 = ((BigDecimal) map.get("TIME_DIFF2")).doubleValue();  //流程时间差timeDiff2 = 当前时间 - 报单时间(收单派单的start_)
+			//	 if((BigDecimal) map.get("TIME_DIFF2") != null){
+					 /*double time_Diff2 = ((BigDecimal) map.get("TIME_DIFF2")).doubleValue();  //流程时间差timeDiff2 = 当前时间 - 报单时间(收单派单的start_)
 					 double startD_diff = ((BigDecimal) map.get("STARTD_DIFF")).doubleValue();  //开始时间 那天的时间所占多少天
-					 double currD_diff = ((BigDecimal) map.get("CURRD_DIFF")).doubleValue();  //当前时间 当天天的时间所占多少天
-					 String start_time =  (String) map.get("START_TIME") ; 
+					 double currD_diff = ((BigDecimal) map.get("CURRD_DIFF")).doubleValue();  //当前时间 当天天的时间所占多少天 */	
+				
+				//	 String start_time =  (String) map.get("START_TIME") ; 
 					 String curr_time = (String) map.get("CURR_TIME") ; 
 					 
 					//流程时长（单位：工作日）=（当前时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
-					 double lcTimeLen = getTimeLen(start_time, curr_time, time_Diff2, startD_diff, currD_diff);
+					// double lcTimeLen = getTimeLen(start_time, curr_time, time_Diff2, startD_diff, currD_diff);
+					 double lcTimeLen = (Double) thismethod.invoke(bean, start_time,curr_time);
 					 xdProcessTaskAssignee.setLcTimeLen(lcTimeLen);
-				 }
+			//	 }
 				 
 			 }
 		}
@@ -782,6 +794,7 @@ public class XdProcessAction   extends BaseAction {
 			Struts2Utils.renderText(info);
 		}
 	}
+	
 
 	
 }
