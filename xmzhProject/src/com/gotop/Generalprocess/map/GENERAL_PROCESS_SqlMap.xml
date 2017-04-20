@@ -322,8 +322,8 @@ FROM
                             t4.rate_float_scale,
                             case
 				               when t4.basic_rate_float='0' then 0 
-				               when t4.basic_rate_float='1' then abs(t4.rate_float_scale)
-				               when t4.basic_rate_float='2' then (-1)*abs(t4.rate_float_scale)
+				               when t4.basic_rate_float='1' then abs(replace(t4.rate_float_scale,'%',''))
+				               when t4.basic_rate_float='2' then -1*abs(replace(t4.rate_float_scale,'%',''))
 				             end as basic_rate,
                             t4.currency,
                             t4.apply_bal/10000 AS apply_bal,

@@ -24,7 +24,7 @@
    
     <result column="CUST_GRADE" property="cust_grade" jdbcType="VARCHAR" />
         <result column="BASIC_RATE_FLOAT" property="basic_rate_float" jdbcType="VARCHAR" />
-        <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="DECIMAL" />
+        <result column="RATE_FLOAT_SCALE" property="rate_float_scale" jdbcType="VARCHAR" />
   </resultMap>
   
   
@@ -72,7 +72,7 @@
       #mortgageTime:VARCHAR#, #receiveTime:VARCHAR#, #applicationTime:VARCHAR#,
       #issuedTime:VARCHAR#, #supportCategory:VARCHAR#, #supportMoney:VARCHAR#, #risk:VARCHAR#,
       #processingOpinion:VARCHAR#,#custName:VARCHAR#,#supportMoneyType:VARCHAR#,#oneCategory:VARCHAR#,#loanCategory:VARCHAR#,#yesOrNotRisk:VARCHAR#,
-      #cust_grade:VARCHAR#, #basic_rate_float:VARCHAR#, abs(#rate_float_scale:DECIMAL#))
+      #cust_grade:VARCHAR#, #basic_rate_float:VARCHAR#, #rate_float_scale:VARCHAR#  )
   </insert>
   
   
@@ -104,7 +104,7 @@
       YESORNOTRISK=#yesOrNotRisk:VARCHAR#,
       CUST_GRADE = #cust_grade:VARCHAR#,
       BASIC_RATE_FLOAT = #basic_rate_float:VARCHAR#,
-      RATE_FLOAT_SCALE = abs(#rate_float_scale:DECIMAL#)
+      RATE_FLOAT_SCALE = #rate_float_scale:VARCHAR#
       
       where  PROCESSMODELID = #processModelId:DECIMAL:-9999#
     

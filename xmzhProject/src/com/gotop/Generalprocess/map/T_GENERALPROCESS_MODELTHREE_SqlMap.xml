@@ -70,4 +70,28 @@
     from T_GENERALPROCESS_MODELTHREE t
     where PROCESSMODELID = #processModelId#
   </select>
+  
+  <!-- 查询报单时间 -->
+  <select id="queryReportTime" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+    select case
+         when TT.Pre_Task_Name = '受理调查' then
+          to_char(TT.START_, 'yyyy-MM-dd hh24:mi:ss')
+         else
+          to_char(sysdate, 'yyyy-MM-dd hh24:mi:ss')
+       end as reporttime
+  from (select t.execution_,
+               t.activity_name_,
+               t.start_,
+               t.end_,
+               t2.activity_name_ as pre_task_name
+          from JBPM4_HIST_ACTINST      t,
+               T_PROCESS_TASK_ASSIGNEE t1,
+               JBPM4_HIST_ACTINST      t2
+         where t.execution_ = #flow_id#
+           and t.activity_name_ = #taskName#
+           and t.execution_ = t1.execution_id
+           and t.htask_ = t1.next_task_id
+           and t1.execution_id = t2.execution_
+           and t1.pre_task_id = t2.htask_) TT
+    </select>
 </sqlMap>

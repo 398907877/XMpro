@@ -23,6 +23,8 @@
 		<th nheight="34" width="100" align="center" class="form_label">币种</th>
 		<th nheight="34" width="100" align="center" class="form_label">申请金额（万元）</th>
 		<th nheight="34" width="100" align="center" class="form_label">支用类别</th>
+		<th nheight="34" width="100" align="center" class="form_label">基准利率浮动方向</th>
+		<th nheight="34" width="100" align="center" class="form_label">利率浮动比例</th>
 		<th nheight="34" width="100" align="center" class="form_label">当前节点名称</th>
 		<th nheight="34" width="100" align="center" class="form_label">当前节点办理人</th>
 		<th nheight="34" width="100" align="center" class="form_label">当前处理人机构</th>
@@ -55,6 +57,12 @@
 		      </td>
 		      <td style="vnd.ms-excel.numberformat:@">
 			   <d:write iterateId="id1" property="supportCategory"  dictTypeId="PROCESS_pay"/>
+		      </td>
+		      <td style="vnd.ms-excel.numberformat:@">
+			   <d:write iterateId="id1" dictTypeId="PROCESS_BASICRATEFLOAT" property="basic_rate_float"  />
+		      </td>
+		      <td style="vnd.ms-excel.numberformat:@">
+				<b:write iterateId="id1" property="rate_float_scale" /> 
 		      </td>
 		      <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="currentActivityName" />

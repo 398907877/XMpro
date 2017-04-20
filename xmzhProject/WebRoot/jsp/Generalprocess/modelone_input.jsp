@@ -207,7 +207,7 @@
                                                   利率浮动比例：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:130px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"  />	
+         <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:60px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"  />	%
         </td>
       </tr>
        <tr>
@@ -384,6 +384,12 @@
         var submitter; 
 		var currenUser;
 		var flowId=$("#executionId");
+
+		if($("#basic_rate_float").val()=="0"){ //初始化数据后，若浮动方向为“不变”，则利率比例 不可输入
+			 
+		  	   $("#rate_float_scale").attr("readonly","true");
+		  	   $("#rate_float_scale").val(0);
+		     }
 		
 
 		
@@ -487,6 +493,7 @@
  
  show('${taskAssgineeDto.fxJson}');
  $(document).ready(function(){
+
 	 //获取当前登录者的上级机构code
 	 var orgcode = '${sessionScope.login_user.orgcode}';
 	 $.ajax({
@@ -635,6 +642,7 @@ function initPlanCell20(){
     		          }
 
     		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim());
+    		   		
     		             
     	    		if(value!="1"){  //执行 提交
 
@@ -867,7 +875,9 @@ function initPlanCell20(){
         	   $("#rate_float_scale").val(0);
            }else{  //其他为可输入
         	   $("#rate_float_scale").attr("readonly","");
-        	   $("#rate_float_scale").val("");
+        	   if($("#rate_float_scale").val() == 0){
+        		   $("#rate_float_scale").val("");
+            	}
            }
 		}
  </script>

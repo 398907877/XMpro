@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -344,5 +345,22 @@ public class TGeneralprocessModelthreeService implements ITGeneralprocessModelth
 			log.error("获取任务实体", e);
 		}
 		return taskAssgineeDto;
+	}
+
+	@Override
+	public List queryReportTime(ProcessModelThree modelThree) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(modelThree != null){
+			if(modelThree.getFlow_id() != null && !"".equals(modelThree.getFlow_id())){
+				map.put("flow_id", modelThree.getFlow_id());
+			}
+			if(modelThree.getTaskName() != null && !"".equals(modelThree.getTaskName())){
+				map.put("taskName", modelThree.getTaskName());
+			}
+		}
+		
+		List list = this.tGeneralprocessModelthreeDAO.queryReportTime(map);
+		return list;
 	}
 }

@@ -208,9 +208,25 @@ public class TGeneralprocessModelthreeAction extends BaseAction {
 	private TaskAssgineeDto taskAssgineeDto;
 
 	/**
-	 * isView :1、为只读状态， 默认为空
+	 * isView :1、为只读状态， 默认为空; （用于与 模式三 表单显示中的 modelThree判断是否为只读）
 	 */
-	private String isView;
+	private String isView; 
+	
+	/**
+	 * isView2 :1、为只读状态， 默认为空（用于与模式三表单显示中的 modelOne判断是否为只读）
+	 */
+	private String isView2;
+	
+	
+
+	public String getIsView2() {
+		return isView2;
+	}
+
+	public void setIsView2(String isView2) {
+		this.isView2 = isView2;
+	}
+
 
 	/**
 	 * 
@@ -275,8 +291,13 @@ public class TGeneralprocessModelthreeAction extends BaseAction {
 			one.setFlow_Id(businessId);
 			modelOne = this.generalprocessModeloneService.queryModelOne(one);
 			
+			if(modelOne != null && modelOne.getRate_float_scale() != null){
+				modelOne.setRate_float_scale( (modelOne.getRate_float_scale()).replace("%","") );
+			}
+			
 			if(modelOne != null){
 				this.setModelOne(modelOne);
+				this.setIsView2("1");
 			}
 			
 			if(main != null){
@@ -298,13 +319,26 @@ public class TGeneralprocessModelthreeAction extends BaseAction {
 					taskName = taskName1;
 				}
 			}
+			
 			ProcessModelThree newModelThree = new ProcessModelThree();
+			String reportTime = "";
+			
 			if (businessId != null && taskName1 != null) {
 				ProcessModelThree modelThree = new ProcessModelThree();
 				modelThree.setFlow_id(businessId);
 				modelThree.setTaskName(taskName1);
 				newModelThree = this.generalprocessModelthreeService
 						.queryModelThree(modelThree);
+				
+				
+				if(newModelThree == null || (newModelThree != null && newModelThree.getReporttime() == null)){
+					//查不到报单时间时，查询当前 收单派单 上个节点是不是 受理调查，若是 则取 收单派单的start时间，若不是 则取系统当前时间
+					 List list = this.generalprocessModelthreeService.queryReportTime(modelThree);
+					 if(list.size() != 0){
+						 HashMap<String,Object> hp = (HashMap<String, Object>) list.get(0);
+						 reportTime =  (String) hp.get("REPORTTIME");
+					 }
+				}
 			}
 
 			String[] rulesArray = null;
@@ -343,6 +377,14 @@ public class TGeneralprocessModelthreeAction extends BaseAction {
 				map.remove(rm);
 			}
 
+			if(newModelThree == null){
+				newModelThree = new ProcessModelThree();
+				newModelThree.setReporttime(reportTime);
+			}
+			if(newModelThree != null && newModelThree.getReporttime() == null){
+				newModelThree.setReporttime(reportTime);
+			}
+			
 			this.setModelThree(newModelThree);
 
 			List<List<GeneralprocessFieldBean>> beans = GeneralprocessUtil

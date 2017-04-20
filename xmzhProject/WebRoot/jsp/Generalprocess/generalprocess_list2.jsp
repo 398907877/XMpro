@@ -145,9 +145,8 @@
 				<tr>
 				<td class="form_label" align="right" >利率区间：</td>
 					<td colspan="1" >
-					<h:text id="rate_min"   style="width:70px;"   property="generalprocessDto.rate_min"  validateAttr="type=double;"  />
-					到
-					<h:text id="rate_max"   style="width:70px;"   property="generalprocessDto.rate_max"  validateAttr="type=double;"  />
+					<h:text id="rate_min"   style="width:70px;"   property="generalprocessDto.rate_min"  validateAttr="type=double;"  />% —
+					<h:text id="rate_max"   style="width:70px;"   property="generalprocessDto.rate_max"  validateAttr="type=double;"  />%
 					</td>
 					<td class="form_label" align="right" ></td>
 					<td colspan="1" ></td>

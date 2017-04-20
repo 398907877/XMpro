@@ -230,7 +230,7 @@
                                                  利率浮动比例：
         </td>
         <td colspan="1"  style="width:30%">
-           <h:text id="rate_float_scale"  style="width:130px;"  property="modelSix.rate_float_scale"  validateAttr="type=double;fracDigit=2;allowNull=true;" />	
+           <h:text id="rate_float_scale"  style="width:60px;"  property="modelSix.rate_float_scale"  validateAttr="type=double;fracDigit=2;allowNull=true;" />%	
         </td>
       </tr>
        <tr>
@@ -343,6 +343,12 @@ $(function (){
     var submitter; 
 	var currenUser;
 	var flowId=$("#executionId");
+
+	if($("#basic_rate_float").val()=="0"){ //初始化数据后，若浮动方向为“不变”，则利率比例 不可输入
+		 
+	  	   $("#rate_float_scale").attr("readonly","true");
+	  	   $("#rate_float_scale").val(0);
+	     }
 	
 
 	
@@ -759,7 +765,9 @@ $(function(){
     	   $("#rate_float_scale").val(0);
        }else{  //其他为可输入
     	   $("#rate_float_scale").attr("readonly","");
-    	   $("#rate_float_scale").val("");
+    	   if($("#rate_float_scale").val() == 0){
+    		   $("#rate_float_scale").val("");
+        	}
        }
 	}
 </script>

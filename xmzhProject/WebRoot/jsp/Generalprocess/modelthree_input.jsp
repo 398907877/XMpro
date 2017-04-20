@@ -16,30 +16,14 @@
   <body>
   <div id='showdiv'>
     	</div>
-    <h:form name="form1" id="form1" action="" method="post" enctype="multipart/form-data" onsubmit="return checkForm(this);">
-        
-        <h:hidden id="businessKey" name="taskAssgineeDto.businessKey" property="taskAssgineeDto.businessKey"/>
-        <h:hidden id="nextTaskId" name="taskAssgineeDto.nextTaskId" property="taskAssgineeDto.nextTaskId"/>
-        <h:hidden id="executionId" name="taskAssgineeDto.executionId" property="taskAssgineeDto.executionId"/>
-        <h:hidden id="businessType" name="taskAssgineeDto.businessType" property="taskAssgineeDto.businessType"/>
-        <h:hidden id="taskAssingee" name="taskAssgineeDto.taskAssingee" property="taskAssgineeDto.taskAssingee"/>
-        <h:hidden id="processTaskAssigneeId" name="taskAssgineeDto.processTaskAssigneeId" property="taskAssgineeDto.processTaskAssigneeId"/>
-        <h:hidden id="parentId" name="taskAssgineeDto.parentId" property="taskAssgineeDto.parentId"/>
-        <h:hidden id="isChild" name="taskAssgineeDto.isChild" property="taskAssgineeDto.isChild"/>
-        <h:hidden id="preTaskAssingee" name="taskAssgineeDto.preTaskAssingee" property="taskAssgineeDto.preTaskAssingee"/>
-        <h:hidden id="definitionId" name="taskAssgineeDto.definitionId" property="taskAssgineeDto.definitionId"/>
-        
-        <h:hidden id="processModelId" name="modelThree.processModelId" property="modelThree.processModelId"/>
-		<h:hidden id="taskName" name="modelThree.taskName" property="modelThree.taskName"/>
 		
-		<h:hidden id="modelOneId" name="modelOne.processModelId" property="modelOne.processModelId"/>
+		<h:hidden id="modelOneId" name="modelOne.processModelId" property="modelOne.processModelId"  />
 		<h:hidden id="modelOneTaskName" name="modelOne.taskName" property="modelOne.taskName"/>
 		<h:hidden id="modelOneFlowId" name="modelOne.flow_Id" property="modelOne.flow_Id"/>
 		<h:hidden id="modelOneCreateName" name="modelOne.create_name" property="modelOne.create_name"/>
 		<h:hidden id="modelOneTime" name="modelOne.create_time" property="modelOne.create_time"/>
 		
-		<h:hidden id="beginAssingee" name="taskAssgineeDto.beginAssingee" property="taskAssgineeDto.beginAssingee"/>
-		<h:hidden id="beginOrg" name="taskAssgineeDto.beginOrg" property="taskAssgineeDto.beginOrg"/>
+<!-- 模式一 显示内容 -->		
 	<table id="modelOneTb" align="center" border="0" width="100%" class="form_table" >
       <tr>
          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:50px;background-color: rgb(145, 186, 221);" >
@@ -49,12 +33,12 @@
       <tr>
       	<td class="form_label" align="right" style="width:120px;" >受理支行<br>（一级选项）</td>
       	<td colspan="1">
-         <h:text property="modelOne.orgNameOne" id="orgNameOne" validateAttr="allowNull=false" style="width:130px;" readonly="true"/><font style="color: red">*</font>
+         <h:text property="modelOne.orgNameOne" id="orgNameOne" validateAttr="allowNull=false" style="width:130px;" readonly="true"  disabled="true" /><font style="color: red">*</font>
          <h:hidden property="modelOne.orgCodeOne" id="orgCodeOne"/>	
       	</td>
      	<td class="form_label" align="right" style="width:120px;" >受理支行<br>（二级选项）</td>
      	<td colspan="3">
-        <h:text id="orgNameTwo" property="modelOne.orgNameTwo" readonly="true"/>
+        <h:text id="orgNameTwo" property="modelOne.orgNameTwo" readonly="true"   disabled="true" />
 		<h:hidden id="orgCodeTwo" property="modelOne.orgCodeTwo" />
 	   <!--  <a href="#" onclick="open_slzhej_fun()">选择</a> -->
         </td>
@@ -64,14 +48,14 @@
                                                    主调信贷员：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.creatorName" id="creatorName" style="width:130px;" /><font style="color: red">*</font>	
+         <h:text property="modelOne.creatorName" id="creatorName" style="width:130px;"  disabled="true" /><font style="color: red">*</font>	
          <h:hidden id="creator" property="modelOne.creator" />
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                   辅调信贷员：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.fdxdy" id="fdxdy" style="width:130px;" /><font style="color: red">*</font>	
+         <h:text property="modelOne.fdxdy" id="fdxdy" style="width:130px;"  disabled="true"  /><font style="color: red">*</font>	
         </td>
       </tr>
        <tr>
@@ -79,24 +63,24 @@
                                                    营业主管：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.yxzg" id="yxzg" style="width:130px;" /><font style="color: red">*</font>	
+         <h:text property="modelOne.yxzg" id="yxzg" style="width:130px;"  disabled="true"  /><font style="color: red">*</font>	
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                    营销人员：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.yxry" id="yxry" style="width:130px;" />	
+         <h:text property="modelOne.yxry" id="yxry" style="width:130px;"  disabled="true"  />	
         </td>
       	</tr>
        <tr>
      	<td class="form_label" align="right" style="width:120px;">客户姓名：</td>
      	<td>
-	     	 <h:text property="modelOne.cust_Name" id="cust_Name"  style="width:130px;" />
+	     	 <h:text property="modelOne.cust_Name" id="cust_Name"  style="width:130px;"  disabled="true"  />
 	     	 <font style="color: red;">*</font>
      	</td>
      	<td class="form_label" align="right" style="width:120px;">合作机构：</td>
      	<td>
-	     	 <h:text property="modelOne.coOrganization" id="coOrganization"  style="width:130px;" />
+	     	 <h:text property="modelOne.coOrganization" id="coOrganization"  style="width:130px;"  disabled="true"  />
      	</td>
       </tr>
        <tr>
@@ -104,13 +88,13 @@
                                                  申请金额：
         </td>
         <td colspan="1">
-         <h:text property="modelOne.apply_bal" id="apply_bal" validateAttr="type=float" style="width:130px;" /><font style="color: red">*</font>	
+         <h:text property="modelOne.apply_bal" id="apply_bal" validateAttr="type=float" style="width:130px;"  disabled="true"  /><font style="color: red">*</font>	
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                    申请币别：
         </td>
 					<td colspan="1">
-						<d:select  id="currency"  dictTypeId="PROCESS_MONEY" property="modelOne.currency"></d:select>
+						<d:select  id="currency"  dictTypeId="PROCESS_MONEY" property="modelOne.currency"  disabled="true" ></d:select>
 					</td>
       </tr>
        <tr>
@@ -119,7 +103,7 @@
         </td>
         <td colspan="1">
         
-        <select id="oneCategorys" onchange="changeoneCategory()"   required>
+        <select id="oneCategorys" onchange="changeoneCategory()"   required  disabled="true">
          </select>
          <h:hidden property="modelOne.oneCategory"  id="oneCategory" />
          <font style="color: red">*</font>	
@@ -128,7 +112,7 @@
                                                    贷种分类：
         </td>
         <td colspan="1">
-         <select id="loanCategorys" onchange="changeloanCategory()">
+         <select id="loanCategorys" onchange="changeloanCategory()"  disabled="true">
          </select>
          <h:hidden property="modelOne.loanCategory"  id="loanCategory"/>
          
@@ -137,7 +121,7 @@
         <tr>
            	<td class="form_label" align="right" style="width:120px;">是否老顾客：</td>
      	<td colspan="1">
-			<h:select  id="old_Cust"  property="modelOne.old_Cust">
+			<h:select  id="old_Cust"  property="modelOne.old_Cust"  disabled="true" >
 			     <h:option label="否" value="n"/>
 			     <h:option label="是" value="y"/>
 			     
@@ -146,8 +130,8 @@
       
         <td class="form_label" align="right" style="width:120px;">营销人员机构：</td>
      	<td colspan="1">
-       <h:text property="modelOne.yxryjg" id="yxryjg" validateAttr="allowNull=ture" style="width:130px;" readonly="false"  />
-	    <a href="#" onclick="open_slzhej_fun1()">选择</a>
+       <h:text property="modelOne.yxryjg" id="yxryjg" validateAttr="allowNull=ture" style="width:130px;" readonly="false"  disabled="true"  />
+	    <!-- <a href="#" onclick="open_slzhej_fun1()" >选择</a> -->
       
       </tr>
       <tr>
@@ -156,7 +140,7 @@
         </td>
         <td colspan="1">
 
-          <h:text property="modelOne.dywx_Name" id="dywx_Name" style="width:130px;" />	
+          <h:text property="modelOne.dywx_Name" id="dywx_Name" style="width:130px;"  disabled="true"  />	
 
         </td>
         
@@ -165,28 +149,28 @@
         </td>
         <td colspan="1">
         <div id="inputTime">
-	         <w:date  id="survey_Time" submitFormat="yyyy-MM-dd" format="yyyy-MM-dd"  property="modelOne.survey_Time"/>
+	         <w:date  id="survey_Time" submitFormat="yyyy-MM-dd" format="yyyy-MM-dd"  property="modelOne.survey_Time"  disabled="true" />
          </div>
         </td>
       </tr>
                   <tr>
      	<td class="form_label" align="right" style="width:120px;">借款人工作单位：</td>
      	<td>
-	     	 <h:text property="modelOne.borr_Unit" id="borr_Unit" validateAttr="allowNull=ture" style="width:250px;" />
+	     	 <h:text property="modelOne.borr_Unit" id="borr_Unit" validateAttr="allowNull=ture" style="width:250px;"  disabled="true"  />
      	</td>
      	<td class="form_label" align="right" style="width:120px;">借款人配偶工作单位：</td>
      	<td>
-	     	 <h:text property="modelOne.borrSpouse_Unit" id="borrSpouse_Unit" validateAttr="allowNull=ture" style="width:250px;" />
+	     	 <h:text property="modelOne.borrSpouse_Unit" id="borrSpouse_Unit" validateAttr="allowNull=ture" style="width:250px;"  disabled="true"  />
      	</td>
       </tr>
                    <tr>
      	<td class="form_label" align="right" style="width:120px;">共同借款人工作单位：</td>
      	<td>
-	     	 <h:text property="modelOne.comBorr_Unit" id="comBorr_Unit" validateAttr="allowNull=ture" style="width:250px;" />
+	     	 <h:text property="modelOne.comBorr_Unit" id="comBorr_Unit" validateAttr="allowNull=ture" style="width:250px;"  disabled="true"  />
      	</td>
      	<td class="form_label" align="right" style="width:120px;">共同借款人配偶工作单位：</td>
      	<td>
-	     	 <h:text property="modelOne.comBorrSpouse_Unit" id="comBorrSpouse_Unit" validateAttr="allowNull=ture" style="width:250px;" />
+	     	 <h:text property="modelOne.comBorrSpouse_Unit" id="comBorrSpouse_Unit" validateAttr="allowNull=ture" style="width:250px;"  disabled="true"  />
      	</td>
       </tr>
       <tr>
@@ -194,14 +178,14 @@
                                                    基准利率浮动：
         </td>
         <td colspan="1">
-         <d:select    id="basic_rate_float"  dictTypeId="PROCESS_BASICRATEFLOAT"  property="modelOne.basic_rate_float"  nullLabel="请选择"  onchange="rate_judge_fun()"></d:select> 
+         <d:select    id="basic_rate_float"  dictTypeId="PROCESS_BASICRATEFLOAT"  property="modelOne.basic_rate_float"  nullLabel="请选择"  onchange="rate_judge_fun()"  disabled="true"  ></d:select> 
         </td>
         
         <td class="form_label" align="right" style="width:120px;">
                                                  利率浮动比例：
         </td>
         <td colspan="1">
-           <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:130px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"/>	
+           <h:text property="modelOne.rate_float_scale" id="rate_float_scale" style="width:60px;"  validateAttr="type=double;fracDigit=2;allowNull=true;"  disabled="true"  />%	
         </td>
       </tr>
        <tr>
@@ -209,7 +193,7 @@
                                                  客户评级：
         </td>
         <td colspan="1">
-        <h:text id="cust_grade"  style="width:130px;"  property="modelOne.cust_grade"  />	
+        <h:text id="cust_grade"  style="width:130px;"  property="modelOne.cust_grade"  disabled="true"  />	
         </td>
         <td class="form_label" align="right" style="width:120px;">
                                                  
@@ -223,7 +207,7 @@
                      <div id="tag11" style="padding-top:15px;"></div>
                  </td>
        </tr>
-        <tr id="fujian">
+        <!-- <tr id="fujian">
      	<td class="form_label" align="right">附件：</td>
      	<td colspan="3">
 				<input type="button" onclick="addFile11('tabtest11','files2');return false;" value="新增附件" 
@@ -233,23 +217,45 @@
 				<table border=0 id="tabtest11">
 				</table>
      	</td>
-     </tr>
-      
-      
+     </tr> -->
       
       <tr>
      	<td class="form_label" align="right">超限说明：</td>
      	<td colspan="3">
-	     	<h:textarea property="modelOne.content" id="content"  extAttr="class='h80' "  validateAttr="maxLength=512;" rows="4"  style="width:90%;" />
+	     	<h:textarea property="modelOne.content" id="content"  extAttr="class='h80' "  validateAttr="maxLength=512;" rows="4"  style="width:90%;"  disabled="true"  />
      	</td>
       </tr>
       <tr>
      	<td class="form_label" align="right">处理意见：</td>
      	<td colspan="3">
-	     	<h:textarea property="modelOne.hanldOption" id="hanldOption1"  extAttr="class='h80' "  validateAttr="maxLength=512;allowNull=ture" rows="4"  style="width:90%;" />
+	     	<h:textarea property="modelOne.hanldOption" id="hanldOption1"  extAttr="class='h80' "  validateAttr="maxLength=512;allowNull=ture" rows="4"  style="width:90%;"  disabled="true"  />
      	</td>
       </tr>
     </table>
+    
+    
+    
+    
+    <!-- 模式三表单 -->
+<h:form name="form1" id="form1" action="" method="post" enctype="multipart/form-data" onsubmit="return checkForm(this);">
+
+    	<h:hidden id="businessKey" name="taskAssgineeDto.businessKey" property="taskAssgineeDto.businessKey"/>
+        <h:hidden id="nextTaskId" name="taskAssgineeDto.nextTaskId" property="taskAssgineeDto.nextTaskId"/>
+        <h:hidden id="executionId" name="taskAssgineeDto.executionId" property="taskAssgineeDto.executionId"/>
+        <h:hidden id="businessType" name="taskAssgineeDto.businessType" property="taskAssgineeDto.businessType"/>
+        <h:hidden id="taskAssingee" name="taskAssgineeDto.taskAssingee" property="taskAssgineeDto.taskAssingee"/>
+        <h:hidden id="processTaskAssigneeId" name="taskAssgineeDto.processTaskAssigneeId" property="taskAssgineeDto.processTaskAssigneeId"/>
+        <h:hidden id="parentId" name="taskAssgineeDto.parentId" property="taskAssgineeDto.parentId"/>
+        <h:hidden id="isChild" name="taskAssgineeDto.isChild" property="taskAssgineeDto.isChild"/>
+        <h:hidden id="preTaskAssingee" name="taskAssgineeDto.preTaskAssingee" property="taskAssgineeDto.preTaskAssingee"/>
+        <h:hidden id="definitionId" name="taskAssgineeDto.definitionId" property="taskAssgineeDto.definitionId"/>
+        
+        <h:hidden id="beginAssingee" name="taskAssgineeDto.beginAssingee" property="taskAssgineeDto.beginAssingee"/>
+		<h:hidden id="beginOrg" name="taskAssgineeDto.beginOrg" property="taskAssgineeDto.beginOrg"/>
+        
+        <h:hidden id="processModelId" name="modelThree.processModelId" property="modelThree.processModelId"/>
+		<h:hidden id="taskName" name="modelThree.taskName" property="modelThree.taskName"/> 
+     
 	<table align="center" border="0" width="100%" class="form_table" >
        <tr>
          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:50px;background-color: rgb(145, 186, 221);" >
@@ -261,7 +267,8 @@
       		 <td><d:select dictTypeId="ZHPT_ISURGENT" id="isurgent" property="modelThree.isurgent" nullLabel="请选择"/></td> 
       	<td class="form_label" align="right" style="width:10%;">报单时间：</td>
       		 <td colspan="1">
-	         <w:date id="reporttime" submitFormat="yyyy-MM-dd" format="yyyy-MM-dd" allowNull="false" property="modelThree.reporttime"/><font style="color: red">*</font>	
+	         <w:date id="reporttime" submitFormat="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd HH:mm:ss" allowNull="false" property="modelThree.reporttime"  readOnly="true"   style="width:150px;"/><font style="color: red">*</font>
+	         	
         </td>
       </tr>
       <tr>
@@ -480,7 +487,7 @@ $(function (){
 				        success: function (files) {
 					        if(files!=""){
 					         	$.each(files,function( i,item ){
-						         	if('${isView}'!='')
+						         	if('${isView2}'!='')
 					    	        	$("#tag11").fileDown({filename:item.fileName,filevalue:item.fileId});
 						         	else 
 						         		$("#tag11").fileDown({filename:item.fileName,filevalue:item.fileId,remove:1});
@@ -699,7 +706,7 @@ $(function (){
 
 				var rowId2 = 0;
 				function addFile11(tabid,varName){
-					alert("3zhongyou1 ");
+					
 				    var tab,row,td,fName,fId,tdStr;
 				    var zs=$("#tabtest tbody tr").length;
 				    tab = $id(tabid);
@@ -761,7 +768,9 @@ $(function (){
 		        	   $("#rate_float_scale").val(0);
 		           }else{  //其他为可输入
 		        	   $("#rate_float_scale").attr("readonly","");
-		        	   $("#rate_float_scale").val("");
+		        	   if($("#rate_float_scale").val() == 0){
+		        		   $("#rate_float_scale").val("");
+		            	}
 		           }
 				}			
  </script>

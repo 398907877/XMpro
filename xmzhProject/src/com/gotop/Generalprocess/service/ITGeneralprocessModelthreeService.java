@@ -31,4 +31,6 @@ public interface ITGeneralprocessModelthreeService {
 			TaskAssgineeDto taskAssgineeDto,File[] files,String[] filesFileName,File[] files2,String[] files2FileName) throws Exception;
 
 	ProcessModelThree queryModelThree(ProcessModelThree modelThree);
+
+	List queryReportTime(ProcessModelThree modelThree);
 }

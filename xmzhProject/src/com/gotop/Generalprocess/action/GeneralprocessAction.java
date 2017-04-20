@@ -418,6 +418,10 @@ public class GeneralprocessAction extends BaseAction {
 
 				newModelOne = this.generalprocessModeloneService
 						.queryModelOne(modelOne);
+				
+				if(newModelOne != null && newModelOne.getRate_float_scale() != null){
+					newModelOne.setRate_float_scale( (newModelOne.getRate_float_scale()).replace("%","") );
+				}
 			}
 
 			String[] rulesArray = null;
@@ -626,6 +630,12 @@ public class GeneralprocessAction extends BaseAction {
 		MUOUserSession muo = getCurrentOnlineUser();
 		modeType="mod1";
 		try {
+			
+			//若利率浮动比例有值，给它加%
+			if(modelOne != null &&  !"".equals(modelOne.getRate_float_scale())  ){
+				modelOne.setRate_float_scale( modelOne.getRate_float_scale()+"%" );
+			}
+			
 			this.generalProcessService.handleModelOne(muo, modelOne, taskAssgineeDto, files, filesFileName);
 			this.updateProcessMistakes();
 		} catch (Exception e) {

@@ -234,6 +234,10 @@ public class TGeneralprocessModelsixAction extends BaseAction {
         			modelSix.setFlowId(businessId);
         			modelSix.setTaskName(taskName1);
         			newModelSix = this.tGeneralprocessModelsixService.queryModelSixByFlowIdAndTaskName(modelSix);
+        			
+        			if(newModelSix != null && newModelSix.getRate_float_scale() != null){
+        				newModelSix.setRate_float_scale( (newModelSix.getRate_float_scale()).replace("%","") );
+        			}
     			}
     			
     			String[] rulesArray = null;
@@ -294,7 +298,7 @@ public class TGeneralprocessModelsixAction extends BaseAction {
     						modelSix.setBasic_rate_float(modelOne1.getBasic_rate_float());
     					}
     					if(modelOne1.getRate_float_scale() != null){
-    						modelSix.setRate_float_scale(modelOne1.getRate_float_scale());
+    						modelSix.setRate_float_scale(modelOne1.getRate_float_scale().replace("%",""));
     					}
     					
     					isStrat="1";
@@ -373,6 +377,11 @@ public class TGeneralprocessModelsixAction extends BaseAction {
   		String info ="success";
       	MUOUserSession muo = getCurrentOnlineUser();
   		try {
+  		    //若利率浮动比例有值，给它加%
+			if(modelSix != null &&  !"".equals(modelSix.getRate_float_scale())  ){
+				modelSix.setRate_float_scale( modelSix.getRate_float_scale()+"%" );
+			}
+			
   			this.tGeneralprocessModelsixService.handleModelSix(muo,modelSix,taskAssgineeDto,files,filesFileName,"test1","test2");
   			this.updateProcessMistakes();
   		} catch (Exception e) {

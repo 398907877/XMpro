@@ -68,8 +68,8 @@
 					
 					<td class="form_label" align="right" >利率区间：</td>
 					<td colspan="3">
-						<h:text id="rateStart" property="loanRateFloatReport.rateStart"  style="width:80px;"  validateAttr="type=float;" /> —
-						<h:text id="rateEnd" property="loanRateFloatReport.rateEnd"  style="width:80px;"  validateAttr="type=float;" />
+						<h:text id="rateStart" property="loanRateFloatReport.rateStart"  style="width:80px;"  validateAttr="type=float;" />% —
+						<h:text id="rateEnd" property="loanRateFloatReport.rateEnd"  style="width:80px;"  validateAttr="type=float;" />%
 					</td>
 				</tr>
 				

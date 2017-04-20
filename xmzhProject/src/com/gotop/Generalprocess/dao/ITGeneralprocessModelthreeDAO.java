@@ -21,4 +21,6 @@ public interface ITGeneralprocessModelthreeDAO {
 	ProcessModelThree queryModelThreeById(String processModelId);
 
 	void uptModelThree(ProcessModelThree modelThree);
+
+	List queryReportTime(HashMap<String, Object> map);
 }

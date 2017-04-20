@@ -96,7 +96,7 @@ public class ProcessModelOne extends ProcessModel  implements  Serializable {
 	private String   basic_rate_float;
 	
 	@GeneralprocessField(name="利率浮动比例",type="text")
-	private Double   rate_float_scale;
+	private String   rate_float_scale;
 	
 
 	
@@ -310,11 +310,13 @@ public class ProcessModelOne extends ProcessModel  implements  Serializable {
 	}
 
 
-	public Double getRate_float_scale() {
+	
+
+	public String getRate_float_scale() {
 		return rate_float_scale;
 	}
 
-	public void setRate_float_scale(Double rate_float_scale) {
+	public void setRate_float_scale(String rate_float_scale) {
 		this.rate_float_scale = rate_float_scale;
 	}
 
@@ -391,6 +393,9 @@ public class ProcessModelOne extends ProcessModel  implements  Serializable {
 	public void setYxryjg(String yxryjg) {
 		this.yxryjg = yxryjg;
 	}
+	
+	
+	
 	
 	
 }

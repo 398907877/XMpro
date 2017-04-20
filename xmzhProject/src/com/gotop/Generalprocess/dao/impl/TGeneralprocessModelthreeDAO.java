@@ -54,5 +54,11 @@ public class TGeneralprocessModelthreeDAO extends SqlMapClientDao implements ITG
 	public void uptModelThree(ProcessModelThree modelThree) {
 		getSqlMapClientTemplate().update("T_GENERALPROCESS_MODELTHREE_SqlMap.uptModelThree", modelThree);
 	}
+
+	@Override
+	public List queryReportTime(HashMap<String, Object> map) {
+		
+		return queryForList("T_GENERALPROCESS_MODELTHREE_SqlMap.queryReportTime", map);
+	}
    
 }
