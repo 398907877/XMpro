@@ -7,16 +7,16 @@
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="ZDCUSTMANAGER" property="zdCustManager" jdbcType="NUMBER" />
-    <result column="ZHGPDTIMEONE" property="zhgpdTimeOne" jdbcType="NUMBER" />
-    <result column="ZHGPDTIMETWO" property="zhgpdTimeTwo" jdbcType="NUMBER" />
-    <result column="ZHGPDTIMETHREE" property="zhgpdTimeThree" jdbcType="NUMBER" />
-    <result column="REVIEWAPPROVALONETIME" property="reviewApprovalOneTime" jdbcType="NUMBER" />
-    <result column="REVIEWAPPROVALTWOTIME" property="reviewApprovalTwoTime" jdbcType="NUMBER" />
-    <result column="REVIEWAPPROVALTHREEORMORETIME" property="reviewApprovalThreeOrMoreTime" jdbcType="NUMBER" />
-    <result column="ALLPROCESSTIMEONE" property="allProcessTimeOne" jdbcType="NUMBER" />
-    <result column="ALLPROCESSTIMETWO" property="allProcessTimeTwo" jdbcType="NUMBER" />
-    <result column="ZLWZHAPPROVALTIME" property="zlwzhApprovalTime" jdbcType="NUMBER" />
+    <result column="ZDCUSTMANAGER" property="zdCustManager" jdbcType="VARCHAR" />
+    <result column="ZHGPDTIMEONE" property="zhgpdTimeOne" jdbcType="VARCHAR" />
+    <result column="ZHGPDTIMETWO" property="zhgpdTimeTwo" jdbcType="VARCHAR" />
+    <result column="ZHGPDTIMETHREE" property="zhgpdTimeThree" jdbcType="VARCHAR" />
+    <result column="REVIEWAPPROVALONETIME" property="reviewApprovalOneTime" jdbcType="VARCHAR" />
+    <result column="REVIEWAPPROVALTWOTIME" property="reviewApprovalTwoTime" jdbcType="VARCHAR" />
+    <result column="REVIEWAPPROVALTHREEORMORETIME" property="reviewApprovalThreeOrMoreTime" jdbcType="VARCHAR" />
+    <result column="ALLPROCESSTIMEONE" property="allProcessTimeOne" jdbcType="VARCHAR" />
+    <result column="ALLPROCESSTIMETWO" property="allProcessTimeTwo" jdbcType="VARCHAR" />
+    <result column="ZLWZHAPPROVALTIME" property="zlwzhApprovalTime" jdbcType="VARCHAR" />
   </resultMap>
   
   
@@ -32,17 +32,51 @@
        ONECATEGORY,
        LOANCATEGORY,
        CREATORNAME ZDCUSTMANAGER,
-       MAX(PDONE) ZHGPDTIMEONE,
-       MAX(PDTWO) ZHGPDTIMETWO,
-       MAX(PDTHREE) ZHGPDTIMETHREE,
+       DECODE(SUBSTR(TO_CHAR(MAX(PDONE)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(PDONE)),
+              TO_CHAR(MAX(PDONE))) ZHGPDTIMEONE,
+              
+       DECODE(SUBSTR(TO_CHAR(MAX(PDTWO)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(PDTWO)),
+              TO_CHAR(MAX(PDTWO))) ZHGPDTIMETWO,
+                     
+       DECODE(SUBSTR(TO_CHAR(MAX(PDTHREE)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(PDTHREE)),
+              TO_CHAR(MAX(PDTHREE))) ZHGPDTIMETHREE,
+              
+       DECODE(SUBSTR(TO_CHAR(MAX(REVIEWAPPROVALONETIME)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(REVIEWAPPROVALONETIME)),
+              TO_CHAR(MAX(REVIEWAPPROVALONETIME))) REVIEWAPPROVALONETIME,
        
-       MAX(REVIEWAPPROVALONETIME) REVIEWAPPROVALONETIME,
-       MAX(REVIEWAPPROVALTWOTIME) REVIEWAPPROVALTWOTIME,
-       MAX(REVIEWAPPROVALTHREEORMORETIME) REVIEWAPPROVALTHREEORMORETIME,
-            
-       MAX(ALLPROCESSTIMEONE) ALLPROCESSTIMEONE,
-       MAX(ALLPROCESSTIMETWO) ALLPROCESSTIMETWO,
-       MAX(ZLWZHAPPROVALTIME) ZLWZHAPPROVALTIME
+       DECODE(SUBSTR(TO_CHAR(MAX(REVIEWAPPROVALTWOTIME)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(REVIEWAPPROVALTWOTIME)),
+              TO_CHAR(MAX(REVIEWAPPROVALTWOTIME))) REVIEWAPPROVALTWOTIME,
+              
+       DECODE(SUBSTR(TO_CHAR(MAX(REVIEWAPPROVALTHREEORMORETIME)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(REVIEWAPPROVALTHREEORMORETIME)),
+              TO_CHAR(MAX(REVIEWAPPROVALTHREEORMORETIME))) REVIEWAPPROVALTHREEORMORETIME,
+              
+       DECODE(SUBSTR(TO_CHAR(MAX(ALLPROCESSTIMEONE)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(ALLPROCESSTIMEONE)),
+              TO_CHAR(MAX(ALLPROCESSTIMEONE))) ALLPROCESSTIMEONE,  
+              
+       DECODE(SUBSTR(TO_CHAR(MAX(ALLPROCESSTIMETWO)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(ALLPROCESSTIMETWO)),
+              TO_CHAR(MAX(ALLPROCESSTIMETWO))) ALLPROCESSTIMETWO,  
+       
+       DECODE(SUBSTR(TO_CHAR(MAX(ZLWZHAPPROVALTIME)), 1, 1),
+              '.',
+              0 || TO_CHAR(MAX(ZLWZHAPPROVALTIME)),
+              TO_CHAR(MAX(ZLWZHAPPROVALTIME))) ZLWZHAPPROVALTIME  
+      
   FROM (SELECT ORGNAMEONE,
                ORGCODEONE,
                ORGCODETWO,

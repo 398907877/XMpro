@@ -13,16 +13,15 @@ public class TimeLimitConditionReport implements Serializable {
 	private String zdCustManager;
 	private String repTimeStart;
 	private String repTimeEnd;
-	private double zhgpdTimeOne;
-	private double zhgpdTimeTwo;
-	private double zhgpdTimeThree;
-	private double reviewApprovalOneTime;
-	private double reviewApprovalTwoTime;
-	private double reviewApprovalThreeOrMoreTime;
-	private double allProcessTimeOne;
-	private double allProcessTimeTwo;
-	private double zlwzhApprovalTime;
-
+	private String zhgpdTimeOne;
+	private String zhgpdTimeTwo;
+	private String zhgpdTimeThree;
+	private String reviewApprovalOneTime;
+	private String reviewApprovalTwoTime;
+	private String reviewApprovalThreeOrMoreTime;
+	private String allProcessTimeOne;
+	private String allProcessTimeTwo;
+	private String zlwzhApprovalTime;
 	public String getOrgCodeOne() {
 		return orgCodeOne;
 	}
@@ -34,18 +33,6 @@ public class TimeLimitConditionReport implements Serializable {
 	}
 	public void setOrgCodeTwo(String orgCodeTwo) {
 		this.orgCodeTwo = orgCodeTwo;
-	}
-	public String getRepTimeStart() {
-		return repTimeStart;
-	}
-	public void setRepTimeStart(String repTimeStart) {
-		this.repTimeStart = repTimeStart;
-	}
-	public String getRepTimeEnd() {
-		return repTimeEnd;
-	}
-	public void setRepTimeEnd(String repTimeEnd) {
-		this.repTimeEnd = repTimeEnd;
 	}
 	public String getOrgNameOne() {
 		return orgNameOne;
@@ -77,61 +64,75 @@ public class TimeLimitConditionReport implements Serializable {
 	public void setZdCustManager(String zdCustManager) {
 		this.zdCustManager = zdCustManager;
 	}
-	public double getZhgpdTimeOne() {
+	public String getRepTimeStart() {
+		return repTimeStart;
+	}
+	public void setRepTimeStart(String repTimeStart) {
+		this.repTimeStart = repTimeStart;
+	}
+	public String getRepTimeEnd() {
+		return repTimeEnd;
+	}
+	public void setRepTimeEnd(String repTimeEnd) {
+		this.repTimeEnd = repTimeEnd;
+	}
+	public String getZhgpdTimeOne() {
 		return zhgpdTimeOne;
 	}
-	public void setZhgpdTimeOne(double zhgpdTimeOne) {
+	public void setZhgpdTimeOne(String zhgpdTimeOne) {
 		this.zhgpdTimeOne = zhgpdTimeOne;
 	}
-	public double getZhgpdTimeTwo() {
+	public String getZhgpdTimeTwo() {
 		return zhgpdTimeTwo;
 	}
-	public void setZhgpdTimeTwo(double zhgpdTimeTwo) {
+	public void setZhgpdTimeTwo(String zhgpdTimeTwo) {
 		this.zhgpdTimeTwo = zhgpdTimeTwo;
 	}
-	public double getZhgpdTimeThree() {
+	public String getZhgpdTimeThree() {
 		return zhgpdTimeThree;
 	}
-	public void setZhgpdTimeThree(double zhgpdTimeThree) {
+	public void setZhgpdTimeThree(String zhgpdTimeThree) {
 		this.zhgpdTimeThree = zhgpdTimeThree;
 	}
-	public double getReviewApprovalOneTime() {
+	public String getReviewApprovalOneTime() {
 		return reviewApprovalOneTime;
 	}
-	public void setReviewApprovalOneTime(double reviewApprovalOneTime) {
+	public void setReviewApprovalOneTime(String reviewApprovalOneTime) {
 		this.reviewApprovalOneTime = reviewApprovalOneTime;
 	}
-	public double getReviewApprovalTwoTime() {
+	public String getReviewApprovalTwoTime() {
 		return reviewApprovalTwoTime;
 	}
-	public void setReviewApprovalTwoTime(double reviewApprovalTwoTime) {
+	public void setReviewApprovalTwoTime(String reviewApprovalTwoTime) {
 		this.reviewApprovalTwoTime = reviewApprovalTwoTime;
 	}
-	public double getReviewApprovalThreeOrMoreTime() {
+	public String getReviewApprovalThreeOrMoreTime() {
 		return reviewApprovalThreeOrMoreTime;
 	}
 	public void setReviewApprovalThreeOrMoreTime(
-			double reviewApprovalThreeOrMoreTime) {
+			String reviewApprovalThreeOrMoreTime) {
 		this.reviewApprovalThreeOrMoreTime = reviewApprovalThreeOrMoreTime;
 	}
-	public double getAllProcessTimeOne() {
+	public String getAllProcessTimeOne() {
 		return allProcessTimeOne;
 	}
-	public void setAllProcessTimeOne(double allProcessTimeOne) {
+	public void setAllProcessTimeOne(String allProcessTimeOne) {
 		this.allProcessTimeOne = allProcessTimeOne;
 	}
-	public double getAllProcessTimeTwo() {
+	public String getAllProcessTimeTwo() {
 		return allProcessTimeTwo;
 	}
-	public void setAllProcessTimeTwo(double allProcessTimeTwo) {
+	public void setAllProcessTimeTwo(String allProcessTimeTwo) {
 		this.allProcessTimeTwo = allProcessTimeTwo;
 	}
-	public double getZlwzhApprovalTime() {
+	public String getZlwzhApprovalTime() {
 		return zlwzhApprovalTime;
 	}
-	public void setZlwzhApprovalTime(double zlwzhApprovalTime) {
+	public void setZlwzhApprovalTime(String zlwzhApprovalTime) {
 		this.zlwzhApprovalTime = zlwzhApprovalTime;
 	}
+
+	
 	
 	
 	
