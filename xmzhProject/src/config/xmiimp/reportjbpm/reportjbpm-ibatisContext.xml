@@ -57,7 +57,7 @@
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <!--  <bean id="bjErrorNumReportDao" class="com.gotop.reportjbpm.dao.impl.BjErrorNumReportDao" >
+   <bean id="bjErrorNumReportDao" class="com.gotop.reportjbpm.dao.impl.BjErrorNumReportDao" >
     <property name="sqlMapClient" ref="sqlMapClient" />
-  </bean> -->
+  </bean> 
 </beans>
