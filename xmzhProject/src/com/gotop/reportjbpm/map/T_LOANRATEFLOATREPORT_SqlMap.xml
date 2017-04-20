@@ -3,116 +3,146 @@
 <sqlMap namespace="T_LOANRATEFLOATREPORT_SqlMap">
  <resultMap id="LoanRateFloatReport" class="com.gotop.reportjbpm.model.LoanRateFloatReport" >
     <!--Bean方式返回全表-->
-    <result column="END_" property="makeLoansDate" jdbcType="VARCHAR" />
     <result column="ORGNAMEONE" property="orgNameOne" jdbcType="VARCHAR" />
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="NEXT_OPR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
     <result column="YXZG" property="yyzg" jdbcType="VARCHAR" />
-    <result column="SUPPORT_MONEY" property="amount" jdbcType="VARCHAR" />
+   <result column="NUMS" property="nums" jdbcType="VARCHAR" /> 
+    <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
   </resultMap>
 	
 	<!-- 查询贷款利率浮动统计 -->
 	<select id="queryLoanRateFloatReport" parameterClass="java.util.HashMap" resultMap="LoanRateFloatReport">
-	SELECT
-          EXECUTION_,
-          ACTIVITY_NAME_,
-          substr(to_char(END_, 'yyyy-mm-dd hh24miss') ,0,10) as END_,
-          OPERATORNAME,
-          ORGCODEONE,
-          ORGCODETWO,
-          CREATOR,
-          YXZG,
-          ONECATEGORY,
-          LOANCATEGORY,
-          RATE_FLOAT_SCALE,
-          SUPPORT_MONEY,
-          NEXT_OPR_NAME,
-          ( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODEONE) AS ORGNAMEONE,
-          ( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODETWO) AS ORGNAMETWO
-         
-        FROM
-          (
-            SELECT
-              tt.EXECUTION_,
-              tt.ACTIVITY_NAME_,
-              tt.END_,
-              t2.OPERATORNAME,
-              t3.ORGCODEONE,
-              t3.ORGCODETWO,
-              t3.CREATOR,
-              t3.YXZG,
-              t3.ONECATEGORY,
-              t3.LOANCATEGORY,
-              t4.RATE_FLOAT_SCALE,
-              t4.SUPPORT_MONEY,
-              t5.EMPNAME as NEXT_OPR_NAME
-           
-            FROM
-              JBPM4_HIST_ACTINST tt
-            LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
-            LEFT JOIN ac_operator t2 ON t1.ASSIGNEE_ = t2.OPERATORID
-            LEFT JOIN T_GENERALPROCESS_MODELONE t3 ON tt.EXECUTION_ = t3.flow_id
-            LEFT JOIN T_GENERALPROCESS_MODELSIX t4 ON tt.EXECUTION_ = t4.flow_id
-            LEFT JOIN OM_EMPLOYEE t5 ON t3.CREATOR = t5.EMPID
-            WHERE
-              HPROCI_ IN (
-                SELECT
-                  DBID_
-                FROM
-                  JBPM4_HIST_PROCINST T
-                WHERE
-                  T .PROCDEFID_ IN (
-                    SELECT
-                      DEFINITION_ID
-                    FROM
-                      T_PROCESS_CONFIG T
-                    WHERE
-                      BUSINESS_TYPE = '88'
-                  )
-              )
-          )
-        WHERE
-          end_ IS NOT NULL
-          and  ACTIVITY_NAME_   =  '放款操作'
-	   <isNotNull prepend="and" property="startTime" >
-         <![CDATA[
-            END_ >= to_date('$startTime$','yyyy-mm-dd')
-               ]]>
-      </isNotNull>
-      <isNotNull prepend="and" property="endTime" >
-        <![CDATA[
-            END_ <= to_date('$endTime$','yyyy-mm-dd')
-               ]]>
-      </isNotNull>
-      <isNotNull prepend="and" property="orgCodeOne" >
-           ORGCODEONE = '$orgCodeOne$'
-      </isNotNull>
-      <isNotNull prepend="and" property="orgCodeTwo" >
-           ORGCODETWO = '$orgCodeTwo$'
-      </isNotNull>
-      <isNotNull prepend="and" property="oneCategory" >
-            ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
-           	 and dic.dictid in($oneCategory$))
-      </isNotNull>
-      <isNotNull prepend="and" property="loanCategory" >
-          LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
-           	 and dic.dictid in($loanCategory$))
-      </isNotNull>
-      <isNotNull prepend="and" property="creatorName" >
-           NEXT_OPR_NAME like '%'||'$creatorName$'||'%'
-      </isNotNull>
-      <isNotNull prepend="and" property="yxzg" >
-           YXZG like '%'||'$yxzg$'||'%'
-      </isNotNull>
-      <isNotNull prepend="and" property="rateStart" >
-         <![CDATA[RATE_FLOAT_SCALE>=#rateStart#]]>
-      </isNotNull>
-      <isNotNull prepend="and" property="rateEnd" >
-         <![CDATA[RATE_FLOAT_SCALE<=#rateEnd#]]>
-      </isNotNull>
-      ORDER BY  END_, LOANCATEGORY ASC
+select * from	(select TT2.*,
+		       o1.orgname as orgnameone,
+		       o2.orgname as orgnametwo
+		  from (select TT.orgcodeone,
+		               TT.orgcodetwo,
+		               TT.onecategory,
+		               TT.loancategory,
+		               TT.creator_name,
+		               TT.yxzg,
+		               count(*) as nums,
+		               sum(TT.apply_bal) as amount
+		          from (select M.*,
+		                       case
+		                         when M.basic_rate_float = '0' then
+		                          0
+		                         when M.basic_rate_float = '1' then
+		                          abs(replace(M.rate_float_scale, '%', ''))
+		                         when M.basic_rate_float = '2' then
+		                          -1 * abs(replace(M.rate_float_scale, '%', ''))
+		                       end as basic_rate,
+		                       N.makeLoans_Date
+		                
+		                  from (select g1.execution_id,
+		                               g1.orgcodeone,
+		                               g1.orgcodetwo,
+		                               g1.onecategory,
+		                               g1.loancategory,
+		                               g1.creator_name,
+		                               g1.yxzg,
+		                               g1.apply_bal,
+		                               decode(g1.basic_rate_float,
+		                                      NULL,
+		                                      g6.basic_rate_float,
+		                                      g1.basic_rate_float) AS basic_rate_float,
+		                               decode(g1.rate_float_scale,
+		                                      NULL,
+		                                      g6.rate_float_scale,
+		                                      g1.rate_float_scale) AS rate_float_scale
+		                        
+		                          from (select t1.execution_id,
+		                                       t4.orgcodeone,
+		                                       t4.orgcodetwo,
+		                                       t4.onecategory,
+		                                       t4.loancategory,
+		                                       e.empname  as creator_name,
+		                                       t4.yxzg,
+		                                       t4.apply_bal,
+		                                       t4.basic_rate_float,
+		                                       t4.rate_float_scale
+		                                  from T_PROCESS_BUSINESS        t1,
+		                                       JBPM4_HIST_PROCINST       t2,
+		                                       T_PROCESS_CONFIG          t3,
+		                                       T_GENERALPROCESS_MODELONE t4,
+		                                       om_employee e
+		                                 where t1.execution_id = t2.id_
+		                                   and t2.procdefid_ = t3.definition_id
+		                                   and t1.execution_id = t4.flow_id
+		                                   and t4.creator = e.empid
+		                                   and t1.business_type = '88'
+		                                   and t3.state = '01'
+		                                   and t4.orgcodetwo is not null) g1
+		                          left join T_GENERALPROCESS_MODELSIX g6
+		                            on g1.execution_id = g6.flow_id) M
+		                  left join
+		                
+		                 (select T.execution_,
+		                        to_char(T.END_, 'yyyy-mm-dd') as makeLoans_Date
+		                   from (SELECT ac.*,
+		                                row_number() over(partition by ac.execution_ order by end_ desc) as rn
+		                           FROM JBPM4_HIST_ACTINST ac
+		                          where ac.activity_name_ = '放款操作') T
+		                  where T.rn = 1) N
+		                    on M.execution_id = N.execution_) TT
+		                    where 1=1
+		                    <isNotNull prepend="and" property="orgCodeOne" >
+						           TT.ORGCODEONE = '$orgCodeOne$'
+						      </isNotNull>
+						      <isNotNull prepend="and" property="orgCodeTwo" >
+						           TT.ORGCODETWO = '$orgCodeTwo$'
+						      </isNotNull>
+						      <isNotNull prepend="and" property="oneCategory" >
+						            TT.ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
+						           	 and dic.dictid in($oneCategory$))
+						      </isNotNull>
+						      <isNotNull prepend="and" property="loanCategory" >
+						          TT.LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
+						           	 and dic.dictid in($loanCategory$))
+						      </isNotNull>
+						      <isNotNull prepend="and" property="creatorName" >
+						           TT.CREATOR_NAME like '%'||'$creatorName$'||'%'
+						      </isNotNull>
+						      <isNotNull prepend="and" property="yxzg" >
+						           TT.YXZG like '%'||'$yxzg$'||'%'
+						      </isNotNull>
+						      <isNotNull prepend="and" property="rateStart" >
+						         <![CDATA[ TT.BASIC_RATE>=#rateStart#]]>
+						      </isNotNull>
+						      <isNotNull prepend="and" property="rateEnd" >
+						         <![CDATA[ TT.BASIC_RATE<=#rateEnd#]]>
+						      </isNotNull>
+						      <isNotNull prepend="and" property="startTime" >
+						         <![CDATA[
+						            TT.MAKELOANS_DATE >= '$startTime$'
+						               ]]>
+						      </isNotNull>
+						      <isNotNull prepend="and" property="endTime" >
+						        <![CDATA[
+						            TT.MAKELOANS_DATE <= '$endTime$'
+						               ]]>
+						      </isNotNull>
+						      
+		         group by TT.orgcodeone,
+		                  TT.orgcodetwo,
+		                  TT.onecategory,
+		                  TT.loancategory,
+		                  TT.creator_name,
+		                  TT.yxzg) TT2,
+		       om_organization o1,
+		       om_organization o2
+		 where TT2.orgcodeone = o1.orgcode
+		   and TT2.orgcodetwo = o2.orgcode
+		   )
+		 order by orgnameone,
+			          orgnametwo,
+			          onecategory,
+			          loancategory,
+			          creator_name,
+			          yxzg
 	</select>
 
 </sqlMap>

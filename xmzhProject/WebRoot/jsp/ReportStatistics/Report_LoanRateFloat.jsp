@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@include file="/common/common.jsp"%>
 <%@include file="/common/skins/skin0/component.jsp"%>
+<%@page import="com.gotop.reportjbpm.model.LoanRateFloatReport" %>
 <h:css href="/css/style1/style-custom.css" />
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
 
@@ -18,10 +19,10 @@
                      <td class="form_label" align="right" >放款日期：</td>
 					<td >
 					从
-					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="makeLoansDateStart" name="loanRateFloatReport.makeLoansDateStart" 
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="makeLoansDateStart" name="loanRateFloatReport.makeLoansDateStart" 
 					property="loanRateFloatReport.makeLoansDateStart" /> 
 					到
-					<w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="makeLoansDateEnd" name="loanRateFloatReport.makeLoansDateEnd" 
+					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="makeLoansDateEnd" name="loanRateFloatReport.makeLoansDateEnd" 
 					property="loanRateFloatReport.makeLoansDateEnd" /></td>
 					
                     <td class="form_label" align="right" >一级支行：</td>
@@ -132,7 +133,15 @@
                            <l:iterate property="loanRateFloatReportList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1"    property="makeLoansDate" />
+									<%
+									LoanRateFloatReport loanRateFloatReport = (LoanRateFloatReport) request.getAttribute("loanRateFloatReport");
+									if( !"".equals(loanRateFloatReport.getMakeLoansDateStart()) || !"".equals(loanRateFloatReport.getMakeLoansDateEnd() )){
+									%>
+										${loanRateFloatReport.makeLoansDateStart} ~ ${loanRateFloatReport.makeLoansDateEnd}
+									<%
+									}
+									%>
+									
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="orgNameOne" />
