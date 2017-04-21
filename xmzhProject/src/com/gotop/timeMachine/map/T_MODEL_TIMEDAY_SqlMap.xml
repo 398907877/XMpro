@@ -304,7 +304,7 @@ select operatorname from ac_operator where operatorid =
     where t.request_id = #request_id:DECIMAL:-9999#
   </update>
   
-  <!-- 查询工作时间维护 表-->
+  <!-- 查询超限报表的更新时间-->
   <select id="queryReportUpdatetime" resultClass="java.lang.String"   >
 	 select to_char(max(handle_time), 'yyyy/MM/dd hh24:mi:ss') as update_time
    from (select *

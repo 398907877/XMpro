@@ -1,5 +1,7 @@
 package com.gotop.reportjbpm;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,16 +10,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gotop.Generalprocess.util.SpringContextUtil;
 import com.gotop.jbpm.model.WorkTimeMainBean;
 import com.gotop.jbpm.model.WorkTimeSideBean;
 import com.gotop.timeMachine.model.TModelTimeday;
 import com.gotop.timeMachine.service.ITModelTimedayService;
 
-
+/**
+ * 公用的工具类
+ * @author lmt
+ *
+ */
 public class MyUtil {
 
 	protected     ITModelTimedayService tModelTimedayService;
-
 
 	public ITModelTimedayService gettModelTimedayService() {
 		return tModelTimedayService;
@@ -25,6 +31,26 @@ public class MyUtil {
 
 	public void settModelTimedayService(ITModelTimedayService tModelTimedayService) {
 		this.tModelTimedayService = tModelTimedayService;
+	}
+	
+	
+	/**
+	 * 调用公用方法计算时间差的  使用 例子！！！仅供调用参考！！
+	 */
+	public  void demo() throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		
+		//前提需要在对应的actionContext这个spring文件里 配置MyUtil
+    	Object bean = SpringContextUtil.getBean("myUtil"); 
+    	Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
+    	
+    	//计算消耗的工作时间(单位：小时)
+    	//Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forHours", String.class,String.class);
+    	
+    	//计算消耗的工作时间(单位：工作日)
+    	Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forDays", String.class,String.class);
+    	
+    	Double expendtime = (Double) thismethod.invoke(bean, "20170101080000", "20170102080000");
+    	
 	}
 
 	/**

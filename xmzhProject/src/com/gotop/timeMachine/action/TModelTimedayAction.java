@@ -3,6 +3,7 @@ package com.gotop.timeMachine.action;
 import com.fr.script.function.ARRAY;
 import com.gotop.Generalprocess.model.ProcessModelOne;
 import com.gotop.Generalprocess.model.ProcessModelThree;
+import com.gotop.Generalprocess.util.SpringContextUtil;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.crm.util.MUO;
 import com.gotop.jbpm.model.NodeTimeLimitBean;
@@ -23,6 +24,7 @@ import com.primeton.utils.AjaxParam;
 import com.primeton.utils.Page;
 import com.primeton.utils.pageCondExpand;
 
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -145,6 +147,11 @@ public class TModelTimedayAction extends BaseAction {
      */
     public void handleTimeReport() throws Exception {
     	
+    	//前提需要在对应的actionContext这个spring文件里 配置MyUtil
+    	Object bean = SpringContextUtil.getBean("myUtil"); 
+    	Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
+    	Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forHours", String.class,String.class);
+    			
     	Long request_id = (Long) this.tModelTimedayService.queryRequestId();
     	
       // 1.查询出所有的信贷流程，当前节点必须为“结束
@@ -219,7 +226,8 @@ public class TModelTimedayAction extends BaseAction {
 	    			}
 	    			
 	    			String end = histActinst.getEnd();
-	    			Double expendtime = getExpendTime(start, end); //计算得到消耗的时间
+	    			//Double expendtime = getExpendTime(start, end); //计算得到消耗的时间
+	    			Double expendtime = (Double) thismethod.invoke(bean, start, end);
 	    			
 	    			//查询节点配置的时限，判断是否超限
 					Map<String, Object> map2 = new HashMap<String, Object>();
@@ -1000,6 +1008,11 @@ public class TModelTimedayAction extends BaseAction {
     	
     	/*Long request_id = (Long) this.tModelTimedayService.queryRequestId();*/
     	
+    	//前提需要在对应的actionContext这个spring文件里 配置MyUtil
+    	Object bean = SpringContextUtil.getBean("myUtil"); 
+    	Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
+    	Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forDays", String.class,String.class);
+    	
       // 1.查询出所有的   未结束的   信贷流程
     	List<XdproForEnd> xdproForEnds = this.tModelTimedayService.queryXdproForNotEnd();
     	
@@ -1081,7 +1094,8 @@ public class TModelTimedayAction extends BaseAction {
 	    				end = histActinst.getEnd();
 	    			}
 	    			
-	    			Double expendtime = getExpendTime(start, end); //计算得到消耗的时间
+	    			//Double expendtime = getExpendTime(start, end); //计算得到消耗的时间
+	    			Double expendtime = (Double) thismethod.invoke(bean, start,end);
 	    			
 	    			//查询节点配置的时限，判断是否超限
 					Map<String, Object> map2 = new HashMap<String, Object>();
