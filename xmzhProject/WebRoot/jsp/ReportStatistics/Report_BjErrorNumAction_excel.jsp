@@ -35,7 +35,7 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="loanCategory"/>
 			  <td>
-			    <b:write iterateId="id1" property="bjErrorNum"/>
+			    <b:write iterateId="id1" property="averageCount"/>
 			  </td>
 			</tr>
 			</l:iterate>

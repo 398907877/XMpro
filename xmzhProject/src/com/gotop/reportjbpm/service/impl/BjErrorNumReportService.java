@@ -85,23 +85,7 @@ public class BjErrorNumReportService implements IBjErrorNumReportService {
 		}
 		
 		
-
 		List<BjErrorNumReport> bjErrorNumReportLists =bjErrorNumReportDao.queryBjErrorNumReportList(map,page);
-		
-		for (int i = 0; i < bjErrorNumReportLists.size(); i++) {
-			 NumberFormat percent = NumberFormat.getPercentInstance();
-		     percent.setMaximumFractionDigits(2);
-			BigDecimal oneBjErrorNum=new BigDecimal(bjErrorNumReportLists.get(i).getOneBjErrorNum());
-			BigDecimal oneBjNums=new BigDecimal(bjErrorNumReportLists.get(i).getOneBjNums());
-			int r1=oneBjErrorNum.compareTo(BigDecimal.ZERO);
-			int r2=oneBjNums.compareTo(BigDecimal.ZERO);
-			if(r1!=0 && r2!=0){
-				BigDecimal bjErrorNum=oneBjErrorNum.divide(oneBjNums, 4,  BigDecimal.ROUND_HALF_UP);//ROUND_DOWN直接截断
-				bjErrorNumReportLists.get(i).setBjErrorNum(percent.format(bjErrorNum.doubleValue()));
-			}
-				
-			
-		}
 		
 		return bjErrorNumReportLists;
 	}
@@ -148,20 +132,6 @@ public class BjErrorNumReportService implements IBjErrorNumReportService {
 				}
 				
 		List<BjErrorNumReport> bjErrorNumReportLists =bjErrorNumReportDao.queryBjErrorNumReportListForExcel(map);
-		for (int i = 0; i < bjErrorNumReportLists.size(); i++) {
-			 NumberFormat percent = NumberFormat.getPercentInstance();
-		     percent.setMaximumFractionDigits(2);
-			BigDecimal oneBjErrorNum=new BigDecimal(bjErrorNumReportLists.get(i).getOneBjErrorNum());
-			BigDecimal oneBjNums=new BigDecimal(bjErrorNumReportLists.get(i).getOneBjNums());
-			int r1=oneBjErrorNum.compareTo(BigDecimal.ZERO);
-			int r2=oneBjNums.compareTo(BigDecimal.ZERO);
-			if(r1!=0 && r2!=0){
-				BigDecimal bjErrorNum=oneBjErrorNum.divide(oneBjNums, 4,  BigDecimal.ROUND_HALF_UP);//ROUND_DOWN直接截断
-				bjErrorNumReportLists.get(i).setBjErrorNum(percent.format(bjErrorNum.doubleValue()));
-			}
-				
-			
-		}
 		
 		return bjErrorNumReportLists;
 	}

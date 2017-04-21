@@ -7,136 +7,115 @@
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="oneBjErrorNum" property="oneBjErrorNum" jdbcType="VARCHAR" />
-    <result column="oneBjNums" property="oneBjNums" jdbcType="VARCHAR" />
+    <result column="AVERAGECOUNT" property="averageCount" jdbcType="DOUBLE" />
   </resultMap>
 	
 	<!-- 笔均差错数统计 -->
 	<select id="queryBjErrorNumReport" parameterClass="java.util.HashMap" resultMap="BjErrorNumReport">
-	SELECT 
-( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODEONE) AS ORGNAMEONE,
-( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODETWO) AS ORGNAMETWO,
-ORGCODEONE,
-ORGCODETWO,
-ONECATEGORY,
-LOANCATEGORY,
-sum(CntNumberOne) oneBjNums,
-sum(CseNumberOne) oneBjErrorNum
-from 
-(
+			/* WUJIAJUN MAKE */
+	select a4.orgname as ORGNAMEONE, a5.orgname as ORGNAMETWO, a3.ONECATEGORY, a3.LOANCATEGORY, a3.AVERAGECOUNT
+		from 	
+				(SELECT
+				   round(SUM (MISCOUNT) / COUNT (FLOW_ID),2)  AS AVERAGECOUNT,
+				  MAX (ORGCODEONE) as ORGCODEONE,
+				  MAX (ORGCODETWO) as ORGCODETWO,
+				  MAX (ONECATEGORY) as ONECATEGORY,
+				  MAX (LOANCATEGORY) as LOANCATEGORY
+				FROM
+				  ( select a1.* from
+				    (/* 计算出满足流程的！  所有流程 有多少差错！  下一步，汇总mis/count  */
+				    SELECT
+				      t5.FLOW_ID,
+				      T5.ORGCODEONE,
+				      T5.ORGCODETWO,
+				      T5.ONECATEGORY,
+				      T5.LOANCATEGORY,
+				      T4.MISCOUNT,
+				      T9.REPORTTIME
+				    FROM
+				      (
+				        SELECT
+				          FLOWID,
+				          COUNT (T8.MISTAKEID) AS MISCOUNT
+				        FROM
+				          (
+				            /* 关联出所有的 差错 然后做汇总 */
+				            SELECT
+				              T6.*, T7.MISTAKEID
+				            FROM
+				              (
+				                /* 关联到项目信息 一级分行 二级分行  一级分类  贷种分类 
+				                所有的信贷流程。并且是审批通过的 */
+				                SELECT
+				                  FlowID
+				                FROM
+				                  (
+				                    SELECT
+				                      t3.execution_id AS FlowID
+				                    FROM
+				                      (
+				                        SELECT
+				                          t1.execution_id,
+				                          t2.activity_name_
+				                        FROM
+				                          (
+				                            SELECT
+				                              p1.execution_id
+				                            FROM
+				                              t_process_business p1 ,JBPM4_HIST_PROCINST p2, T_PROCESS_CONFIG p3
+				                            WHERE p1.BUSINESS_TYPE = '88' 
+				                              and p2.procdefid_ = p3.definition_id
+				                              and p3.state='01'
+				                          ) t1
+				                        LEFT JOIN JBPM4_HIST_ACTINST t2 ON T1.execution_id = T2.EXECUTION_
+				                      ) t3
+				                    WHERE
+				                      T3.ACTIVITY_NAME_ = '审批一'
+				                    OR T3.ACTIVITY_NAME_ = '审批二'
+				                    OR T3.ACTIVITY_NAME_ = '出具决策意见'
+				                  )
+				                GROUP BY
+				                  FlowID
+				              ) t6
+				            LEFT JOIN T_GENERALPROCESS_MISTAKE t7 ON T6.FLOWID = T7.FLOW_ID
+				          ) T8
+				        GROUP BY
+				          T8.FLOWID
+				      ) t4
+				    LEFT JOIN T_GENERALPROCESS_MODELONE t5 ON T4.FLOWID = T5.FLOW_ID
+				    LEFT JOIN T_GENERALPROCESS_MODELTHREE t9 ON T4.FLOWID = T9.FLOW_ID 
+				    ) a1  
+				    where 1=1
+				       <isNotNull prepend="and" property="repTimeStrat" >
+		                    <![CDATA[  a1.REPORTTIME  >= '$repTimeStrat$'     ]]>
+		               </isNotNull>
+		               <isNotNull prepend="and" property="repTimeEnd" >                                    
+		                    <![CDATA[  a1.REPORTTIME  <= '$repTimeEnd$'   ]]>
+		               </isNotNull>
+		               <isNotNull prepend="and" property="orgCodeOne" >
+		                    a1.ORGCODEONE = '$orgCodeOne$'
+		               </isNotNull>
+		              <isNotNull prepend="and" property="orgCodeTwo" >
+		                   a1.ORGCODETWO = '$orgCodeTwo$'
+		              </isNotNull>
+		              <isNotNull prepend="and" property="oneCategory" >
+		                    a1.ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
+		                     and dic.dictid in($oneCategory$))
+		              </isNotNull>
+		              <isNotNull prepend="and" property="loanCategory" >
+		                  a1.LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
+		                     and dic.dictid in($loanCategory$))
+		              </isNotNull>
+				    
+				  ) a2
+				GROUP BY
+				  orgcodeone,
+				  ORGCODETWO,
+				  ONECATEGORY,
+				  LOANCATEGORY  )  a3, 
+				   om_organization a4, om_organization a5
+   			where a3.orgcodeone = a4.orgcode(+) and a3.orgcodetwo = a5.orgcode(+)
 
-SELECT  
-ORGCODEONE,
-ORGCODETWO,
-ONECATEGORY,
-LOANCATEGORY,
-ACTIVITY_NAME_,
-CASE WHEN cnt >= 1 THEN  1 ELSE  0 END CntNumberOne,
-CASE WHEN cse >= 1 THEN  1 ELSE  0 END CseNumberOne
-FROM
-  (
-    SELECT
-      EXECUTION_,
-      
-      ORGCODEONE,
-      ORGCODETWO,
-      ONECATEGORY,
-      LOANCATEGORY,
-      ACTIVITY_NAME_,
-      TASKNAME,
-      COUNT (ACTIVITY_NAME_) cnt,
-      COUNT (TASKNAME) cse
-    FROM
-      (
-        SELECT
-          EXECUTION_,
-          ACTIVITY_NAME_,
-          END_,
-          OPERATORNAME,
-          
-          ORGCODEONE,
-          ORGCODETWO,
-          
-          ONECATEGORY,
-          LOANCATEGORY,
-          REPORTTIME,
-          TASKNAME
-        FROM
-          (
-            SELECT
-              tt.EXECUTION_,
-              tt.ACTIVITY_NAME_,
-              tt.END_,
-              t2.OPERATORNAME,
-              
-              t3.ORGCODEONE,
-              t3.ORGCODETWO,
-              
-              t3.ONECATEGORY,
-              t3.LOANCATEGORY,
-              t4.REPORTTIME,
-              t5.taskname
-            FROM
-              JBPM4_HIST_ACTINST tt
-            LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
-            LEFT JOIN ac_operator t2 ON t1.ASSIGNEE_ = t2.OPERATORID
-            LEFT JOIN T_GENERALPROCESS_MODELONE t3 ON tt.EXECUTION_ = t3.flow_id
-            LEFT JOIN T_GENERALPROCESS_MISTAKE t5 ON t3.flow_id = t5.flow_id
-            LEFT JOIN T_GENERALPROCESS_MODELTHREE t4 ON t4.flow_id = tt.EXECUTION_
-            WHERE
-              HPROCI_ IN (
-                SELECT
-                  DBID_
-                FROM
-                  JBPM4_HIST_PROCINST T
-                WHERE
-                  T .PROCDEFID_ IN (
-                    SELECT
-                      DEFINITION_ID
-                    FROM
-                      T_PROCESS_CONFIG T
-                    WHERE
-                      BUSINESS_TYPE = '88'
-                  )
-              )
-          )
-        WHERE
-          end_ IS NOT NULL
-          and ACTIVITY_NAME_   in  ('发起合同预审')
-               <isNotNull prepend="and" property="repTimeStrat" >
-                    <![CDATA[REPORTTIME  >= '$repTimeStrat$']]>
-               </isNotNull>
-               <isNotNull prepend="and" property="repTimeEnd" >                                    
-                    <![CDATA[REPORTTIME  <= '$repTimeEnd$']]>
-               </isNotNull>
-               <isNotNull prepend="and" property="orgCodeOne" >
-                    ORGCODEONE = '$orgCodeOne$'
-               </isNotNull>
-              <isNotNull prepend="and" property="orgCodeTwo" >
-                   ORGCODETWO = '$orgCodeTwo$'
-              </isNotNull>
-              <isNotNull prepend="and" property="oneCategory" >
-                    ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
-                     and dic.dictid in($oneCategory$))
-              </isNotNull>
-              <isNotNull prepend="and" property="loanCategory" >
-                  LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
-                     and dic.dictid in($loanCategory$))
-              </isNotNull>
-      )
-    GROUP BY
-      EXECUTION_,
-      ORGCODEONE,
-      ORGCODETWO,
-      ONECATEGORY,
-      LOANCATEGORY,
-      ACTIVITY_NAME_,
-      TASKNAME
-    
-)
-)
-GROUP BY
-ORGCODEONE,ORGCODETWO,ONECATEGORY,  LOANCATEGORY
 	</select>
 
 </sqlMap>

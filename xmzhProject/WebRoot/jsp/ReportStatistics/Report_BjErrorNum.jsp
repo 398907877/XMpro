@@ -114,7 +114,7 @@
 									<b:write iterateId="id1" property="loanCategory" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="bjErrorNum" />
+									<b:write iterateId="id1" property="averageCount" />
 								</td>
 							</tr>
 						</l:iterate>

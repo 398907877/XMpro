@@ -23,12 +23,11 @@ public class BjErrorNumReport implements Serializable {
 	private String loanCategory;
 	//贷种分类
 	private String loanCategoryId;
-	//一次上报业务总差错数
-	private String oneBjErrorNum;
-	//一次上报业务总笔数
-	private String oneBjNums;
+
 	//笔均差错数
-	private String bjErrorNum;
+	private double averageCount;
+	
+	
 	public String getRepTimeStart() {
 		return repTimeStart;
 	}
@@ -77,24 +76,7 @@ public class BjErrorNumReport implements Serializable {
 	public void setLoanCategory(String loanCategory) {
 		this.loanCategory = loanCategory;
 	}
-	public String getOneBjErrorNum() {
-		return oneBjErrorNum;
-	}
-	public void setOneBjErrorNum(String oneBjErrorNum) {
-		this.oneBjErrorNum = oneBjErrorNum;
-	}
-	public String getOneBjNums() {
-		return oneBjNums;
-	}
-	public void setOneBjNums(String oneBjNums) {
-		this.oneBjNums = oneBjNums;
-	}
-	public String getBjErrorNum() {
-		return bjErrorNum;
-	}
-	public void setBjErrorNum(String bjErrorNum) {
-		this.bjErrorNum = bjErrorNum;
-	}
+	
 	public String getOneCategoryId() {
 		return oneCategoryId;
 	}
@@ -107,5 +89,15 @@ public class BjErrorNumReport implements Serializable {
 	public void setLoanCategoryId(String loanCategoryId) {
 		this.loanCategoryId = loanCategoryId;
 	}
+	public double getAverageCount() {
+		return averageCount;
+	}
+	public void setAverageCount(double averageCount) {
+		this.averageCount = averageCount;
+	}
+	
+	
+	
+	
 	
 }
