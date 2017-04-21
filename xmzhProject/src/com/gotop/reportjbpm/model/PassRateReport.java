@@ -28,24 +28,20 @@ public class PassRateReport implements Serializable {
 	private String reviewEmpname;
 	//审批人
 	private String approvalEmpname;
-	//一次审批通过笔数
-	private String businessNumberOne;
-
-	//二次审批通过笔数
-	private String businessNumberTwo;
-	//三次审批通过笔数
-	private String businessNumberThree;
-	//3次以上次审批通过笔数
-	private String businessNumberMoreThree;
-	//4次以上次审批通过笔数
-	private String businessNumberMoreFour;
 	
-	//一次通过率
-	private String onePassRate;
-	//二次通过率
-	private String twoPassRate;
-	//三次以上通过率
-	private String threeOrMorePassRate;
+	/*一次通过率
+	（相同的 一级、二级机构、一级、贷种分类前提下，表示一条记录，这条记录汇总前的一次通过笔数/汇总前的总笔数）
+	一次通过笔数 = 前提是上个节点是“审批一”或者“审批二“或者“出具决策意见” 的“发起合同预审”的走过的节点个数为1
+	*/
+	private String passone_rate;
+	
+	/*二次通过率
+	（相同的 一级、二级机构、一级、贷种分类前提下，表示一条记录，这条记录汇总前的二次通过笔数/(汇总前的总笔数-一次通过笔数)）
+	二次通过笔数 = 前提是上个节点是“审批一”或者“审批二“或者“出具决策意见” 的“发起合同预审”的走过的节点个数为2
+	*/
+	private String passtwo_rate;
+	
+	
 	public String getRepTimeStart() {
 		return repTimeStart;
 	}
@@ -106,56 +102,6 @@ public class PassRateReport implements Serializable {
 	public void setApprovalEmpname(String approvalEmpname) {
 		this.approvalEmpname = approvalEmpname;
 	}
-	
-	public String getOnePassRate() {
-		return onePassRate;
-	}
-	public void setOnePassRate(String onePassRate) {
-		this.onePassRate = onePassRate;
-	}
-	
-	public String getTwoPassRate() {
-		return twoPassRate;
-	}
-	public void setTwoPassRate(String twoPassRate) {
-		this.twoPassRate = twoPassRate;
-	}
-	public String getThreeOrMorePassRate() {
-		return threeOrMorePassRate;
-	}
-	public void setThreeOrMorePassRate(String threeOrMorePassRate) {
-		this.threeOrMorePassRate = threeOrMorePassRate;
-	}
-	public String getBusinessNumberOne() {
-		return businessNumberOne;
-	}
-	public void setBusinessNumberOne(String businessNumberOne) {
-		this.businessNumberOne = businessNumberOne;
-	}
-	public String getBusinessNumberTwo() {
-		return businessNumberTwo;
-	}
-	public void setBusinessNumberTwo(String businessNumberTwo) {
-		this.businessNumberTwo = businessNumberTwo;
-	}
-	public String getBusinessNumberThree() {
-		return businessNumberThree;
-	}
-	public void setBusinessNumberThree(String businessNumberThree) {
-		this.businessNumberThree = businessNumberThree;
-	}
-	public String getBusinessNumberMoreThree() {
-		return businessNumberMoreThree;
-	}
-	public void setBusinessNumberMoreThree(String businessNumberMoreThree) {
-		this.businessNumberMoreThree = businessNumberMoreThree;
-	}
-	public String getBusinessNumberMoreFour() {
-		return businessNumberMoreFour;
-	}
-	public void setBusinessNumberMoreFour(String businessNumberMoreFour) {
-		this.businessNumberMoreFour = businessNumberMoreFour;
-	}
 	public String getLoanCategoryId() {
 		return loanCategoryId;
 	}
@@ -167,6 +113,18 @@ public class PassRateReport implements Serializable {
 	}
 	public void setOneCategoryId(String oneCategoryId) {
 		this.oneCategoryId = oneCategoryId;
+	}
+	public String getPassone_rate() {
+		return passone_rate;
+	}
+	public void setPassone_rate(String passone_rate) {
+		this.passone_rate = passone_rate;
+	}
+	public String getPasstwo_rate() {
+		return passtwo_rate;
+	}
+	public void setPasstwo_rate(String passtwo_rate) {
+		this.passtwo_rate = passtwo_rate;
 	}
 	
 

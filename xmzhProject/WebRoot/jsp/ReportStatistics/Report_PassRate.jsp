@@ -15,7 +15,7 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                     <td class="form_label" align="right" >派单日期：</td>
+                     <td class="form_label" align="right" >报单日期：</td>
 					<td >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="repTimeStart" name="passRateReport.repTimeStart" 
@@ -107,9 +107,6 @@
 					       <th nowrap="nowrap">
 								二次通过率
 							</th>
-                            <th nowrap="nowrap">
-								三次以上通过率
-							</th>
 						</tr>
                            <l:iterate property="passRateReportList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
@@ -132,15 +129,11 @@
 									<b:write iterateId="id1" property="approvalEmpname" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="onePassRate" />
+									<b:write iterateId="id1" property="passone_rate" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="twoPassRate" />
+									<b:write iterateId="id1" property="passtwo_rate" />
 								</td>
-								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="threeOrMorePassRate" />
-								</td>
-
 							</tr>
 						</l:iterate>
 							<tr>

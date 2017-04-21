@@ -23,7 +23,6 @@
 		<th height="34" width="100" align="center" class="form_label">审批人员</th>
 		<th height="34" width="100" align="center" class="form_label">一次通过率</th>
 		<th height="34" width="100" align="center" class="form_label">二次通过率</th>
-		<th height="34" width="100" align="center" class="form_label">三次以上通过率</th>
 	</tr>
 	<l:iterate property="passRateReportList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
@@ -46,13 +45,10 @@
 			   <b:write iterateId="id1" property="approvalEmpname"/>
 			  </td>
 			   <td>
-			   <b:write iterateId="id1" property="onePassRate"/>
+			   <b:write iterateId="id1" property="passone_rate"/>
 			  </td>
 			   <td>
-			    <b:write iterateId="id1" property="twoPassRate"/>
-			  </td>
-			  <td>
-			    <b:write iterateId="id1" property="threeOrMorePassRate"/>
+			    <b:write iterateId="id1" property="passtwo_rate"/>
 			  </td>
 			</tr>
 			</l:iterate>

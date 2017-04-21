@@ -76,34 +76,6 @@ public class PassRateReportService implements IPassRateReportService {
 		
 
 		List<PassRateReport> passRateReportLists  =passRateReportDao.queryPassRateReportList(map,page);
-		for (int i = 0; i < passRateReportLists.size(); i++) {
-			 NumberFormat percent = NumberFormat.getPercentInstance();
-		     percent.setMaximumFractionDigits(2);
-			BigDecimal businessNumberOne=new BigDecimal(passRateReportLists.get(i).getBusinessNumberOne());
-			BigDecimal businessNumberTwo=new BigDecimal(passRateReportLists.get(i).getBusinessNumberTwo());
-			BigDecimal businessNumberThree=new BigDecimal(passRateReportLists.get(i).getBusinessNumberThree());
-			BigDecimal businessNumberMoreThree=new BigDecimal(passRateReportLists.get(i).getBusinessNumberMoreThree());
-			BigDecimal businessNumberMoreFour=new BigDecimal(passRateReportLists.get(i).getBusinessNumberMoreFour());
-			int r1=businessNumberOne.compareTo(BigDecimal.ZERO);
-			int r2=businessNumberTwo.compareTo(BigDecimal.ZERO);
-			int r3=businessNumberThree.compareTo(BigDecimal.ZERO);
-			int r4=businessNumberMoreThree.compareTo(BigDecimal.ZERO);
-			int r5=businessNumberMoreFour.compareTo(BigDecimal.ZERO);
-			if(r1!=0 && r2!=0){
-				BigDecimal onePassRate=businessNumberOne.divide(businessNumberOne.add(businessNumberTwo), 4,  BigDecimal.ROUND_HALF_UP);//ROUND_DOWN直接截断
-				passRateReportLists.get(i).setOnePassRate(percent.format(onePassRate.doubleValue()));
-			}
-			if(r2!=0 && r3!=0){
-				BigDecimal twoPassRate=businessNumberTwo.divide(businessNumberTwo.add(businessNumberThree), 4,  BigDecimal.ROUND_HALF_UP);
-				passRateReportLists.get(i).setTwoPassRate(percent.format(twoPassRate.doubleValue()));
-			}
-			if(r4!=0 && r5!=0){
-				BigDecimal threeOrMorePassRate=businessNumberMoreThree.divide(businessNumberMoreThree.add(businessNumberMoreFour), 4,  BigDecimal.ROUND_HALF_UP);
-				passRateReportLists.get(i).setThreeOrMorePassRate(percent.format(threeOrMorePassRate.doubleValue()));
-			}
-				
-			
-		}
 		
 		return passRateReportLists;
 	}
@@ -157,34 +129,6 @@ public class PassRateReportService implements IPassRateReportService {
 			 map.put("loanCategory",loanCategory);
 		}
 		List<PassRateReport> passRateReportLists  =passRateReportDao.queryPassRateReportListForExcel(map);
-		for (int i = 0; i < passRateReportLists.size(); i++) {
-			 NumberFormat percent = NumberFormat.getPercentInstance();
-		     percent.setMaximumFractionDigits(2);
-			BigDecimal businessNumberOne=new BigDecimal(passRateReportLists.get(i).getBusinessNumberOne());
-			BigDecimal businessNumberTwo=new BigDecimal(passRateReportLists.get(i).getBusinessNumberTwo());
-			BigDecimal businessNumberThree=new BigDecimal(passRateReportLists.get(i).getBusinessNumberThree());
-			BigDecimal businessNumberMoreThree=new BigDecimal(passRateReportLists.get(i).getBusinessNumberMoreThree());
-			BigDecimal businessNumberMoreFour=new BigDecimal(passRateReportLists.get(i).getBusinessNumberMoreFour());
-			int r1=businessNumberOne.compareTo(BigDecimal.ZERO);
-			int r2=businessNumberTwo.compareTo(BigDecimal.ZERO);
-			int r3=businessNumberThree.compareTo(BigDecimal.ZERO);
-			int r4=businessNumberMoreThree.compareTo(BigDecimal.ZERO);
-			int r5=businessNumberMoreFour.compareTo(BigDecimal.ZERO);
-			if(r1!=0 && r2!=0){
-				BigDecimal onePassRate=businessNumberOne.divide(businessNumberOne.add(businessNumberTwo), 4,  BigDecimal.ROUND_HALF_UP);//ROUND_DOWN直接截断
-				passRateReportLists.get(i).setOnePassRate(percent.format(onePassRate.doubleValue()));
-			}
-			if(r2!=0 && r3!=0){
-				BigDecimal twoPassRate=businessNumberTwo.divide(businessNumberTwo.add(businessNumberThree), 4,  BigDecimal.ROUND_HALF_UP);
-				passRateReportLists.get(i).setTwoPassRate(percent.format(twoPassRate.doubleValue()));
-			}
-			if(r4!=0 && r5!=0){
-				BigDecimal threeOrMorePassRate=businessNumberMoreThree.divide(businessNumberMoreThree.add(businessNumberMoreFour), 4,  BigDecimal.ROUND_HALF_UP);
-				passRateReportLists.get(i).setThreeOrMorePassRate(percent.format(threeOrMorePassRate.doubleValue()));
-			}
-				
-			
-		}
 		
 		return passRateReportLists;
 	}

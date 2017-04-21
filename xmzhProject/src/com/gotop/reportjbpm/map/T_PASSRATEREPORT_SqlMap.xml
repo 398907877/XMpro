@@ -7,204 +7,172 @@
     <result column="ORGNAMETWO" property="orgNameTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
-    <result column="REVIEW_EMP_NAME" property="reviewEmpname" jdbcType="VARCHAR" />
-    <result column="APPROVAL_EMP_NAME" property="approvalEmpname" jdbcType="VARCHAR" />
-    <result column="businessNumberOne" property="businessNumberOne" jdbcType="VARCHAR" />
-    <result column="businessNumberTwo" property="businessNumberTwo" jdbcType="VARCHAR" />
-    <result column="businessNumberThree" property="businessNumberThree" jdbcType="VARCHAR" />
-    <result column="businessNumberMoreThree" property="businessNumberMoreThree" jdbcType="VARCHAR" />
-    <result column="businessNumberMoreFour" property="businessNumberMoreFour" jdbcType="VARCHAR" />
+    <result column="REVIEWEMPNAME" property="reviewEmpname" jdbcType="VARCHAR" />
+    <result column="APPROVALEMPNAME" property="approvalEmpname" jdbcType="VARCHAR" />
+    <result column="PASSONE_RATE" property="passone_rate" jdbcType="VARCHAR" />
+    <result column="PASSTWO_RATE" property="passtwo_rate" jdbcType="VARCHAR" />
   </resultMap>
 	
-	<!-- 通过率统计 -->
+	<!-- 通过率统计 author:lmt -->
 	<select id="queryPassRateReport" parameterClass="java.util.HashMap" resultMap="PassRateReport">
-SELECT 
-ORGCODEONE,
-ORGCODETWO,
-ONECATEGORY,
-LOANCATEGORY,
-REVIEW_EMP_NAME,
-APPROVAL_EMP_NAME,
-( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODEONE) AS ORGNAMEONE,
-( select ORGNAME from OM_ORGANIZATION where orgcode=ORGCODETWO) AS ORGNAMETWO,
-sum(businessNumberOne) businessNumberOne,sum(businessNumberTwo) businessNumberTwo,sum(businessNumberThree) businessNumberThree,
-sum(businessNumberMoreThree) businessNumberMoreThree,sum(businessNumberMoreFour) businessNumberMoreFour
-from 
-(
+	
+			with temp1 as  /* temp1:查出在一个流程实例里同时经过审查一和审批一节点的所有流程*/
+			(select *
+			  from (SELECT execution_, wm_concat(activity_name_) as activity_names /* wm_concat()函数：节点名称用逗号拼接起来*/
+			          FROM JBPM4_HIST_ACTINST
+			         group by execution_) a1
+			 where a1.activity_names like '%审查一%审批一%'
+			    or a1.activity_names like '%审批一%审查一%') ,
+			    
+			    temp2 as /* temp2:在temp1的流程里查询每条流程对应的审查人员 */
+			    (select a5.execution_, a6.empname as reviewEmpname
+			  from (select a3.*,
+			               a4.task_assignee_id,
+			               row_number() over(partition by a4.execution_id order by a4.id) as rn2
+			          from (select *
+			                  from (select ac.*,
+			                               row_number() over(partition by ac.execution_ order by start_) as rn
+			                          from JBPM4_HIST_ACTINST ac
+			                         where execution_ in
+			                               (select execution_
+			                                  from temp1)
+			                           and activity_name_ = '审查一') a2
+			                 where rn = 1) a3,
+			               T_PROCESS_TASK_ASSIGNEE_PERSON a4
+			         where a3.execution_ = a4.execution_id
+			           and a3.htask_ = a4.task_id) a5,
+			       om_employee a6
+			 where a5.rn2 = 1
+			   and a5.task_assignee_id = a6.empid
+			),
+			
+			temp3 as   /* temp3:在temp1的流程里查询每条流程对应的审批人员 */
+			(select a5.execution_, a6.empname as approvalEmpname
+			  from (select a3.*,
+			               a4.task_assignee_id,
+			               row_number() over(partition by a4.execution_id order by a4.id) as rn2
+			          from (select *
+			                  from (select ac.*,
+			                               row_number() over(partition by ac.execution_ order by start_) as rn
+			                          from JBPM4_HIST_ACTINST ac
+			                         where execution_ in
+			                               (select execution_
+			                                  from temp1)
+			                           and activity_name_ = '审批一') a2
+			                 where rn = 1) a3,
+			               T_PROCESS_TASK_ASSIGNEE_PERSON a4
+			         where a3.execution_ = a4.execution_id
+			           and a3.htask_ = a4.task_id) a5,
+			       om_employee a6
+			 where a5.rn2 = 1
+			   and a5.task_assignee_id = a6.empid ),
+			   
+			temp4 as  /* temp4:以T_PROCESS_BUSINESS为主表查询出是 信贷流程 并且 已启用 的流程信息 */
+			(select t1.execution_id,
+						   t4.orgcodeone,
+						   t4.orgcodetwo,
+			               t4.onecategory,
+			               t4.loancategory,
+			               t5.reporttime
+			          from T_PROCESS_BUSINESS        t1,
+			               JBPM4_HIST_PROCINST       t2,
+			               T_PROCESS_CONFIG          t3,
+			               T_GENERALPROCESS_MODELONE t4,
+			               T_GENERALPROCESS_MODELTHREE t5
+			         where t1.execution_id = t2.id_
+			           and t2.procdefid_ = t3.definition_id
+			           and t1.execution_id = t4.flow_id
+			           and t1.execution_id = t5.flow_id(+)
+			           and t1.business_type = '88'
+			           and t3.state = '01'
+			           and t4.orgcodetwo is not null 
+			           <isNotNull prepend="and" property="repTimeStrat" >
+				         <![CDATA[
+				            t5.reporttime >= #repTimeStrat#
+				               ]]>
+				      </isNotNull>
+				      <isNotNull prepend="and" property="repTimeEnd" >
+				        <![CDATA[
+				            t5.reporttime <=  #repTimeEnd#
+				               ]]>
+				      </isNotNull>
+				      ),
+			
+			temp5 as (  /* 查询通过次数（几个“发起合同预审”就代表几次通过） */
+			select m4.execution_, count(*) as pass_count 
+			  from (select m1.*, m3.activity_name_ as pre_task_name
+			          from JBPM4_HIST_ACTINST      m1,
+			               T_PROCESS_TASK_ASSIGNEE m2,
+			               JBPM4_HIST_ACTINST      m3
+			         where m1.activity_name_ = '发起合同预审'
+			           and m1.execution_ = m2.execution_id
+			           and m1.htask_ = m2.next_task_id
+			           and m2.pre_task_id = m3.htask_) m4
+			 where m4.pre_task_name in ('审批一', '审批二', '出具决策意见')
+			 group by m4.execution_), 
+			
+			temp6 as /* temp6:最终连接后的大表。包含一级、二级机构、一级、贷种分类、报单时间、通过次数的流程列表，一行记录一条流程 */
+			(select TT1.*,temp5.pass_count 
+			from 
+			   (select temp4.*, temp2.reviewEmpname, temp3.approvalEmpname 
+			       from temp1, temp2, temp3 , temp4
+			   where temp1.execution_ = temp2.execution_ and temp1.execution_ = temp3.execution_
+			   and temp1.execution_ = temp4.execution_id) TT1 
+			   left join temp5 on TT1.execution_id = temp5.execution_ 
+			   where 1=1 ) 
+		
+			 
+			/* 最终的查询表 */
+	select tt.*, t3.orgname as orgnameone, t4.orgname as orgnametwo
+	   from		
+			(select   t.*, t1.passone_num, t2.passtwo_num, 
+			case 
+			  when t1.passone_num is not null 
+			    then 
+			       round((t1.passone_num/t.all_num)*100,2)||'%' 
+			    else '0%'
+			  end as passone_rate, 
+			  
+			case
+			  when t2.passtwo_num is not null 
+			  then 
+			     round((t2.passtwo_num/(t.all_num-t1.passone_num))*100,2)||'%' 
+			  else '0%' 
+			    end as passtwo_rate  
+			     
+			from
+			(select orgcodeone, orgcodetwo, onecategory, loancategory, reviewEmpname,approvalEmpname, count(*) as all_num from temp6 
+			group by orgcodeone,orgcodetwo,onecategory,loancategory,reviewEmpname,approvalEmpname) t,
+			
+			(select orgcodeone, orgcodetwo, onecategory, loancategory, reviewEmpname,approvalEmpname, count(*) as passone_num from temp6 
+			where pass_count=1 group by orgcodeone,orgcodetwo,onecategory,loancategory,reviewEmpname,approvalEmpname) t1,
+			
+			(select orgcodeone, orgcodetwo, onecategory, loancategory, reviewEmpname,approvalEmpname, count(*) as passtwo_num from temp6 
+			where pass_count=2 group by orgcodeone,orgcodetwo,onecategory,loancategory,reviewEmpname,approvalEmpname) t2
+			
+			where t.orgcodeone = t1.orgcodeone(+) and t.orgcodetwo = t1.orgcodetwo(+) and t.onecategory = t1.onecategory(+) and t.loancategory = t1.loancategory(+)
+			and t.reviewEmpname = t1.reviewEmpname(+) and t.approvalEmpname = t1.approvalEmpname(+)
+			and t.orgcodeone = t2.orgcodeone(+) and t.orgcodetwo = t2.orgcodetwo(+) and t.onecategory = t2.onecategory(+) and t.loancategory = t2.loancategory(+)
+			and t.reviewEmpname = t2.reviewEmpname(+) and t.approvalEmpname = t2.approvalEmpname(+)
+			
+			) tt, om_organization t3, om_organization t4
+	where  tt.orgcodeone = t3.orgcode and tt.orgcodetwo = t4.orgcode
 
-SELECT   ORGCODEONE,
-         ORGCODETWO,
-         ONECATEGORY,
-         LOANCATEGORY,    
-         REVIEW_EMP_NAME,
-         APPROVAL_EMP_NAME,
-CASE WHEN cnt = 1 THEN  1 ELSE  0 END businessNumberOne,  
-CASE WHEN cnt = 2 THEN  1 ELSE  0 END businessNumberTwo,  
-CASE WHEN cnt = 3 THEN  1 ELSE  0 END businessNumberThree,
-CASE WHEN cnt > 3 THEN  1 ELSE  0 END businessNumberMoreThree,  
-CASE WHEN cnt > 4 THEN  1 ELSE  0 END businessNumberMoreFour 
-FROM
-  (
-    SELECT
-       ORGCODEONE,
-       ORGCODETWO,
-      ONECATEGORY,
-      LOANCATEGORY,
-      ACTIVITY_NAME_,
-      OPERATORNAME,
-      REVIEW_EMP_NAME,
-      APPROVAL_EMP_NAME,
-      COUNT (ACTIVITY_NAME_) cnt
-    FROM
-      (
-        SELECT
-          EXECUTION_,
-          ACTIVITY_NAME_,
-          END_,
-          OPERATORNAME,
-          ORGCODEONE,
-          ORGCODETWO,
-          ONECATEGORY,
-          LOANCATEGORY,  
-          substr(PRE_TASK_TIME ,0,8) as PRE_TASK_TIME,     
-         ( select empname from om_employee where empid = REVIEWEMPID) as REVIEW_EMP_NAME,
-         ( select empname from om_employee where empid = APPROVALEMPID) as APPROVAL_EMP_NAME
-        FROM
-          (
-            SELECT
-              tt.EXECUTION_,
-              tt.ACTIVITY_NAME_,
-              tt.END_,
-              t2.OPERATORNAME,
-              t3.ORGCODEONE,
-              t3.ORGCODETWO,
-              t3.ONECATEGORY,
-              t3.LOANCATEGORY,
-              t4.REPORTTIME,
-              t8.pre_task_assingee as REVIEWEMPID,
-              t7.PRE_TASK_TIME,
-              t9.pre_task_assingee as APPROVALEMPID
-            FROM
-              JBPM4_HIST_ACTINST tt
-            LEFT JOIN JBPM4_HIST_TASK t1 ON TT.HTASK_ = T1.DBID_
-            LEFT JOIN ac_operator t2 ON t1.ASSIGNEE_ = t2.OPERATORID
-            LEFT JOIN T_GENERALPROCESS_MODELONE t3 ON tt.EXECUTION_ = t3.flow_id
-            LEFT JOIN T_GENERALPROCESS_MODELTHREE t4 ON t4.flow_id = tt.EXECUTION_
-            LEFT JOIN (
-                 SELECT *
-                          FROM
-                            (SELECT execution_id,
-                                    pre_task_id,
-                                    pre_task_assingee,
-                                    next_activity_name,
-                                    PRE_TASK_TIME
-                             FROM t_Process_Task_Assignee
-                             WHERE business_type = '88'
-                             and next_activity_name = '收单派单' 
-                             )
-            ) t6 ON tt.EXECUTION_ = t6.execution_id
-            LEFT JOIN (
-                 SELECT *
-                          FROM
-                            (SELECT execution_id,
-                                    pre_task_id,
-                                    pre_task_assingee,
-                                    next_activity_name,
-                                    PRE_TASK_TIME
-                             FROM t_Process_Task_Assignee
-                             WHERE business_type = '88'
-                             and next_activity_name = '审查一' 
-                             )
-            ) t7 ON t6.execution_id = t7.execution_id 
-            LEFT JOIN (
-                 SELECT *
-                          FROM
-                            (SELECT execution_id,
-                                    pre_task_id,
-                                    pre_task_assingee,
-                                    next_activity_name,
-                                    PRE_TASK_TIME
-                             FROM t_Process_Task_Assignee
-                             WHERE business_type = '88'
-                             and next_activity_name = '审查一' 
-                             )
-            ) t8 ON tt.EXECUTION_ = t8.execution_id
-           LEFT JOIN (
-                 SELECT *
-                          FROM
-                            (SELECT execution_id,
-                                    pre_task_id,
-                                    pre_task_assingee,
-                                    next_activity_name
-                             FROM t_Process_Task_Assignee
-                             WHERE business_type = '88'
-                             and next_activity_name = '发起合同预审' 
-                             )
-            ) t9 ON tt.EXECUTION_ = t9.execution_id
-            WHERE
-              HPROCI_ IN (
-                SELECT
-                  DBID_
-                FROM
-                  JBPM4_HIST_PROCINST T
-                WHERE
-                  T .PROCDEFID_ IN (
-                    SELECT
-                      DEFINITION_ID
-                    FROM
-                      T_PROCESS_CONFIG T
-                    WHERE
-                      BUSINESS_TYPE = '88'
-                  )
-              )
-          )
-        WHERE
-          end_ IS NOT NULL
-          and ACTIVITY_NAME_ = '发起合同预审'
-          <isNotNull prepend="and" property="repTimeStrat" >
-         <![CDATA[
-            PRE_TASK_TIME >= #repTimeStrat#
-               ]]>
-      </isNotNull>
-      <isNotNull prepend="and" property="repTimeEnd" >
-        <![CDATA[
-            PRE_TASK_TIME <=  #repTimeEnd#
-               ]]>
-      </isNotNull>
       <isNotNull prepend="and" property="orgCodeOne" >
-           ORGCODEONE = '$orgCodeOne$'
+           tt.ORGCODEONE = '$orgCodeOne$'
       </isNotNull>
       <isNotNull prepend="and" property="orgCodeTwo" >
-           ORGCODETWO = '$orgCodeTwo$'
+           tt.ORGCODETWO = '$orgCodeTwo$'
       </isNotNull>
       <isNotNull prepend="and" property="oneCategory" >
-            ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
+            tt.ONECATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_onecategory' 
            	 and dic.dictid in($oneCategory$))
       </isNotNull>
       <isNotNull prepend="and" property="loanCategory" >
-          LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
+          tt.LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
            	 and dic.dictid in($loanCategory$))
       </isNotNull>
      
-        
-      )
-    GROUP BY
-      EXECUTION_,
-      ORGCODEONE,
-      ORGCODETWO,
-      ONECATEGORY,
-      LOANCATEGORY,
-       REVIEW_EMP_NAME,
-      APPROVAL_EMP_NAME
-)
-)
-GROUP BY
-ORGCODEONE,
-ORGCODETWO,
-ONECATEGORY,
-LOANCATEGORY,
-REVIEW_EMP_NAME,
-APPROVAL_EMP_NAME
 	</select>
 
 </sqlMap>
