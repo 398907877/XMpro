@@ -22,7 +22,7 @@
        ORGNAMETWO,
        ONECATEGORY,
        LOANCATEGORY,
-       '天' as TIMELIMITTYPE,
+       '$timeLimitType$' as TIMELIMITTYPE,
        SUM(CASE
              WHEN tmp_time = 1 THEN
               1

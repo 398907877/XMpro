@@ -67,7 +67,10 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 			}
 			map.put("loanCategory",loanCategory);
 		}
-		
+		if(processUsedTimeReport.getTimeLimitType()!=null&&!"".equals(processUsedTimeReport.getTimeLimitType())){
+			map.put("timeLimitType", processUsedTimeReport.getTimeLimitType());
+			
+		}
 	    processUsedTimeReportList=processUsedTimeReportDao.queryProcessUsedTimeReportList(map, page);
 		return processUsedTimeReportList;
 	}

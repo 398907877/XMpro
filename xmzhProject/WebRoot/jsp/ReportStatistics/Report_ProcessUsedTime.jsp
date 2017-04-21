@@ -56,11 +56,7 @@
 					
 					<td class="form_label" align="right" >时限类型：</td>
 					<td>
-					 <select id="sel_timeLimitType" >
-					 <option value="">请选择</option>
-			         </select> 
-					 <h:hidden id="timeLimitType"  property="processUsedTimeReport.timeLimitType" />	
-			         
+					<d:select dictTypeId="TIME_LIMIT_TYPE" property="processUsedTimeReport.timeLimitType" nullLabel="请选择"></d:select>
 					</td>	
 				</tr>
 				
