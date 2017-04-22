@@ -187,19 +187,14 @@
    select A9.execution_,
        
        case
-         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
-          to_char(A9.start_, 'yyyymmddhh24miss')
+         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查'  then  to_char(A9.start_, 'yyyymmddhh24miss')
        end as start_time,
        
        case
-         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
-          to_char(A9.end_, 'yyyymmddhh24miss')
+         when A9.RN=1 and A9.NEXT_TASK_NAME = '审查一' then to_char(A9.end_, 'yyyymmddhh24miss')
        end as end_time,
        
-       case
-         when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查' and A9.NEXT_TASK_NAME = '审查一' then
-          to_char(sysdate, 'yyyymmddhh24miss')
-       end as curr_time
+       to_char(sysdate, 'yyyymmddhh24miss') as curr_time
        
 <!--  to_char(A9.start_, 'yyyy/mm/dd hh24:mi:ss') as start_time,
        to_char(A9.end_, 'yyyy/mm/dd hh24:mi:ss') as end_time,
@@ -232,7 +227,7 @@
                 to_date(to_char(sysdate, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2) as currD_diff -->
-  from ( select  AA.*,  ROW_NUMBER() OVER(PARTITION BY execution_, PRE_TASK_NAME, next_task_name  ORDER BY  START_) RN  from 
+  from ( select  AA.*,  ROW_NUMBER() OVER(PARTITION BY execution_  ORDER BY  START_) RN  from 
   (select A7.*, A8.activity_name_ as NEXT_TASK_NAME
     from (select A5.*, A6.activity_name_ as PRE_TASK_NAME
           from (select A3.*, A4.NEXT_TASK_ID
@@ -252,7 +247,7 @@
                left join JBPM4_HIST_ACTINST A6 
                on A5.execution_ = A6.execution_ and A5.PRE_TASK_ID = A6.HTASK_) A7
              left join  JBPM4_HIST_ACTINST A8  
-             on A7.execution_ = A8.execution_  and A7.NEXT_TASK_ID = A8.HTASK_ ) AA  ) A9
+             on A7.execution_ = A8.execution_  and A7.NEXT_TASK_ID = A8.HTASK_ ) AA  ) A9 where rn=1
    </select>
    
    

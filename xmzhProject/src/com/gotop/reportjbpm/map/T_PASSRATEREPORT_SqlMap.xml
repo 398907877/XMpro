@@ -172,7 +172,7 @@
           tt.LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
            	 and dic.dictid in($loanCategory$))
       </isNotNull>
-     
+     order by  tt.ORGCODEONE, tt.ORGCODETWO, tt.ONECATEGORY,  tt.LOANCATEGORY, tt.REVIEWEMPNAME, tt.APPROVALEMPNAME
 	</select>
 
 </sqlMap>

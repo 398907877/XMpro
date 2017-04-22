@@ -256,10 +256,15 @@ public class XdProcessAction   extends BaseAction {
 				 
 					 String start_time =  (String) map.get("START_TIME") ; 
 					 String end_time =  (String) map.get("END_TIME") ; 
+					 Double pdTimeLen = null;
+					  
+					 if(start_time != null && end_time != null){
 					 
-					//派单时长（单位：工作日）=（派单时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
-					 //double pdTimeLen = getTimeLen(start_time, end_time, time_Diff1, startD_diff, endD_diff);
-					 double pdTimeLen = (Double) thismethod.invoke(bean, start_time,end_time);
+						//派单时长（单位：工作日）=（派单时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
+						 //double pdTimeLen = getTimeLen(start_time, end_time, time_Diff1, startD_diff, endD_diff);
+						 pdTimeLen = (Double) thismethod.invoke(bean, start_time,end_time);
+					 }
+					 
 					 xdProcessTaskAssignee.setPdTimeLen(pdTimeLen);
 		//		 }
 				 
@@ -271,10 +276,14 @@ public class XdProcessAction   extends BaseAction {
 				
 				//	 String start_time =  (String) map.get("START_TIME") ; 
 					 String curr_time = (String) map.get("CURR_TIME") ; 
+					 Double lcTimeLen = null;
 					 
-					//流程时长（单位：工作日）=（当前时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
-					// double lcTimeLen = getTimeLen(start_time, curr_time, time_Diff2, startD_diff, currD_diff);
-					 double lcTimeLen = (Double) thismethod.invoke(bean, start_time,curr_time);
+					 if(start_time != null && curr_time != null){
+						//流程时长（单位：工作日）=（当前时间-报单时间）（单位：天） – 周末 – 节假日 + 特殊工作日
+						// double lcTimeLen = getTimeLen(start_time, curr_time, time_Diff2, startD_diff, currD_diff);
+						 lcTimeLen = (Double) thismethod.invoke(bean, start_time,curr_time);
+					 }
+					 
 					 xdProcessTaskAssignee.setLcTimeLen(lcTimeLen);
 			//	 }
 				 
