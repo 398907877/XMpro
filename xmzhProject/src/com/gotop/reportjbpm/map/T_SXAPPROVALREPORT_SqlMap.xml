@@ -100,7 +100,7 @@
                               TT.ONECATEGORY))
         PIVOT(SUM(V_NUM) NUM, SUM(AMT) MONENY
            FOR ONECATEGORY IN($oneParams$))
-         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$),(ORGCODEONE),())) S,
+         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$))) S,
        OM_ORGANIZATION O1,
        OM_ORGANIZATION O2,
        (SELECT ORGCODEONE,

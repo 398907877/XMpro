@@ -39,14 +39,20 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 		this.processUsedTimeReport = processUsedTimeReport;
 	}
 	public String processUsedTimeReportList(){
+		
+		
+//		try {
+//			processUsedTimeReport();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+		
+		
 		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportList(processUsedTimeReport, this.getPage());
 		this.setPage(page);
 		this.setProcessUsedTimeReportList(processUsedTimeReportList);
-		try {
-			processUsedTimeReport();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 		return "processUsedTimeReportList";
 	}
 	
