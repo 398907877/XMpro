@@ -1,5 +1,6 @@
 package com.gotop.reportjbpm.service;
 
+import java.util.HashMap;
 import java.util.List;
 import com.gotop.reportjbpm.model.ProcessUsedTimeReport;
 import com.primeton.utils.Page;
@@ -12,6 +13,14 @@ public interface IProcessUsedTimeReportService {
 	 * @return
 	 */
 	List<ProcessUsedTimeReport> queryProcessUsedTimeReportList(ProcessUsedTimeReport processUsedTimeReport, Page page);
+	
+	/**
+	 * 流程用时统计报表
+	 * @param approval
+	 * @param page
+	 * @return
+	 */
+	List<ProcessUsedTimeReport> queryProcessUsedTimeReportListTemp();
 	/**
 	 * 流程用时统计报表导出excel
 	 * @param approval
@@ -20,6 +29,12 @@ public interface IProcessUsedTimeReportService {
 	 */
 	List<ProcessUsedTimeReport> queryProcessUsedTimeReportListForExcel(ProcessUsedTimeReport processUsedTimeReport);
 	
+	/**
+	 * 插入临时表PROCESS_USEDTIME_REPORT
+	 * @param ProcessUsedTimeReportTemp
+	 */
+	public void insertProcessUsedTimeReportTemp(HashMap<String, String> hmp);
 	
+	List<ProcessUsedTimeReport> queryProcessUsedTimeType();
 
 }

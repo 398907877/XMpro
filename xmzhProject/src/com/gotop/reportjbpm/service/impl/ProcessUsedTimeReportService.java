@@ -122,7 +122,28 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 		
 	    processUsedTimeReportList=processUsedTimeReportDao.queryProcessUsedTimeReportListForExcel(map);
 		return processUsedTimeReportList;
-		//return null;
 	}
+
+	@Override
+	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportListTemp() {
+	    List<ProcessUsedTimeReport> processUsedTimeReportList =new ArrayList<ProcessUsedTimeReport>();
+	    processUsedTimeReportList=processUsedTimeReportDao.queryProcessUsedTimeReportListTemp();
+		return processUsedTimeReportList;
+	}
+
+	@Override
+	public void insertProcessUsedTimeReportTemp(
+			HashMap<String, String> hmp)  {
+		processUsedTimeReportDao.insertProcessUsedTimeReportTemp(hmp);
+		
+	}
+
+	@Override
+	public List<ProcessUsedTimeReport> queryProcessUsedTimeType() {
+		 List<ProcessUsedTimeReport> processUsedTimeTypeList =new ArrayList<ProcessUsedTimeReport>();
+		 processUsedTimeTypeList=processUsedTimeReportDao.queryProcessUsedTimeType();
+		return processUsedTimeTypeList;
+	}
+
 
 }

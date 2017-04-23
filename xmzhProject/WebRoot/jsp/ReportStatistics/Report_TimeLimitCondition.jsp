@@ -104,28 +104,28 @@
 								主调客户经理
 							</th>
 							<th  nowrap="nowrap">
-								综合岗一次派单时间(小时)
+								综合岗一次派单时间
 					       </th>
 							<th  nowrap="nowrap">
-								综合岗二次派单时间(小时)
+								综合岗二次派单时间
 					       </th>
 							<th  nowrap="nowrap">
-								综合岗三次派单时间(小时)
+								综合岗三次派单时间
 					       </th>
 							<th nowrap="nowrap">
-								审查审批一次作业时间(小时)
+								审查审批一次作业时间
 					       </th>
 					       <th nowrap="nowrap">
-								审查审批二次作业时间(小时)
+								审查审批二次作业时间
 							</th>
                             <th nowrap="nowrap">
-								审查审批三次以上作业时间(小时)
+								审查审批三次以上作业时间
 							</th>
 							<th nowrap="nowrap">
-								全流程作业时间1(小时)
+								全流程作业时间1
 							</th>
 							<th nowrap="nowrap">
-								全流程作业时间2(小时)
+								全流程作业时间2
 							</th>
 							<th nowrap="nowrap">
 								资料完整后审批时间

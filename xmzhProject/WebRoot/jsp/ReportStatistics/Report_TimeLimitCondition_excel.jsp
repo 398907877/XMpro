@@ -19,14 +19,14 @@
 		<th height="34" width="100" align="center" class="form_label">一级分类</th>
 		<th height="34" width="100" align="center" class="form_label">贷种分类</th>
 		<th height="34" width="200" align="center" class="form_label">主调客户经理</th>
-		<th height="34" width="100" align="center" class="form_label">综合岗一次派单时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">综合岗二次派单时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">综合岗三次派单时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">审查审批一次作业时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">审查审批二次作业时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">审查审批三次以上作业时间(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">全流程作业时间1(小时)</th>
-		<th height="34" width="100" align="center" class="form_label">全流程作业时间2(小时)</th>
+		<th height="34" width="100" align="center" class="form_label">综合岗一次派单时间</th>
+		<th height="34" width="100" align="center" class="form_label">综合岗二次派单时间</th>
+		<th height="34" width="100" align="center" class="form_label">综合岗三次派单时间</th>
+		<th height="34" width="100" align="center" class="form_label">审查审批一次作业时间</th>
+		<th height="34" width="100" align="center" class="form_label">审查审批二次作业时间</th>
+		<th height="34" width="100" align="center" class="form_label">审查审批三次以上作业时间</th>
+		<th height="34" width="100" align="center" class="form_label">全流程作业时间1</th>
+		<th height="34" width="100" align="center" class="form_label">全流程作业时间2</th>
 		<th height="34" width="100" align="center" class="form_label">资料完整后审批时间</th>
 		
 	</tr>

@@ -128,7 +128,8 @@
 									<b:write iterateId="id1" property="loanCategory" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="timeLimitType" />
+								
+					               <d:write  iterateId="id1" dictTypeId="TIME_LIMIT_TYPE" property="timeLimitType"/>
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="onedaysDealNum" />
