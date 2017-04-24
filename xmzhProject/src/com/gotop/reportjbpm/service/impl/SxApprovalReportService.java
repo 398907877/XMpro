@@ -112,7 +112,7 @@ public class SxApprovalReportService implements ISxApprovalReportService  {
 			
 		}
 		if(sxApprovalReport.getApprovalTimeEnd()!=null&&!"".equals(sxApprovalReport.getApprovalTimeEnd())){
-			map.put("approvalTimeStart", sxApprovalReport.getApprovalTimeEnd());
+			map.put("approvalTimeEnd", sxApprovalReport.getApprovalTimeEnd());
 			
 		}
 		sxApprovalReportList=sxApprovalReportDao.querySxApprovalReportList(map,page);
@@ -210,7 +210,7 @@ public class SxApprovalReportService implements ISxApprovalReportService  {
 			
 		}
 		if(sxApprovalReport.getApprovalTimeEnd()!=null&&!"".equals(sxApprovalReport.getApprovalTimeEnd())){
-			map.put("approvalTimeStart", sxApprovalReport.getApprovalTimeEnd());
+			map.put("approvalTimeEnd", sxApprovalReport.getApprovalTimeEnd());
 			
 		}
 		sxApprovalReportList=sxApprovalReportDao.querySxApprovalReportListForExcel(map);
