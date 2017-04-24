@@ -267,14 +267,19 @@ SELECT ORGNAMEONE,
                        T_PROCESS_TASK_ASSIGNEE   P1,
                        JBPM4_HIST_ACTINST        J1,
                        JBPM4_HIST_ACTINST        j2,
-                       T_GENERALPROCESS_MODELTHREE T3
+                       T_GENERALPROCESS_MODELTHREE T3,
+		                JBPM4_HIST_PROCINST       JT,
+		                t_process_config          G
                  WHERE B.EXECUTION_ID=T.FLOW_ID
                     AND T.ORGCODEONE = O1.ORGCODE
                    AND T.ORGCODETWO = O2.ORGCODE(+)
                    AND T.CREATOR = E1.EMPID
                    AND T.FLOW_ID = P1.EXECUTION_ID
                    AND B.EXECUTION_ID=T3.FLOW_ID
-                   AND P1.BUSINESS_TYPE = '88'
+                   AND B.EXECUTION_ID=JT.ID_
+                   AND  JT.PROCDEFID_=G.DEFINITION_ID
+                   AND b.BUSINESS_TYPE = '88'
+                   AND G.STATE='01'
                    AND t.flow_id = j1.execution_
                    AND t.flow_id = j2.execution_
                    and j1.HTASK_ = p1.next_task_id

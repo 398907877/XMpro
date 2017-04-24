@@ -63,37 +63,53 @@
                                   FROM T_GENERALPROCESS_MODELONE) A,
                                (SELECT DISTINCT ONECATEGORY
                                   FROM T_GENERALPROCESS_MODELONE) B) T
-                  LEFT JOIN (SELECT T.ORGCODEONE,
-                                   T.ORGCODETWO,
-                                   T.ONECATEGORY,
-                                   COUNT(*) V_NUM,
-                                   SUM(T.APPLY_BAL) AMT
-                              FROM T_GENERALPROCESS_MODELONE T,
-                                   OM_EMPLOYEE               E1,
-                                   T_PROCESS_TASK_ASSIGNEE   P1,
-                                   T_APPROVE_OPNINION_GP    p2
-                             WHERE T.CREATOR = E1.EMPID
-                               AND T.FLOW_ID = P1.EXECUTION_ID
-                               AND T.FLOW_ID=P2.FLOW_ID
-                               AND P1.NEXT_ACTIVITY_NAME = '结束'
-                               AND P1.BUSINESS_TYPE = '88'
-                               AND P2.resource_type = '88'
-                               <isNotNull prepend="and" property="approvalTimeStart" >
-					           	<![CDATA[
-					           		P2.operator_type = '提交发起合同预审' 
-					           		and P2.operater_date >= '$approvalTimeStart$'
-					               ]]>
-      						</isNotNull>
-				           <isNotNull prepend="and" property="approvalTimeEnd" >
-				           	<![CDATA[
-				            	P2.operator_type = '提交发起合同预审' 
-				           		and P2.operater_date <= '$approvalTimeEnd$'
-				               ]]>
-				      		</isNotNull>
-                               
-                             GROUP BY T.ORGCODEONE,
-                                      T.ORGCODETWO,
-                                      T.ONECATEGORY) TT
+                  LEFT JOIN (
+                  
+                  SELECT ORGCODEONE,
+       ORGCODETWO,
+       ONECATEGORY,
+       COUNT(id) V_NUM,
+       SUM(APPLY_BAL) AMT
+
+  from (
+        
+        SELECT DISTINCT T.ORGCODEONE,
+                         T.ORGCODETWO,
+                         T.ONECATEGORY,
+                         T.APPLY_BAL,
+                         B.ID
+          FROM t_process_business        B,
+                T_GENERALPROCESS_MODELONE T,
+                T_PROCESS_TASK_ASSIGNEE   P1,
+                T_APPROVE_OPNINION_GP     p2,
+                JBPM4_HIST_PROCINST       JT,
+                t_process_config          G
+         WHERE B.EXECUTION_ID = T.FLOW_ID
+           AND T.FLOW_ID = P1.EXECUTION_ID
+           AND T.FLOW_ID = P2.FLOW_ID
+           AND B.EXECUTION_ID = JT.ID_
+           AND JT.PROCDEFID_ = G.DEFINITION_ID
+           AND G.STATE = '01'
+           AND P1.NEXT_ACTIVITY_NAME = '结束'
+           AND B.BUSINESS_TYPE = '88'
+           AND P2.resource_type = '88'
+           
+            <isNotNull prepend="and" property="approvalTimeStart" >
+                      <![CDATA[
+                        P2.operator_type = '提交发起合同预审' 
+                        and P2.operater_date >= '$approvalTimeStart$'
+                         ]]>
+                  </isNotNull>
+                   <isNotNull prepend="and" property="approvalTimeEnd" >
+                    <![CDATA[
+                      P2.operator_type = '提交发起合同预审' 
+                      and P2.operater_date <= '$approvalTimeEnd$'
+                       ]]>
+                  </isNotNull>
+           )
+
+ GROUP BY ORGCODEONE, ORGCODETWO, ONECATEGORY
+) TT
                     ON CONCAT(CONCAT(T.ORGCODEONE, T.ORGCODETWO),
                               T.ONECATEGORY) =
                        CONCAT(CONCAT(TT.ORGCODEONE, TT.ORGCODETWO),
