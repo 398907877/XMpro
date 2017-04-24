@@ -17,7 +17,14 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 	private ProcessUsedTimeReport processUsedTimeReport;
 	private IProcessUsedTimeReportService processUsedTimeReportService;
 	private List<ProcessUsedTimeReport> processUsedTimeReportList =new ArrayList<ProcessUsedTimeReport>();
+	private String reslut;
 	
+	public String getReslut() {
+		return reslut;
+	}
+	public void setReslut(String reslut) {
+		this.reslut = reslut;
+	}
 	public List<ProcessUsedTimeReport> getProcessUsedTimeReportList() {
 		return processUsedTimeReportList;
 	}
@@ -62,8 +69,13 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 		return "processUsedTimeReportExcel";
 	}
 	
-	 public void processUsedTimeReport() throws Exception {
-		 Object bean = SpringContextUtil.getBean("myUtil"); 
+	 public String processUsedTimeReport() throws Exception {
+		 String res="激活失败";
+		 System.out.println("111");
+		 try {
+			
+		
+		    Object bean = SpringContextUtil.getBean("myUtil"); 
 	    	Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
 	    //	Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forDays", String.class,String.class);
 	    	List<ProcessUsedTimeReport> processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportListTemp();
@@ -122,13 +134,18 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 				    		//processUsedTimeReportTemp.setWorktime(worktime);
 				    		//processUsedTimeReportTemp.setInserttime(inserttime);
 				    		processUsedTimeReportService.insertProcessUsedTimeReportTemp(tempMap);
+				    		res="激活成功";
 			    		}
 		    		}
 		    		
 		    	}
 	    	}
-	    	
-	    			
+		 } catch (Exception e) {
+			    res="激活失败";
+				e.printStackTrace();
+			}
+	    	this.setReslut(res);
+	    	return "processUsedTimeReport";		
 	 }
 	 
 	 /**

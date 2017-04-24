@@ -129,7 +129,9 @@
 			<result name="processUsedTimeReportExcel">
 				/jsp/ReportStatistics/Report_ProcessUsedTime_excel.jsp
 			</result>
-
+	        <result name="processUsedTimeReport">
+				/jsp/ReportStatistics/processUsedTimeReport.jsp
+			</result>
 		</action>
 		
 		<action name="timeLimitConditionReportAction_*" class="timeLimitConditionReportAction"
