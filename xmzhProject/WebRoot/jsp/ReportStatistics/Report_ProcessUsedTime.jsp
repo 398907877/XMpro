@@ -56,7 +56,7 @@
 					
 					<td class="form_label" align="right" >时限类型：</td>
 					<td>
-					<d:select dictTypeId="TIME_LIMIT_TYPE" property="processUsedTimeReport.timeLimitType" nullLabel="请选择"></d:select>
+					<d:select id="timeLimitType" dictTypeId="TIME_LIMIT_TYPE" property="processUsedTimeReport.timeLimitType" nullLabel="请选择"></d:select>
 					</td>	
 				</tr>
 				
@@ -70,7 +70,11 @@
 							<input type="button" value="清 空" class="button" onclick="clears();">
                                                         <input id="downexl" type="button" class="button" value="导出列表" onclick="excelExport();"></td>
 					</tr>			
-					
+					<tr>
+						<td colspan="6">
+								<font style="color: blue">最近更新时间：<b:write property="update_time" /> </font> &nbsp;&nbsp;&nbsp;
+						</td>
+					</tr>			
 			</table>
 		</w:panel>
 	</h:form>

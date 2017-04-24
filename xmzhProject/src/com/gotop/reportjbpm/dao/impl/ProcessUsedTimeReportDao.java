@@ -39,5 +39,11 @@ public class ProcessUsedTimeReportDao extends SqlMapClientDao implements IProces
 		return this.queryForList("T_PROCESSUSEDTIMEREPORT_SqlMap.queryProcessUsedTimeType", null);
 	}
 
+	@Override
+	public Object queryReportUpdatetime() {
+		Object object = queryForObject("T_PROCESSUSEDTIMEREPORT_SqlMap.queryReportUpdatetime");
+		return  object;
+	}
+
 	
 }

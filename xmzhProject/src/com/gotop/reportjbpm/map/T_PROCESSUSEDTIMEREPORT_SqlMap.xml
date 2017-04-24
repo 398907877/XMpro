@@ -425,5 +425,12 @@ SELECT ORGNAMEONE,
    AND G.STATUS = '1'
    order by g.sortno
 	</select>
+	
+	  <!-- 查询流程用时报表的更新时间-->
+  <select id="queryReportUpdatetime" resultClass="java.lang.String"   >
+	select to_char(to_date(max(t.inserttime), 'yyyy-mm-dd HH24:mi:ss'),
+               'yyyy-mm-dd HH24:mi:ss') as update_time
+  from process_UsedTime_Report t
+  </select> 
 
 </sqlMap>

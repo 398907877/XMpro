@@ -36,5 +36,7 @@ public interface IProcessUsedTimeReportService {
 	public void insertProcessUsedTimeReportTemp(HashMap<String, String> hmp);
 	
 	List<ProcessUsedTimeReport> queryProcessUsedTimeType();
+	
+	Object queryReportUpdatetime();
 
 }

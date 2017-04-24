@@ -18,7 +18,15 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 	private IProcessUsedTimeReportService processUsedTimeReportService;
 	private List<ProcessUsedTimeReport> processUsedTimeReportList =new ArrayList<ProcessUsedTimeReport>();
 	private String reslut;
+    
+    private String update_time;
 	
+	public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
 	public String getReslut() {
 		return reslut;
 	}
@@ -58,6 +66,9 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 		
 		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportList(processUsedTimeReport, this.getPage());
 		this.setPage(page);
+		//查询超限报表更新时间，显示在页面
+    	String update_time =  (String) this.processUsedTimeReportService.queryReportUpdatetime();
+    	this.setUpdate_time(update_time);
 		this.setProcessUsedTimeReportList(processUsedTimeReportList);
 	
 		return "processUsedTimeReportList";
@@ -71,7 +82,6 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 	
 	 public String processUsedTimeReport() throws Exception {
 		 String res="激活失败";
-		 System.out.println("111");
 		 try {
 			
 		

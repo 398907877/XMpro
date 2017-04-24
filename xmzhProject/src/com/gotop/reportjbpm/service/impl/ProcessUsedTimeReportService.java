@@ -145,5 +145,12 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 		return processUsedTimeTypeList;
 	}
 
+	@Override
+	public Object queryReportUpdatetime() {
+		
+		Object object = this.processUsedTimeReportDao.queryReportUpdatetime();
+		return object;
+	}
+
 
 }
