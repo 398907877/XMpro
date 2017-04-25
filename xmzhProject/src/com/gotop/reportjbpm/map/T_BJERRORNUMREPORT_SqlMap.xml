@@ -43,40 +43,35 @@
 				            SELECT
 				              T6.*, T7.MISTAKEID
 				            FROM
-				              (
-				                /* 关联到项目信息 一级分行 二级分行  一级分类  贷种分类 
-				                所有的信贷流程。并且是审批通过的 */
-				                SELECT
-				                  FlowID
-				                FROM
-				                  (
-				                    SELECT
-				                      t3.execution_id AS FlowID
-				                    FROM
-				                      (
-				                        SELECT
-				                          t1.execution_id,
-				                          t2.activity_name_
-				                        FROM
-				                          (
-				                            SELECT
-				                              p1.execution_id
-				                            FROM
-				                              t_process_business p1 ,JBPM4_HIST_PROCINST p2, T_PROCESS_CONFIG p3
-				                            WHERE p1.BUSINESS_TYPE = '88' 
-				                              and p2.procdefid_ = p3.definition_id
-				                              and p3.state='01'
-				                          ) t1
-				                        LEFT JOIN JBPM4_HIST_ACTINST t2 ON T1.execution_id = T2.EXECUTION_
-				                      ) t3
-				                    WHERE
-				                      T3.ACTIVITY_NAME_ = '审批一'
-				                    OR T3.ACTIVITY_NAME_ = '审批二'
-				                    OR T3.ACTIVITY_NAME_ = '出具决策意见'
-				                  )
-				                GROUP BY
-				                  FlowID
-				              ) t6
+				              (/*--关联到项目信息 一级分行 二级分行  一级分类  贷种分类 --所有的信贷流程。并且是审批通过的*/
+								SELECT
+									FlowID
+								FROM
+									(
+										SELECT
+											t3.execution_id AS FlowID
+										FROM
+											(
+												SELECT
+													t1.execution_id,
+													t2.OPERATOR_TYPE   
+												FROM
+													(
+														SELECT
+															execution_id
+														FROM
+															t_process_business
+														WHERE
+															BUSINESS_TYPE = '88'
+													) t1
+												LEFT JOIN T_APPROVE_OPNINION_GP t2 ON T1.execution_id = T2.FLOW_ID
+											) t3
+										WHERE
+											T3.OPERATOR_TYPE = '提交发起合同预审'
+										
+									)
+								GROUP BY
+									FlowID ) t6
 				            LEFT JOIN T_GENERALPROCESS_MISTAKE t7 ON T6.FLOWID = T7.FLOW_ID
 				          ) T8
 				        GROUP BY
