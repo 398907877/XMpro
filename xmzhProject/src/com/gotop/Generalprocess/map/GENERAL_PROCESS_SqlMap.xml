@@ -288,8 +288,51 @@
   	
   	  <!-- 信贷流程查询 将t_process_business作为查询主表 -->
   <select id="queryGeneralprocessList2" resultMap="TGeneralProcess_HashMapResult2" parameterClass="java.util.HashMap">
-SELECT t17.*,
-       t18.reporttime
+with temp as /* temp：查出每个流程节点的操作人员 */
+(select ac.*, ap.task_assignee_id as activity_empid, emp.empname as activity_empname
+            from JBPM4_HIST_ACTINST      ac,
+                 T_PROCESS_TASK_ASSIGNEE_PERSON ap,
+                 om_employee emp
+           where ac.execution_ = ap.execution_id
+             and ac.htask_ = ap.task_id
+             and ap.task_assignee_id = emp.empid ),
+             
+temp1  as  /* temp1：查出每个流程第一次执行“审查一”的员工 */           
+ (select execution_, activity_empname as fir_sc_empname
+   from (select temp.*, row_number() over(partition by execution_ order by start_) as rn
+           from temp               
+          where temp.activity_name_ = '审查一')
+  where rn = 1),
+  
+  temp2  as   /* temp2：查出每个流程第二次执行“审查一”的员工 */        
+ (select execution_, activity_empname as sec_sc_empname
+   from (select temp.*, row_number() over(partition by execution_ order by start_) as rn
+           from temp               
+          where temp.activity_name_ = '审查一')
+  where rn = 2),
+  
+  temp3  as   /* temp3：查出每个流程第一次执行“审批一”的员工 */        
+ (select execution_, activity_empname as fir_sp_empname
+   from (select temp.*, row_number() over(partition by execution_ order by start_) as rn
+           from temp               
+          where temp.activity_name_ = '审批一')
+  where rn = 1),
+  
+  temp4 as   /* temp4：查出每个流程第二次执行“审批一”的员工 */         
+ (select execution_, activity_empname as sec_sp_empname
+   from (select temp.*, row_number() over(partition by execution_ order by start_) as rn
+           from temp               
+          where temp.activity_name_ = '审批一')
+  where rn = 2),
+
+tempT as /* 列出每个流程的 第一次操作审查一的人、第二次操作审查一的人、第一次操作审批一的人、第二次操作审批一的人 */
+(select T.execution_, temp1.fir_sc_empname, temp2.sec_sc_empname, temp3.fir_sp_empname, temp4.sec_sp_empname  from  
+  (select execution_ from JBPM4_HIST_ACTINST group by execution_) T, temp1, temp2, temp3, temp4 
+  where T.execution_ = temp1.execution_(+) and T.execution_ = temp2.execution_(+)
+    and T.execution_ = temp3.execution_(+) and T.execution_ = temp4.execution_(+) 
+)
+
+SELECT t17.*,  t18.reporttime, tempT.fir_sc_empname, tempT.sec_sc_empname, tempT.fir_sp_empname, tempT.sec_sp_empname
 FROM
   (SELECT t15.*,
           t16.process_name
@@ -416,9 +459,11 @@ FROM
       LEFT JOIN /*查找 对应的流程模板id definition_id */ JBPM4_HIST_PROCINST t14 ON t13.execution_id = t14.id_) t15
    , /*查找 流程名称process_name */ T_PROCESS_CONFIG t16 
    where t15.definition_id = t16.definition_id and t16.state='01' ) t17
-LEFT JOIN /*查找 上报时间reporttime */ t_generalprocess_modelthree t18 ON t17.execution_id = t18.flow_id
-                       
-where beginOrgname is not null 
+   ,/*查找 上报时间reporttime */ t_generalprocess_modelthree t18 , tempT
+ 
+ WHERE t17.execution_id = t18.flow_id(+)
+and t17.execution_id = tempT.execution_(+)                      
+and  beginOrgname is not null 
 	and beginEmpname is not null 
 	and cust_name is not null
  <isNotNull property="orgid" >
@@ -493,15 +538,8 @@ where beginOrgname is not null
            	 t17.loancategory in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
            	 and dic.dictid in($loanCategory$))
       		</isNotNull>
-		<isNotNull prepend="and" property="dyApp" >
-			t17.activityName = '审批一' 
-			and t17.pre_task_assingee in (select empid from om_employee where empname = '$dyApp$')
-      		</isNotNull>
-           <isNotNull prepend="and" property="deApp" >
-           t17.activityName = '审批二' 
-			and t17.pre_task_assingee in (select empid from om_employee where empname = '$deApp$')
-      		</isNotNull>
-           <isNotNull prepend="and" property="dyCheck" >
+		
+         <!--   <isNotNull prepend="and" property="dyCheck" >
            t17.activityName = '审查一' 
 			and t17.pre_task_assingee in (select empid from om_employee where empname = '$dyCheck$')
       		</isNotNull>
@@ -509,6 +547,28 @@ where beginOrgname is not null
            	 t17.activityName = '审查二' 
 			and t17.pre_task_assingee in (select empid from om_employee where empname = '$deCheck$')
       		</isNotNull>
+      		<isNotNull prepend="and" property="dyApp" >
+			t17.activityName = '审批一' 
+			and t17.pre_task_assingee in (select empid from om_employee where empname = '$dyApp$')
+      		</isNotNull>
+           <isNotNull prepend="and" property="deApp" >
+           t17.activityName = '审批二' 
+			and t17.pre_task_assingee in (select empid from om_employee where empname = '$deApp$')
+      		</isNotNull> -->
+      		
+      		<isNotNull prepend="and" property="dyCheck" >
+           tempT.fir_sc_empname =  '$dyCheck$'
+      		</isNotNull>
+           <isNotNull prepend="and" property="deCheck" >
+           	 tempT.sec_sc_empname = '$deCheck$'
+      		</isNotNull>
+      		<isNotNull prepend="and" property="dyApp" >
+			 tempT.fir_sp_empname = '$dyApp$'
+      		</isNotNull>
+           <isNotNull prepend="and" property="deApp" >
+            tempT.sec_sp_empname = '$deApp$'
+      		</isNotNull> 
+      		
            <isNotNull prepend="and" property="processName" >
            t17.process_name like '%'||'$processName$'||'%'
       		</isNotNull>
