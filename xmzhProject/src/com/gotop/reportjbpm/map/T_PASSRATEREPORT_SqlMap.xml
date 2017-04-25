@@ -16,24 +16,53 @@
 	<!-- 通过率统计 author:lmt -->
 	<select id="queryPassRateReport" parameterClass="java.util.HashMap" resultMap="PassRateReport">
 	
-			with temp1 as
-/* temp1:查出在一个流程实例里经过完”审批一“并且上个节点是”审查一“的所有流程,
- 并且查询每条流程“审查一-->审批一”到底走过几次
- */
- (select m4.execution_, count(*) as sc_sp_count
-    from (select m1.*, m3.activity_name_ as pre_task_name
+with tempA as /* tempA:查出在一个流程实例里经过完”审查一“并且下个节点是”审批一“的所有流程 */
+(select m4.* from 
+     (select m1.*, m3.activity_name_ as next_task_name
             from JBPM4_HIST_ACTINST      m1,
                  T_PROCESS_TASK_ASSIGNEE m2,
                  JBPM4_HIST_ACTINST      m3
-           where m1.activity_name_ = '审批一'
+           where m1.activity_name_ = '审查一' 
+             and m1.end_ is not null
+             and m1.execution_ = m2.execution_id
+             and m1.htask_ = m2.pre_task_id
+             and m2.next_task_id = m3.htask_) m4
+       where m4.next_task_name = '审批一'        
+),
+
+tempB as  /* 查出在一个流程实例里经过完”审批一“并且上个节点是”审查一“的所有流程 */
+ (select m4.* from 
+     (select m1.*, m3.activity_name_ as pre_task_name
+            from JBPM4_HIST_ACTINST      m1,
+                 T_PROCESS_TASK_ASSIGNEE m2,
+                 JBPM4_HIST_ACTINST      m3
+           where m1.activity_name_ = '审批一' 
              and m1.end_ is not null
              and m1.execution_ = m2.execution_id
              and m1.htask_ = m2.next_task_id
              and m2.pre_task_id = m3.htask_) m4
-   where m4.pre_task_name = '审查一'
-   group by execution_),
+       where m4.pre_task_name = '审查一'     
+),
 
-temp5 as /* 查询通过的流程，pass_count代表几次通过 */
+temp1 as
+/* temp1: 并且查询每条流程“受理调查-->收单派单”到底走过几次,即几次派单
+ */
+(select execution_, count(*) as sc_sp_count from 
+
+     (select m1.*, m3.activity_name_ as next_task_name
+            from JBPM4_HIST_ACTINST      m1,
+                 T_PROCESS_TASK_ASSIGNEE m2,
+                 JBPM4_HIST_ACTINST      m3
+           where m1.activity_name_ = '受理调查' 
+             and m1.end_ is not null
+             and m1.execution_ = m2.execution_id
+             and m1.htask_ = m2.pre_task_id
+             and m2.next_task_id = m3.htask_) m4
+       where m4.next_task_name = '收单派单'      
+ 
+  group by execution_),
+
+temp5 as /* 查询通过的流程，pass_count代表几次派单通过 */
  (select j1.execution_, j2.sc_sp_count as pass_count
     from (select execution_
             from JBPM4_HIST_ACTINST
@@ -42,17 +71,15 @@ temp5 as /* 查询通过的流程，pass_count代表几次通过 */
          temp1 j2
    where j1.execution_ = j2.execution_),
 
-temp2 as /* temp2:在temp1的流程里查询每条流程对应的审查人员 */
+temp2 as /* temp2:在tempA的流程里查询每条流程对应的审查人员 */
  (select a5.execution_, a6.empname as reviewEmpname
     from (select a3.*,
                  a4.task_assignee_id,
                  row_number() over(partition by a4.execution_id order by a4.id) as rn2
             from (select *
-                    from (select ac.*,
-                                 row_number() over(partition by ac.execution_ order by start_) as rn
-                            from JBPM4_HIST_ACTINST ac
-                           where execution_ in (select execution_ from temp1)
-                             and activity_name_ = '审查一') a2
+                    from (select tempA.*,
+                                 row_number() over(partition by execution_ order by start_) as rn
+                            from tempA) a2
                    where rn = 1) a3,
                  T_PROCESS_TASK_ASSIGNEE_PERSON a4
            where a3.execution_ = a4.execution_id
@@ -61,17 +88,15 @@ temp2 as /* temp2:在temp1的流程里查询每条流程对应的审查人员 */
    where a5.rn2 = 1
      and a5.task_assignee_id = a6.empid),
 
-temp3 as /* temp3:在temp1的流程里查询每条流程对应的审批人员 */
+temp3 as /* temp3:在tempB的流程里查询每条流程对应的审批人员 */
  (select a5.execution_, a6.empname as approvalEmpname
     from (select a3.*,
                  a4.task_assignee_id,
                  row_number() over(partition by a4.execution_id order by a4.id) as rn2
             from (select *
-                    from (select ac.*,
-                                 row_number() over(partition by ac.execution_ order by start_) as rn
-                            from JBPM4_HIST_ACTINST ac
-                           where execution_ in (select execution_ from temp1)
-                             and activity_name_ = '审批一') a2
+                    from (select tempB.*,
+                                 row_number() over(partition by execution_ order by start_) as rn
+                            from tempB ) a2
                    where rn = 1) a3,
                  T_PROCESS_TASK_ASSIGNEE_PERSON a4
            where a3.execution_ = a4.execution_id
