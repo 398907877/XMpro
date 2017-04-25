@@ -35,7 +35,7 @@ select * from	(select TT2.*,
 		                         when M.basic_rate_float = '2' then
 		                          -1 * abs(replace(M.rate_float_scale, '%', ''))
 		                       end as basic_rate,
-		                       N.makeLoans_Date
+		                       decode(N.time1, NULL, P.time2, N.time1) as makeLoans_Date
 		                
 		                  from (select g1.execution_id,
 		                               g1.orgcodeone,
@@ -77,17 +77,25 @@ select * from	(select TT2.*,
 		                                   and t3.state = '01'
 		                                   and t4.orgcodetwo is not null) g1
 		                          left join T_GENERALPROCESS_MODELSIX g6
-		                            on g1.execution_id = g6.flow_id) M
-		                  left join
-		                
-		                 (select T.execution_,
-		                        to_char(T.END_, 'yyyy-mm-dd') as makeLoans_Date
+		                            on g1.execution_id = g6.flow_id) M,
+		                            
+		                (select T.execution_,
+		                        to_char(T.END_, 'yyyy-mm-dd') as time1
 		                   from (SELECT ac.*,
 		                                row_number() over(partition by ac.execution_ order by end_ desc) as rn
 		                           FROM JBPM4_HIST_ACTINST ac
 		                          where ac.activity_name_ = '放款操作') T
-		                  where T.rn = 1) N
-		                    on M.execution_id = N.execution_) TT
+		                  where T.rn = 1) N,
+		                  
+		                  (select T.execution_,
+                            to_char(T.END_, 'yyyy-mm-dd') as time2
+                       from (SELECT ac.*,
+                                    row_number() over(partition by ac.execution_ order by end_ desc) as rn
+                               FROM JBPM4_HIST_ACTINST ac
+                              where ac.activity_name_ = '额度生效') T
+                      where T.rn = 1) P
+		                  
+		                    where M.execution_id = N.execution_(+)  and M.execution_id = P.execution_(+)    ) TT
 		                    where 1=1
 		                    <isNotNull prepend="and" property="orgCodeOne" >
 						           TT.ORGCODEONE = '$orgCodeOne$'
