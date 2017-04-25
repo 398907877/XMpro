@@ -89,7 +89,6 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 	    	Class<?> classes = Class.forName("com.gotop.reportjbpm.MyUtil");
 	    //	Method thismethod = classes.getDeclaredMethod("getworkTimeDiff_forDays", String.class,String.class);
 	    	List<ProcessUsedTimeReport> processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportListTemp();
-	    	
 	    	if(processUsedTimeReportList.size()>0){
 	    	    Date d=new Date();
  				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -108,6 +107,7 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 							tempMap.put("displayordertwo", processUsedTimeReportList.get(i).getDisplayOrderTwo());
 							tempMap.put("onecategory", processUsedTimeReportList.get(i).getOneCategory());
 							tempMap.put("loancategory", processUsedTimeReportList.get(i).getLoanCategory());
+							tempMap.put("zdcustmanager", processUsedTimeReportList.get(i).getZdCustManager());
 							tempMap.put("reporttime", processUsedTimeReportList.get(i).getReportTime());
 							tempMap.put("flowid", processUsedTimeReportList.get(i).getFlowId());
 							tempMap.put("timelimittype", processUsedTimeTypeList.get(j).getTimeLimitType());
@@ -132,7 +132,6 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 							String worktimeTemp=tempObj[j];
 				    		//String startTime=processUsedTimeReportList.get(i).getRepTimeStart();
 				    		//String endTime=processUsedTimeReportList.get(i).getRepTimeEnd();
-				    		System.out.println("8888888888"+worktimeTemp);
 			    			String worktime="0";
 			    			worktime=getWorkTimeforDays(bean,classes,worktimeTemp);
 //				    		if(!"0".equals(startTime)&&!"0".equals(endTime)){

@@ -33,8 +33,15 @@ public class ProcessUsedTimeReport implements Serializable {
 	private String zlwzhApprovalTime;
 	private String flowId;
 	private String tempTime;
+	private String zdCustManager;
 	
 	
+	public String getZdCustManager() {
+		return zdCustManager;
+	}
+	public void setZdCustManager(String zdCustManager) {
+		this.zdCustManager = zdCustManager;
+	}
 	public String getTempTime() {
 		return tempTime;
 	}

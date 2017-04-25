@@ -87,13 +87,13 @@
     <result column="DISPLAYORDERTWO" property="displayOrderTwo" jdbcType="VARCHAR" />
     <result column="ONECATEGORY" property="oneCategory" jdbcType="VARCHAR" />
     <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
+    <result column="ZDCUSTMANAGER" property="zdCustManager" jdbcType="VARCHAR" />
     <result column="REPORTTIME" property="reportTime" jdbcType="VARCHAR" />
     <result column="FLOWID" property="flowId" jdbcType="VARCHAR" />
     <result column="TEMPTIME" property="tempTime" jdbcType="VARCHAR" />
   </resultMap>
      <select id="queryProcessUsedTimeReportListTemp"  resultMap="processUsedTimeReportTemp">
-	
-select ORGNAMEONE,
+	select ORGNAMEONE,
        ORGCODEONE,
        ORGCODETWO,
        ORGNAMETWO,
@@ -101,285 +101,183 @@ select ORGNAMEONE,
        DISPLAYORDERTWO,
        ONECATEGORY,
        LOANCATEGORY,
+       ZDCUSTMANAGER,
        p.flow_id flowId,
        t3.reporttime REPORTTIME,
-       ZHGPDTIMEONE||';'||ZHGPDTIMETWO||';'||
-       ZHGPDTIMETHREE||';'||
-       REVIEWAPPROVALONETIME||';'||
-       REVIEWAPPROVALTWOTIME||';'||
-       REVIEWAPPROVALTHREEORMORETIME||';'||
-       ALLPROCESSTIMEONE||';'||
-       ALLPROCESSTIMETWO||';'||
-       ZLWZHAPPROVALTIME TEMPTIME from 
-       (SELECT ORGNAMEONE,
-       ORGCODEONE,
-       ORGCODETWO,
-       ORGNAMETWO,
-       DISPLAYORDERONE,
-       DISPLAYORDERTWO,
-       ONECATEGORY,
-       LOANCATEGORY,
-       flow_id ,
-       MAX(PDONE_start)||','||MAX(PDONE_end) ZHGPDTIMEONE,
-       MAX(PDtwo_start)||','||MAX(PDtwo_end) ZHGPDTIMETWO,
-       MAX(PDthree_start)||','||MAX(PDthree_end) ZHGPDTIMETHREE,
-       MAX(REVIEWAPPROVALONETIME_start)||','||MAX(REVIEWAPPROVALONETIME_end) REVIEWAPPROVALONETIME,
-       MAX(REVIEWAPPROVALTWOTIME_start)||','||MAX(REVIEWAPPROVALTWOTIME_end) REVIEWAPPROVALTWOTIME,
-       MAX(REORMORETIME_start)||','||MAX(REORMORETIME_end) REVIEWAPPROVALTHREEORMORETIME,
-       MAX(ALLPROCESSTIMEONE_start)||','||MAX(ALLPROCESSTIMEONE_end) ALLPROCESSTIMEONE,
-       MAX(ALLPROCESSTIMETWO_start)||','||MAX(ALLPROCESSTIMETWO_end) ALLPROCESSTIMETWO,
-       MAX(ZLWZHAPPROVALTIME_start)||','||MAX(ZLWZHAPPROVALTIME_end) ZLWZHAPPROVALTIME
-FROM(
-SELECT ORGNAMEONE,
+       ZHGPDTIMEONE || ';' || ZHGPDTIMETWO || ';' || ZHGPDTIMETHREE || ';' ||
+       REVIEWAPPROVALONETIME || ';' || REVIEWAPPROVALTWOTIME || ';' ||
+       REVIEWAPPROVALTHREEORMORETIME || ';' || ALLPROCESSTIMEONE || ';' ||
+       ALLPROCESSTIMETWO || ';' || ZLWZHAPPROVALTIME TEMPTIME
+  from (select ORGNAMEONE,
                ORGCODEONE,
                ORGCODETWO,
+               ORGNAMETWO,
                DISPLAYORDERONE,
                DISPLAYORDERTWO,
-               ORGNAMETWO,
                ONECATEGORY,
                LOANCATEGORY,
-            (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '受理调查' and activity_name_next='收单派单' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) PDONE_start,
-               
-               (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) PDONE_end,
-               
-                (CASE
-                 WHEN rn = 2 AND
-                      activity_name_last = '受理调查' and activity_name_next='收单派单' THEN
-                 start_next
-                 ELSE
-                  '0'
-               END) PDtwo_start,
-               
-               (CASE
-                 WHEN rn = 2 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) PDtwo_end,
-               
-               (CASE
-                 WHEN rn = 3 AND
-                      activity_name_last = '受理调查' and activity_name_next='收单派单' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) PDthree_start,
-               
-                (CASE
-                 WHEN rn = 3 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) PDthree_end,
-               
-               (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REVIEWAPPROVALONETIME_start,
-               
-                (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '审查一' and activity_name_next='收单派单' THEN
-                  start_next
-                 WHEN rn = 1 AND
-                      activity_name_last = '审批一' and activity_name_next='收单派单' THEN
-                  start_next
-                  WHEN rn = 1 AND
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN rn = 1 AND
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REVIEWAPPROVALONETIME_end,
-               
-               
-               (CASE
-                 WHEN rn = 2 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REVIEWAPPROVALTWOTIME_start,
-               
-                (CASE
-                 WHEN rn = 2 AND
-                      activity_name_last = '审查一' and activity_name_next='收单派单' THEN
-                  start_next
-                 WHEN rn = 2 AND
-                      activity_name_last = '审批一' and activity_name_next='收单派单' THEN
-                  start_next
-                  WHEN rn = 2 AND
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN rn = 2 AND
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REVIEWAPPROVALTWOTIME_end,
-               
-               
-               
-               (CASE
-                 WHEN rn >= 3 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REORMORETIME_start,
-               
-                (CASE
-                 WHEN rn >= 3 AND
-                      activity_name_last = '审查一' and activity_name_next='收单派单' THEN
-                  start_next
-                 WHEN rn >= 3 AND
-                      activity_name_last = '审批一' and activity_name_next='收单派单' THEN
-                  start_next
-                  WHEN rn >= 3 AND
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN rn >= 3 AND
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) REORMORETIME_end,
-               
-               
-               (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '受理调查' and activity_name_next='收单派单' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) ALLPROCESSTIMEONE_start,
-               
-               
-                 (CASE
-                  WHEN rn = 1 AND
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN rn = 1 AND
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) ALLPROCESSTIMEONE_end,
-               
-               
-               (CASE
-                 WHEN rn = 1 AND
-                      activity_name_last = '收单派单' and activity_name_next='审查一' THEN
-                  end_next
-                 ELSE
-                  '0'
-               END) ALLPROCESSTIMETWO_start,
-               
-               
-                 (CASE
-                  WHEN rn = 1 AND
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN rn = 1 AND
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) ALLPROCESSTIMETWO_end,
-               
-               
-                 (CASE
-                 WHEN 
-                      activity_name_last = '受理调查' and activity_name_next='收单派单' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) ZLWZHAPPROVALTIME_start,
-                (CASE
-                  WHEN 
-                      activity_name_last = '审查一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                   WHEN 
-                      activity_name_last = '审批一' and activity_name_next='发起合同预审' THEN
-                  start_next
-                 ELSE
-                  '0'
-               END) ZLWZHAPPROVALTIME_end,
-               
+               ZDCUSTMANAGER,
                FLOW_ID,
-               activity_name_last,
-               activity_name_next,
-               RN
-          FROM (SELECT distinct O1.ORGNAME AS ORGNAMEONE,
-                                T.ORGCODEONE,
-                                T.ORGCODETWO,
-                                O1.DISPLAYORDER AS DISPLAYORDERONE,
-                                O2.DISPLAYORDER AS DISPLAYORDERTWO,
-                                O2.ORGNAME AS ORGNAMETWO,
-                                T.ONECATEGORY,
-                                T.LOANCATEGORY,
-                                T.FLOW_ID,
-                                j2.activity_name_ activity_name_last,
-                                J1.ACTIVITY_NAME_ activity_name_next,
-                                to_char(j1.start_, 'yyyyMMddHHmiss') start_next,
-                                to_char(j1.end_, 'yyyyMMddHHmiss') end_next,
-                                to_char(j2.start_, 'yyyyMMddHHmiss') start_last,
-                                to_char(j2.end_, 'yyyyMMddHHmiss') end_last,
-                                ROW_NUMBER() OVER(PARTITION BY T.ORGCODEONE, T.ORGCODETWO, T.ONECATEGORY, T.LOANCATEGORY, j2.activity_name_,T.FLOW_ID, J1.ACTIVITY_NAME_ ORDER BY j1.START_) RN
-                  FROM  t_process_business b,
-                  T_GENERALPROCESS_MODELONE T,
+                 <![CDATA[
+               nvl(max((CASE
+                         WHEN rn = 1 AND operator_type = '提交收单派单' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 1 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') ZHGPDTIMEONE,
+               
+               nvl(max((CASE
+                         WHEN rn = 2 AND operator_type = '提交收单派单' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 2 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') ZHGPDTIMETWO,
+               
+               nvl(max((CASE
+                         WHEN rn = 3 AND operator_type = '提交收单派单' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 3 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') ZHGPDTIMETHREE,
+               
+               nvl(max((CASE
+                         WHEN rn = 1 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(min((CASE
+                         WHEN rn = 1 AND operator_type = '退回收单派单' THEN
+                          strat_
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') REVIEWAPPROVALONETIME,
+               
+               nvl(max((CASE
+                         WHEN rn = 2 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(min((CASE
+                         WHEN rn = 2 AND operator_type = '退回收单派单' THEN
+                          strat_
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') REVIEWAPPROVALTWOTIME,
+               
+               nvl(max((CASE
+                         WHEN rn = 3 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn >= 3 AND operator_type = '退回收单派单' THEN
+                          strat_
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') REVIEWAPPROVALTHREEORMORETIME,
+               
+               nvl(max((CASE
+                         WHEN rn = 1 AND operator_type = '提交收单派单' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') ALLPROCESSTIMEONE,
+               
+               nvl(max((CASE
+                         WHEN rn = 1 AND operator_type = '提交审查一' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') ALLPROCESSTIMETWO,
+               
+               nvl(max((CASE
+                         WHEN rn >= 1 AND operator_type = '提交收单派单' THEN
+                          strat_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(max((CASE
+                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                       END)),
+                   '0') ZLWZHAPPROVALTIME
+        ]]>
+          from (select gp.operator_type,
+                       gp.operater_date || gp.operater_time strat_,
+                       b.execution_id FLOW_ID,
+                       e1.empname ZDCUSTMANAGER,
+                       t.orgcodeone,
+                       t.orgcodetwo,
+                       o1.orgname orgnameone,
+                       o2.orgname orgnametwo,
+                       O1.DISPLAYORDER AS DISPLAYORDERONE,
+                       O2.DISPLAYORDER AS DISPLAYORDERTWO,
+                       T.ONECATEGORY,
+                       T.LOANCATEGORY,
+                       ROW_NUMBER() OVER(PARTITION BY T.ORGCODEONE, T.ORGCODETWO, T.ONECATEGORY, T.LOANCATEGORY, gp.operator_type, b.execution_id ORDER BY gp.operater_date, gp.operater_time) RN
+                  from t_process_business        b,
+                       T_GENERALPROCESS_MODELONE T,
+                       T_APPROVE_OPNINION_GP     gp,
+                       JBPM4_HIST_PROCINST       JT,
+                       t_process_config          G,
+                       OM_EMPLOYEE               E1,
                        OM_ORGANIZATION           O1,
-                       OM_ORGANIZATION           O2,
-                       T_PROCESS_TASK_ASSIGNEE   P1,
-                       JBPM4_HIST_ACTINST        J1,
-                       JBPM4_HIST_ACTINST        j2,
-                       JBPM4_HIST_PROCINST JT,
-                       t_process_config G
-                 WHERE B.EXECUTION_ID=T.FLOW_ID
-                    AND T.ORGCODEONE = O1.ORGCODE
-                   AND T.ORGCODETWO = O2.ORGCODE(+)
-                   AND T.FLOW_ID = P1.EXECUTION_ID
-                   AND B.EXECUTION_ID=JT.ID_
-                   AND  JT.PROCDEFID_=G.DEFINITION_ID
-                   AND P1.BUSINESS_TYPE = '88'
-                   AND G.STATE='01'
-                   AND t.flow_id = j1.execution_
-                   AND t.flow_id = j2.execution_
-                   and j1.HTASK_ = p1.next_task_id
-                   and p1.PRE_TASK_ID=j2.htask_
-                   
-            
-                ))
- GROUP BY ORGNAMEONE,
-          ORGCODEONE,
-          DISPLAYORDERONE,
-          DISPLAYORDERTWO,
-          ORGCODETWO,
-          ORGNAMETWO,
-          ONECATEGORY,
-          LOANCATEGORY,
-          flow_id) p left join T_GENERALPROCESS_MODELTHREE t3
-          on p.flow_id=t3.flow_id
- order by DISPLAYORDERONE,DISPLAYORDERTWO
+                       OM_ORGANIZATION           O2
+                 where b.execution_id = t.flow_id
+                   and b.execution_id = gp.flow_id
+                   AND B.EXECUTION_ID = JT.ID_
+                   AND JT.PROCDEFID_ = G.DEFINITION_ID
+                   AND T.ORGCODEONE = O1.ORGCODE
+                   AND T.ORGCODETWO = O2.ORGCODE
+                   AND T.CREATOR = E1.EMPID
+                   and b.business_type = '88'
+                   and g.state = '01')
+        
+         GROUP BY ORGNAMEONE,
+                  ORGCODEONE,
+                  DISPLAYORDERONE,
+                  DISPLAYORDERTWO,
+                  ORGCODETWO,
+                  ORGNAMETWO,
+                  ONECATEGORY,
+                  LOANCATEGORY,
+                  ZDCUSTMANAGER,
+                  FLOW_ID) p
+  left join T_GENERALPROCESS_MODELTHREE t3
+    on p.flow_id = t3.flow_id
+ order by DISPLAYORDERONE, DISPLAYORDERTWO
+
 	
 	</select>
     <insert id="insertProcessUsedTimeReportTemp" parameterClass="java.util.HashMap">
@@ -393,6 +291,7 @@ SELECT ORGNAMEONE,
 			   loancategory,
 			   reporttime,
 			   flowid,
+			   zdcustmanager,
 			   timelimittype,
 			   worktime ,        
 			   inserttime       
@@ -408,6 +307,7 @@ SELECT ORGNAMEONE,
 			   #loancategory#,
 			   #reporttime#,
 			   #flowid#,
+			   #zdcustmanager#,
 			   #timelimittype#,
 			   #worktime# ,        
 			   #inserttime#  )     
