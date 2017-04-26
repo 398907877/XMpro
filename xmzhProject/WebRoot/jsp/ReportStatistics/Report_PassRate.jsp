@@ -15,7 +15,7 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                     <td class="form_label" align="right" >报单日期：</td>
+                     <td class="form_label" align="right" >派单日期：</td>
 					<td >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="repTimeStart" name="passRateReport.repTimeStart" 
@@ -48,10 +48,22 @@
 					</td>
 					
 					<td class="form_label" align="right" >贷种分类：</td>
-					<td colspan="3">
+					<td >
 						<h:hidden id="loanCategoryId" property="passRateReport.loanCategoryId"/>
 						<h:text id="loanCategory" property="passRateReport.loanCategory" readonly="true"   style="width:130px;"/>
 						<a href="#" onclick="showloanCategory();">选择</a>
+					</td>
+					
+					<td class="form_label" align="right" >审查人员：</td>
+					<td >
+						<h:text id="reviewEmpname" property="passRateReport.reviewEmpname" />
+					</td>
+				</tr>
+				
+				<tr>	
+					<td class="form_label" align="right" >审批人员：</td>
+					<td colspan="1">
+						<h:text id="approvalEmpname" property="passRateReport.approvalEmpname" />
 					</td>
 				</tr>
 				
@@ -221,6 +233,10 @@
     				var loanCategory = $id("loanCategory").value;
     				//带种分类id
     				var loanCategoryId = $id("loanCategoryId").value;
+					//审查人
+    				var reviewEmpname = $id("reviewEmpname").value;
+    				//审批人
+    				var approvalEmpname = $id("approvalEmpname").value;
     				
     				
     				var strUrl = "/reportjbpm/passRateReportAction_queryPassRateReportListForExcel.action?";
@@ -232,6 +248,8 @@
     				if(oneCategoryId != ""){strUrl=strUrl+"&passRateReport.oneCategoryId="+oneCategoryId;} 
     				if(loanCategory != ""){strUrl=strUrl+"&passRateReport.loanCategory="+loanCategory;} 
     				if(loanCategoryId != ""){strUrl=strUrl+"&passRateReport.loanCategoryId="+loanCategoryId;} 
+    				if(reviewEmpname != ""){strUrl=strUrl+"&passRateReport.reviewEmpname="+reviewEmpname;} 
+    				if(approvalEmpname != ""){strUrl=strUrl+"&passRateReport.approvalEmpname="+approvalEmpname;} 
     				
     				//alert(strUrl);
     				window.location.href=strUrl;

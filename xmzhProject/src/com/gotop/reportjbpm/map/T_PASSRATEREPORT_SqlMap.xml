@@ -30,7 +30,7 @@ with tempA as /* tempA:查出在一个流程实例里经过完”审查一“并
        where m4.next_task_name = '审批一'        
 ),
 
-tempB as  /* 查出在一个流程实例里经过完”审批一“并且上个节点是”审查一“的所有流程 */
+tempB as  /* tempB：查出在一个流程实例里经过完”审批一“并且上个节点是”审查一“的所有流程 */
  (select m4.* from 
      (select m1.*, m3.activity_name_ as pre_task_name
             from JBPM4_HIST_ACTINST      m1,
@@ -42,6 +42,21 @@ tempB as  /* 查出在一个流程实例里经过完”审批一“并且上个�
              and m1.htask_ = m2.next_task_id
              and m2.pre_task_id = m3.htask_) m4
        where m4.pre_task_name = '审查一'     
+),
+
+tempC as /* tempC：查出派单流程的派单时间（第一次收单派单提交审查一的时间） */
+(select m5.execution_, m5.activity_name_, m5.end_ as pd_time
+ from (select m4.*, row_number() over(partition by m4.execution_ order by m4.start_) as rn
+    from (select m1.*, m3.activity_name_ as next_task_name
+            from JBPM4_HIST_ACTINST      m1,
+                 T_PROCESS_TASK_ASSIGNEE m2,
+                 JBPM4_HIST_ACTINST      m3
+           where m1.activity_name_ = '收单派单'
+             and m1.end_ is not null
+             and m1.execution_ = m2.execution_id
+             and m1.htask_ = m2.pre_task_id
+             and m2.next_task_id = m3.htask_) m4
+   where m4.next_task_name = '审查一') m5 where rn=1 
 ),
 
 temp1 as
@@ -111,27 +126,30 @@ temp4 as /* temp4:以T_PROCESS_BUSINESS为主表查询出是 信贷流程 并且
          t4.orgcodetwo,
          t4.onecategory,
          t4.loancategory,
-         t5.reporttime
+         t5.reporttime,
+         tempC.pd_time
     from T_PROCESS_BUSINESS          t1,
          JBPM4_HIST_PROCINST         t2,
          T_PROCESS_CONFIG            t3,
          T_GENERALPROCESS_MODELONE   t4,
-         T_GENERALPROCESS_MODELTHREE t5
+         T_GENERALPROCESS_MODELTHREE t5,
+         tempC
    where t1.execution_id = t2.id_
      and t2.procdefid_ = t3.definition_id
      and t1.execution_id = t4.flow_id
      and t1.execution_id = t5.flow_id(+)
+     and t1.execution_id = tempC.execution_(+)
      and t1.business_type = '88'
      and t3.state = '01'
      and t4.orgcodetwo is not null
      <isNotNull prepend="and" property="repTimeStrat" >
 				         <![CDATA[
-				            t5.reporttime >= #repTimeStrat#
+				            to_char(tempC.pd_time, 'yyyyMMdd') >= #repTimeStrat#
 				               ]]>
 				      </isNotNull>
 				      <isNotNull prepend="and" property="repTimeEnd" >
 				        <![CDATA[
-				            t5.reporttime <=  #repTimeEnd#
+				            to_char(tempC.pd_time, 'yyyyMMdd') <=  #repTimeEnd#
 				               ]]>
 				      </isNotNull>
      ),
@@ -293,6 +311,12 @@ select tt.*, o1.orgname as orgnameone, o2.orgname as orgnametwo
       <isNotNull prepend="and" property="loanCategory" >
           tt.LOANCATEGORY in(select dic.dictname from eos_dict_entry dic where dic.dicttypeid='PROCESS_credit_type' 
            	 and dic.dictid in($loanCategory$))
+      </isNotNull>
+      <isNotNull prepend="and" property="reviewEmpname" >
+           tt.REVIEWEMPNAME like '%'||'$reviewEmpname$'||'%'
+      </isNotNull>
+      <isNotNull prepend="and" property="approvalEmpname" >
+           tt.APPROVALEMPNAME like '%'||'$approvalEmpname$'||'%'
       </isNotNull>
        order by  tt.ORGCODEONE, tt.ORGCODETWO, tt.ONECATEGORY,  tt.LOANCATEGORY, tt.REVIEWEMPNAME, tt.APPROVALEMPNAME
        

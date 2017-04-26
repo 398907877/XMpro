@@ -73,8 +73,15 @@ public class PassRateReportService implements IPassRateReportService {
 					 map.put("loanCategory",loanCategory);
 				}
 		
+				//审查人
+				if(passRateReport.getReviewEmpname()!=null && !"".equals(passRateReport.getReviewEmpname())){
+					map.put("reviewEmpname", passRateReport.getReviewEmpname());
+				}
+				//审批人
+				if(passRateReport.getApprovalEmpname()!=null && !"".equals(passRateReport.getApprovalEmpname())){
+					map.put("approvalEmpname", passRateReport.getApprovalEmpname());
+				}
 		
-
 		List<PassRateReport> passRateReportLists  =passRateReportDao.queryPassRateReportList(map,page);
 		
 		return passRateReportLists;
@@ -128,6 +135,16 @@ public class PassRateReportService implements IPassRateReportService {
 			}
 			 map.put("loanCategory",loanCategory);
 		}
+		
+		//审查人
+		if(passRateReport.getReviewEmpname()!=null && !"".equals(passRateReport.getReviewEmpname())){
+			map.put("reviewEmpname", passRateReport.getReviewEmpname());
+		}
+		//审批人
+		if(passRateReport.getApprovalEmpname()!=null && !"".equals(passRateReport.getApprovalEmpname())){
+			map.put("approvalEmpname", passRateReport.getApprovalEmpname());
+		}
+		
 		List<PassRateReport> passRateReportLists  =passRateReportDao.queryPassRateReportListForExcel(map);
 		
 		return passRateReportLists;

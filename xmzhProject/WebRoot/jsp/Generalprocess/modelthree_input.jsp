@@ -17,7 +17,7 @@
   <div id='showdiv'>
     	</div>
 		
-		<h:hidden id="modelOneId" name="modelOne.processModelId" property="modelOne.processModelId"  />
+	<%-- 	<h:hidden id="modelOneId" name="modelOne.processModelId" property="modelOne.processModelId"  />
 		<h:hidden id="modelOneTaskName" name="modelOne.taskName" property="modelOne.taskName"/>
 		<h:hidden id="modelOneFlowId" name="modelOne.flow_Id" property="modelOne.flow_Id"/>
 		<h:hidden id="modelOneCreateName" name="modelOne.create_name" property="modelOne.create_name"/>
@@ -232,9 +232,7 @@
      	</td>
       </tr>
     </table>
-    
-    
-    
+     --%>
     
     <!-- 模式三表单 -->
 <h:form name="form1" id="form1" action="" method="post" enctype="multipart/form-data" onsubmit="return checkForm(this);">
@@ -533,7 +531,7 @@ $(function (){
 
 	   	  if(checkForm($id("form1"))){      
 
-		   	 var   reg = /\-|\+?/;  //匹配正负号
+		   	 /* var   reg = /\-|\+?/;  //匹配正负号
 			  var result = ($("#rate_float_scale").val()).match(reg);  //result可能为+、-、空，空值说明没带符号
 			 
 			  if(result != ""){ 
@@ -556,7 +554,7 @@ $(function (){
 		               alert("当前已输入利率浮动比例，请选择基准利率浮动!");
 		               return false;
 		          }
-		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim());
+		   		$("#rate_float_scale").val($("#rate_float_scale").val().trim()); */
 
 	    	 if(value!="1"){
       			var strUrl = "/jbpm/jbpmDemoAction_toNextTaskConfig.action?taskAssgineeDto.executionId="+$id("executionId").value+"&taskAssgineeDto.definitionId=${taskAssgineeDto.definitionId}";
