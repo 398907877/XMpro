@@ -20,10 +20,10 @@
                      <td class="form_label" align="right" >报单日期：</td>
 					<td >
 					从
-					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="repTimeStart" name="bjErrorNumReport.repTimeStart" 
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="repTimeStart" name="bjErrorNumReport.repTimeStart" 
 					property="bjErrorNumReport.repTimeStart" /> 
 					到
-					<w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="repTimeEnd" name="bjErrorNumReport.repTimeEnd" 
+					<w:date format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="repTimeEnd" name="bjErrorNumReport.repTimeEnd" 
 					property="bjErrorNumReport.repTimeEnd" /></td>
 					
                     <td class="form_label" align="right" >一级支行：</td>

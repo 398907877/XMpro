@@ -34,26 +34,13 @@ public class BjErrorNumReportService implements IBjErrorNumReportService {
 	public List<BjErrorNumReport> queryBjErrorNumReportList(BjErrorNumReport bjErrorNumReport, Page page) {
 		List<BjErrorNumReport> bjErrorNumReportList=new ArrayList<BjErrorNumReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if (bjErrorNumReport.getRepTimeStart() !=null&&!"".equals(bjErrorNumReport.getRepTimeStart())) {
 		
-				try {
-					map.put("repTimeStrat",sdf.format(sdf1.parse(bjErrorNumReport.getRepTimeStart())));
-				} catch (ParseException e) {
-					
-					e.printStackTrace();
-				}
-			
+		if (bjErrorNumReport.getRepTimeStart() !=null&&!"".equals(bjErrorNumReport.getRepTimeStart())) {
+				map.put("repTimeStrat", bjErrorNumReport.getRepTimeStart());
 		}
 		
 		if (bjErrorNumReport.getRepTimeEnd() !=null&&!"".equals(bjErrorNumReport.getRepTimeEnd())) {
-			try {
-				map.put("repTimeEnd",  sdf.format(sdf1.parse(bjErrorNumReport.getRepTimeEnd())));
-			} catch (ParseException e) {
-				
-				e.printStackTrace();
-			}
+				map.put("repTimeEnd",  bjErrorNumReport.getRepTimeEnd());
 		}
 		//一级支行
 		if(bjErrorNumReport.getOrgCodeOne()!=null && !"".equals(bjErrorNumReport.getOrgCodeOne())){

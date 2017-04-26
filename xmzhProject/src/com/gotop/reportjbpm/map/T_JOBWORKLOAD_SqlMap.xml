@@ -137,10 +137,10 @@ FROM
                                         <![CDATA[REPORTTIME  <=(#appTimeEnd#)]]>
                               </isNotNull> -->
                               <isNotNull prepend="and" property="pdtimeOne_start" >
-                                        <![CDATA[pdtime_one  >= to_char(to_date('$pdtimeOne_start$', 'yyyy/mm/dd hh24:mi:ss'), 'yyyy/mm/dd hh24:mi:ss' )  ]]>
+                                        <![CDATA[to_char(to_date(pdtime_one, 'yyyy/mm/dd hh24:mi:ss'), 'yyyy-mm-dd' )  >= '$pdtimeOne_start$' ]]>
                               </isNotNull>
                              <isNotNull prepend="and" property="pdtimeOne_end" >                                    
-                                        <![CDATA[pdtime_one  <= to_char(to_date('$pdtimeOne_end$', 'yyyy/mm/dd hh24:mi:ss'), 'yyyy/mm/dd hh24:mi:ss' )  ]]>
+                                        <![CDATA[to_char(to_date(pdtime_one, 'yyyy/mm/dd hh24:mi:ss'), 'yyyy-mm-dd' )  <= '$pdtimeOne_end$'  ]]>
                               </isNotNull>
 							<isNotNull prepend="and" property="processNodeName" >
                                         ACTIVITY_NAME_   in  ($processNodeName$)
