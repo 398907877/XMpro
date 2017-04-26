@@ -160,5 +160,11 @@ public class LoanRateFloatReportService implements ILoanRateFloatReportService {
 
 		return loanRateFloatReports;
 	}
+	@Override
+	public HashMap<String, Object> queryOrgInfoById(String orgid) {
+		
+		HashMap<String, Object> map = loanRateFloatReportDao.queryOrgInfoById(orgid);
+		return map;
+	}
 
 }

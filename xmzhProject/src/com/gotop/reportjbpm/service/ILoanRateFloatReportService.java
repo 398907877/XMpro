@@ -1,5 +1,6 @@
 package com.gotop.reportjbpm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.gotop.reportjbpm.model.LoanRateFloatReport;
@@ -13,5 +14,7 @@ public interface ILoanRateFloatReportService {
 	List<LoanRateFloatReport> queryLoanRateFloatReport(MUOUserSession muo,LoanRateFloatReport loanRateFloatReport,Page page);
 
 	List<LoanRateFloatReport> queryLoanRateFloatReportExcel(MUOUserSession muo,LoanRateFloatReport loanRateFloatReport);
+
+	HashMap<String, Object> queryOrgInfoById(String orgid);
 
 }

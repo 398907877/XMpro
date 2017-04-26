@@ -1,5 +1,6 @@
 package com.gotop.reportjbpm.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,14 @@ public class LoanRateFloatReportDao extends SqlMapClientDao implements ILoanRate
 		
 		List list = queryForList("GENERAL_PROCESS_SqlMap.isOneOrg", map2);
 		return list;
+	}
+
+
+
+	@Override
+	public HashMap<String, Object> queryOrgInfoById(String orgid) {
+		
+		HashMap<String, Object> map = (HashMap<String, Object>) queryForObject("T_LOANRATEFLOATREPORT_SqlMap.queryOrgInfoById", orgid);
+		return map;
 	}
 }

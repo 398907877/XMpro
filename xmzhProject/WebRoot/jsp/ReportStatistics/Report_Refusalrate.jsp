@@ -4,6 +4,8 @@
 <h:css href="/css/style1/style-custom.css" />
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
 
+<script src="<%=request.getContextPath() %>/js/org_public.js"></script>
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -292,7 +294,16 @@
  			var objName="";
  			var peArgument = [];
  			var startOrgid= '${sessionScope.login_user.orgid}'; 
- 			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1&changeTree.startOrgid="+startOrgid;
+
+ 			 //调用org_public.js公共函数，判断当前机构是部门还是机构
+ 			var info = judgeIsDept(startOrgid); 
+ 			
+ 			if(info == "yes"){ //说明是部门，显示全部机构树
+ 				strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1";
+     		}else{ //说明是支行，显示本级及下级机构树
+     			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1&changeTree.startOrgid="+startOrgid;
+         	}
+         	
  			objName="选择受理支行";  
  			var paramEntity = new ParamEntity('Organization');
      			if(param==1){

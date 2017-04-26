@@ -152,5 +152,9 @@ select * from	(select TT2.*,
 			          creator_name,
 			          yxzg
 	</select>
+	
+	<select id="queryOrgInfoById"  parameterClass="java.lang.String" resultClass="java.util.HashMap">
+	select * from om_organization where orgid= '$orgid$'
+	</select>
 
 </sqlMap>

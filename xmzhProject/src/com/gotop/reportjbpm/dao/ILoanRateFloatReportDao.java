@@ -1,5 +1,6 @@
 package com.gotop.reportjbpm.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +17,8 @@ public interface ILoanRateFloatReportDao {
 
 	public List<Omorganization> isOneOrg(Map<String, Object> map2);
 	//List<LoanRateFloatReport> querytaskNameList();
+
+
+	HashMap<String, Object> queryOrgInfoById(String orgid);
 
 }
