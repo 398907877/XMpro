@@ -34,16 +34,12 @@
   	<!-- 查询时限情况统计报表 -->
 	<select id="querySxApprovalReportList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
 	
- 
- 
- SELECT S.ORGCODEONE,
+  SELECT S.ORGCODEONE,
        O1.ORGNAME ORGNAMEONE,
        O1.DISPLAYORDER DISPLAYORDERONE,
-       S.ORGCODETWO,
-       O2.ORGNAME ORGNAMETWO,
+       DECODE(S.ORGCODETWO, '小计', '', '合计', '', S.ORGCODETWO) ORGCODETWO,
+       DECODE(S.ORGCODETWO, '小计', '小计', '合计', '合计', O2.ORGNAME) ORGNAMETWO,
        O2.DISPLAYORDER DISPLAYORDERTWO,
-       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALTWO, 0)) ORGCOUNT,
-       DECODE(S.ORGCODETWO, '合计', '', NVL(TT.TOTALONE, 0) + 1) ROWCOUNT,
        $threeParams$
   FROM (SELECT ORGCODEONE,
                DECODE(GROUPING(ORGCODEONE) + GROUPING(ORGCODETWO),
@@ -59,10 +55,52 @@
                        NVL(V_NUM, 0) V_NUM,
                        NVL(AMT, 0) AMT
                   FROM (SELECT A.ORGCODEONE, A.ORGCODETWO, B.ONECATEGORY
-                          FROM (SELECT DISTINCT ORGCODEONE, ORGCODETWO
-                                  FROM T_GENERALPROCESS_MODELONE) A,
-                               (SELECT DISTINCT ONECATEGORY
-                                  FROM T_GENERALPROCESS_MODELONE) B) T
+                          FROM (SELECT T.ORGCODEONE,
+       T.ORGCODETWO
+  FROM t_process_business        B,
+       T_GENERALPROCESS_MODELONE T,
+       T_PROCESS_TASK_ASSIGNEE   P1,
+       T_APPROVE_OPNINION_GP     p2,
+       JBPM4_HIST_PROCINST       JT,
+       t_process_config          G,
+       OM_ORGANIZATION           O1,
+       OM_ORGANIZATION           O2
+ WHERE B.EXECUTION_ID = T.FLOW_ID
+   AND T.FLOW_ID = P1.EXECUTION_ID
+   AND T.FLOW_ID = P2.FLOW_ID
+   AND B.EXECUTION_ID = JT.ID_
+   AND JT.PROCDEFID_ = G.DEFINITION_ID
+   AND t.ORGCODEONE = O1.ORGCODE
+   AND t.ORGCODETWO = O2.ORGCODE(+)
+   AND G.STATE = '01'
+   AND P1.NEXT_ACTIVITY_NAME = '结束'
+   AND B.BUSINESS_TYPE = '88'
+   AND P2.resource_type = '88'
+   
+    <isNotNull prepend="and" property="approvalTimeStart" >
+              <![CDATA[
+                P2.operator_type = '提交发起合同预审' 
+                and P2.operater_date >= '$approvalTimeStart$'
+                 ]]>
+          </isNotNull>
+           <isNotNull prepend="and" property="approvalTimeEnd" >
+            <![CDATA[
+              P2.operator_type = '提交发起合同预审' 
+              and P2.operater_date <= '$approvalTimeEnd$'
+               ]]>
+          </isNotNull>
+ GROUP BY T.ORGCODEONE,
+          T.ORGCODETWO) A,
+                               (SELECT DISTINCT  ONECATEGORY
+   FROM T_GENERALPROCESS_MODELONE T,
+        T_PROCESS_TASK_ASSIGNEE   P1,
+        EOS_DICT_ENTRY            E
+  WHERE T.FLOW_ID = P1.EXECUTION_ID
+    AND T.ONECATEGORY = E.DICTNAME
+    AND DICTTYPEID = 'PROCESS_onecategory'
+    AND P1.NEXT_ACTIVITY_NAME = '结束'
+    AND P1.BUSINESS_TYPE = '88'
+    order by ONECATEGORY) B) T
                   LEFT JOIN (
                   
                   SELECT ORGCODEONE,
@@ -93,20 +131,7 @@
            AND P1.NEXT_ACTIVITY_NAME = '结束'
            AND B.BUSINESS_TYPE = '88'
            AND P2.resource_type = '88'
-           
-            <isNotNull prepend="and" property="approvalTimeStart" >
-                      <![CDATA[
-                        P2.operator_type = '提交发起合同预审' 
-                        and P2.operater_date >= '$approvalTimeStart$'
-                         ]]>
-                  </isNotNull>
-                   <isNotNull prepend="and" property="approvalTimeEnd" >
-                    <![CDATA[
-                      P2.operator_type = '提交发起合同预审' 
-                      and P2.operater_date <= '$approvalTimeEnd$'
-                       ]]>
-                  </isNotNull>
-           )
+        ) 
 
  GROUP BY ORGCODEONE, ORGCODETWO, ONECATEGORY
 ) TT
@@ -116,21 +141,12 @@
                               TT.ONECATEGORY))
         PIVOT(SUM(V_NUM) NUM, SUM(AMT) MONENY
            FOR ONECATEGORY IN($oneParams$))
-         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$))) S,
+         GROUP BY GROUPING SETS((ORGCODEONE, ORGCODETWO, $threeParams$),(ORGCODEONE),())) S,
        OM_ORGANIZATION O1,
-       OM_ORGANIZATION O2,
-       (SELECT ORGCODEONE,
-               COUNT(ORGCODEONE) TOTALONE,
-               COUNT(ORGCODETWO) TOTALTWO
-          FROM (SELECT ORGCODEONE, ORGCODETWO
-                  FROM T_GENERALPROCESS_MODELONE
-                 GROUP BY ORGCODEONE, ORGCODETWO)
-         GROUP BY ORGCODEONE) TT
+       OM_ORGANIZATION O2
  WHERE S.ORGCODEONE = O1.ORGCODE(+)
    AND S.ORGCODETWO = O2.ORGCODE(+)
-   AND S.ORGCODEONE = TT.ORGCODEONE(+)
- ORDER BY DISPLAYORDERONE,DISPLAYORDERTWO
- 
+ ORDER BY DISPLAYORDERONE, DISPLAYORDERTWO,  O1.ORGNAME, O2.ORGNAME, ORGNAMETWO DESC
  
 	</select>
 
