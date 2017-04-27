@@ -77,6 +77,31 @@ public class TimeLimitConditionReportService implements ITimeLimitConditionRepor
 			map.put("zdCustManager", timeLimitConditionReport.getZdCustManager());
 			
 		}
+		
+		if(timeLimitConditionReport.getSppTimeStart()!=null&&!"".equals(timeLimitConditionReport.getSppTimeStart())){
+			map.put("sppTimeType", "0");
+			map.put("sppTimeStart", timeLimitConditionReport.getSppTimeStart());
+			
+		}
+		if(timeLimitConditionReport.getSppTimeEnd()!=null&&!"".equals(timeLimitConditionReport.getSppTimeEnd())){
+			map.put("sppTimeType", "1");
+			map.put("sppTimeEnd", timeLimitConditionReport.getSppTimeEnd());
+			
+		}
+		if(timeLimitConditionReport.getSppTimeEnd()!=null&&!"".equals(timeLimitConditionReport.getSppTimeEnd())&&timeLimitConditionReport.getSppTimeStart()!=null&&!"".equals(timeLimitConditionReport.getSppTimeStart())){
+			map.put("sppTimeType", "2");
+			map.put("sppTimeStart", timeLimitConditionReport.getSppTimeStart());
+			map.put("sppTimeEnd", timeLimitConditionReport.getSppTimeEnd());
+			
+		}
+		if(timeLimitConditionReport.getScName()!=null&&!"".equals(timeLimitConditionReport.getScName())){
+			map.put("scName", timeLimitConditionReport.getScName());
+			
+		}
+		if(timeLimitConditionReport.getSpName()!=null&&!"".equals(timeLimitConditionReport.getSpName())){
+			map.put("spName", timeLimitConditionReport.getSpName());
+			
+		}
 		timeLimitConditionReportList=timeLimitConditionReportDao.queryTimeLimitConditionReportList(map, page);
 //		
 //		//讲结果集开始、结束时进行计算重新存入List
@@ -203,6 +228,31 @@ public class TimeLimitConditionReportService implements ITimeLimitConditionRepor
 		
 		if(timeLimitConditionReport.getZdCustManager()!=null&&!"".equals(timeLimitConditionReport.getZdCustManager())){
 			map.put("zdCustManager", timeLimitConditionReport.getZdCustManager());
+			
+		}
+
+		if(timeLimitConditionReport.getSppTimeStart()!=null&&!"".equals(timeLimitConditionReport.getSppTimeStart())){
+			map.put("sppTimeType", "0");
+			map.put("sppTimeStart", timeLimitConditionReport.getSppTimeStart());
+			
+		}
+		if(timeLimitConditionReport.getSppTimeEnd()!=null&&!"".equals(timeLimitConditionReport.getSppTimeEnd())){
+			map.put("sppTimeType", "1");
+			map.put("sppTimeEnd", timeLimitConditionReport.getSppTimeEnd());
+			
+		}
+		if(timeLimitConditionReport.getSppTimeEnd()!=null&&!"".equals(timeLimitConditionReport.getSppTimeEnd())&&timeLimitConditionReport.getSppTimeStart()!=null&&!"".equals(timeLimitConditionReport.getSppTimeStart())){
+			map.put("sppTimeType", "2");
+			map.put("sppTimeStart", timeLimitConditionReport.getSppTimeStart());
+			map.put("sppTimeEnd", timeLimitConditionReport.getSppTimeEnd());
+			
+		}
+		if(timeLimitConditionReport.getScName()!=null&&!"".equals(timeLimitConditionReport.getScName())){
+			map.put("scName", timeLimitConditionReport.getScName());
+			
+		}
+		if(timeLimitConditionReport.getSpName()!=null&&!"".equals(timeLimitConditionReport.getSpName())){
+			map.put("spName", timeLimitConditionReport.getSpName());
 			
 		}
 		timeLimitConditionReportList=timeLimitConditionReportDao.queryTimeLimitConditionReportListForExcel(map);

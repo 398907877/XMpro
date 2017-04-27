@@ -22,6 +22,35 @@ public class TimeLimitConditionReport implements Serializable {
 	private String allProcessTimeOne;
 	private String allProcessTimeTwo;
 	private String zlwzhApprovalTime;
+	private String sppTimeStart;
+	private String sppTimeEnd;
+	private String scName;
+	private String spName;
+	
+	public String getSppTimeStart() {
+		return sppTimeStart;
+	}
+	public void setSppTimeStart(String sppTimeStart) {
+		this.sppTimeStart = sppTimeStart;
+	}
+	public String getSppTimeEnd() {
+		return sppTimeEnd;
+	}
+	public void setSppTimeEnd(String sppTimeEnd) {
+		this.sppTimeEnd = sppTimeEnd;
+	}
+	public String getScName() {
+		return scName;
+	}
+	public void setScName(String scName) {
+		this.scName = scName;
+	}
+	public String getSpName() {
+		return spName;
+	}
+	public void setSpName(String spName) {
+		this.spName = spName;
+	}
 	public String getOrgCodeOne() {
 		return orgCodeOne;
 	}

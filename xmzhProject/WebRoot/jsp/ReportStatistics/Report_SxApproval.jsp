@@ -191,8 +191,12 @@
     				var approvalTimeEnd = $id("approvalTimeEnd").value;
     				
     				var strUrl = "/reportjbpm/sxApprovalReportAction_sxApprovalReportExcel.action?";
-    				if(approvalTimeStart != null){strUrl=strUrl+"&sxApprovalReport.approvalTimeStart="+approvalTimeStart;}
-    	    		if(approvalTimeEnd != null){strUrl=strUrl+"&sxApprovalReport.approvalTimeEnd="+approvalTimeEnd;} 
+    				if(approvalTimeStart != null){
+    				approvalTimeStart=approvalTimeStart.replaceAll("-","");
+    				strUrl=strUrl+"&sxApprovalReport.approvalTimeStart="+approvalTimeStart;}
+    	    		if(approvalTimeEnd != null){
+    				approvalTimeEnd=approvalTimeEnd.replaceAll("-","");
+    	    		strUrl=strUrl+"&sxApprovalReport.approvalTimeEnd="+approvalTimeEnd;} 
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}

@@ -19,7 +19,7 @@ public class SxApprovalReportDao extends SqlMapClientDao implements ISxApprovalR
 	@Override
 	public List<SxApprovalReport> querySxApprovalReportListForExcel(
 			Map<String, Object> map) {
-		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportListForExcel", map);
+		return this.queryForList("T_SXAPPROVALREPORT_SqlMap.querySxApprovalReportList", map);
 	}
 
 	@Override

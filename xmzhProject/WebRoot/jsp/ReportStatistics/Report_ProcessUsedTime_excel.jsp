@@ -39,7 +39,7 @@
 			   <b:write iterateId="id1" property="loanCategory"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="timeLimitType" />
+			     <d:write  iterateId="id1" dictTypeId="TIME_LIMIT_TYPE" property="timeLimitType"/>
 			  </td>
 			    <td>
 			   <b:write iterateId="id1" property="onedaysDealNum"/>

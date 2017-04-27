@@ -96,6 +96,60 @@
 				  <isNotNull prepend="and" property="zdCustManager" >
                       t.zdCustManager   like '%$zdCustManager$%'
                   </isNotNull>
+                   <isEqual prepend="and" property="sppTimeType" compareValue="0">
+                      t.FLOWID  in (select hh.flow_id from (
+						select t.flow_id, nvl(min(t.operater_date), 0) operater_date
+						  from T_APPROVE_OPNINION_GP t
+						 where  (t.operator_type = '提交发起合同预审' or t.operator_type = '结束')
+						 group by flow_id
+						) hh
+					<![CDATA[	where hh.operater_date>='$sppTimeStart$']]>
+                      )
+                 </isEqual>
+                 
+                   <isEqual prepend="and" property="sppTimeType" compareValue="1">
+                      t.FLOWID  in (select hh.flow_id from (
+						select t.flow_id, nvl(min(t.operater_date), 0) operater_date
+						  from T_APPROVE_OPNINION_GP t
+						 where  (t.operator_type = '提交发起合同预审' or t.operator_type = '结束')
+						 group by flow_id
+						) hh
+						<![CDATA[ where hh.operater_date<='$sppTimeEnd$']]>
+                      )
+                 </isEqual>
+                 
+                 <isEqual prepend="and" property="sppTimeType" compareValue="2">
+                      t.FLOWID  in (select hh.flow_id from (
+						select t.flow_id, nvl(min(t.operater_date), 0) operater_date
+						  from T_APPROVE_OPNINION_GP t
+						 where  (t.operator_type = '提交发起合同预审' or t.operator_type = '结束')
+						 group by flow_id
+						) hh
+						<![CDATA[ where hh.operater_date>='$sppTimeStart$'
+						and hh.operater_date<='$sppTimeEnd$'
+						]]>
+                      )
+                 </isEqual>
+                 
+                 <isNotNull prepend="and" property="scName" >
+                      t.FLOWID  in (select distinct a.flow_id
+								  from T_APPROVE_OPNINION_GP a,
+								  om_employee b
+								 where a.operator=b.empid
+								   and a.operator_type = '提交审查一'
+								   and b.empname like '%$scName$%'
+                      )
+                  </isNotNull>
+                  
+                  <isNotNull prepend="and" property="spName" >
+                      t.FLOWID  in (select distinct a.flow_id
+								  from T_APPROVE_OPNINION_GP a,
+								  om_employee b
+								 where a.operator=b.empid
+								   and a.operator_type = '提交审批一'
+								   and b.empname like '%$spName$%'
+                      )
+                  </isNotNull>
          GROUP BY ORGNAMEONE,
                   ORGCODETWO,
                   ORGNAMETWO,

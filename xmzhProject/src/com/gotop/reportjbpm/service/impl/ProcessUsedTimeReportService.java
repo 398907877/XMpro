@@ -71,6 +71,22 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 			map.put("timeLimitType", processUsedTimeReport.getTimeLimitType());
 			
 		}
+		if(processUsedTimeReport.getSppTimeStart()!=null&&!"".equals(processUsedTimeReport.getSppTimeStart())){
+			map.put("sppTimeType", "0");
+			map.put("sppTimeStart", processUsedTimeReport.getSppTimeStart());
+			
+		}
+		if(processUsedTimeReport.getSppTimeEnd()!=null&&!"".equals(processUsedTimeReport.getSppTimeEnd())){
+			map.put("sppTimeType", "1");
+			map.put("sppTimeEnd", processUsedTimeReport.getSppTimeEnd());
+			
+		}
+		if(processUsedTimeReport.getSppTimeEnd()!=null&&!"".equals(processUsedTimeReport.getSppTimeEnd())&&processUsedTimeReport.getSppTimeStart()!=null&&!"".equals(processUsedTimeReport.getSppTimeStart())){
+			map.put("sppTimeType", "2");
+			map.put("sppTimeStart", processUsedTimeReport.getSppTimeStart());
+			map.put("sppTimeEnd", processUsedTimeReport.getSppTimeEnd());
+			
+		}
 	    processUsedTimeReportList=processUsedTimeReportDao.queryProcessUsedTimeReportList(map, page);
 		return processUsedTimeReportList;
 	}
@@ -119,7 +135,26 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 			}
 			map.put("loanCategory",loanCategory);
 		}
-		
+		if(processUsedTimeReport.getTimeLimitType()!=null&&!"".equals(processUsedTimeReport.getTimeLimitType())){
+			map.put("timeLimitType", processUsedTimeReport.getTimeLimitType());
+			
+		}
+		if(processUsedTimeReport.getSppTimeStart()!=null&&!"".equals(processUsedTimeReport.getSppTimeStart())){
+			map.put("sppTimeType", "0");
+			map.put("sppTimeStart", processUsedTimeReport.getSppTimeStart());
+			
+		}
+		if(processUsedTimeReport.getSppTimeEnd()!=null&&!"".equals(processUsedTimeReport.getSppTimeEnd())){
+			map.put("sppTimeType", "1");
+			map.put("sppTimeEnd", processUsedTimeReport.getSppTimeEnd());
+			
+		}
+		if(processUsedTimeReport.getSppTimeEnd()!=null&&!"".equals(processUsedTimeReport.getSppTimeEnd())&&processUsedTimeReport.getSppTimeStart()!=null&&!"".equals(processUsedTimeReport.getSppTimeStart())){
+			map.put("sppTimeType", "2");
+			map.put("sppTimeStart", processUsedTimeReport.getSppTimeStart());
+			map.put("sppTimeEnd", processUsedTimeReport.getSppTimeEnd());
+			
+		}
 	    processUsedTimeReportList=processUsedTimeReportDao.queryProcessUsedTimeReportListForExcel(map);
 		return processUsedTimeReportList;
 	}

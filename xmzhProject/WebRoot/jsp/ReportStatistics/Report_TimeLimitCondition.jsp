@@ -62,6 +62,26 @@
 					</td>	
 				</tr>
 				
+				
+				<tr>	
+					<td class="form_label" align="right" >审批通过或结束日期：</td>
+					<td >
+					从
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="sppTimeStart" name="timeLimitConditionReport.sppTimeStart" 
+					property="timeLimitConditionReport.sppTimeStart" /> 
+					到
+					<w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="sppTimeEnd" name="timeLimitConditionReport.sppTimeEnd" 
+					property="timeLimitConditionReport.sppTimeEnd" /></td>
+					
+					<td class="form_label" align="right" >审查人员：</td>
+					<td>
+					 <h:text property="timeLimitConditionReport.scName" id="scName" style="width:130px;" />	
+					</td>
+					<td class="form_label" align="right" >审批人员：</td>
+					<td>
+					 <h:text property="timeLimitConditionReport.spName" id="spName" style="width:130px;" />	
+					</td>	
+				</tr>
 				<tr class="form_bottom">
 						<td colspan="10" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
@@ -235,6 +255,12 @@
 			$("#loanCategory").val("");
 			$("#loanCategoryId").val("");
 			$("#zdCustManager").val("");
+			$("#sppTimeStart_input").val("");
+			$("#sppTimeEnd_input").val("");
+			$name("timeLimitConditionReport.sppTimeStart").value = "";
+			$name("timeLimitConditionReport.sppTimeEnd").value = "";
+			$("#scName").val("");
+			$("#spName").val("");
 			
 		}
 
@@ -264,14 +290,34 @@
     				var loanCategory = $id("loanCategory").value;
     				//主调信贷员
     				var zdCustManager = $id("zdCustManager").value;
+    				//审批通过或结束日期 开始
+    				var sppTimeStart = $id("sppTimeStart").value;
+    				//审批通过或结束日期结束
+    				var sppTimeEnd = $id("sppTimeEnd").value;
+    				//审查人员
+    				var scName = $id("scName").value;
+    				//审批人员
+    				var spName = $id("spName").value;
     				var strUrl = "/reportjbpm/timeLimitConditionReportAction_timeLimitConditionReportExcel.action?";
-    				if(repTimeStart != null){strUrl=strUrl+"&timeLimitConditionReport.repTimeStart="+repTimeStart;}
-    	    		if(repTimeEnd != null){strUrl=strUrl+"&timeLimitConditionReport.repTimeEnd="+repTimeEnd;} 
+    				if(repTimeStart != null){
+    				repTimeStart=repTimeStart.replaceAll("-","");
+    				strUrl=strUrl+"&timeLimitConditionReport.repTimeStart="+repTimeStart;}
+    	    		if(repTimeEnd != null){
+    				repTimeEnd=repTimeEnd.replaceAll("-","");
+    	    		strUrl=strUrl+"&timeLimitConditionReport.repTimeEnd="+repTimeEnd;} 
     				if(orgNameOne != ""){strUrl=strUrl+"&timeLimitConditionReport.orgNameOne="+orgNameOne+"&timeLimitConditionReport.orgCodeOne="+orgCodeOne;}
     				if(orgNameTwo != ""){strUrl=strUrl+"&timeLimitConditionReport.orgNameTwo="+orgNameTwo+"&timeLimitConditionReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&timeLimitConditionReport.oneCategory="+oneCategory;} 
     				if(loanCategory != ""){strUrl=strUrl+"&timeLimitConditionReport.loanCategory="+loanCategory;} 
     				if(zdCustManager != ""){strUrl=strUrl+"&timeLimitConditionReport.zdCustManager="+zdCustManager;}
+    				if(sppTimeStart != ""){
+    				sppTimeStart=sppTimeStart.replaceAll("-","");
+    				strUrl=strUrl+"&timeLimitConditionReport.sppTimeStart="+sppTimeStart;}
+    				if(sppTimeEnd != ""){
+    				sppTimeEnd=sppTimeEnd.replaceAll("-","");
+    				strUrl=strUrl+"&timeLimitConditionReport.sppTimeEnd="+sppTimeEnd;}
+    				if(scName != ""){strUrl=strUrl+"&timeLimitConditionReport.scName="+scName;}
+    				if(spName != ""){strUrl=strUrl+"&timeLimitConditionReport.spName="+spName;}
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}

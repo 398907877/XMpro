@@ -61,7 +61,17 @@
 					<d:select id="timeLimitType" dictTypeId="TIME_LIMIT_TYPE" property="processUsedTimeReport.timeLimitType" nullLabel="请选择"></d:select>
 					</td>	
 				</tr>
-				
+				<tr>	
+					<td class="form_label" align="right" >审批通过或结束日期：</td>
+					<td >
+					从
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="sppTimeStart" name="processUsedTimeReport.sppTimeStart" 
+					property="processUsedTimeReport.sppTimeStart" /> 
+					到
+					<w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="sppTimeEnd" name="processUsedTimeReport.sppTimeEnd" 
+					property="processUsedTimeReport.sppTimeEnd" /></td>
+					
+				</tr>
 				<tr class="form_bottom">
 						<td colspan="10" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
@@ -203,6 +213,12 @@
 			$("#loanCategory").val("");
 			$("#loanCategoryId").val("");
 			$("#timeLimitType").val("");
+			//清空传入后台的时间控件的值
+			//清空JSP页面时间控件显示的值
+			$("#sppTimeStart_input").val("");
+			$("#sppTimeEnd_input").val("");
+			$name("processUsedTimeReport.sppTimeStart").value = "";
+			$name("processUsedTimeReport.sppTimeEnd").value = "";
 			
 		}
 
@@ -232,15 +248,29 @@
     				var loanCategory = $id("loanCategory").value;
     				//时限类型
     				var timeLimitType = $id("timeLimitType").value;
+    				//审批通过或结束日期 开始
+    				var sppTimeStart = $id("sppTimeStart").value;
+    				//审批通过或结束日期结束
+    				var sppTimeEnd = $id("sppTimeEnd").value;
     				
     				var strUrl = "/reportjbpm/processUsedTimeReportAction_processUsedTimeReportExcel.action?";
-    				if(repTimeStart != null){strUrl=strUrl+"&processUsedTimeReport.repTimeStart="+repTimeStart;}
-    	    		if(repTimeEnd != null){strUrl=strUrl+"&processUsedTimeReport.repTimeEnd="+repTimeEnd;} 
+    				if(repTimeStart != null){
+    				repTimeStart=repTimeStart.replaceAll("-","");
+    				strUrl=strUrl+"&processUsedTimeReport.repTimeStart="+repTimeStart;}
+    	    		if(repTimeEnd != null){
+    				repTimeEnd=repTimeEnd.replaceAll("-","");
+    	    		strUrl=strUrl+"&processUsedTimeReport.repTimeEnd="+repTimeEnd;} 
     				if(orgNameOne != ""){strUrl=strUrl+"&processUsedTimeReport.orgNameOne="+orgNameOne+"&processUsedTimeReport.orgCodeOne="+orgCodeOne;}
     				if(orgNameTwo != ""){strUrl=strUrl+"&processUsedTimeReport.orgNameTwo="+orgNameTwo+"&processUsedTimeReport.orgCodeTwo="+orgCodeTwo;}
     				if(oneCategory != ""){strUrl=strUrl+"&processUsedTimeReport.oneCategory="+oneCategory;} 
     				if(loanCategory != ""){strUrl=strUrl+"&processUsedTimeReport.loanCategory="+loanCategory;} 
     				if(timeLimitType != ""){strUrl=strUrl+"&processUsedTimeReport.timeLimitType="+timeLimitType;}
+    				if(sppTimeStart != ""){
+    				sppTimeStart=sppTimeStart.replaceAll("-","");
+    				strUrl=strUrl+"&processUsedTimeReport.sppTimeStart="+sppTimeStart;}
+    				if(sppTimeEnd != ""){
+    				sppTimeEnd=sppTimeEnd.replaceAll("-","");
+    				strUrl=strUrl+"&processUsedTimeReport.sppTimeEnd="+sppTimeEnd;}
     				//alert(strUrl);
     				window.location.href=strUrl;
     			}

@@ -34,8 +34,22 @@ public class ProcessUsedTimeReport implements Serializable {
 	private String flowId;
 	private String tempTime;
 	private String zdCustManager;
+	private String sppTimeStart;
+	private String sppTimeEnd;
 	
 	
+	public String getSppTimeStart() {
+		return sppTimeStart;
+	}
+	public void setSppTimeStart(String sppTimeStart) {
+		this.sppTimeStart = sppTimeStart;
+	}
+	public String getSppTimeEnd() {
+		return sppTimeEnd;
+	}
+	public void setSppTimeEnd(String sppTimeEnd) {
+		this.sppTimeEnd = sppTimeEnd;
+	}
 	public String getZdCustManager() {
 		return zdCustManager;
 	}
