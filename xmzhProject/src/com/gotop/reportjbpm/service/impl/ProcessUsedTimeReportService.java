@@ -9,6 +9,7 @@ import com.gotop.reportjbpm.dao.IProcessUsedTimeReportDao;
 import com.gotop.reportjbpm.model.ProcessUsedTimeReport;
 import com.gotop.reportjbpm.service.IProcessUsedTimeReportService;
 import com.gotop.util.string.Obj2StrUtils;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public class ProcessUsedTimeReportService implements IProcessUsedTimeReportService {
@@ -24,10 +25,22 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 	}
 
 	@Override
-	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportList(
+	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportList(MUOUserSession muo,
 			ProcessUsedTimeReport processUsedTimeReport, Page page) {
+		
 	    List<ProcessUsedTimeReport> processUsedTimeReportList =new ArrayList<ProcessUsedTimeReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = processUsedTimeReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 		if(processUsedTimeReport.getRepTimeStart()!=null&&!"".equals(processUsedTimeReport.getRepTimeStart())){
 			map.put("repTimeStart", processUsedTimeReport.getRepTimeStart());
 			
@@ -92,10 +105,22 @@ public class ProcessUsedTimeReportService implements IProcessUsedTimeReportServi
 	}
 
 	@Override
-	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportListForExcel(
+	public List<ProcessUsedTimeReport> queryProcessUsedTimeReportListForExcel(MUOUserSession muo,
 			ProcessUsedTimeReport processUsedTimeReport) {
+		
 		List<ProcessUsedTimeReport> processUsedTimeReportList =new ArrayList<ProcessUsedTimeReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = processUsedTimeReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 		if(processUsedTimeReport.getRepTimeStart()!=null&&!"".equals(processUsedTimeReport.getRepTimeStart())){
 			map.put("repTimeStart", processUsedTimeReport.getRepTimeStart());
 			

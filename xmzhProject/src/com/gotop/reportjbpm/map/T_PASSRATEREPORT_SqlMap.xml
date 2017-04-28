@@ -318,6 +318,15 @@ select tt.*, o1.orgname as orgnameone, o2.orgname as orgnametwo
       <isNotNull prepend="and" property="approvalEmpname" >
            tt.APPROVALEMPNAME like '%'||'$approvalEmpname$'||'%'
       </isNotNull>
+      
+      <isNull property="orgCodeOne" >
+      	 <isNull property="orgCodeTwo" >
+      	    <isNotNull prepend="and" property="defaultOrgcode" >
+           tt.ORGCODETWO in(select orgcode from om_organization start with orgcode='$defaultOrgcode$' connect by prior orgid = parentorgid)
+            </isNotNull>
+           </isNull>
+      </isNull>
+      
        order by  tt.ORGCODEONE, tt.ORGCODETWO, tt.ONECATEGORY,  tt.LOANCATEGORY, tt.REVIEWEMPNAME, tt.APPROVALEMPNAME
        
 	</select>

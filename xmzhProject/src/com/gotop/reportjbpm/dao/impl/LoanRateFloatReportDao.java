@@ -42,4 +42,11 @@ public class LoanRateFloatReportDao extends SqlMapClientDao implements ILoanRate
 		HashMap<String, Object> map = (HashMap<String, Object>) queryForObject("T_LOANRATEFLOATREPORT_SqlMap.queryOrgInfoById", orgid);
 		return map;
 	}
+
+
+
+	@Override
+	public List yesOrNot_dep(String orgcode) {
+		return this.queryForList("T_LOANRATEFLOATREPORT_SqlMap.yesOrNot_dep", orgcode);
+	}
 }

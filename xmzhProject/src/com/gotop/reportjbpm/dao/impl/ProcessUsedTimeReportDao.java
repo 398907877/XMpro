@@ -45,5 +45,10 @@ public class ProcessUsedTimeReportDao extends SqlMapClientDao implements IProces
 		return  object;
 	}
 
+	@Override
+	public List yesOrNot_dep(String orgcode) {
+		return this.queryForList("T_LOANRATEFLOATREPORT_SqlMap.yesOrNot_dep", orgcode);
+	}
+
 	
 }

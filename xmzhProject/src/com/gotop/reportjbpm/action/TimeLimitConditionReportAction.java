@@ -6,6 +6,7 @@ import java.util.List;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.reportjbpm.model.TimeLimitConditionReport;
 import com.gotop.reportjbpm.service.ITimeLimitConditionReportService;
+import com.gotop.vo.system.MUOUserSession;
 public class TimeLimitConditionReportAction extends BaseAction {
     private  TimeLimitConditionReport timeLimitConditionReport;
     private  ITimeLimitConditionReportService timeLimitConditionReportService;
@@ -32,14 +33,18 @@ public class TimeLimitConditionReportAction extends BaseAction {
 		this.timeLimitConditionReport = timeLimitConditionReport;
 	}
 	public String timeLimitConditionReportList(){
-		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportList(timeLimitConditionReport, this.getPage());
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportList(muo,timeLimitConditionReport, this.getPage());
 		this.setPage(page);
 		this.setTimeLimitConditionReportList(timeLimitConditionReportList);
 		return "timeLimitConditionReportList";
 	}
 	
 	public String timeLimitConditionReportExcel(){
-		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportListForExcel(timeLimitConditionReport);
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportListForExcel(muo,timeLimitConditionReport);
 		this.setTimeLimitConditionReportList(timeLimitConditionReportList);
 		return "timeLimitConditionReportExcel";
 	}

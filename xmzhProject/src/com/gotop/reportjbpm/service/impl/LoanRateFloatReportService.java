@@ -33,6 +33,15 @@ public class LoanRateFloatReportService implements ILoanRateFloatReportService {
 		
 		
 		Map<String, Object>map = new HashMap<String, Object>();
+		String orgcode = muo.getOrgcode();
+		List list  = loanRateFloatReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
 		
 		 StringBuffer stringBuffer = new StringBuffer();
 			
@@ -100,6 +109,16 @@ public class LoanRateFloatReportService implements ILoanRateFloatReportService {
 	public List<LoanRateFloatReport> queryLoanRateFloatReportExcel(MUOUserSession muo,LoanRateFloatReport loanRateFloatReport) {
 		
 		Map<String, Object>map = new HashMap<String, Object>();
+		String orgcode = muo.getOrgcode();
+		List list  = loanRateFloatReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 				if (loanRateFloatReport.getMakeLoansDateStart()!=null&&!"".equals(loanRateFloatReport.getMakeLoansDateStart())) {
 						map.put("startTime", loanRateFloatReport.getMakeLoansDateStart());
 					

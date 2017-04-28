@@ -14,6 +14,7 @@ import com.gotop.reportjbpm.model.BjErrorNumReport;
 import com.gotop.reportjbpm.model.PassRateReport;
 import com.gotop.reportjbpm.service.IBjErrorNumReportService;
 import com.gotop.util.string.Obj2StrUtils;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public class BjErrorNumReportService implements IBjErrorNumReportService {
@@ -31,9 +32,20 @@ public class BjErrorNumReportService implements IBjErrorNumReportService {
 	}
 
 	@Override
-	public List<BjErrorNumReport> queryBjErrorNumReportList(BjErrorNumReport bjErrorNumReport, Page page) {
+	public List<BjErrorNumReport> queryBjErrorNumReportList(MUOUserSession muo, BjErrorNumReport bjErrorNumReport, Page page) {
+		
 		List<BjErrorNumReport> bjErrorNumReportList=new ArrayList<BjErrorNumReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = bjErrorNumReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
 		
 		if (bjErrorNumReport.getRepTimeStart() !=null&&!"".equals(bjErrorNumReport.getRepTimeStart())) {
 				map.put("repTimeStrat", bjErrorNumReport.getRepTimeStart());
@@ -78,9 +90,21 @@ public class BjErrorNumReportService implements IBjErrorNumReportService {
 	}
 
 	@Override
-	public List<BjErrorNumReport> queryBjErrorNumReportListForExcel(BjErrorNumReport bjErrorNumReport) {
+	public List<BjErrorNumReport> queryBjErrorNumReportListForExcel(MUOUserSession muo, BjErrorNumReport bjErrorNumReport) {
+		
 		List<BjErrorNumReport> bjErrorNumReportList=new ArrayList<BjErrorNumReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = bjErrorNumReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 		if (bjErrorNumReport.getRepTimeStart() !=null&&!"".equals(bjErrorNumReport.getRepTimeStart())) {
 		
 				map.put("repTimeStrat",bjErrorNumReport.getRepTimeStart());

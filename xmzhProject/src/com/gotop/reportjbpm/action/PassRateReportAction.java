@@ -6,6 +6,7 @@ import java.util.List;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.reportjbpm.model.PassRateReport;
 import com.gotop.reportjbpm.service.IPassRateReportService;
+import com.gotop.vo.system.MUOUserSession;
 
 public class PassRateReportAction extends BaseAction {
 	private PassRateReport passRateReport;
@@ -38,7 +39,9 @@ public class PassRateReportAction extends BaseAction {
 	 * @return
 	 */
 	public String queryPassRateReportList(){
-		passRateReportList=passRateReportService.queryPassRateReportList(passRateReport,this.getPage());
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		passRateReportList=passRateReportService.queryPassRateReportList(muo,passRateReport,this.getPage());
 		this.setPage(page);
 		this.setPassRateReportList(passRateReportList);
 		return  "QueryPassRateReportList";
@@ -48,7 +51,8 @@ public class PassRateReportAction extends BaseAction {
 	 * @return
 	 */
 	public String queryPassRateReportListForExcel(){
-		passRateReportList=passRateReportService.queryPassRateReportListForExcel(passRateReport);
+		MUOUserSession muo = getCurrentOnlineUser();
+		passRateReportList=passRateReportService.queryPassRateReportListForExcel(muo,passRateReport);
 		this.setPassRateReportList(passRateReportList);
 		return  "QueryPassRateReportForExcel";
 	}

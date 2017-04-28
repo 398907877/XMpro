@@ -8,6 +8,7 @@ import java.util.Map;
 import com.gotop.reportjbpm.dao.ISxApprovalReportDao;
 import com.gotop.reportjbpm.model.SxApprovalReport;
 import com.gotop.reportjbpm.service.ISxApprovalReportService;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public class SxApprovalReportService implements ISxApprovalReportService  {
@@ -22,10 +23,21 @@ public class SxApprovalReportService implements ISxApprovalReportService  {
 
 	private ISxApprovalReportDao sxApprovalReportDao;
 	@Override
-	public List<SxApprovalReport> querySxApprovalReportList(
+	public List<SxApprovalReport> querySxApprovalReportList(MUOUserSession muo, 
 			SxApprovalReport sxApprovalReport, Page page,List<SxApprovalReport> sxApprovalReportTitleList) {
+		
 		List<SxApprovalReport> sxApprovalReportList =new ArrayList<SxApprovalReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = sxApprovalReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
 		
 		StringBuffer sb=new StringBuffer();
 		for(int i=0;i<sxApprovalReportTitleList.size();i++){
@@ -121,10 +133,21 @@ public class SxApprovalReportService implements ISxApprovalReportService  {
 	}
 
 	@Override
-	public List<SxApprovalReport> querySxApprovalReportListForExcel(
+	public List<SxApprovalReport> querySxApprovalReportListForExcel(MUOUserSession muo, 
 			SxApprovalReport sxApprovalReport,List<SxApprovalReport> sxApprovalReportTitleList) {
+		
 		List<SxApprovalReport> sxApprovalReportList =new ArrayList<SxApprovalReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = sxApprovalReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
 		
 		StringBuffer sb=new StringBuffer();
 		for(int i=0;i<sxApprovalReportTitleList.size();i++){

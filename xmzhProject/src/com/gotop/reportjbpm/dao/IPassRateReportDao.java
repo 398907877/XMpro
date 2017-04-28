@@ -21,5 +21,6 @@ public interface IPassRateReportDao {
 	 * @return
 	 */
 	List<PassRateReport> queryPassRateReportListForExcel(Map<String, Object> map);
+	List yesOrNot_dep(String orgcode);
 
 }

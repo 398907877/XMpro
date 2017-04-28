@@ -21,4 +21,7 @@ public interface ILoanRateFloatReportDao {
 
 	HashMap<String, Object> queryOrgInfoById(String orgid);
 
+
+	List yesOrNot_dep(String orgcode);
+
 }

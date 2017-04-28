@@ -220,8 +220,16 @@
              function excelExport(){
     				//报单时间 开始
     				var repTimeStart = $id("repTimeStart").value;
+    				if(repTimeStart != null){
+    					repTimeStart = repTimeStart.replaceAll("-","");
+        			}
+    				
     				//报单时间 结束
     				var repTimeEnd = $id("repTimeEnd").value;
+    				if(repTimeEnd != null){
+    					repTimeEnd = repTimeEnd.replaceAll("-","");
+        			}
+    				
     				//一级支行 名称
     				var orgNameOne = $id("orgNameOne").value;
     				//一级支行 code

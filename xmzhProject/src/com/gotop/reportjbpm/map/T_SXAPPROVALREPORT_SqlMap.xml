@@ -89,6 +89,9 @@
               and P2.operater_date <= '$approvalTimeEnd$'
                ]]>
           </isNotNull>
+		<isNotNull prepend="and" property="defaultOrgcode" >
+			 T.ORGCODETWO in(select orgcode from om_organization start with orgcode='$defaultOrgcode$' connect by prior orgid = parentorgid)
+		</isNotNull>
  GROUP BY T.ORGCODEONE,
           T.ORGCODETWO) A,
                                (SELECT DISTINCT  ONECATEGORY
@@ -211,6 +214,9 @@
               and P2.operater_date <= '$approvalTimeEnd$'
                ]]>
           </isNotNull>
+          <isNotNull prepend="and" property="defaultOrgcode" >
+			 T.ORGCODETWO in(select orgcode from om_organization start with orgcode='$defaultOrgcode$' connect by prior orgid = parentorgid)
+		</isNotNull>
  GROUP BY T.ORGCODEONE,
           T.ORGCODETWO) A,
                                (SELECT DISTINCT  ONECATEGORY

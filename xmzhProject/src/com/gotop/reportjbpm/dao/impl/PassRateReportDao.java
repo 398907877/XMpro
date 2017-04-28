@@ -21,4 +21,9 @@ public class PassRateReportDao extends SqlMapClientDao implements IPassRateRepor
 		return this.queryForList("T_PASSRATEREPORT_SqlMap.queryPassRateReport", map);
 	}
 
+	@Override
+	public List yesOrNot_dep(String orgcode) {
+		return this.queryForList("T_LOANRATEFLOATREPORT_SqlMap.yesOrNot_dep", orgcode);
+	}
+
 }

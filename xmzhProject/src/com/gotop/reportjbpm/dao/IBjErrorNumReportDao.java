@@ -21,5 +21,6 @@ public interface IBjErrorNumReportDao {
 	 * @return
 	 */
 	List<BjErrorNumReport> queryBjErrorNumReportListForExcel(Map<String, Object> map);
+	List yesOrNot_dep(String orgcode);
 
 }

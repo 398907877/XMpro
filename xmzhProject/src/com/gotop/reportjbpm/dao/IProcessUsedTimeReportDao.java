@@ -36,4 +36,7 @@ public interface IProcessUsedTimeReportDao {
 	void insertProcessUsedTimeReportTemp(HashMap<String, String> hmp);
 	Object queryReportUpdatetime();
 
+
+	List yesOrNot_dep(String orgcode);
+
 }

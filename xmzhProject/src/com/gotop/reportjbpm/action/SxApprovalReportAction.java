@@ -6,6 +6,7 @@ import java.util.List;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.reportjbpm.model.SxApprovalReport;
 import com.gotop.reportjbpm.service.ISxApprovalReportService;
+import com.gotop.vo.system.MUOUserSession;
 public class SxApprovalReportAction extends BaseAction {
 
 	private  SxApprovalReport sxApprovalReport;
@@ -56,8 +57,10 @@ public class SxApprovalReportAction extends BaseAction {
 		this.sxApprovalReportTitleList = sxApprovalReportTitleList;
 	}
 	public String sxApprovalReportList(){
+		
+		MUOUserSession muo = getCurrentOnlineUser();
 		sxApprovalReportTitleList=sxApprovalReportService.querySxApprovalReportTitleList(sxApprovalReport);
-		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportList(sxApprovalReport, this.getPage(),sxApprovalReportTitleList);
+		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportList(muo,sxApprovalReport, this.getPage(),sxApprovalReportTitleList);
 		this.setSxApprovalReportList(sxApprovalReportList);
 		this.setSxApprovalReportTitleList(sxApprovalReportTitleList);
 		this.setPage(page);
@@ -67,8 +70,10 @@ public class SxApprovalReportAction extends BaseAction {
 	}
 	
 	public String sxApprovalReportExcel(){
+		
+		MUOUserSession muo = getCurrentOnlineUser();
 		sxApprovalReportTitleList=sxApprovalReportService.querySxApprovalReportTitleList(sxApprovalReport);
-		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportListForExcel(sxApprovalReport,sxApprovalReportTitleList);
+		sxApprovalReportList=sxApprovalReportService.querySxApprovalReportListForExcel(muo,sxApprovalReport,sxApprovalReportTitleList);
 		this.setSxApprovalReportTitleList(sxApprovalReportTitleList);
 		this.setSxApprovalReportList(sxApprovalReportList);
 		return "sxApprovalReportExcel";

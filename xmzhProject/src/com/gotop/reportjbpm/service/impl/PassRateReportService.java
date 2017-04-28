@@ -13,6 +13,7 @@ import com.gotop.reportjbpm.dao.IPassRateReportDao;
 import com.gotop.reportjbpm.model.PassRateReport;
 import com.gotop.reportjbpm.service.IPassRateReportService;
 import com.gotop.util.string.Obj2StrUtils;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public class PassRateReportService implements IPassRateReportService {
@@ -30,11 +31,20 @@ public class PassRateReportService implements IPassRateReportService {
 	}
 
 	@Override
-	public List<PassRateReport> queryPassRateReportList(PassRateReport passRateReport, Page page) {
+	public List<PassRateReport> queryPassRateReportList(MUOUserSession muo, PassRateReport passRateReport, Page page) {
 		List<PassRateReport> passRateReportList=new ArrayList<PassRateReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
-		//SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String orgcode = muo.getOrgcode();
+		List list  = passRateReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 	
 		if (passRateReport.getRepTimeStart() !=null&&!"".equals(passRateReport.getRepTimeStart())) {
 		
@@ -88,22 +98,26 @@ public class PassRateReportService implements IPassRateReportService {
 	}
 
 	@Override
-	public List<PassRateReport> queryPassRateReportListForExcel(PassRateReport passRateReport) {
-		Map<String, Object>map=new HashMap<String, Object>();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	public List<PassRateReport> queryPassRateReportListForExcel(MUOUserSession muo,PassRateReport passRateReport) {
 		
-	  try {
+		Map<String, Object>map=new HashMap<String, Object>();
+		String orgcode = muo.getOrgcode();
+		List list  = passRateReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 			if (passRateReport.getRepTimeStart() !=null&&!"".equals(passRateReport.getRepTimeStart())) {
-				map.put("repTimeStrat",sdf.format(sdf1.parse(passRateReport.getRepTimeStart())));
+				map.put("repTimeStrat",passRateReport.getRepTimeStart());
 					
 			}
 			if (passRateReport.getRepTimeEnd() !=null&&!"".equals(passRateReport.getRepTimeEnd())) {
-				map.put("repTimeEnd",  sdf.format(sdf1.parse(passRateReport.getRepTimeEnd())));
+				map.put("repTimeEnd",  passRateReport.getRepTimeEnd());
 			}
-		  } catch (ParseException e) {
-				e.printStackTrace();
-		 }
 			
 
 		

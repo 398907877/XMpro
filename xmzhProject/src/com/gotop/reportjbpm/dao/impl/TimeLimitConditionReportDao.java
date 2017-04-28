@@ -22,6 +22,11 @@ public class TimeLimitConditionReportDao extends SqlMapClientDao implements ITim
 		return this.queryForList("T_TIMELIMITCONDITIONREPORT_SqlMap.queryTimeLimitConditionReportList", map);
 	}
 
+	@Override
+	public List yesOrNot_dep(String orgcode) {
+		return this.queryForList("T_LOANRATEFLOATREPORT_SqlMap.yesOrNot_dep", orgcode);
+	}
+
 	
 
 }

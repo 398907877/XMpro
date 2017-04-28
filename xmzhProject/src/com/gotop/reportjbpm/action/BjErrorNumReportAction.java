@@ -6,6 +6,7 @@ import java.util.List;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.reportjbpm.model.BjErrorNumReport;
 import com.gotop.reportjbpm.service.IBjErrorNumReportService;
+import com.gotop.vo.system.MUOUserSession;
 
 public class BjErrorNumReportAction extends BaseAction {
 	private BjErrorNumReport bjErrorNumReport;
@@ -37,7 +38,9 @@ public class BjErrorNumReportAction extends BaseAction {
 	 * @return
 	 */
 	public String bjErrorNumReportList(){
-		bjErrorNumReportList=bjErrorNumReportService.queryBjErrorNumReportList(bjErrorNumReport,this.getPage());
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		bjErrorNumReportList=bjErrorNumReportService.queryBjErrorNumReportList(muo,bjErrorNumReport,this.getPage());
 		this.setPage(page);
 		this.setBjErrorNumReportList(bjErrorNumReportList);
 		return  "QueryBjErrorNumReportList";
@@ -47,7 +50,9 @@ public class BjErrorNumReportAction extends BaseAction {
 	 * @return
 	 */
 	public String bjErrorNumReportExcel(){
-		bjErrorNumReportList=bjErrorNumReportService.queryBjErrorNumReportListForExcel(bjErrorNumReport);
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		bjErrorNumReportList=bjErrorNumReportService.queryBjErrorNumReportListForExcel(muo,bjErrorNumReport);
 		this.setBjErrorNumReportList(bjErrorNumReportList);
 		return  "QueryBjErrorNumReportForExcel";
 	}

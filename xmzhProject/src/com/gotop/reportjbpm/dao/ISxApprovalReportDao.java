@@ -27,6 +27,7 @@ public interface ISxApprovalReportDao {
 	 * @return
 	 */
 	List<SxApprovalReport> querySxApprovalReportListForExcel(Map<String, Object> map);
+	List yesOrNot_dep(String orgcode);
 	
 
 }

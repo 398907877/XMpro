@@ -12,6 +12,7 @@ import com.gotop.Generalprocess.util.SpringContextUtil;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.reportjbpm.model.ProcessUsedTimeReport;
 import com.gotop.reportjbpm.service.IProcessUsedTimeReportService;
+import com.gotop.vo.system.MUOUserSession;
 public class ProcessUsedTimeReportAction extends BaseAction {
 
 	private ProcessUsedTimeReport processUsedTimeReport;
@@ -63,8 +64,8 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 //		}
 //		
 		
-		
-		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportList(processUsedTimeReport, this.getPage());
+		MUOUserSession muo = getCurrentOnlineUser();
+		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportList(muo,processUsedTimeReport, this.getPage());
 		this.setPage(page);
 		//查询超限报表更新时间，显示在页面
     	String update_time =  (String) this.processUsedTimeReportService.queryReportUpdatetime();
@@ -75,7 +76,9 @@ public class ProcessUsedTimeReportAction extends BaseAction {
 	}
 	
 	public String processUsedTimeReportExcel(){
-		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportListForExcel(processUsedTimeReport);
+		
+		MUOUserSession muo = getCurrentOnlineUser();
+		processUsedTimeReportList=processUsedTimeReportService.queryProcessUsedTimeReportListForExcel(muo,processUsedTimeReport);
 		this.setProcessUsedTimeReportList(processUsedTimeReportList);
 		return "processUsedTimeReportExcel";
 	}

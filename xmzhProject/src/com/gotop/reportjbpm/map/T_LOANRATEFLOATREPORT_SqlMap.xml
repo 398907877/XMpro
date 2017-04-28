@@ -134,6 +134,14 @@ select * from	(select TT2.*,
 						               ]]>
 						      </isNotNull>
 						      
+						      <isNull property="orgCodeOne" >
+						      	 <isNull property="orgCodeTwo" >
+						      	    <isNotNull prepend="and" property="defaultOrgcode" >
+						           TT.ORGCODETWO in(select orgcode from om_organization start with orgcode='$defaultOrgcode$' connect by prior orgid = parentorgid)
+						            </isNotNull>
+						           </isNull>
+						      </isNull>
+						      
 		         group by TT.orgcodeone,
 		                  TT.orgcodetwo,
 		                  TT.onecategory,
@@ -155,6 +163,19 @@ select * from	(select TT2.*,
 	
 	<select id="queryOrgInfoById"  parameterClass="java.lang.String" resultClass="java.util.HashMap">
 	select * from om_organization where orgid= '$orgid$'
+	</select>
+	
+	<select id="yesOrNot_dep"   parameterClass="java.lang.String" resultClass="java.util.HashMap">
+	<![CDATA[
+	select o.*,
+	case when parentorgid = 5425 and orgname <> '一类支行'
+	  then 'yes'
+	    else 'no'
+	      end as is_dep
+	 from om_organization o
+  where o.orgcode = '$orgcode$'
+	
+	   ]]>
 	</select>
 
 </sqlMap>

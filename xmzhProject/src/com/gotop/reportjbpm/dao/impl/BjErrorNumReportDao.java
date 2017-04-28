@@ -21,4 +21,11 @@ public class BjErrorNumReportDao extends SqlMapClientDao implements IBjErrorNumR
 		return this.queryForList("T_BJERRORNUMREPORT_SqlMap.queryBjErrorNumReport", map);
 	}
 
+	@Override
+	public List yesOrNot_dep(String orgcode) {
+		return this.queryForList("T_LOANRATEFLOATREPORT_SqlMap.yesOrNot_dep", orgcode);
+	}
+	
+	
+
 }

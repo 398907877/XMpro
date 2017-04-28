@@ -9,6 +9,7 @@ import com.gotop.reportjbpm.dao.ITimeLimitConditionReportDao;
 import com.gotop.reportjbpm.model.TimeLimitConditionReport;
 import com.gotop.reportjbpm.service.ITimeLimitConditionReportService;
 import com.gotop.util.string.Obj2StrUtils;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public class TimeLimitConditionReportService implements ITimeLimitConditionReportService  {
@@ -26,11 +27,22 @@ public class TimeLimitConditionReportService implements ITimeLimitConditionRepor
 	}
 
 	@Override
-	public List<TimeLimitConditionReport> queryTimeLimitConditionReportList(
+	public List<TimeLimitConditionReport> queryTimeLimitConditionReportList(MUOUserSession muo,
 			TimeLimitConditionReport timeLimitConditionReport, Page page) {
 	    List<TimeLimitConditionReport> timeLimitConditionReportList =new ArrayList<TimeLimitConditionReport>();
 	   // List<TimeLimitConditionReport> resulettimeLimitConditionReportList =new ArrayList<TimeLimitConditionReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = timeLimitConditionReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 		if(timeLimitConditionReport.getRepTimeStart()!=null&&!"".equals(timeLimitConditionReport.getRepTimeStart())){
 			map.put("repTimeStart", timeLimitConditionReport.getRepTimeStart());
 			
@@ -179,11 +191,22 @@ public class TimeLimitConditionReportService implements ITimeLimitConditionRepor
 	}
 
 	@Override
-	public List<TimeLimitConditionReport> queryTimeLimitConditionReportListForExcel(
+	public List<TimeLimitConditionReport> queryTimeLimitConditionReportListForExcel(MUOUserSession muo,
 			TimeLimitConditionReport timeLimitConditionReport) {
 		List<TimeLimitConditionReport> timeLimitConditionReportList =new ArrayList<TimeLimitConditionReport>();
 	    //List<TimeLimitConditionReport> resulettimeLimitConditionReportList =new ArrayList<TimeLimitConditionReport>();
 		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orgcode = muo.getOrgcode();
+		List list  = timeLimitConditionReportDao.yesOrNot_dep(orgcode); //查询当前机构是部门还是机构
+		
+		if (list.size() != 0){
+			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
+			 if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
+				 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
+			 }
+		}
+		
 		if(timeLimitConditionReport.getRepTimeStart()!=null&&!"".equals(timeLimitConditionReport.getRepTimeStart())){
 			map.put("repTimeStart", timeLimitConditionReport.getRepTimeStart());
 			

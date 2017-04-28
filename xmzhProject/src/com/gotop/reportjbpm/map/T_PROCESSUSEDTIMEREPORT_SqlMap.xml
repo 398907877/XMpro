@@ -61,6 +61,14 @@
 			  T.orgCodeTwo='$orgCodeTwo$'
 		  </isNotNull>
 		  
+		  <isNull property="orgCodeOne" >
+			      	 <isNull property="orgCodeTwo" >
+			      	    <isNotNull prepend="and" property="defaultOrgcode" >
+			           T.orgCodeTwo in(select orgcode from om_organization start with orgcode='$defaultOrgcode$' connect by prior orgid = parentorgid)
+			            </isNotNull>
+			           </isNull>
+			      </isNull>
+		  
           <isNotNull prepend="and" property="oneCategory">
 			  T.ONECATEGORY in ($oneCategory$)
 		  </isNotNull>
