@@ -51,7 +51,7 @@
 			   <![CDATA[T.REPORTTIME>=#repTimeStart#]]>
 		  </isNotNull> 
 		   <isNotNull prepend="and" property="repTimeEnd" >                                    
-                    <![CDATA[T.REPORTTIME  <=(#repTimeEnd#)]]>
+                    <![CDATA[T.REPORTTIME  <=#repTimeEnd#]]>
             </isNotNull>
                  
            <isNotNull prepend="and" property="orgCodeOne">
@@ -136,7 +136,7 @@
        LOANCATEGORY,
        ZDCUSTMANAGER,
        p.flow_id flowId,
-       t3.reporttime REPORTTIME,
+       to_char(to_date(t3.reporttime,'yyyy-MM-dd hh24:mi:ss'),'yyyyMMdd') REPORTTIME,
        ZHGPDTIMEONE || ';' || ZHGPDTIMETWO || ';' || ZHGPDTIMETHREE || ';' ||
        REVIEWAPPROVALONETIME || ';' || REVIEWAPPROVALTWOTIME || ';' ||
        REVIEWAPPROVALTHREEORMORETIME || ';' || ALLPROCESSTIMEONE || ';' ||
