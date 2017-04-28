@@ -17,7 +17,7 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                     <td class="form_label" align="right" >报单日期：</td>
+                     <td class="form_label" align="right" >派单日期：</td>
 					<td >
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyy-MM-dd" id="repTimeStart" name="bjErrorNumReport.repTimeStart" 

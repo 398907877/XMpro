@@ -60,9 +60,35 @@
 														SELECT
 															execution_id
 														FROM
-															t_process_business
+															t_process_business b,
+															(
+														select  m5.execution_,m5.end_ as pd_time
+														 from (select m4.*, row_number() over(partition by m4.execution_ order by m4.start_) as rn
+														    from (select m1.*, m3.activity_name_ as next_task_name
+														            from JBPM4_HIST_ACTINST      m1,
+														                 T_PROCESS_TASK_ASSIGNEE m2,
+														                 JBPM4_HIST_ACTINST      m3
+														           where m1.activity_name_ = '收单派单'
+														             and m1.end_ is not null
+														             and m1.execution_ = m2.execution_id
+														             and m1.htask_ = m2.pre_task_id
+														             and m2.next_task_id = m3.htask_) m4
+														   where m4.next_task_name = '审查一') m5
+														   where 1=1
+														<isNotNull prepend="and" property="repTimeStrat" >
+												         <![CDATA[
+												            to_char(m5.end_, 'yyyy-MM-dd') >= #repTimeStrat#
+												               ]]>
+												      </isNotNull>
+												      <isNotNull prepend="and" property="repTimeEnd" >
+												        <![CDATA[
+												            to_char(m5.end_, 'yyyy-MM-dd') <=  #repTimeEnd#
+												               ]]>
+												      </isNotNull>
+														 )tempC
 														WHERE
-															BUSINESS_TYPE = '88'
+															b.execution_id=tempC.execution_
+                                                            and b.BUSINESS_TYPE = '88'
 													) t1
 												LEFT JOIN T_APPROVE_OPNINION_GP t2 ON T1.execution_id = T2.FLOW_ID
 											) t3
