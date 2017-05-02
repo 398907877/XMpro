@@ -28,12 +28,26 @@
 			<l:iterate property="jobWorkloadList" id="id1">
 			
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="issuedTr">
-			<%-- <td style="vnd.ms-excel.numberformat:@">
-			     ${starttime}     ${endtime} 
-			  </td> --%>
-			  <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1" property="pdtimeOne"/>
+			<td style="vnd.ms-excel.numberformat:@">
+			    			<l:notEmpty property="${starttime}">
+							 	<l:notEmpty property="${endtime}">
+							 		${starttime}  ~  ${endtime} 
+							 	</l:notEmpty>
+							 </l:notEmpty> 
+							  <l:empty   property="${starttime}">
+							  		<l:notEmpty property="${endtime}">
+							 		~  ${endtime}
+							 	  </l:notEmpty>
+							  </l:empty>
+							  <l:empty   property="${endtime}">
+							  		<l:notEmpty property="${starttime}">
+							 		${starttime}  ~
+							 	  </l:notEmpty>
+							  </l:empty>      
 			  </td>
+			  <%-- <td style="vnd.ms-excel.numberformat:@">
+			     <b:write iterateId="id1" property="pdtimeOne"/>
+			  </td> --%>
 			 <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="oneCategory"/>
 			  </td>

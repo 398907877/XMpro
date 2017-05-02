@@ -108,12 +108,26 @@
 						<w:radioGroup id="group1">
                            <l:iterate property="jobWorkloadList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
-							 <%-- <td nowrap="nowrap"> 
-							     ${starttime}      ${endtime} 
-								</td> --%>
-								<td nowrap="nowrap"> 
-							     <b:write iterateId="id1" property="pdtimeOne" />
+							 <td nowrap="nowrap">
+							 <l:notEmpty property="${starttime}">
+							 	<l:notEmpty property="${endtime}">
+							 		${starttime}  ~  ${endtime} 
+							 	</l:notEmpty>
+							 </l:notEmpty> 
+							  <l:empty   property="${starttime}">
+							  		<l:notEmpty property="${endtime}">
+							 		~  ${endtime} 
+							 	  </l:notEmpty>
+							  </l:empty>
+							  <l:empty   property="${endtime}">
+							  		<l:notEmpty property="${starttime}">
+							 		${starttime}  ~
+							 	  </l:notEmpty>
+							  </l:empty>      
 								</td>
+								<%-- <td nowrap="nowrap"> 
+							     <b:write iterateId="id1" property="pdtimeOne" />
+								</td> --%>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="oneCategory" />
 								</td>
