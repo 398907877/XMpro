@@ -16,13 +16,13 @@
 	<tr height="34">
 	<th height="34" width="100" align="center" class="form_label"  rowspan="3">一级支行</th>
 		<th height="34" width="100" align="center" class="form_label"  rowspan="3">二级支行</th>
-		<th height="34" width="100" align="center" class="form_label" rowspan="1"   colspan='<b:write property="sxApprovalReportTitleList.size()*2" />' >列出所有一级分类</th>
+		<th height="34" width='<b:write property="sxApprovalReportTitleList.size()*200" />' align="center" class="form_label" rowspan="1"   colspan='<b:write property="sxApprovalReportTitleList.size()*2" />' >列出所有一级分类</th>
 		 
 	
 	</tr>
 	<tr height="34">
 	 <l:iterate property="sxApprovalReportTitleList" id="id1">
-			<th height="34"  width="100" align="center" class="form_label"  rowspan="1"   colspan="2">
+			<th height="34"  width="200" align="center" class="form_label"  rowspan="1"   colspan="2">
 			<b:write iterateId="id1" property="oneCategory" />
 			</th>
 		</l:iterate>
