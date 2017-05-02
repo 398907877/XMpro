@@ -207,7 +207,7 @@ $(function (){
 							 row =  tab.insertRow();
 							 row.id = "fileRow"+rowId;
 							 td = row.insertCell(); 
-		tdStr="差错内容：<textarea   rows=\"3\" style=\"width:60%\"  name=\"mistakeContent\" id=\"mistakeContent\" size='70' validateAttr=\"allowNull=false\" readonly=\"true\" onkeyup=\"this.value=this.value.replace(/[\|]/g,'')\">"+mistakeContent+"</textarea>";
+		tdStr="差错内容：<textarea   rows=\"3\" style=\"width:60%\"  name=\"mistakeContent\" id=\"mistakeContent\" size='70' validateAttr=\"allowNull=false\" readonly=\"true\"        >"+mistakeContent+"</textarea>";
 		tdStr+="<input type=\"hidden\" id=\"processMistake.mistakeId\" name=\"mistakeId\" value=\""+mistakeId+"\" />";
 		tdStr+="扣罚金额：<input type=\"text\" name=\"money\" value=\""+money+"\" id=\"money\" readonly=\"true\" size='10' validateAttr=\"allowNull=false\">元  <br/>";
 		tdStr+="整改情况：<textarea   rows=\"3\" style=\"width:60%\"  size='70'  name=\"rectification\" id=\"rectification\"  >"+rectification+"</textarea>";

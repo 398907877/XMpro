@@ -246,11 +246,11 @@
 										tdStr+="<input type=\"hidden\" name=\""+hiTaskName+"\" id=\""+tnId+"\" value=\""+item.taskName+"\" >";
 										tdStr+="<input type=\"hidden\" name=\""+hiEmpId+"\" id=\""+epId+"\" value=\""+item.empid+"\" >";
 										tdStr+="<input type=\"hidden\" name=\""+hiFlowId+"\" id=\""+flId+"\" value=\""+item.flowId+"\" >";
-					         			tdStr+="差错内容：<textarea  rows=\"3\"  style=\"width:60%\"  name=\""+hiFiles+"\" id=\""+fId+"\" value=\""+item.mistakeContent+"\" size='70' validateAttr=\"allowNull=false\" onkeyup=\"this.value=this.value.replace(/[\|]/g,'')\">"+item.mistakeContent+"</textarea>";
+					         			tdStr+="差错内容：<textarea  rows=\"3\"  style=\"width:60%\"  name=\""+hiFiles+"\" id=\""+fId+"\" value=\""+item.mistakeContent+"\" size='70' validateAttr=\"allowNull=false\" >"+item.mistakeContent+"</textarea>";
 									 	tdStr+="扣罚金额：<input type=\"text\" name=\""+hiJees+"\" id=\""+jeId+"\" value=\""+item.punishBal+"\" size='10' validateAttr=\"allowNull=false\" >元 <br/>";
 
 									 	//历史整改情况
-					         			tdStr+="整改情况：<textarea      rows=\"3\" readonly=\"true\"   style=\"width:60%\"  name=\""+hirectification+"\" id=\""+reId+"\" value=\""+item.rectification+"\" size='70'  onkeyup=\"this.value=this.value.replace(/[\|]/g,'')\">"+item.rectification+"</textarea>";
+					         			tdStr+="整改情况：<textarea      rows=\"3\" readonly=\"true\"   style=\"width:60%\"  name=\""+hirectification+"\" id=\""+reId+"\" value=\""+item.rectification+"\" size='70'        >"+item.rectification+"</textarea>";
 									 //	tdStr+= "<input type=\"button\" onclick=\"remove('hirectification"+rowId+"');\" name='button"+rowId+"' value=\"清空\" style=\"margin-left:2px;vertical-align:middle;cursor:hand;\"/>";
 									 	
 					     			 	tdStr+= "<input type=\"button\" onclick=\"delTr('fileRow9"+rowId+"');\" name='button"+rowId+"' value=\"删除\" style=\"margin-left:2px;vertical-align:middle;cursor:hand;\"/>";
@@ -320,7 +320,7 @@
 										td = row.insertCell();
 					         			tdStr="<textarea   style=\"display:none\"  style=\"width:60%\"  size='70'                name=\""+timeName+"\"   id=\""+timemask+"\"   validateAttr=\"allowNull=false\" readonly=\"true\" >"+item.addTime+"</textarea>";
 
-					         			tdStr+="差错内容：<textarea   rows=\"3\" style=\"width:60%\"   name=\""+fName+"\" id=\""+fId+"\"    validateAttr=\"allowNull=false\" onkeyup=\"this.value=this.value.replace(/[\|]/g,'')\">"+item.mistakeContent+"</textarea>";
+					         			tdStr+="差错内容：<textarea   rows=\"3\" style=\"width:60%\"   name=\""+fName+"\" id=\""+fId+"\"    validateAttr=\"allowNull=false\"       >"+item.mistakeContent+"</textarea>";
 					         		//	tdStr+=row.id;
 									 	tdStr+="扣罚金额：<input type=\"text\" name=\""+jeName+"\" id=\""+jeId+"\" value=\""+item.punishBal+"\" size='10' validateAttr=\"allowNull=false\">元<br/>";
 					         			tdStr+="整改情况：<textarea   rows=\"3\" style=\"width:60%\"  size='70'  name=\"rectification\" id=\"rectification\"  >"+item.rectification+"</textarea>";
@@ -453,7 +453,7 @@
 
 			 
   			tdStr="<textarea    style=\"display:none\"  style=\"width:60%\"  size='70'                name=\""+timeName+"\" id=\""+timemask+"\"   validateAttr=\"allowNull=false\" readonly=\"true\" ></textarea>"; 
-			 	tdStr="差错内容：<textarea   rows=\"3\" style=\"width:60%\"  name=\""+fName+"\" id=\""+fId+"\" size='70' validateAttr=\"allowNull=false\" onkeyup=\"this.value=this.value.replace(/[\|]/g,'')\"></textarea>";
+			 	tdStr="差错内容：<textarea   rows=\"3\" style=\"width:60%\"  name=\""+fName+"\" id=\""+fId+"\" size='70' validateAttr=\"allowNull=false\"       ></textarea>";
 			 	tdStr+="扣罚金额：<input type=\"text\" name=\""+jeName+"\" id=\""+jeId+"\" size='10' validateAttr=\"allowNull=false\">元";
 			    tdStr+= "<input type=\"button\" onclick=\"delTr('fileRow5"+rowId+"');\" name='button"+rowId+"' value=\"删除\" style=\"margin-left:2px;vertical-align:middle;cursor:hand;\"/>";
 			    tdStr+= "<input type=\"button\" id=\"save8"+rowId+"\" onclick=\"save8Mistake('fileRow5"+rowId+"','save8"+rowId+"');\" name='button"+rowId+"' value=\"保存\" style=\"margin-left:2px;vertical-align:middle;cursor:hand;\"/>";
