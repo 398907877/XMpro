@@ -33,10 +33,10 @@
 			    	<b:write iterateId="id1" property="loanCategory"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="orgname" />
+			    <b:write iterateId="id1" property="orgNameOne" />
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="orgnametwo"/>
+			    <b:write iterateId="id1" property="orgNameTwo"/> 
 			  </td>
 			   <td>
 			   <b:write iterateId="id1" property="EA_number"/>
