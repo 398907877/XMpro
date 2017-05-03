@@ -23,6 +23,7 @@
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">贷种</th>
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">超限环节</th>
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">超限人员</th>
+		<th height="34"  align="center" class="form_label" nowrap="nowrap">超限次数</th>
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">超限时长(单位:小时)</th>
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">节点开始时间</th>
 		<th height="34"  align="center" class="form_label" nowrap="nowrap">节点结束时间</th>
@@ -56,6 +57,9 @@
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			  	 	<b:write iterateId="id1" property="empname" />
+			  </td>
+			  <td>
+			  	 	<b:write iterateId="id1" property="overcount" />
 			  </td>
 			  <td>
 			  		<b:write iterateId="id1" property="overtime" />

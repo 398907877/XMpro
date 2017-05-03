@@ -117,6 +117,9 @@
 					       <th nowrap="nowrap">
 								超限人员
 							</th>
+							<th nowrap="nowrap">
+								超限次数
+							</th>
                              <th nowrap="nowrap">
 								超限时长(单位:小时)
 							</th>
@@ -163,6 +166,9 @@
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="empname" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="overcount" />
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="overtime" />

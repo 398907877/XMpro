@@ -70,7 +70,7 @@
     <result column="ENDTIME" property="endtime" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REQUEST_ID" property="request_id" jdbcType="DECIMAL" />
-    
+    <result column="RN" property="overcount" jdbcType="VARCHAR" />
   </resultMap>
 
  <resultMap id="workTimeMain_Result" class="com.gotop.jbpm.model.WorkTimeMainBean" >
@@ -234,7 +234,7 @@ select operatorname from ac_operator where operatorid =
 <!-- 查询 超限报表 临时表(已结束的流程)-->
   <select id="queryOverTimeReport" resultMap="OverTimeReport_Result" parameterClass="java.util.HashMap" >
     
-	select ID, REPORTTIME ,TASKNAME, CUSTNAME, ONECATEGORY_NAME,LOANCATEGORY_NAME, 
+	select ID, REPORTTIME ,TASKNAME, CUSTNAME, ONECATEGORY_NAME,LOANCATEGORY_NAME, RN,
 		ORGNAME_ONE, ORGNAME_TWO, EMPNAME, trunc(OVERTIME, 2) as OVERTIME, 
 		REMARK, REQUEST_ID, PROCESS_NAME, 
 		to_char(to_date(STARTTIME, 'yyyyMMddhh24miss') , 'yyyy-MM-dd hh24:mi:ss') as STARTTIME, 
@@ -346,7 +346,7 @@ where DEFINITION_ID in (
   <!-- 查询 超限报表 临时表(未结束的流程)-->
   <select id="queryOverTimeReportNotEnd" resultMap="OverTimeReport_Result" parameterClass="java.util.HashMap" >
     
-	select ID, REPORTTIME ,TASKNAME, CUSTNAME, ONECATEGORY_NAME,LOANCATEGORY_NAME, 
+	select ID, REPORTTIME ,TASKNAME, CUSTNAME, ONECATEGORY_NAME,LOANCATEGORY_NAME, RN,
 		ORGNAME_ONE, ORGNAME_TWO, EMPNAME, trunc(OVERTIME, 2) as OVERTIME, 
 		REMARK, REQUEST_ID, PROCESS_NAME, 
 		to_char(to_date(STARTTIME, 'yyyyMMddhh24miss') , 'yyyy-MM-dd hh24:mi:ss') as STARTTIME, 
