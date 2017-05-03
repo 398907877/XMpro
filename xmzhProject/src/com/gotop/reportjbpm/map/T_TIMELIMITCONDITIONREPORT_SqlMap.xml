@@ -141,21 +141,17 @@
                  
                  <isNotNull prepend="and" property="scName" >
                       t.FLOWID  in (select distinct a.flow_id
-								  from T_APPROVE_OPNINION_GP a,
-								  om_employee b
-								 where a.operator=b.empid
-								   and a.operator_type = '提交审查一'
-								   and b.empname like '%$scName$%'
+								  from T_APPROVE_OPNINION_GP a
+								 where  a.operator_type = '提交审查一'
+								   and a.next_opr_name like '%$scName$%'
                       )
                   </isNotNull>
                   
                   <isNotNull prepend="and" property="spName" >
                       t.FLOWID  in (select distinct a.flow_id
-								  from T_APPROVE_OPNINION_GP a,
-								  om_employee b
-								 where a.operator=b.empid
-								   and a.operator_type = '提交审批一'
-								   and b.empname like '%$spName$%'
+								  from T_APPROVE_OPNINION_GP a
+								 where  a.operator_type = '提交审批一'
+								   and a.next_opr_name like '%$spName$%'
                       )
                   </isNotNull>
          GROUP BY ORGNAMEONE,

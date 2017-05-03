@@ -145,11 +145,22 @@
        ZDCUSTMANAGER,
        p.flow_id flowId,
        to_char(to_date(t3.reporttime,'yyyy-MM-dd hh24:mi:ss'),'yyyyMMdd') REPORTTIME,
-       ZHGPDTIMEONE || ';' || ZHGPDTIMETWO || ';' || ZHGPDTIMETHREE || ';' ||
+       TEMPTIME
+  from (select TT.ORGNAMEONE,
+       TT.ORGCODEONE,
+       TT.ORGCODETWO,
+       TT.ORGNAMETWO,
+       TT.DISPLAYORDERONE,
+       TT.DISPLAYORDERTWO,
+       TT.ONECATEGORY,
+       TT.LOANCATEGORY,
+       TT.ZDCUSTMANAGER,
+       TT.FLOW_ID,
+       PP.ZHGPDTIMEONE || ';' || PP.ZHGPDTIMETWO || ';' || PP.ZHGPDTIMETHREE || ';' ||
        REVIEWAPPROVALONETIME || ';' || REVIEWAPPROVALTWOTIME || ';' ||
        REVIEWAPPROVALTHREEORMORETIME || ';' || ALLPROCESSTIMEONE || ';' ||
-       ALLPROCESSTIMETWO || ';' || ZLWZHAPPROVALTIME TEMPTIME
-  from (select ORGNAMEONE,
+       ALLPROCESSTIMETWO || ';' || ZLWZHAPPROVALTIME TEMPTIME from (
+select ORGNAMEONE,
                ORGCODEONE,
                ORGCODETWO,
                ORGNAMETWO,
@@ -159,7 +170,7 @@
                LOANCATEGORY,
                ZDCUSTMANAGER,
                FLOW_ID,
-                 <![CDATA[
+                <![CDATA[
                nvl(max((CASE
                          WHEN rn = 1 AND operator_type = '提交收单派单' THEN
                           strat_
@@ -273,7 +284,8 @@
                           strat_
                        END)),
                    '0') ZLWZHAPPROVALTIME
-        ]]>
+                   
+						]]>
           from (select gp.operator_type,
                        gp.operater_date || gp.operater_time strat_,
                        b.execution_id FLOW_ID,
@@ -314,7 +326,64 @@
                   ONECATEGORY,
                   LOANCATEGORY,
                   ZDCUSTMANAGER,
-                  FLOW_ID) p
+                  FLOW_ID) tt
+                   left join (select bb.execution_,
+nvl(max((CASE
+                         WHEN rn = 1 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
+                          bb.start_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(min((CASE
+                         WHEN rn = 1 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
+                          bb.start_
+                          WHEN rn = 1 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
+                          bb.start_
+                       END)),
+                   '0') ZHGPDTIMEONE,
+               
+               nvl(max((CASE
+                         WHEN rn = 2 AND  bb.activity_name_ = '收单派单' and bb.transition_='提交审查一'  THEN
+                          bb.start_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(min((CASE
+                         WHEN rn = 2 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
+                          bb.start_
+                          WHEN rn = 2 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
+                          bb.start_
+                       END)),
+                   '0') ZHGPDTIMETWO,
+               
+               nvl(max((CASE
+                         WHEN rn = 3 AND  bb.activity_name_ = '收单派单' and bb.transition_='提交审查一'  THEN
+                          bb.start_
+                       END)),
+                   '0') || ',' ||
+               
+               nvl(min((CASE
+                         WHEN rn = 3 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
+                          bb.start_
+                          WHEN rn = 3 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
+                          bb.start_
+                       END)),
+                   '0') ZHGPDTIMETHREE
+ from (
+select t.execution_,
+       t.activity_name_,
+       to_char(t.start_,'yyyymmddhh24miss') start_,
+       to_char(t.end_,'yyyymmddhh24miss') end_,
+       t.transition_,
+       ROW_NUMBER() OVER(PARTITION BY t.execution_, t.activity_name_, t.transition_ ORDER BY t.start_) RN
+  from JBPM4_HIST_ACTINST t
+ ) bb
+ 
+ GROUP BY bb.execution_
+
+)
+PP
+on tt.FLOW_ID=PP.execution_) p
   left join T_GENERALPROCESS_MODELTHREE t3
     on p.flow_id = t3.flow_id
  order by DISPLAYORDERONE, DISPLAYORDERTWO
