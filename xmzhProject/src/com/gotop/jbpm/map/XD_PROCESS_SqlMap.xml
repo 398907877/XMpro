@@ -27,7 +27,10 @@
      <result column="LOANCATEGORY" property="loanCategory" jdbcType="VARCHAR" />
      <result column="REPORTCNT" property="reportcnt" jdbcType="VARCHAR" />
      <result column="REPORTTIME" property="reportTime" jdbcType="VARCHAR" />
-      <result column="ISURGENT" property="isurgent" jdbcType="VARCHAR" />    
+      <result column="ISURGENT" property="isurgent" jdbcType="VARCHAR" />
+      <result column="START_TIME" property="start_time" jdbcType="VARCHAR" />
+      <result column="END_TIME" property="end_time" jdbcType="VARCHAR" />
+      <result column="CURR_TIME" property="curr_time" jdbcType="VARCHAR" />    
   </resultMap>
   
  <resultMap id="abatorgenerated_XdProcess_HashMapResult2" class="java.util.HashMap" >
@@ -99,8 +102,28 @@
   
   <!--查询信贷流程 待办事项列表-->
   <select id="queryXdMyTodoList" resultMap="abatorgenerated_XdProcess_Result" parameterClass="java.util.HashMap" >
-  select T13.* from
-   (select T11.*, to_number(nvl(T12.REPORTCNT,'0')) as REPORTCNT, T12.REPORTTIME, T12.ISURGENT
+  with temp as /*查询JBPM4_HIST_ACTINST表流程本次报单和派单时间，本次指最近一次*/
+(select a5.execution_,
+       to_char(a5.start_, 'yyyymmddhh24miss') AS start_time,
+       to_char(a5.end_, 'yyyymmddhh24miss') AS end_time,
+       to_char(sysdate, 'yyyymmddhh24miss') AS curr_time
+  from (SELECT a4.*,
+               ROW_NUMBER() OVER(PARTITION BY a4.execution_ ORDER BY a4.START_ DESC) AS RN
+          from (SELECT a1.*, a3.activity_name_ as pre_task_name
+                  FROM JBPM4_HIST_ACTINST      a1,
+                       T_PROCESS_TASK_ASSIGNEE a2,
+                       JBPM4_HIST_ACTINST      a3
+                 where a1.activity_name_ = '收单派单'
+                   and a1.execution_ = a2.execution_id(+)
+                   and a1.htask_ = a2.next_task_id(+)
+                   and a2.execution_id = a3.execution_(+)
+                   and a2.pre_task_id = a3.htask_(+)) a4
+         where a4.pre_task_name = '受理调查') a5
+ where rn = 1)
+ 
+  select T13.*, temp.start_time, temp.end_time, temp.curr_time 
+ from  (select T11.*, to_number(nvl(T12.REPORTCNT,'0')) as REPORTCNT, T12.REPORTTIME,
+ 			case when T12.ISURGENT = '0' then '0' else '1' end as ISURGENT
   from (select T9.*, T10.CUST_NAME, T10.ONECATEGORY, T10.LOANCATEGORY
           from (SELECT T1.ID,
                        T7.EXECUTION_ID_ as EXECUTION_ID,
@@ -152,6 +175,7 @@
             on T9.EXECUTION_ID = T10.FLOW_ID) T11
   left join T_GENERALPROCESS_MODELTHREE T12
     on T11.EXECUTION_ID = T12.FLOW_ID ) T13
+    left join temp on t13.EXECUTION_ID = temp.EXECUTION_
     <dynamic prepend="where" >
    <isNotNull prepend="and" property="custName" >
            T13.CUST_NAME like '%'||'$custName$'||'%'
@@ -165,7 +189,7 @@
            	 and dic.dictid in($loanCategoryId$))
       		</isNotNull>
       		</dynamic>
-      		order by T13.ISURGENT ASC, T13.REPORTTIME ASC, T13.REPORTCNT DESC
+      		order by T13.ISURGENT ASC, temp.start_time ASC, T13.REPORTCNT DESC
   </select>
   
    <select id="queryXdProcessList" resultMap="abatorgenerated_XdProcess_HashMapResult2" parameterClass="java.util.HashMap" >

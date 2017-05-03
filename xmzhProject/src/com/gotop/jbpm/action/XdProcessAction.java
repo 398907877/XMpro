@@ -244,9 +244,9 @@ public class XdProcessAction   extends BaseAction {
 		
 		//循环分页的10条记录，每条查出其派单时长和流程时长
 		for (XdProcessTaskAssignee xdProcessTaskAssignee : xdProcessTaskAssignees) {
-			String executionId = xdProcessTaskAssignee.getExecutionId();
+			/*String executionId = xdProcessTaskAssignee.getExecutionId();
 			 HashMap map =  this.xdProcessService.queryTimeDiff(executionId);  
-			 if(map != null){
+			 if(map != null){  */
 				 
 				 //计算派单时长
 			//	 if((BigDecimal) map.get("TIME_DIFF1") != null){
@@ -254,8 +254,8 @@ public class XdProcessAction   extends BaseAction {
 					 double startD_diff = ((BigDecimal) map.get("STARTD_DIFF")).doubleValue();  //开始时间 那天的时间所占多少天
 					 double endD_diff = ((BigDecimal) map.get("ENDD_DIFF")).doubleValue();  //结束时间 那天的时间所占多少天*/	
 				 
-					 String start_time =  (String) map.get("START_TIME") ; 
-					 String end_time =  (String) map.get("END_TIME") ; 
+					 String start_time =  xdProcessTaskAssignee.getStart_time(); 
+					 String end_time =  xdProcessTaskAssignee.getEnd_time(); 
 					 Double pdTimeLen = null;
 					  
 					 if(start_time != null && end_time != null){
@@ -275,7 +275,7 @@ public class XdProcessAction   extends BaseAction {
 					 double currD_diff = ((BigDecimal) map.get("CURRD_DIFF")).doubleValue();  //当前时间 当天天的时间所占多少天 */	
 				
 				//	 String start_time =  (String) map.get("START_TIME") ; 
-					 String curr_time = (String) map.get("CURR_TIME") ; 
+					 String curr_time = xdProcessTaskAssignee.getCurr_time();
 					 Double lcTimeLen = null;
 					 
 					 if(start_time != null && curr_time != null){
@@ -287,7 +287,7 @@ public class XdProcessAction   extends BaseAction {
 					 xdProcessTaskAssignee.setLcTimeLen(lcTimeLen);
 			//	 }
 				 
-			 }
+			/* }*/
 		}
 		
 		

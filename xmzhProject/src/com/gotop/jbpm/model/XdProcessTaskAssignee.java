@@ -156,6 +156,21 @@ public class XdProcessTaskAssignee implements Serializable {
      */
     private String isurgent;
     
+    /**
+     * 流程的本次（最近一次）报单时间
+     */
+    private String start_time;
+    
+    /**
+     * 流程的本次（最近一次）派单时间
+     */
+    private String end_time;
+    
+    /**
+     * 当前时间
+     */
+    private String curr_time;
+    
     /*
      * 流程标题 
      */
@@ -430,6 +445,30 @@ public class XdProcessTaskAssignee implements Serializable {
 
 	public void setIsurgent(String isurgent) {
 		this.isurgent = isurgent;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+
+	public String getCurr_time() {
+		return curr_time;
+	}
+
+	public void setCurr_time(String curr_time) {
+		this.curr_time = curr_time;
 	}
 
 	
