@@ -51,7 +51,7 @@ public class TimeMachineJob   {
 		
 		try {
 			
-			System.out.println("+++++++++++++开始执行 超限时长报表  START+++++++++++");
+			System.out.println("+++++++++++++ 超限时长报表  START+++++++++++");
 			
 		Object bean = SpringContextUtil.getBean("tModelTimedayaction"); 
 		
@@ -81,6 +81,43 @@ public class TimeMachineJob   {
 	}
 	
 	
+	
+	
+
+	
+	private void processUsedTimeReport() {
+		// TODO Auto-generated method stub
+		
+		try {
+			
+			System.out.println("+++++++++++++时限情况统计  流程用时统计 START+++++++++++");
+			
+		Object bean = SpringContextUtil.getBean("processUsedTimeReportAction"); 
+		
+		Class<?> classes = Class.forName("com.gotop.reportjbpm.action.ProcessUsedTimeReportAction");
+
+		// 目前只有值，需要加入加入 @ 注解的 值
+
+		Method thismethod = classes.getDeclaredMethod("processUsedTimeReport");
+
+		// bean
+		String  back = (String) thismethod.invoke(bean);
+		
+		
+		
+		
+		System.out.println("+++++++++++++ 时限情况统计  流程用时统计   END+++++++++++");
+		
+		
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+		
+	}
 	
 	
 	
