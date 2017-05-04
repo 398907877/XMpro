@@ -170,7 +170,7 @@ select ORGNAMEONE,
                LOANCATEGORY,
                ZDCUSTMANAGER,
                FLOW_ID,
-                <![CDATA[
+               <![CDATA[
                nvl(max((CASE
                          WHEN rn = 1 AND operator_type = '提交收单派单' THEN
                           strat_
@@ -207,8 +207,10 @@ select ORGNAMEONE,
                        END)),
                    '0') ZHGPDTIMETHREE,
                
-               nvl(max((CASE
+               nvl(min((CASE
                          WHEN rn = 1 AND operator_type = '提交审查一' THEN
+                          strat_
+                          WHEN rn = 1 AND operator_type = '提交审批一' THEN
                           strat_
                        END)),
                    '0') || ',' ||
@@ -218,11 +220,17 @@ select ORGNAMEONE,
                           strat_
                          WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
                           strat_
+                         WHEN rn = 1 and operator_type = '提交审批结束' THEN
+                          strat_
+                         WHEN rn = 1 and operator_type = '提交初审完成' THEN
+                          strat_
                        END)),
                    '0') REVIEWAPPROVALONETIME,
                
-               nvl(max((CASE
+               nvl(min((CASE
                          WHEN rn = 2 AND operator_type = '提交审查一' THEN
+                          strat_
+                          WHEN rn = 2 AND operator_type = '提交审批一' THEN
                           strat_
                        END)),
                    '0') || ',' ||
@@ -230,21 +238,31 @@ select ORGNAMEONE,
                nvl(min((CASE
                          WHEN rn = 2 AND operator_type = '退回收单派单' THEN
                           strat_
-                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                         WHEN rn >= 1 and rn <=2 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                         WHEN rn >= 1 and rn <=2 and operator_type = '提交审批结束' THEN
+                          strat_
+                         WHEN rn >= 1 and rn <=2 and operator_type = '提交初审完成' THEN
                           strat_
                        END)),
                    '0') REVIEWAPPROVALTWOTIME,
                
-               nvl(max((CASE
+               nvl(min((CASE
                          WHEN rn = 3 AND operator_type = '提交审查一' THEN
+                          strat_
+                          WHEN rn = 3 AND operator_type = '提交审批一' THEN
                           strat_
                        END)),
                    '0') || ',' ||
                
-               nvl(max((CASE
+               nvl(min((CASE
                          WHEN rn >= 3 AND operator_type = '退回收单派单' THEN
                           strat_
-                         WHEN rn = 1 and operator_type = '提交发起合同预审' THEN
+                          WHEN rn >= 1 and rn <=3 and operator_type = '提交发起合同预审' THEN
+                          strat_
+                         WHEN rn >= 1 and rn <=3 and operator_type = '提交审批结束' THEN
+                          strat_
+                         WHEN rn >= 1 and rn <=3 and operator_type = '提交初审完成' THEN
                           strat_
                        END)),
                    '0') REVIEWAPPROVALTHREEORMORETIME,
@@ -284,8 +302,7 @@ select ORGNAMEONE,
                           strat_
                        END)),
                    '0') ZLWZHAPPROVALTIME
-                   
-						]]>
+                ]]>  
           from (select gp.operator_type,
                        gp.operater_date || gp.operater_time strat_,
                        b.execution_id FLOW_ID,
