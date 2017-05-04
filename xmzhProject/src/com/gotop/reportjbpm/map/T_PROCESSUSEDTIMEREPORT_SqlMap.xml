@@ -352,38 +352,38 @@ nvl(max((CASE
                    '0') || ',' ||
                
                nvl(min((CASE
-                         WHEN rn = 1 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
-                          bb.start_
-                          WHEN rn = 1 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
-                          bb.start_
+                         WHEN rn = 1 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
+                          bb.end_
+                          WHEN rn = 1 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审批一' THEN
+                          bb.end_
                        END)),
                    '0') ZHGPDTIMEONE,
                
                nvl(max((CASE
-                         WHEN rn = 2 AND  bb.activity_name_ = '收单派单' and bb.transition_='提交审查一'  THEN
+                          WHEN rn = 2 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
                           bb.start_
                        END)),
                    '0') || ',' ||
                
                nvl(min((CASE
-                         WHEN rn = 2 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
-                          bb.start_
-                          WHEN rn = 2 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
-                          bb.start_
+                         WHEN rn = 2 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
+                          bb.end_
+                          WHEN rn = 2 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审批一' THEN
+                          bb.end_
                        END)),
                    '0') ZHGPDTIMETWO,
                
                nvl(max((CASE
-                         WHEN rn = 3 AND  bb.activity_name_ = '收单派单' and bb.transition_='提交审查一'  THEN
+                          WHEN rn = 3 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
                           bb.start_
                        END)),
                    '0') || ',' ||
                
                nvl(min((CASE
-                         WHEN rn = 3 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批一' THEN
-                          bb.start_
-                          WHEN rn = 3 AND bb.activity_name_ = '审查一' and bb.transition_='提交审批二' THEN
-                          bb.start_
+                         WHEN rn = 3 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审查一' THEN
+                          bb.end_
+                          WHEN rn = 3 AND bb.activity_name_ = '收单派单' and bb.transition_='提交审批一' THEN
+                          bb.end_
                        END)),
                    '0') ZHGPDTIMETHREE
  from (
