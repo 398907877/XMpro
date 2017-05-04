@@ -338,19 +338,25 @@
   	  		window.parent.showModalCenter(url,null,callBackParam,1050,450,'数据申请单选择');
   	  	  }		
 	  	  function callBackParam(arg){
-		  	  $("#daPro").val(arg.title);
-		  	  $("#dataUser_show").val(arg.userName);
-		  	  $("#dataUser").val(arg.dataUser);
-		  	 $("#empname").val(arg.userName);
-		  	  $("#empid").val(arg.dataUser);
-		  	  $("#tlimit_hidden").val(arg.useTlimit);
-		  	  var tLimit = arg.useTlimit.substring(0,4);
-		  	tLimit+="-";
-		  	tLimit+=arg.useTlimit.substring(4,6);
-		  	tLimit+="-";
-		  	tLimit+=arg.useTlimit.substring(6);
-		  	  $("#tlimit_input").val(tLimit);
+
+		  	  if(arg != ""){
+			  		$("#daPro").val(arg.title);
+				  	  $("#dataUser_show").val(arg.userName);
+				  	  $("#dataUser").val(arg.dataUser);
+				  	 $("#empname").val(arg.userName);
+				  	  $("#empid").val(arg.dataUser);
+				  	  $("#tlimit_hidden").val(arg.useTlimit);
+				  	  var tLimit = arg.useTlimit.substring(0,4);
+				  	tLimit+="-";
+				  	tLimit+=arg.useTlimit.substring(4,6);
+				  	tLimit+="-";
+				  	tLimit+=arg.useTlimit.substring(6);
+				  	  $("#tlimit_input").val(tLimit);
+			  }
+		  	  
 		  }
+
+		  
 	  	$id("tlimit").onValidate=function(hiddenValue,TextValue)
 		{
 			if(this.getValue()=="") 
