@@ -235,7 +235,7 @@ select ORGNAMEONE,
                        END)),
                    '0') || ',' ||
                
-               nvl(min((CASE
+               nvl(max((CASE
                          WHEN rn = 2 AND operator_type = '退回收单派单' THEN
                           strat_
                          WHEN rn >= 1 and rn <=2 and operator_type = '提交发起合同预审' THEN
@@ -255,7 +255,7 @@ select ORGNAMEONE,
                        END)),
                    '0') || ',' ||
                
-               nvl(min((CASE
+               nvl(max((CASE
                          WHEN rn >= 3 AND operator_type = '退回收单派单' THEN
                           strat_
                           WHEN rn >= 1 and rn <=3 and operator_type = '提交发起合同预审' THEN
