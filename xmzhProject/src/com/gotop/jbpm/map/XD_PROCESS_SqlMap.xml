@@ -191,7 +191,8 @@
        end as start_time,
        
        case
-         when A9.RN=1 and A9.NEXT_TASK_NAME = '审查一' then to_char(A9.end_, 'yyyymmddhh24miss')
+        <!--  when A9.RN=1 and A9.NEXT_TASK_NAME = '审查一' then to_char(A9.end_, 'yyyymmddhh24miss') -->
+        when A9.RN=1 and A9.PRE_TASK_NAME = '受理调查'  then  to_char(A9.end_, 'yyyymmddhh24miss')
        end as end_time,
        
        to_char(sysdate, 'yyyymmddhh24miss') as curr_time
@@ -227,7 +228,7 @@
                 to_date(to_char(sysdate, 'yyyy/mm/dd'),
                         'yyyy/mm/dd hh24:mi:ss'),
                 2) as currD_diff -->
-  from ( select  AA.*,  ROW_NUMBER() OVER(PARTITION BY execution_  ORDER BY  START_) RN  from 
+  from ( select  AA.*,  ROW_NUMBER() OVER(PARTITION BY execution_  ORDER BY  START_ desc) RN  from 
   (select A7.*, A8.activity_name_ as NEXT_TASK_NAME
     from (select A5.*, A6.activity_name_ as PRE_TASK_NAME
           from (select A3.*, A4.NEXT_TASK_ID

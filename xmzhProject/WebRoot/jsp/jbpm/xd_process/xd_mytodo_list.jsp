@@ -104,15 +104,15 @@
 							  </l:equal>
 							
 							<l:notEqual iterateId="id1"  property="isurgent"  targetValue="0" >
-								    <l:greaterThan iterateId="id1"  property="pdTimeLen"  targetValue="2" >
+								    <l:greaterThan iterateId="id1"  property="lcTimeLen"  targetValue="2" >
 								          <tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />"    style="background-color: orange;">
 								    </l:greaterThan>
 								    
-								    <l:lessEqual iterateId="id1"  property="pdTimeLen"  targetValue="2" >
+								    <l:lessEqual iterateId="id1"  property="lcTimeLen"  targetValue="2" >
 								          <tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />"   >
 								    </l:lessEqual>
 								    
-								     <l:empty iterateId="id1"  property="pdTimeLen"  >
+								     <l:empty iterateId="id1"  property="lcTimeLen"  >
 								          <tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />"   >
 								    </l:empty>
 								   </l:notEqual>
