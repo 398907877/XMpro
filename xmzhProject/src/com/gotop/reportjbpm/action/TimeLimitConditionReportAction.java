@@ -11,6 +11,8 @@ public class TimeLimitConditionReportAction extends BaseAction {
     private  TimeLimitConditionReport timeLimitConditionReport;
     private  ITimeLimitConditionReportService timeLimitConditionReportService;
 	private List<TimeLimitConditionReport> timeLimitConditionReportList =new ArrayList<TimeLimitConditionReport>();
+	private String update_time;
+	
 	public List<TimeLimitConditionReport> getTimeLimitConditionReportList() {
 		return timeLimitConditionReportList;
 	}
@@ -32,11 +34,22 @@ public class TimeLimitConditionReportAction extends BaseAction {
 			TimeLimitConditionReport timeLimitConditionReport) {
 		this.timeLimitConditionReport = timeLimitConditionReport;
 	}
+
+    public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+
 	public String timeLimitConditionReportList(){
 		
 		MUOUserSession muo = getCurrentOnlineUser();
 		timeLimitConditionReportList=timeLimitConditionReportService.queryTimeLimitConditionReportList(muo,timeLimitConditionReport, this.getPage());
 		this.setPage(page);
+		//查询超限报表更新时间，显示在页面
+    	String update_time =  (String) this.timeLimitConditionReportService.queryReportUpdatetime();
+    	this.setUpdate_time(update_time);
 		this.setTimeLimitConditionReportList(timeLimitConditionReportList);
 		return "timeLimitConditionReportList";
 	}

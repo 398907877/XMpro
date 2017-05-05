@@ -353,6 +353,12 @@ public class TimeLimitConditionReportService implements ITimeLimitConditionRepor
 		return timeLimitConditionReportList;
 	}
 
+	@Override
+	public Object queryReportUpdatetime() {
+		Object object = this.timeLimitConditionReportDao.queryReportUpdatetime();
+		return object;
+	}
+
 	/**
 	 * 处理开始结束时间：格式20151218031212,20151218031244
 	 * @param tempTime

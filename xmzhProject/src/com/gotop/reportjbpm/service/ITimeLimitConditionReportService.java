@@ -24,5 +24,5 @@ public interface ITimeLimitConditionReportService {
 	List<TimeLimitConditionReport> queryTimeLimitConditionReportListForExcel(MUOUserSession muo, TimeLimitConditionReport timeLimitConditionReport);
 	
 	
-
+	Object queryReportUpdatetime();
 }

@@ -21,5 +21,5 @@ public interface ITimeLimitConditionReportDao {
 	 */
 	List<TimeLimitConditionReport> queryTimeLimitConditionReportListForExcel(Map<String, Object> map);
 	List yesOrNot_dep(String orgcode);
-
+	Object queryReportUpdatetime();
 }

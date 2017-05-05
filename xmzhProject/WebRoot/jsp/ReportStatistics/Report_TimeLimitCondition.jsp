@@ -92,7 +92,12 @@
 							<input type="button" value="清 空" class="button" onclick="clears();">
                                                         <input id="downexl" type="button" class="button" value="导出列表" onclick="excelExport();"></td>
 					</tr>			
-					
+							
+					<tr>
+						<td colspan="6">
+								<font style="color: blue">最近更新时间：<b:write property="update_time" /> </font> &nbsp;&nbsp;&nbsp;
+						</td>
+					</tr>	
 			</table>
 		</w:panel>
 	</h:form>
