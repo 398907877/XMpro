@@ -32,7 +32,7 @@
 		<property name="startDelay" value="0" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->
 		<property name="repeatInterval" value="3600000" /><!-- 每1小时调度一次  3600秒(s)=3600000毫秒(ms)-->
 	</bean>
-
+ 
 
 	<!-- CronTriggerBean，支持到指定时间运行一次 <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
 		<property name="jobDetail" ref="job2" /> <property name="cronExpression" 
@@ -40,7 +40,7 @@
 
 
 
-	<!-- 配置调度工厂 -->
+	<!-- 配置调度工厂
 
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
@@ -51,7 +51,7 @@
 	</bean>
 
 
-
+ -->
 
 
 
