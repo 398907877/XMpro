@@ -102,24 +102,57 @@
   
   <!--查询信贷流程 待办事项列表-->
   <select id="queryXdMyTodoList" resultMap="abatorgenerated_XdProcess_Result" parameterClass="java.util.HashMap" >
-  with temp as /*查询JBPM4_HIST_ACTINST表流程本次报单和派单时间，本次指最近一次*/
+  with temp1 as /*查询JBPM4_HIST_ACTINST表流程上下节点名称*/
+ (select a4.*, b2.activity_name_ as next_task_name
+    from (SELECT a1.*, a3.activity_name_ as pre_task_name
+            FROM JBPM4_HIST_ACTINST      a1,
+                 T_PROCESS_TASK_ASSIGNEE a2,
+                 JBPM4_HIST_ACTINST      a3
+           where a1.activity_name_ = '收单派单'
+             and a1.execution_ = a2.execution_id(+)
+             and a1.htask_ = a2.next_task_id(+)
+             and a2.execution_id = a3.execution_(+)
+             and a2.pre_task_id = a3.htask_(+)) a4,
+         T_PROCESS_TASK_ASSIGNEE b1,
+         JBPM4_HIST_ACTINST b2
+   where a4.execution_ = b1.execution_id(+)
+     and a4.htask_ = b1.pre_task_id(+)
+     and b1.execution_id = b2.execution_(+)
+     and b1.next_task_id = b2.htask_(+)
+ ),
+
+temp2 as /*筛选出“收单派单”上个节点是“受理调查”的流程*/
 (select a5.execution_,
-       to_char(a5.start_, 'yyyymmddhh24miss') AS start_time,
-       to_char(a5.end_, 'yyyymmddhh24miss') AS end_time,
-       to_char(sysdate, 'yyyymmddhh24miss') AS curr_time
-  from (SELECT a4.*,
-               ROW_NUMBER() OVER(PARTITION BY a4.execution_ ORDER BY a4.START_ DESC) AS RN
-          from (SELECT a1.*, a3.activity_name_ as pre_task_name
-                  FROM JBPM4_HIST_ACTINST      a1,
-                       T_PROCESS_TASK_ASSIGNEE a2,
-                       JBPM4_HIST_ACTINST      a3
-                 where a1.activity_name_ = '收单派单'
-                   and a1.execution_ = a2.execution_id(+)
-                   and a1.htask_ = a2.next_task_id(+)
-                   and a2.execution_id = a3.execution_(+)
-                   and a2.pre_task_id = a3.htask_(+)) a4
-         where a4.pre_task_name = '受理调查') a5
- where rn = 1)
+       to_char(a5.start_, 'yyyymmddhh24miss') AS start_time1,
+       to_char(a5.end_, 'yyyymmddhh24miss') AS end_time1
+       
+  from (SELECT temp1.*,
+               ROW_NUMBER() OVER(PARTITION BY execution_ ORDER BY START_ DESC) AS RN
+          from temp1
+         where pre_task_name = '受理调查') a5
+ where rn = 1),
+ 
+ temp3 as /*筛选出“收单派单”上个节点是“受理调查”，并且下个节点是“审查一”或者“审批一”的流程*/
+ (select a6.execution_,
+       to_char(a6.start_, 'yyyymmddhh24miss') AS start_time2,
+       to_char(a6.end_, 'yyyymmddhh24miss') AS end_time2
+  from (SELECT temp1.*,
+               ROW_NUMBER() OVER(PARTITION BY execution_ ORDER BY START_ DESC) AS RN
+          from temp1
+         where pre_task_name = '受理调查' and next_task_name in ('审查一','审批一')) a6
+ where rn = 1
+ ),
+ 
+ temp as  /*查询JBPM4_HIST_ACTINST表流程本次报单和派单时间，本次指最近一次*/
+ (select TT.execution_,
+ case when TT.end_time1 is null then TT.start_time1 else TT.start_time2 end as start_time,
+ case when TT.end_time1 is null then TT.end_time1 else TT.end_time2 end as end_time,
+ to_char(sysdate, 'yyyymmddhh24miss') AS curr_time
+  from
+ (select temp2.*, temp3.start_time2, temp3.end_time2 
+ from temp2, temp3
+ where temp2.execution_ = temp3.execution_(+)) TT
+ )
  
   select T13.*, temp.start_time, temp.end_time, temp.curr_time 
  from  (select T11.*, to_number(nvl(T12.REPORTCNT,'0')) as REPORTCNT, T12.REPORTTIME,
