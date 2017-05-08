@@ -13,7 +13,7 @@
     <result column="businessNumberThree" property="businessNumberThree" jdbcType="VARCHAR" />
     <result column="businessNumberFour" property="businessNumberFour" jdbcType="VARCHAR" />
     <result column="businessNumberFive" property="businessNumberFive" jdbcType="VARCHAR" />
-    <result column="PDTIME_ONE" property="pdtimeOne" jdbcType="VARCHAR" />
+   <!--  <result column="PDTIME_ONE" property="pdtimeOne" jdbcType="VARCHAR" /> -->
   </resultMap>
 
  <resultMap id="JobWorkload1" class="com.gotop.reportjbpm.model.JobWorkload" >
@@ -34,13 +34,13 @@ SELECT DISTINCT ACTIVITY_NAME
   <!-- 岗位工作量统计 -->
   	<select id="jobWorkloadtList" parameterClass="java.util.HashMap" resultMap="JobWorkload">
 SELECT 
-ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, PDTIME_ONE,
+ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, 
 sum(businessNumberOne) businessNumberOne,sum(businessNumberTwo) businessNumberTwo,sum(businessNumberThree) businessNumberThree,
 sum(businessNumberFour) businessNumberFour,sum(businessNumberFive)businessNumberFive
 from 
 (
 
-SELECT  ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, PDTIME_ONE,
+SELECT  ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME, 
 CASE WHEN cnt = 1 THEN  1 ELSE  0 END businessNumberOne,  
 CASE WHEN cnt = 2 THEN  1 ELSE  0 END businessNumberTwo,  
 CASE WHEN cnt = 3 THEN  1 ELSE  0 END businessNumberThree,  
@@ -54,8 +54,7 @@ FROM
 			LOANCATEGORY,
 			ACTIVITY_NAME_,
 			OPERATORNAME,
-			COUNT (ACTIVITY_NAME_) cnt,
-			PDTIME_ONE
+			COUNT (ACTIVITY_NAME_) cnt
 		FROM
 			(
 				SELECT
@@ -152,12 +151,11 @@ FROM
 			ONECATEGORY,
 			LOANCATEGORY,
 			ACTIVITY_NAME_,
-			OPERATORNAME,
-			PDTIME_ONE
+			OPERATORNAME
 )
 )
 GROUP BY
-ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME,PDTIME_ONE
+ONECATEGORY,  LOANCATEGORY,  ACTIVITY_NAME_,  OPERATORNAME
 
   
 	</select>
