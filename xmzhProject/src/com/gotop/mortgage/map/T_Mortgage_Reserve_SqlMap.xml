@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_Mortgage_Reserve_SqlMap">
+ 
+     <resultMap id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" >
+    <!--Bean方式返回全表-->
+    <result column="updateTime" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap> 
+     
+  
+  <select id="queryMortgageReserveList" parameterClass="java.util.HashMap" resultMap="mortgageReserve">
+	select to_char(to_date(max(t.inserttime), 'yyyy-mm-dd HH24:mi:ss'),
+               'yyyy-mm-dd HH24:mi:ss') as updateTime
+  from process_UsedTime_Report t
+  </select>  
+
+</sqlMap>

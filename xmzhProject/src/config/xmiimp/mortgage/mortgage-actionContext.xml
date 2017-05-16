@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
+<beans >
+ 
+  <bean name="mortgageReserve" id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" singleton="false" ></bean> 
+   <bean name="mortgageReserveAction" id="mortgageReserveAction" class="com.gotop.mortgage.action.MortgageReserveAction" singleton="false" >
+     <property name="mortgageReserveService" ref="mortgageReserveService" />
+    <property name="mortgageReserve" ref="mortgageReserve" />
+  </bean>
+  
+  
+   
+
+</beans>
