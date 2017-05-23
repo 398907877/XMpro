@@ -3,9 +3,13 @@
 <beans >
  
   <bean name="mortgageReserve" id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" singleton="false" ></bean> 
+  <bean name="mortgageReserveCar" id="mortgageReserveCar" class="com.gotop.mortgage.model.MortgageReserveCar" singleton="false" ></bean> 
+  <bean name="mortgageReserveHouse" id="mortgageReserveHouse" class="com.gotop.mortgage.model.MortgageReserveHouse" singleton="false" ></bean> 
    <bean name="mortgageReserveAction" id="mortgageReserveAction" class="com.gotop.mortgage.action.MortgageReserveAction" singleton="false" >
      <property name="mortgageReserveService" ref="mortgageReserveService" />
     <property name="mortgageReserve" ref="mortgageReserve" />
+    <property name="mortgageReserveCar" ref="mortgageReserveCar" />
+    <property name="mortgageReserveHouse" ref="mortgageReserveHouse" />
   </bean>
   
   
