@@ -20,10 +20,12 @@ public class MortgageReserve {
 	private String recordValue;
 	private String packetNumber;
 	private String nextName;
+	private String purchaseNumber;
 	private String fileName;
 	private String remark;
 	private String noRegisterSign;
 	private String status;
+	private String afterMortgageStatus;
 	private String insertTime;
 	private String updateTime;
 	
@@ -164,6 +166,18 @@ public class MortgageReserve {
 	}
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getAfterMortgageStatus() {
+		return afterMortgageStatus;
+	}
+	public void setAfterMortgageStatus(String afterMortgageStatus) {
+		this.afterMortgageStatus = afterMortgageStatus;
+	}
+	public String getPurchaseNumber() {
+		return purchaseNumber;
+	}
+	public void setPurchaseNumber(String purchaseNumber) {
+		this.purchaseNumber = purchaseNumber;
 	}
 
 

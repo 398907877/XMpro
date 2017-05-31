@@ -10,6 +10,15 @@
 	      <result name="add_mortgageReserve" >
 	        /jsp/mortgage/add_mortgageReserve.jsp
 	      </result>
+	      <result name="add_collateral_info" >
+	        /jsp/mortgage/add_collateral_info.jsp
+	      </result>
+	      <result name="view_collateral_info" >
+	        /jsp/mortgage/view_collateral_info.jsp
+	      </result>
+	      <result name="list1" type="json">
+			   <param name="root">fileResourceTables</param>
+		  </result>
 		</action>
 	</package>
 </struts>

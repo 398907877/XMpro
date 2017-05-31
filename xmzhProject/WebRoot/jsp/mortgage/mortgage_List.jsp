@@ -10,7 +10,7 @@
 		<title>库存浏览列表</title>
 	</head>
 	<body topmargin="0" leftmargin="0">
-	<h:form name="appQuery"	action="/mortgage/mortgageReserveAction_queryMortgageReserveList.action" method="post">
+	<h:form name="query_form"	action="/mortgage/mortgageReserveAction_queryMortgageReserveList.action" method="post">
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
 				<tr>
@@ -69,7 +69,7 @@
 				  <tr>
 				    <td class="form_label" align="right" >经办机构：</td>
 					<td>
-					<h:text property="mortgageReserve.orgCode" id="orgCode" style="width:130px;" />	
+					<h:text property="mortgageReserve.orgCode" id="orgCode" style="width:130px;" readonly="true"/>	
 					<a href="#" onclick="open_slzhej_fun1()">选择</a>
 					</td>	
 					 <td class="form_label" align="right" >库存状态：</td>
@@ -118,7 +118,7 @@
 					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
-							<input id="querys" type="submit" value="查 询" class="button">
+							<input id="querys" type="submit" value="查 询" class="button" >
 							<input type="button" value="清 空" class="button" onclick="clears();"></td>
 					</tr>			
 			</table>
@@ -129,33 +129,77 @@
 				<viewlist id="e2c61865-3b56-470d-bd42-fff792fb9493">
 				<h:form name="page_form"
 					action="/mortgage/mortgageReserveAction_queryMortgageReserveList.action" method="post">
-			 <h:hiddendata property="mortgageReserve"/>  
+			 <h:hiddendata property="mortgageReserveRes"/>  
 
             <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
 		    <h:hidden property="page.count"/>
 		    <h:hidden property="page.isCount"/>
-		    
 					<table align="center" border="0" width="100%" class="EOS_table">
-		    
+					
 						<tr>
-						 
+						<th align="center" nowrap="nowrap">
+								<b:message key="l_select"></b:message>
+							</th>
 						  <th nowrap="nowrap">
-								更新时间
+								他项类型
 						  </th>
-						  <l:iterate property="mortgageReserveList" id="id1">
+						   <th nowrap="nowrap">
+								库存序号
+						  </th>
+						   <th nowrap="nowrap">
+								贷种
+						  </th>
+						   <th nowrap="nowrap">
+								他项权证号
+						  </th>
+						   <th nowrap="nowrap">
+								借款人
+						  </th>
+						   <th nowrap="nowrap">
+								库存状态
+						  </th>
+						  <w:radioGroup id="group1">
+						  <l:iterate property="mortgageReserveList" id="id2">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
 							  
-								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="updateTime" />
+								<td align="center" nowrap="nowrap" width="5%">
+								<w:rowRadio>
+										<h:param name='id' iterateId='id2' property='WARRANTSID' />
+									</w:rowRadio>
 								</td>
-								
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="OTHERTYPE" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROJECTNUMBER" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="LOANTYPE" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="BORROWERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="STATUS" />
+								</td>
 							</tr>
 						</l:iterate>
+					</w:radioGroup>
 						</tr>
+					
               <td colspan="23" class="command_sort_area">
               	<div class="h3"> 
 							<input type="button" class="button" value="新增入库" onclick="add();"/>
+							<input type="button" class="button" value="添加押品" onclick="add_coll();"/>
+							<input type="button" class="button" value="库存详情" onclick="view_Infos();"/>
+							<input type="button" class="button" value="出库处理" onclick="add1();"/>
+							<input type="button" class="button" value="入库处理" onclick="add1();"/>
+							<input type="button" class="button" value="库存变更" onclick="add1();"/>
+							<input type="button" class="button" value="扫描文件上传" onclick="add1();"/>
 					
 				</div>
 							
@@ -189,7 +233,11 @@
 			</w:panel>		
 		</DIV>
 		<script type="text/javascript">
-	
+	 
+	  window.onload = function () {
+           init();
+
+        };
 		
        //抵押类型改变事件
        function changeMortgageType(val){
@@ -204,22 +252,87 @@
         $("#tj_jdc").show();
         $("#tj_fc").hide();
        }
+        callBackFunc();
        }
 
+
+
+       //抵押类型改变事件
+       function init(){
+       var val=$("#mortgageType").val();
+       if(val=="0"){
+        //document.getElementById("tj_jdc").style.display = "none";
+       // document.getElementById("tj_fc").style.display = "block";
+        $("#tj_fc").show();
+        $("#tj_jdc").hide();
+       }else if(val=="1"){
+        //document.getElementById("tj_fc").style.display = "none";
+       // document.getElementById("tj_fc").style.display = "block";
+        $("#tj_jdc").show();
+        $("#tj_fc").hide();
+       }
+       
+       }
 
 		//清空
 		function clears(){
        $id("borrowerName").value="";
 		}
+		function add1(){
+		  var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var rows=gop.getSelectRow();
+		  		var updateTime=rows.getParam("updateTime");
+		  		alert(updateTime);
+		  	}
+		}
 		
-		//新增 MORTGAGERESERVE
+		
+		//新增
 		function add(){
 			 var url="/mortgage/mortgageReserveAction_toAddItem.action";
 			  showModalCenter(url, null,callBackFunc, 700, 500, '新增入库');
 		}
-
+        //添加押品
+		function add_coll(){
+		  var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id;
+			    showModalCenter(url, mortgageType,callBackFunc, 700, 230, '添加押品');
+			  }
+		}
+		//库存详情
+		function view_Infos(){
+		 var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/mortgageReserveAction_toViewInfos.action?mortgageReserveRes.warrantsId="+id+"&mortgageType="+mortgageType;
+			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存详情');
+			  }
+		}
 		function callBackFunc(){
-			var frm = $name("page_form");
+			var frm = $name("query_form");
             frm.submit();
 			//  location.reload(); //就算页面直接关闭，也会重新加载页面
 			}

@@ -17,7 +17,6 @@
 	        		权证的基本信息
 	          </td>
 	        </tr>
-			
 			<tr>	
 				<td class="form_label" align="right" width="15%">押品类型：</td>
 				<td colspan="1" width="30%">
@@ -26,10 +25,10 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">他项类型：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="otherType_fc">
-					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="tempMortgage.otherTypeFC" ></d:select>
+					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="tempMortgage.otherTypeFC"  nullLabel="请选择"></d:select><font style="color: red">*</font>
 				</div>
 				<div id="otherType_jdc"  style="display:none">
-					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="tempMortgage.otherTypeJDC" ></d:select>
+					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="tempMortgage.otherTypeJDC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
 				</div>
 				</td>						
 			</tr>
@@ -40,7 +39,7 @@
 				</td>	
 				<td class="form_label" align="right" width="15%">库存序号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="projectNumber" property="mortgageReserve.projectNumber" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="projectNumber" property="mortgageReserve.projectNumber"/><font style="color: red">*</font>
 				</td>
 											
 			</tr>
@@ -49,7 +48,7 @@
 			<tr>
 				<td class="form_label" align="right" width="15%">他项权证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="otherWarrantsNumber" property="mortgageReserve.otherWarrantsNumber" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="otherWarrantsNumber" property="mortgageReserve.otherWarrantsNumber"/><font style="color: red">*</font>
 				</td>		
 				<td class="form_label" align="right" width="15%">他项登记日期：</td>
 				<td colspan="1" width="30%">
@@ -59,23 +58,23 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">借款人姓名：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerName" property="mortgageReserve.borrowerName" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="borrowerName" property="mortgageReserve.borrowerName"/><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="17%">借款人身份证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo"/><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>		
 				<td class="form_label" align="right" width="15%">经办机构：</td>
 				<td colspan="1" width="30%">
 				<h:hidden id="orgCode" property="mortgageReserve.orgCode" />
-				<h:text id="orgName" property="mortgageReserve.orgName" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="orgName" property="mortgageReserve.orgName"  readonly="true" /><font style="color: red">*</font>
 				<a href="#" onclick="open_slzhej_fun1()">选择</a>
 				</td>	
 				<td class="form_label" align="right" width="15%">经办客户经理：</td>
 				<td colspan="1" width="30%">
-				<h:text id="mangerName" property="mortgageReserve.mangerName" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="mangerName" property="mortgageReserve.mangerName"/><font style="color: red">*</font>
 				</td>	
 										
 			</tr>
@@ -84,15 +83,15 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="loanType_fc">
-					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="tempMortgage.loanTypeFC" ></d:select>
+					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="tempMortgage.loanTypeFC" nullLabel="请选择"></d:select><font style="color: red">*</font>
 				</div>
-				<div id="loanType_jdc">
-					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="tempMortgage.loanTypeJDC" ></d:select>
+				<div id="loanType_jdc"  style="display:none">
+					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="tempMortgage.loanTypeJDC" nullLabel="请选择"></d:select><font style="color: red">*</font>
 				</div>
 				</td>	
 				<td class="form_label" align="right" width="15%">借款合同号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerContractNo" property="mortgageReserve.borrowerContractNo" validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="borrowerContractNo" property="mortgageReserve.borrowerContractNo"/><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>
@@ -102,19 +101,30 @@
 				</td>		
 				<td class="form_label" align="right" width="15%">封包编号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="packetNumber"   property="mortgageReserve.packetNumber"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="packetNumber"   property="mortgageReserve.packetNumber" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
-				<h:text id="nextName"   property="mortgageReserve.nextName"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">备注信息：</td>
 				<td colspan="1" width="30%">
 				<h:text id="remark"   property="mortgageReserve.remark" />
 				</td>					
 			</tr>
+		     <tr id="rowFile">
+		     	<td class="form_label" align="right">上传附件：</td>
+		     	<td colspan="3">
+						<input type="button" onclick="addFile('tabtest','files');return false;" value="新增附件" 
+							style="margin-left:2px;vertical-align:middle;cursor:hand;"/>
+						<font style="color: red">(说明：最多上传5个附件)</font>
+						<br/>
+						<table border=0 id="tabtest">
+						</table>
+		     	</td>
+		     </tr>
 			  <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
 	        		抵质押品信息
@@ -124,29 +134,29 @@
 			<tr>	
 				<td class="form_label" align="right" width="15%">产权证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="propertyNo"   property="mortgageReserveHouse.propertyNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="propertyNo"   property="mortgageReserveHouse.propertyNo" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">产权人姓名：</td>
 				<td colspan="1" width="30%">
-				<h:text id="propertyName"   property="mortgageReserveHouse.propertyName"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="propertyName"   property="mortgageReserveHouse.propertyName" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="17%">产权人身份证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="propertyCardNo"   property="mortgageReserveHouse.propertyCardNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="propertyCardNo"   property="mortgageReserveHouse.propertyCardNo" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">产权地址：</td>
 				<td colspan="1" width="30%">
-				<h:text id="propertyAddres"   property="mortgageReserveHouse.propertyAddres"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="propertyAddres"   property="mortgageReserveHouse.propertyAddres" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="15%">产权证本数：</td>
 				<td colspan="1" width="30%">
-				<h:text id="propertyNums"  size="5"  property="mortgageReserveHouse.propertyNums"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="propertyNums"  size="5"  property="mortgageReserveHouse.propertyNums" /><font style="color: red">*</font>
 				</td>	
-				<td class="form_label" align="right" width="15%">产权证填发日期：</td>
+				<td class="form_label" align="right" width="17%">产权证填发日期：</td>
 				<td colspan="1" width="30%">
 				<w:date id="propertyDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd" property="mortgageReserveHouse.propertyDate" />
 				</td>					
@@ -156,41 +166,41 @@
 			<tr>	
 				<td class="form_label" align="right" width="15%">车主姓名：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carName"   property="mortgageReserveCar.carName"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carName"   property="mortgageReserveCar.carName" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">车主身份证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carCardNo"   property="mortgageReserveCar.carCardNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carCardNo"   property="mortgageReserveCar.carCardNo" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
-				<td class="form_label" align="right" width="15%">机动车登记证号：</td>
+				<td class="form_label" align="right" width="17%">机动车登记证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carRegisterNo"   property="mortgageReserveCar.carRegisterNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carRegisterNo"   property="mortgageReserveCar.carRegisterNo" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">车牌号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carNo"   property="mortgageReserveCar.carNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carNo"   property="mortgageReserveCar.carNo" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="15%">车架号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carFrameNo"   property="mortgageReserveCar.carFrameNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carFrameNo"   property="mortgageReserveCar.carFrameNo" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">购车发票号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carInvoiceNo"   property="mortgageReserveCar.carInvoiceNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carInvoiceNo"   property="mortgageReserveCar.carInvoiceNo" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="15%">完税证明号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carDuesNo"   property="mortgageReserveCar.carDuesNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carDuesNo"   property="mortgageReserveCar.carDuesNo" /><font style="color: red">*</font>
 				</td>	
 				<td class="form_label" align="right" width="15%">保单号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="carSafeNo"   property="mortgageReserveCar.carSafeNo"  validateAttr="allowNull=false" /><font style="color: red">*</font>
+				<h:text id="carSafeNo"   property="mortgageReserveCar.carSafeNo" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			</tbody>
@@ -223,11 +233,175 @@ function changeMortgageType(val){
 	       }
 }
 	function save(){
-	var frm=$name("data_form");
- 		if(!checkForm(frm)){
-			 return ;
-		 }
-    ajaxsubmitO();
+	   var frm=$name("data_form");
+	 
+	   if($id("mortgageType").value == "0"){
+			if($id("otherTypeFC").value == ""){
+			 alert("他项类型不能为空！");
+			 return;
+			}
+		}else if($id("mortgageType").value == "1"){
+			if($id("otherTypeJDC").value == ""){
+				 alert("他项类型不能为空！");
+				 return;
+			}
+		}
+	   if($id("projectNumber").value == ""){
+			alert("库存序号不能为空！");
+			$id("projectNumber").focus();
+			return;
+		}
+	   if($id("otherWarrantsNumber").value == ""){
+			alert("他项权证号不能为空！");
+			$id("otherWarrantsNumber").focus();
+			return;
+		}
+	   if($id("borrowerName").value == ""){
+			alert("借款人姓名不能为空！");
+			$id("borrowerName").focus();
+			return;
+		}
+	   if($id("borrowerCardNo").value == ""){
+			alert("借款人身份证号不能为空！");
+			$id("borrowerCardNo").focus();
+			return;
+		}
+	   if($id("orgCode").value == ""){
+			alert("经办机构不能为空！");
+			$id("orgCode").focus();
+			return;
+		}
+	   if($id("mangerName").value == ""){
+			alert("经办客户经理不能为空！");
+			$id("mangerName").focus();
+			return;
+		}
+		
+	   if($id("mortgageType").value == "0"){
+			if($id("loanTypeFC").value == ""){
+			 alert("贷款种类不能为空！");
+			 return;
+			}
+		}else if($id("mortgageType").value == "1"){
+			if($id("loanTypeJDC").value == ""){
+				 alert("贷款种类不能为空！");
+				 return;
+			}
+		}
+		
+		
+	   if($id("borrowerContractNo").value == ""){
+			alert("借款合同号不能为空！");
+			$id("borrowerContractNo").focus();
+			return;
+		}
+		
+	   if($id("packetNumber").value == ""){
+			alert("封包编号不能为空！");
+			$id("packetNumber").focus();
+			return;
+		}
+	   if($id("nextName").value == ""){
+			alert("交接人不能为空！");
+			$id("nextName").focus();
+			return;
+		}
+		
+		
+	   if($id("mortgageType").value == "0"){
+		   if($id("propertyNo").value == ""){
+				alert("产权证号不能为空！");
+				$id("propertyNo").focus();
+				return;
+			}
+			
+		   if($id("propertyName").value == ""){
+				alert("产权人姓名不能为空！");
+				$id("propertyName").focus();
+				return;
+			}
+			
+		   if($id("propertyCardNo").value == ""){
+				alert("产权人身份证号不能为空！");
+				$id("propertyCardNo").focus();
+				return;
+			}
+			if($id("propertyAddres").value == ""){
+				alert("产权地址不能为空！");
+				$id("propertyAddres").focus();
+				return;
+			}
+			if($id("propertyNums").value == ""){
+				alert("产权证本数不能为空！");
+				$id("propertyNums").focus();
+				return;
+			}
+		}else if($id("mortgageType").value == "1"){
+		   if($id("carName").value == ""){
+				alert("车主姓名不能为空！");
+				$id("carName").focus();
+				return;
+			}
+			if($id("carCardNo").value == ""){
+				alert("车主身份证号不能为空！");
+				$id("carCardNo").focus();
+				return;
+			}
+			if($id("carRegisterNo").value == ""){
+				alert("机动车登记证号不能为空！");
+				$id("carRegisterNo").focus();
+				return;
+			}
+			if($id("carNo").value == ""){
+				alert("车牌号不能为空！");
+				$id("carNo").focus();
+				return;
+			}
+			if($id("carFrameNo").value == ""){
+				alert("车架号不能为空！");
+				$id("carFrameNo").focus();
+				return;
+			}
+			if($id("carInvoiceNo").value == ""){
+				alert("购车发票号不能为空！");
+				$id("carInvoiceNo").focus();
+				return;
+			}
+			if($id("carDuesNo").value == ""){
+				alert("完税证明号不能为空！");
+				$id("carDuesNo").focus();
+				return;
+			}
+			if($id("carSafeNo").value == ""){
+				alert("保单号不能为空！");
+				$id("carSafeNo").focus();
+				return;
+			}
+		}
+ 		///if(!checkForm(frm)){
+		//	 return ;
+		// }
+		 var otherWarrantsNumber= $id("otherWarrantsNumber").value;  //他项权证号
+	    $.ajax({
+			      url: "/mortgage/mortgageReserveAction_checkOtherWarrantsNumber.action",
+			      async: false,
+			      type: 'post',
+			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber,
+			      timeout: 60000,
+			      success: function (data) {
+					   if (data.indexOf("noExist") >= 0) {
+				    		  ajaxsubmitO();
+						}else if (data.indexOf("exist") >= 0) {
+			                 $id("otherWarrantsNumber").focus();	
+							alert("操作失败！该他项权证号("+data+")系统中号码不重复！请重新填写！");
+						} else if (data.indexOf("fails") >= 0) {
+							alert("他项权证号校验失败！");
+						} else {
+							alert("操作失败!");
+						}
+			      
+			      }
+			}); 
 		
 	}
 
@@ -288,6 +462,31 @@ function changeMortgageType(val){
 					}
 		    	}
 			}
+			
+		var rowId = 0;
+		function addFile(tabid,varName){
+		    var tab,row,td,fName,fId,tdStr;
+		    var zs=$("#tabtest tbody tr").length;
+		    tab = $id(tabid);
+		    if (zs>=5){
+		    	alert("新增附件不能超过5个");
+		    	return false;
+		    }
+		    fName = varName;
+		    fId = varName+rowId;
+		    row =  tab.insertRow();
+		    row.id = "fileRow"+rowId;
+		    td = row.insertCell(); 
+		    
+		    tdStr="<input type=\"file\" name=\""+fName+"\" id=\""+fId+"\" onchange=\"CheckUpLoadFile(this,2);\" size='70' class=smallInput validateAttr=\"allowNull=false\">";
+		    tdStr += "<input type=\"button\" onclick=\"delTr('fileRow"+rowId+"');\" name='button"+rowId+"' value=\"删除\" style=\"margin-left:2px;vertical-align:middle;cursor:hand;\"/>";
+		    td.innerHTML = tdStr;
+		    rowId = rowId+1;    
+		}
+			
+		function delTr(id){
+			$("#"+id).remove();
+		}
 </script>
 </body>
 </html>
