@@ -19,27 +19,23 @@
 		<th height="34" width="100" align="center" class="form_label">记录数</th>
 		<th height="34" width="100" align="center" class="form_label">机动车数</th>
 		<th height="34" width="200" align="center" class="form_label">他项权证数</th>
-		<th height="34" width="100" align="center" class="form_label">操作</th>
 	</tr>
 	<l:iterate property="mortgageLists" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
 			  <td style="vnd.ms-excel.numberformat:@">
-			    	<b:write iterateId="id1" property="operatingType"/>
+			    	<d:write iterateId="id1" dictTypeId="MORTGAGE_OUT_IN" property="type"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    	<b:write iterateId="id1" property="otherWarrantsNums"/>
+			    	<d:write iterateId="id1" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="borrowerLog"/>
+			    <b:write iterateId="id1" property="alls"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			   <b:write iterateId="id1" property="carAlls"/>
+			   <b:write iterateId="id1" property="cars"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="carAlls" />
-			   <td style="vnd.ms-excel.numberformat:@">
-			   <b:write iterateId="id1" property="operator"/>
-			  </td>
+			    <b:write iterateId="id1" property="others" />
 			</tr>
 			</l:iterate>
 		</table>

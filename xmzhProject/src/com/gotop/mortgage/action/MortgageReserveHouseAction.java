@@ -35,6 +35,7 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * @return
 	 */
 	public String toRegisterSignConfirm() {
+		//System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
 		this.setMortgageReserveHouseCar(mortgageReserveHouseCar);
 		mortgageReserveHouseCar.setWarrantsId(mortgageReserveHouseCar.getWarrantsId());
 		return "RegisterSignConfirm";
@@ -43,9 +44,13 @@ public class MortgageReserveHouseAction extends BaseAction{
 	public String noRegisterSignConfirm() throws Exception
 	{
 		String warrantsId=getRequest().getParameter("warrantsId");
+		//String noSignString=getRequest().getParameter("noRegisterSign");
+		//System.out.println("补登记确认标志:------>"+mortgageReserveHouseCar.getNoRegisterSign());
+		//System.out.println("aaa==="+warrantsId);
 		String info = "success";
 		try {
 			 mortgageReserve = this.mortgageReserveHouseService.queryMortgageReserveHouseById(warrantsId);
+			//System.out.println("补登记未确认"+mortgageReserve.getNoRegisterSign());
 			//修改主表的补登记状态
 			mortgageReserveHouseService.update(mortgageReserve);
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -55,6 +60,7 @@ public class MortgageReserveHouseAction extends BaseAction{
 			map.put("operatingRemark", "添加补登记确认");
 			//将修改的补登记记录插入操作日志的表
 			mortgageReserveHouseService.insert(map);
+			
 		} catch (Exception e) {
 			info="fails";
 			log.error("[补登记修改失败！]", e);
@@ -84,6 +90,11 @@ public class MortgageReserveHouseAction extends BaseAction{
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
 		}
 		if ("1".equals(mortgageList.getMortgageType())) {
+			//System.out.println("进入机动车出入库汇总查询"+mortgageList.getMortgageType());
+			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
+		}
+		if ("1".equals(mortgageList.getMortgageType())) {
+			//System.out.println("进入房产出入库汇总查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseInOutList(mortgageList, this.getPage());
 		}
 		this.setPage(page);
@@ -100,6 +111,13 @@ public class MortgageReserveHouseAction extends BaseAction{
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutList(mortgageList,this.getPage());
 		}
 		if ("1".equals(mortgageList.getMortgageType())) {
+		//System.out.println("出入汇总查询的类型："+mortgageList.getMortgageType());
+		if ("2".equals(mortgageList.getMortgageType())){
+			//System.out.println("进入机动车不外借明细查询"+mortgageList.getMortgageType());
+			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutList(mortgageList,this.getPage());
+		}
+		if ("1".equals(mortgageList.getMortgageType())) {
+			//System.out.println("进入房产外借明细查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutList(mortgageList,this.getPage());
 		}
 		this.setPage(page);
@@ -113,11 +131,13 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String queryMortgageTotalInOutForExcel(){
 		if ("2".equals(mortgageList.getMortgageType())) {
+			//System.out.println("机动车汇总导出");
 			mortgageLists= mortgageReserveHouseService.queryMortgageReserveCarInOutForExcel(mortgageList);
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("1");
 			return "queryMortgageReserveCarInOutForExcel";
 		}
+		//System.out.println("房产汇总导出");
 		mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseInOutForExcel(mortgageList);
 		this.setMortgageLists(mortgageLists);
 		this.setResult_flag("1");
@@ -131,23 +151,27 @@ public class MortgageReserveHouseAction extends BaseAction{
 		
 		if ("2".equals(mortgageList.getMortgageType())&&"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutForExcel(mortgageList);
+			//System.out.println("机动车外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveCarDetailInOutForExcel1";
 		}
 		if ("2".equals(mortgageList.getMortgageType())&&!"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutForExcel(mortgageList);
+			//System.out.println("机动车不外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveCarDetailInOutForExcel";
 		}
 		if ("1".equals(mortgageList.getMortgageType())&&!"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutForExcel(mortgageList);
+			//System.out.println("房产不外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveHouseDetailInOutForExcel";
 		}
 		if ("1".equals(mortgageList.getMortgageType())&&"1".equals(mortgageList.getOperatingMatters())) {
+			//System.out.println("房产外借导出");
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutForExcel(mortgageList);
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");

@@ -67,16 +67,27 @@
 		    <h:hidden property="page.isCount"/>
 	     <table class="EOS_table" width="100%" style="overflow:scroll">
 		<tr>
-		  <th nowrap="nowrap">选择</th>
-		  <th nowrap="nowrap">库存序号</th>
-		  <th nowrap="nowrap">货种</th>
-		  <th nowrap="nowrap">他项权证号</th>
-		  <th nowrap="nowrap">借款人</th>
-		  <th nowrap="nowrap">库存状态</th>
-		  <th nowrap="nowrap">产权证号</th>
-		  <th nowrap="nowrap">产权人</th>
-		  <th nowrap="nowrap">产权地址</th>
-		  <th nowrap="nowrap">操作</th>
+		  <th align="center" nowrap="nowrap">
+					<b:message key="l_select"></b:message>
+							</th>
+						  <th nowrap="nowrap">
+								他项类型
+						  </th>
+						   <th nowrap="nowrap">
+								库存序号
+						  </th>
+						   <th nowrap="nowrap">
+								贷种
+						  </th>
+						   <th nowrap="nowrap">
+								他项权证号
+						  </th>
+						   <th nowrap="nowrap">
+								借款人
+						  </th>
+						   <th nowrap="nowrap">
+								库存状态
+						  </th>
 		</tr>
 		<w:radioGroup id="group1">
 			<l:iterate property="mortgageReserveHouseList" id="id1">
@@ -87,34 +98,25 @@
 	               <h:param name='warrantsId' iterateId='id1' property='warrantsId'/>
 	               <h:param name='noRegisterSign' iterateId='id1' property='noRegisterSign'/>
 	            </w:rowRadio>
+			  </td>		
+				<td style="text-align: center;width: 20%">
+			    	<nobr><d:write iterateId="id1" dictTypeId="OTHER_TYPE_VIEW" property="otherType"/></nobr>
 			  </td>
-			  <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="projectNumber"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="loanType"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="otherWarrantsNumber"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="borrowerName"/> 
-                </td> 
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="status"/> 
-                </td>  
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="propertyNo"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="propertyName"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="propertyAddres"/> 
-                </td>
-                <td nowrap="nowrap">
-                	<b:write iterateId="id1" property="operator"/> 
-                </td>
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="projectNumber"/></nobr>
+			  </td>
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/></nobr>
+			  </td>
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="otherWarrantsNumber"/></nobr>
+			  </td>
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="borrowerName"/></nobr>
+			  </td>	
+			  <td style="text-align: center;width: 10%">
+			    	<d:write iterateId="id1" dictTypeId="MORTGAG_STATUS" property="status"/>
+			  </td>		
 			</tr>
 			</l:iterate>
 		</w:radioGroup>
@@ -177,7 +179,8 @@
 		
 		//导出
 		function downExl(){
-			var noRegisterSign = $id("noRegisterSign").value;
+			var noRegisterSign=$("#noRegisterSign option:selected");  //获取选中的项
+			//var noRegisterSign = $id("noRegisterSign").value;
 			var propertyName = $id("propertyName").value;
 			var propertyCardNo = $id("propertyCardNo").value;
 			var propertyNo = $id("propertyNo").value;
@@ -211,15 +214,22 @@
 		{
 			var gop = $id("group1");
 	  		var len = gop.getSelectLength();
+	  		var rows=gop.getSelectRow();
+	  		var noSign=rows.getParam("noRegisterSign");
+	  		var warrantsId=rows.getParam("warrantsId");
 	  		if(len == 0){
 	  			alert("请选择一条记录");
 	  			return;
 	  		}else{
-	  		
-	  			var rows=gop.getSelectRow();
-		  		var warrantsId=rows.getParam("warrantsId");
-	  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId;
-	  			showModalCenter(strUrl, null, null, 300, 100, '补登记确认');  
+	  			if(noSign=='1')
+	  			{
+	  				alert("该记录已确认");
+	  			}
+	  			else if(noSign=='2'){
+		  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId+"&mortgageReserveHouseCar.noRegisterSign="+noSign;
+		  			showModalCenter(strUrl, null, null, 300, 100, '补登记确认');  
+	  			}
+	  			
 		  	}
 			
 		}

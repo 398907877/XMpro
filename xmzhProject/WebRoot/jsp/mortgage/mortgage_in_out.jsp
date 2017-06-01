@@ -102,12 +102,12 @@ String str_date = TimeUtil.today();
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
 			  <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -144,12 +144,12 @@ String str_date = TimeUtil.today();
 			  
 			  <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -247,12 +247,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -323,12 +323,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -397,12 +397,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -422,12 +422,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="borrowerNum"/></nobr>
+			    	<nobr><b:write iterateId="issued" property="borrowerNums"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="isBorrow"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -485,12 +485,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingType"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingMatters"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -510,12 +510,12 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="borrowerNum"/></nobr>
+			    	<nobr><b:write iterateId="issued" property="borrowerNums"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="isBorrow"/></nobr>
+			    	<nobr><d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/></nobr>
 			    </div>
 			  </td>
 			  <td style="text-align: center;width: 10%">
@@ -670,16 +670,13 @@ String str_date = TimeUtil.today();
 		//清空
 		function clears(){
 			
-			  
-			
 			$("#d1_input").val("");
 			$("#d2_input").val("");
-			$("#status").val("");
-			
-			
+						
 			$id("d1").value="";
 			$id("d2").value="";
-			$id("status").value="0";
+			
+			
 			//清空传入后台的时间控件的值,将当前时间填入
 			$name("mortgageList.operatingTime").value ="";
 			$name("mortgageList.operatingEndTime").value ="";
@@ -694,7 +691,7 @@ String str_date = TimeUtil.today();
 			var operatingEndTime=$id("d2").value;  //获取选中的项
 			var status=$("#status option:selected"); //获取选中的项
 				
-			alert("汇总导出");
+			//alert("汇总导出");
 			var strUrl="/mortgage/mortgageReserveHouseAction_queryMortgageTotalInOutForExcel.action?";
 			if(options.val()!=null)
 			{

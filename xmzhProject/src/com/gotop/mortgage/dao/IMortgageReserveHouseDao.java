@@ -68,13 +68,25 @@ public interface IMortgageReserveHouseDao {
 	 */
 	public List<MortgageList> queryMortgageReserveCarInOutForExcel(Map<String, Object> map);
 	/**
-	 * 出入库房产明细查询
+	 * 出入库房产不外借明细查询
 	 * @param map
 	 * @return
 	 */
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutList(Map<String, Object> map, Page page);
 	/**
-	 * 出入库机动车明细查询
+	 * 出入库机动车外借明细查询
+	 * @param map
+	 * @return
+	 */
+	public List<MortgageList> queryMortgageReserveCarDetailInOutList1(Map<String, Object> map, Page page);
+	/**
+	 * 出入库房产外借明细查询
+	 * @param map
+	 * @return
+	 */
+	public List<MortgageList> queryMortgageReserveHouseDetailInOutList1(Map<String, Object> map, Page page);
+	/**
+	 * 出入库机动车不外借明细查询
 	 * @param map
 	 * @return
 	 */

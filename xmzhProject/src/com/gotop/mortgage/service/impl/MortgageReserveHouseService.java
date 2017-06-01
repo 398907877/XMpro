@@ -89,6 +89,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     @Override
 	public MortgageReserve queryMortgageReserveHouseById(
 			String id) {
+    	//System.out.println("queryMortgageReserveHouseById------->id==="+id);
     	Map<String, Object> map = new HashMap<String, Object>();
     	map.put("id", id);
 		return this.mortgageReserveHouseDao.queryMortgageReserveHouseById(map);
@@ -141,6 +142,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveHouseInOutList(map, page);
+		//System.out.println("queryMortgageReserveHouseInOutList+service-----");
 		return lists;
 	}
     /**
@@ -149,6 +151,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
      */
     public List<MortgageList> queryMortgageReserveCarInOutList(
 			MortgageList mortgageList, Page page) {
+    	//System.out.println("queryMortgageReserveCarInOutList+111111111");
     	Date date = new Date();
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
@@ -377,8 +380,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 			if (mortgageList.getStatus()!=null
 			&&!"".equals(mortgageList.getStatus())) {
-//				map.put("mortgageType", null);
-//				map.put("operatingMatters", null);
 				map.put("status", mortgageList.getStatus());
 			}
 		}
@@ -421,12 +422,16 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 			if (mortgageList.getStatus()!=null
 			&&!"".equals(mortgageList.getStatus())) {
-//				map.put("mortgageType", null);
-//				map.put("operatingMatters", null);
 				map.put("status", mortgageList.getStatus());
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList(map, page);
+		//外借情况查询
+		if ("1".equals(mortgageList.getOperatingMatters())) {
+			lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList1(map, page);
+		}else {
+			lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList(map, page);
+		}
 		return lists;
 	}
 	@Override
@@ -472,6 +477,12 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList(map, page);
+		//外借情况查询
+		if ("1".equals(mortgageList.getOperatingMatters())) {
+			lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList1(map, page);
+		}else {
+			lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList(map, page);
+		}
 		return lists;
 	}
     

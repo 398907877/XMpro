@@ -36,10 +36,10 @@
 			    	<b:write iterateId="id1" property="operatingTime"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="operatingType"/>
+			    <d:write iterateId="id1" dictTypeId="MORTGAGE_OUT_IN" property="type"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			   <b:write iterateId="id1" property="operatingMatters"/>
+			   <d:write iterateId="id1" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="projectNumber" />
@@ -54,7 +54,7 @@
 			   <b:write iterateId="id1" property="borrowerNums"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			   <b:write iterateId="id1" property="isBorrow"/>
+			   <d:write iterateId="id1" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="operatingUserId"/>
