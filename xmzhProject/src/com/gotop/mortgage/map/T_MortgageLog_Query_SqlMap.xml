@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_MortgageLog_Query_SqlMap">
+	<typeAlias alias="MortgageLog" type="com.gotop.mortgage.model.MortgageLog"/>
+	<resultMap class="MortgageLog" id="mortgageLogMap">
+		<result property="operateTime" jdbcType="string" column="OPERATING_TIME"/>
+		<result property="operateType" jdbcType="string" column="OPERATING_TYPE"/>
+		<result property="orgName" jdbcType="string" column="ORGNAME"/>
+		<result property="empName" jdbcType="string" column="EMPNAME"/>
+		
+		<result property="operateContent" jdbcType="string" column="OPERATECONTENT"/>
+		
+		<result property="remark" jdbcType="string" column="OPERATING_REMARK"/>
+	</resultMap>
+	
+	<!-- 操作日志查询  -->
+	<select id="queryMortgageLogList" parameterClass="java.util.HashMap" resultMap="mortgageLogMap">
+	 select T.*,E.EMPNAME,Y.ORGNAME
+	 from(
+			 select a.*,  
+			      '库存序号：'|| b.PROJECT_NUMBER as OPERATECONTENT
+		       from T_MORTGAGE_LOG a
+		       LEFT JOIN T_WARRANTS_INFO b on a.operating_mortgag_id = b.id
+                 where 1 = 1
+      <isNotNull prepend="and" property="operateType" >
+             a.OPERATING_TYPE =  '$operateType$'
+      </isNotNull>
+	  <isNotNull prepend="and" property="airTime" >
+         <![CDATA[
+           substr(a.OPERATING_TIME,0,8)  >= '$airTime$'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="stopTime" >
+        <![CDATA[
+           substr(a.OPERATING_TIME,0,8)  <=  '$stopTime$'
+               ]]>
+      </isNotNull>
+      ) T,
+       OM_EMPLOYEE                 E,
+       OM_EMPORG                   A,
+       OM_ORGANIZATION             Y
+	 WHERE T.OPERATING_USERID = E.EMPID
+	   AND E.EMPID = A.EMPID
+	   AND A.ORGID = Y.ORGID
+     
+     order by T.OPERATING_TIME desc
+	</select>
+	
+</sqlMap>

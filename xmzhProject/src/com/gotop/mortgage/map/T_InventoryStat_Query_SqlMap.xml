@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_InventoryStat_Query_SqlMap">
+	<typeAlias alias="InventoryStat" type="com.gotop.mortgage.model.InventoryStat"/>
+	<resultMap class="InventoryStat" id="inventoryStatMap">
+		<result property="statTime" jdbcType="string" column="STATTIME"/>
+		<!-- <result property="num1" jdbcType="string" column="NUM1"/>
+		<result property="num2" jdbcType="string" column="NUM2"/>
+		<result property="num3" jdbcType="string" column="NUM3"/>
+		<result property="num4" jdbcType="string" column="NUM4"/>
+		<result property="num5" jdbcType="string" column="NUM5"/>
+		<result property="num6" jdbcType="string" column="NUM6"/>
+		<result property="num7" jdbcType="string" column="NUM7"/>
+		<result property="num8" jdbcType="string" column="NUM8"/>
+		<result property="num9" jdbcType="string" column="NUM9"/>
+		<result property="num10" jdbcType="string" column="NUM10"/>
+		<result property="num11" jdbcType="string" column="NUM11"/>
+		<result property="total1" jdbcType="string" column="TOTAL1"/>
+		<result property="total2" jdbcType="string" column="TOTAL2"/>
+		<result property="total3" jdbcType="string" column="TOTAL3"/>
+		<result property="total4" jdbcType="string" column="TOTAL4"/>
+		 -->
+		
+		<result property="mortgageType" jdbcType="string" column="MORTGAGE_TYPE"/>
+		<result property="otherType" jdbcType="string" column="OTHER_TYPE"/>
+		<result property="loanType" jdbcType="string" column="LOAN_TYPE"/>
+		<result property="num" jdbcType="string" column="NUM"/>
+	</resultMap>
+	<resultMap class="InventoryStat" id="timeMap">
+		<result property="statTime" jdbcType="string" column="STATTIME"/>
+	</resultMap>
+	<!-- 库存统计  -->
+	<select id="queryInventoryStatList" parameterClass="java.util.HashMap" resultMap="inventoryStatMap">
+	   <!--  select sum(substr(T.Insert_Time,0,8)) as STATTIME,P.MORTGAGE_TYPE,P.OTHER_TYPE,P.Loan_Type,count(*) as NUM
+from T_MORTGAGE_LIST T
+ left join T_WARRANTS_INFO P
+ on T.Warrants_Id = P.ID
+ where 1=1
+	  <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+               ]]>
+      </isNotNull>
+ 
+ group by P.MORTGAGE_TYPE,P.OTHER_TYPE,P.LOAN_TYPE
+ order by STATTIME,P.MORTGAGE_TYPE,P.OTHER_TYPE,P.LOAN_TYPE
+ -->
+ <!-- 
+  select substr(P.Insert_Time, 0, 8) as STATTIME,
+       P.MORTGAGE_TYPE,
+       P.OTHER_TYPE,
+       P.Loan_Type,
+       count(*) as NUM
+  from T_WARRANTS_INFO P
+ where 1 = 1
+ 
+      <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            substr(P.INSERT_TIME,0,8) <= '$statTime$'
+               ]]>
+      </isNotNull>
+group by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
+order by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
+      -->
+      
+select 
+      
+       '$statTime$' STATTIME,  
+       P.MORTGAGE_TYPE,
+       P.OTHER_TYPE,
+       P.Loan_Type,
+       count(*) as NUM
+  from T_WARRANTS_INFO P
+ where 1 = 1
+ 
+      <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            substr(P.INSERT_TIME,0,8) <= '$statTime$'
+               ]]>
+      </isNotNull>
+group by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
+order by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
+	</select>
+	
+	<select id="queryTime" parameterClass="java.util.HashMap" resultMap="timeMap">
+	  select  distinct substr(P.Insert_Time, 0, 8) as STATTIME from T_WARRANTS_INFO P
+	</select>
+</sqlMap>

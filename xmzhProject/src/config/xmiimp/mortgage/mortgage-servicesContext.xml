@@ -7,5 +7,19 @@
     <property name="mortgageReserveDao" ref="mortgageReserveDao" />
   </bean>
   
-
+  <bean id="scanService" class="com.gotop.mortgage.service.impl.ScanService" >
+    <property name="scanDao" ref="scanDao" />
+  </bean>
+  
+  <bean id="loanInfoService" class="com.gotop.mortgage.service.impl.LoanInfoService" >
+    <property name="loanInfoDao" ref="loanInfoDao" />
+  </bean>
+  
+  <bean id="mortgageLogService" class="com.gotop.mortgage.service.impl.MortgageLogService" >
+    <property name="mortgageLogDao" ref="mortgageLogDao" />
+  </bean>
+  
+  <bean id="inventoryStatService" class="com.gotop.mortgage.service.impl.InventoryStatService" >
+    <property name="inventoryStatDao" ref="inventoryStatDao" />
+  </bean>
 </beans>

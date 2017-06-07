@@ -14,6 +14,28 @@
   </bean>
   
   
-   
+  <bean name="scan" id="scan" class="com.gotop.mortgage.model.Scan" singleton="false" ></bean> 
+   <bean name="scanManagementAction" id="scanManagementAction" class="com.gotop.mortgage.action.ScanManagementAction" singleton="false" >
+     <property name="scanService" ref="scanService" />
+    <property name="scan" ref="scan" />
+  </bean>
+  
+  <bean name="loanInfo" id="loanInfo" class="com.gotop.mortgage.model.LoanInfo" singleton="false" ></bean> 
+   <bean name="loanInfoQueryAction" id="loanInfoQueryAction" class="com.gotop.mortgage.action.LoanInfoQueryAction" singleton="false" >
+     <property name="loanInfoService" ref="loanInfoService" />
+    <property name="loanInfo" ref="loanInfo" />
+  </bean>
+  
+   <bean name="mortgageLog" id="mortgageLog" class="com.gotop.mortgage.model.MortgageLog" singleton="false" ></bean> 
+   <bean name="mortgageLogQueryAction" id="mortgageLogQueryAction" class="com.gotop.mortgage.action.MortgageLogQueryAction" singleton="false" >
+     <property name="mortgageLogService" ref="mortgageLogService" />
+    <property name="mortgageLog" ref="mortgageLog" />
+  </bean>
+  
+  <bean name="inventoryStat" id="inventoryStat" class="com.gotop.mortgage.model.InventoryStat" singleton="false" ></bean> 
+   <bean name="inventoryStatQueryAction" id="inventoryStatQueryAction" class="com.gotop.mortgage.action.InventoryStatQueryAction" singleton="false" >
+     <property name="inventoryStatService" ref="inventoryStatService" />
+    <property name="inventoryStat" ref="inventoryStat" />
+  </bean>
 
 </beans>

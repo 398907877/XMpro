@@ -6,4 +6,19 @@
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
+  <bean id="scanDao" class="com.gotop.mortgage.dao.impl.ScanDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="loanInfoDao" class="com.gotop.mortgage.dao.impl.LoanInfoDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="mortgageLogDao" class="com.gotop.mortgage.dao.impl.MortgageLogDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="inventoryStatDao" class="com.gotop.mortgage.dao.impl.InventoryStatDao" >
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
 </beans>

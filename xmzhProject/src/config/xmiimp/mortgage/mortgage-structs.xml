@@ -20,5 +20,54 @@
 			   <param name="root">fileResourceTables</param>
 		  </result>
 		</action>
+		
+		<action name="scanManagementAction_*" class="scanManagementAction"
+			method="{1}">
+			<result name="scan_import_manager">
+				/jsp/mortgage/scan_import_manager.jsp
+			</result>
+			<result name="queryScanList">
+				/jsp/mortgage/scan_query.jsp
+			</result>
+			<result name="download" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="bufferSize">10240</param>
+				<param name="contentDisposition">attachment;filename=${global_filename}</param>
+				<param name="inputName">test</param>
+			</result>
+		</action>
+		
+		<action name="loanInfoQueryAction_*" class="loanInfoQueryAction"
+			method="{1}">
+			<result name="queryLoanInfoList">
+				/jsp/mortgage/check_query.jsp
+			</result>
+			<result name="QueryHouseLoanInfoForExcel" >
+                /jsp/mortgage/check_query_house_excel.jsp
+            </result>  
+            <result name="QueryCarLoanInfoForExcel" >
+                /jsp/mortgage/check_query_car_excel.jsp
+            </result>  
+		</action>
+		
+		<action name="mortgageLogQueryAction_*" class="mortgageLogQueryAction"
+			method="{1}">
+			<result name="queryMortgageLogList">
+				/jsp/mortgage/mortgage_OperateLog.jsp
+			</result>
+			<result name="QueryMortgageLogForExcel" >
+                /jsp/mortgage/mortgage_OperateLog_excel.jsp
+            </result>  
+		</action>
+		
+		<action name="inventoryStatQueryAction_*" class="inventoryStatQueryAction"
+			method="{1}">
+			<result name="queryInventoryStatList">
+				/jsp/mortgage/inventory_Stat.jsp
+			</result>
+			<result name="QueryInventoryStatForExcel" >
+                /jsp/mortgage/inventory_Stat_excel.jsp
+            </result>  
+		</action>
 	</package>
 </struts>
