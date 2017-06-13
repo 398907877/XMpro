@@ -9,6 +9,7 @@
   
   <bean id="scanService" class="com.gotop.mortgage.service.impl.ScanService" >
     <property name="scanDao" ref="scanDao" />
+    <property name="mortgageReserveDao" ref="mortgageReserveDao" />
   </bean>
   
   <bean id="loanInfoService" class="com.gotop.mortgage.service.impl.LoanInfoService" >

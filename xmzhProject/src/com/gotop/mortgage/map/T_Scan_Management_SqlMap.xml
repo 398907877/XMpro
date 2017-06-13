@@ -5,7 +5,7 @@
 	
 	<resultMap class="Scan" id="scanMap">
 		<result property="scanID" jdbcType="string" column="ID"/>
-		<result property="operationTime" jdbcType="string" column="INSERT_TIME"/>
+		<result property="operationTime" jdbcType="string" column="INSERT_TIME2"/>
 		<result property="scanType" jdbcType="string" column="SCANNER_TYPE"/>
 		<result property="fileName" jdbcType="string" column="FILE_NAME"/>
 		<result property="warrantsID" jdbcType="string" column="WARRANTS_ID"/>
@@ -27,38 +27,42 @@
 				     )
 				  VALUES
 				    (seq_t_scanner_file.nextval,
-				    to_char(sysdate,'yyyy-MM-DD HH24:mi:ss'),
+				     #operationTime:VARCHAR#,
 				     #scanType:VARCHAR#,
 				     #fileName:VARCHAR#,
 				     #filePath:VARCHAR#,
-				     0,
+				     #warrantsID:VARCHAR#,
 				     #fileReName:VARCHAR#
 				     )
 	</insert>
 	
 	<!-- 扫描件查询 -->
 	<select id="queryScanList" parameterClass="java.util.HashMap" resultMap="scanMap">
-	  select * from T_SCANNER_FILE
+	  select to_char(TO_DATE(T.INSERT_TIME, 'yyyyMMddhh24miss'),
+                                'yyyy-mm-dd hh24:mi:ss') as INSERT_TIME2, T.* 
+      from T_SCANNER_FILE T
 	  where 1=1
 	  <isNotNull prepend="and" property="inTimeStrat" >
          <![CDATA[
-            INSERT_TIME >= '$inTimeStrat$'
+            substr(T.INSERT_TIME,0,8) >= '$inTimeStrat$'
                ]]>
       </isNotNull>
       <isNotNull prepend="and" property="inTimeEnd" >
         <![CDATA[
-             INSERT_TIME <=  '$inTimeEnd$'
+              substr(T.INSERT_TIME,0,8) <=  '$inTimeEnd$'
                ]]>
       </isNotNull>
       <isNotNull prepend="and" property="scanType" >
-             SCANNER_TYPE =  '$scanType$'
+             T.SCANNER_TYPE =  '$scanType$'
       </isNotNull>
-      order by INSERT_TIME desc
+      order by T.INSERT_TIME desc
 	</select>
 	
 	<!-- 根据scaID查询扫描件 -->
 	<select id="queryScan" parameterClass="com.gotop.mortgage.model.Scan" resultMap="scanMap">
-	  select * from T_SCANNER_FILE
-	  where ID='$scanID$'
+	  select T.*,to_char(TO_DATE(T.INSERT_TIME, 'yyyyMMddhh24miss'),
+                                'yyyy-mm-dd hh24:mi:ss') as INSERT_TIME2
+      from T_SCANNER_FILE T
+	  where T.ID='$scanID$'
 	</select>
 </sqlMap>

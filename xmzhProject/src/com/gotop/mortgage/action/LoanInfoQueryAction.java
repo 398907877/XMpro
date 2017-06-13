@@ -83,16 +83,16 @@ public class LoanInfoQueryAction extends BaseAction {
 		MUOUserSession muo = getCurrentOnlineUser();
 		
 		System.out.println("记录个数："+loanInfoList.size());
-		if("0".equals(loanInfo.getMortgageType())){
+		if("1".equals(loanInfo.getMortgageType())){
 			loanInfoList=loanInfoService.queryLoanInfoList(muo,loanInfo,this.getPage());
-			this.setPage(page);
+			//this.setPage(page);
 			this.setLoanInfoList(loanInfoList);
 			this.setLoanInfo(loanInfo);
 			System.out.println("aaaaaaaa");
 			this.setPage2(this.getPage2());
 			this.setLoanInfoNullList(loanInfoNullList);
 		//	this.setLoanInfo(loanInfo);
-		}else if("1".equals(loanInfo.getMortgageType())){
+		}else if("2".equals(loanInfo.getMortgageType())){
 			loanInfoNullList=loanInfoService.queryLoanInfoList(muo,loanInfo,this.getPage2());
 			Page bbb=new Page();
 			//bbb=this.getPage2();
@@ -129,9 +129,9 @@ public class LoanInfoQueryAction extends BaseAction {
 		MUOUserSession muo = getCurrentOnlineUser();
 		loanInfoList=loanInfoService.queryLoanInfoListForExcel(muo,loanInfo);
 		this.setLoanInfoList(loanInfoList);
-		if("0".equals(loanInfo.getMortgageType())){
+		if("1".equals(loanInfo.getMortgageType())){
 			return  "QueryHouseLoanInfoForExcel";
-		}else if("1".equals(loanInfo.getMortgageType())){
+		}else if("2".equals(loanInfo.getMortgageType())){
 			return  "QueryCarLoanInfoForExcel";
 		}
 		return null;

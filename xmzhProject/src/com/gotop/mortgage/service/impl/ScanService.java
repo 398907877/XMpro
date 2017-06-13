@@ -1,13 +1,16 @@
 package com.gotop.mortgage.service.impl;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.gotop.mortgage.dao.IMortgageReserveDao;
 import com.gotop.mortgage.dao.IScanDao;
 import com.gotop.mortgage.model.Scan;
 import com.gotop.mortgage.service.IScanService;
@@ -21,6 +24,13 @@ public class ScanService implements IScanService,Serializable {
 	protected static Logger log = Logger.getLogger(ScanService.class);
 	private IScanDao scanDao;
 	
+	private IMortgageReserveDao mortgageReserveDao;
+	public IMortgageReserveDao getMortgageReserveDao() {
+		return mortgageReserveDao;
+	}
+	public void setMortgageReserveDao(IMortgageReserveDao mortgageReserveDao) {
+		this.mortgageReserveDao = mortgageReserveDao;
+	}
 	public IScanDao getScanDao() {
 		return scanDao;
 	}
@@ -35,8 +45,66 @@ public class ScanService implements IScanService,Serializable {
 	 * @return 新增的条数
 	 * @throws Exception
 	 */
-	public int insertScan(Scan scan) throws Exception{
-		return this.getScanDao().insertScan(scan);
+	public int insertScan(Long pkey,Scan scan,MUOUserSession muo) throws Exception{
+		HashMap<String, String>hmp=new HashMap<String, String>();
+		
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+		String inserttime = sdf2.format(d);
+		
+		//上传时间
+		scan.setOperationTime(inserttime);
+		boolean result=false;
+		int count=0;
+		try {
+		//新增扫描件上传
+		 count = this.getScanDao().insertScan(scan);
+		
+		
+		//获取当前用户id
+		Long userID=muo.getEmpid();
+		
+		//插入成功
+		if(count > 0){
+			String operatingType="6";//扫描件上传
+			//插入日志
+			result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "扫描件上传");
+			if(!result){
+				count=0;
+			}
+		}
+		} catch (Exception e) {
+			count=0;
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	/**
+	 * 插入日志表信息
+	 * @param operatingType 操作类型
+	 * @param userID   操作人员id
+	 * @param pkey    操作主表ID
+	 * @param inserttime  插入时间与插入信息时间保持一致
+	 * @param remark  备注
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean insertMortgageOperatingLog(String operatingType,Long userID,Long pkey,String inserttime,String remark) throws Exception{
+		Map<String, Object>map=new HashMap<String, Object>();
+		boolean result=false;
+		try {
+			map.put("inserttime", inserttime);
+			map.put("userID", userID);
+			map.put("operatingType", operatingType);
+			map.put("warrantsId", pkey);
+			map.put("remark", remark);
+			result=mortgageReserveDao.insertMortgageLog(map);
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override

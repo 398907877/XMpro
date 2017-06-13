@@ -7,12 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+
+import com.gotop.mortgage.model.Scan;
  
  
 /**
@@ -26,7 +29,7 @@ public class ZipFileUtil {
      * @param files         需要压缩的文件
      * @param zipFilePath 压缩后的zip文件路径   ,如"D:/test/aa.zip";
      */
-    public static void compressFiles2Zip(File[] files,String zipFilePath) {
+    public static void compressFiles2Zip(File[] files,String zipFilePath, List<Scan> scanList2) {
         if(files != null && files.length >0) {
             if(isEndsWithZip(zipFilePath)) {
                 ZipArchiveOutputStream zaos = null;
@@ -36,11 +39,19 @@ public class ZipFileUtil {
                     //Use Zip64 extensions for all entries where they are required
                     zaos.setUseZip64(Zip64Mode.AsNeeded);
                      
+                    int i=0;
+                    	
+                    
                     //将每个文件用ZipArchiveEntry封装
                     //再用ZipArchiveOutputStream写到压缩文件中
                     for(File file : files) {
                         if(file != null) {
-                            ZipArchiveEntry zipArchiveEntry  = new ZipArchiveEntry(file,file.getName());
+                     	
+                        	Scan scanA=new Scan();
+                        	scanA=(Scan)scanList2.get(i);
+                        	
+                        	
+                            ZipArchiveEntry zipArchiveEntry  = new ZipArchiveEntry(file,scanA.getFileName());
                             zaos.putArchiveEntry(zipArchiveEntry);
                             InputStream is = null;
                             try {
@@ -53,6 +64,7 @@ public class ZipFileUtil {
                                 }
                                 //Writes all necessary data for this entry.
                                 zaos.closeArchiveEntry(); 
+                                i++;
                             }catch(Exception e) {
                                 throw new RuntimeException(e);
                             }finally {

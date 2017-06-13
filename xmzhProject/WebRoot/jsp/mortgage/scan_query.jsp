@@ -28,7 +28,7 @@
 		            
 		            <td class="form_label" align="right" width="20%">扫描件种类：</td>
 					<td width="30%">
-					    <d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType" nullLabel="请选择" style="width:150px"></d:select>
+					    <d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType"  style="width:150px"></d:select>
 		            </td>				
 				</tr>
 				<tr class="form_bottom">
@@ -66,10 +66,13 @@
 							<th nowrap="nowrap">
 								操作日期
 							</th>
+							
 							<th nowrap="nowrap">
 								扫描件种类
 							</th>
-							
+							<th nowrap="nowrap">
+								扫描文件名
+							</th>
 						</tr>
 						<w:checkGroup id="xgroup1">
                            <l:iterate property="scanList" id="id1">
@@ -83,16 +86,19 @@
 								<td nowrap="nowrap"> 
 									<d:write iterateId="id1" property="scanType" dictTypeId="SCAN_TYPE"/>
 								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="fileName" />
+								</td>
 							</tr>
 						</l:iterate>
 						</w:checkGroup>
 							<tr>
               <td colspan="23" class="command_sort_area">
-            
+            <!-- 
 				<div class="h3">
-					<input type="button" value="扫描件上传" onclick="scan_import();" class="button">
-							
-				</div>			
+					<input type="button" value="扫描件上传" onclick="scan_import();" class="button">				
+				</div>	
+			-->		
               <div class="h4">
 	                <l:equal property="page.isCount" targetValue="true" >
 	                  <b:message key="l_total"></b:message>
@@ -152,7 +158,7 @@
             //扫描件上传
            function scan_import(){
         	   var strUrl = "/jsp/mortgage/scan_import_manager.jsp?_dates="+ new Date();
-        	   showModalCenter(strUrl, "", callBackTypeAdd, 580, 300, '');//增加应用
+        	   showModalCenter(strUrl, "", callBackTypeAdd, 580, 300, '扫描件上传');//增加应用
             }
        	//上传完成回调函数
        	function callBackTypeAdd() {

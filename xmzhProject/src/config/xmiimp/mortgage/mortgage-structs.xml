@@ -29,6 +29,9 @@
 			<result name="queryScanList">
 				/jsp/mortgage/scan_query.jsp
 			</result>
+			<result name="add_scanImport" >
+	           /jsp/mortgage/scan_import_manager.jsp
+	       </result>
 			<result name="download" type="stream">
 				<param name="contentType">application/octet-stream</param>
 				<param name="bufferSize">10240</param>

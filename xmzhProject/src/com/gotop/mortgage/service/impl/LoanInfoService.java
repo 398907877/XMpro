@@ -48,10 +48,10 @@ public class LoanInfoService implements ILoanInfoService {
 			map.put("whetherOverrun", loanInfo.getWhetherOverrun());
 	    }
 		
-		if("0".equals(loanInfo.getMortgageType())){
+		if("1".equals(loanInfo.getMortgageType())){
 			loanInfoLists =loanInfoDao.queryHouseLoanInfoList(map,page);
 		}
-		if("1".equals(loanInfo.getMortgageType())){
+		if("2".equals(loanInfo.getMortgageType())){
 			loanInfoLists =loanInfoDao.queryCarLoanInfoList(map,page);
 		}
 		
@@ -112,10 +112,10 @@ public class LoanInfoService implements ILoanInfoService {
 				if (loanInfo.getWhetherOverrun() !=null&&!"".equals(loanInfo.getWhetherOverrun())) {
 					map.put("whetherOverrun", loanInfo.getWhetherOverrun());
 			    }
-		if("0".equals(loanInfo.getMortgageType())){
+		if("1".equals(loanInfo.getMortgageType())){
 			loanInfoLists =loanInfoDao.queryHouseLoanInfoListForExcel(map);
 		}
-		if("1".equals(loanInfo.getMortgageType())){
+		if("2".equals(loanInfo.getMortgageType())){
 			loanInfoLists =loanInfoDao.queryCarLoanInfoListForExcel(map);
 		}
 		

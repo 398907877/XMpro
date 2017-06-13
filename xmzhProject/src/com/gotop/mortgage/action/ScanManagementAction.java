@@ -78,30 +78,47 @@ public class ScanManagementAction extends BaseAction {
 	public void setScanList(List<Scan> scanList) {
 		this.scanList = scanList;
 	}
+	
+	/**
+	 * 跳转到 扫描件上传页面
+	 * @return
+	 */
+	public String toAddScanImport(){
+		return "add_scanImport";
+	}
+	
 	/**
 	 * 新增扫描件
 	 * @return
 	 * @throws Exception
 	 */
 	public String addScan()throws Exception{
+		System.out.println("id="+scan.getWarrantsID());
+		
+		MUOUserSession muo=getCurrentOnlineUser();
+		Long userID=muo.getEmpid();
+		
 		StringBuffer buffer = new StringBuffer(100);
 		try{
+			String warrantsID= scan.getWarrantsID();
+			Long pkey=Long.valueOf(warrantsID);
+			
+			
 			buffer.append("<script>");
 			
 			//限制上次个数
 			if(upload.size()>10){
 				buffer.append("alert('扫描件上传失败，一次上传个数不能超过10个!');");
 			}else{
-			
 			String sucess="";
 			String fail="";
 			//循环上传文件
 			for(int i=0;i<upload.size();i++){
 				System.out.println(uploadFileName.get(i));
 			this.uploadFileToServer(uploadFileName.get(i),upload.get(i));//上传文件到upload文件夹
-			int count = this.getScanService().insertScan(this.getScan());
+			int count = this.getScanService().insertScan(pkey,this.getScan(),muo);
 			if(count > 0){
-				sucess+=uploadFileName.get(i)+" ";
+				sucess+=uploadFileName.get(i)+" ";			
 			
 			}else{
 				fail+=uploadFileName.get(i)+" ";
@@ -175,7 +192,7 @@ public class ScanManagementAction extends BaseAction {
 			fileUtil.fileUpload(ForUtil.createFileInputStream((File)upload2), url);
 		}
 	}
-	
+	//单个下载和多个下载
 	 public String download() throws Exception {
 		 
 	    		String[] valueArra = ids.split(",");
@@ -185,8 +202,10 @@ public class ScanManagementAction extends BaseAction {
 					}
 					scan.setScanID(valueArra[0]);
 					scan=this.scanService.queryScan(scan);
+					//单个下载
 					this.downloadFile(scan.getFilePath(), scan.getFileName());
 	    		}else if(valueArra.length>1){
+	    			//多个打包下载
 	    			this.downloadMultiFile();
 	    		}
 			 return "download";
@@ -217,7 +236,9 @@ public class ScanManagementAction extends BaseAction {
 	          aaa=fileurl.replace('\\', '/');
 	          InputStream inputStream = new FileInputStream(aaa);
 	          global_inputStream=inputStream;
+	        //  global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
 	          global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
+	          global_filename = global_filename.replaceAll("\\+", "%20").replaceAll("%28", "\\(").replaceAll("%29", "\\)").replaceAll("%3B", ";").replaceAll("%40", "@").replaceAll("%23", "\\#").replaceAll("%26", "\\&");
 	         System.out.println(inputStream);
 	         System.out.println(global_filename);
 	         System.out.println(aaa);
@@ -242,6 +263,7 @@ public class ScanManagementAction extends BaseAction {
 	          
 	        String[] valueArra = ids.split(",");
 	        File[] files = new File[valueArra.length];
+	       List<Scan> scanList2 =new ArrayList<Scan>();
 			for(int i=0; i<valueArra.length; i++){
 				if(scan == null){
 					scan = new Scan();
@@ -254,12 +276,13 @@ public class ScanManagementAction extends BaseAction {
                       File file = new File(aaa.trim());
                       if(file.exists()) {
                           files[i] = file;
+                         scanList2.add(scan);
                       }
                   }
 			}
 			
 			//将多个附件压缩成zip
-            ZipFileUtil.compressFiles2Zip(files,global_filename);
+            ZipFileUtil.compressFiles2Zip(files,global_filename,scanList2);
             InputStream inputStream;
 			inputStream = new FileInputStream(global_filename);
 			global_inputStream=inputStream;

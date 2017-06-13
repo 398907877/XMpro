@@ -28,28 +28,18 @@ function clears(){
 	//.removeAttr("checked");
 	
 }
-
+ 
 	/*
 	 * 功能：图片上传
 	 */
-	function dictImportForType(){
+	function scanImport(){
+ 
+		
 		var frm = $id("importFormForType");
 		var excelFile = $name("upload").value;
+		//alert(excelFile);
 		if (excelFile=="") {
 			alert('请选择你要导入的扫描件');
-			return;
-		}
-		var fileType="";
-		if (excelFile.lastIndexOf(".")!=-1) {
-			fileType = (excelFile.substring(excelFile.lastIndexOf("."),excelFile.length)).toLowerCase();
-			var re= /.jpg$/;
-			if (!re.test(fileType))
-			{
-				alert('请选择JPG文件');
-				return;
-			}
-		}else{
-			alert('文件出现异常，请重试');
 			return;
 		}
 		
@@ -67,7 +57,6 @@ function clears(){
      }
 </script>
 <body leftmargin="0" rightmargin="0" topmargin="0">
-	<!-- 业务字典导入 -->
 	<table align="center" border="0" width="100%" class="form_table">
 		<tr>
 			<td  colSpan="4" class="eos-panel-title">
@@ -84,12 +73,13 @@ function clears(){
 				</td>
 			</tr>
 			 -->
-			<tr>
+			<tr> 
+			    <h:hidden id="id" property="scan.warrantsID"  />
 				<td class="form_label" align="center" width="30%">
 					扫描件种类：
 				</td>
 				<td class="form_label" style="text-align: left;">
-					<d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType" nullLabel="请选择" style="width:150px"></d:select>
+					<d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType"  style="width:150px"></d:select>
 				</td>
 			</tr>
 			<tr>
@@ -97,12 +87,15 @@ function clears(){
 					扫描文件：
 				</td>
 				<td class="form_label" style="text-align: left;">
-					<input type="file" name="upload" size="60" multiple="multiple"><font style="color: red;">*请上传合适的JPG照片</font>
+					<input type="file" name="upload"  accept="image/jpeg" multiple="multiple"><font style="color: red">*请上传合适的JPEG照片</font>
+					<br>
+					<font style="color: red">(说明：最多上传10张照片)</font>
+					
 				</td>
 			</tr>
 			<tr>
 				<td colSpan="4" align="center">
-					<input class="button" type="button" value='上传' onclick="dictImportForType();"/><!-- 导入 -->
+					<input class="button" type="button" value='上传' onclick="scanImport();"/><!-- 导入 -->
 					<input class="button" type="button" value='清空' onclick="clears();"/><!-- 重置 -->
 				</td>
 			 </tr>

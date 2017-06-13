@@ -135,7 +135,7 @@
 				                  <b:write property="page.count" />
 				                  <b:message key="l_recordNO."></b:message>
 				                  <b:write property="page.currentPage" />
-				                  <b:message key="l_page"></b:message>
+				                  <b:message key="l_page"></b:message>/
 				                  <b:write property="page.totalPage" />
 				                  <b:message key="l_page"></b:message>
 				                </l:equal>
@@ -216,7 +216,7 @@
 				                  <b:write property="page2.count" />
 				                  <b:message key="l_recordNO."></b:message>
 				                  <b:write property="page2.currentPage" />
-				                  <b:message key="l_page"></b:message>
+				                  <b:message key="l_page"></b:message>/
 				                  <b:write property="page2.totalPage" />
 				                  <b:message key="l_page"></b:message>
 				                </l:equal>
@@ -247,12 +247,12 @@
 	 //var aaa=$id("#mortgageType").value;
 	 var options=$("#mortgageType option:selected");  //获取选中的项
 	// alert(options.val());
-	 if(options.val()=="0"){
+	 if(options.val()=="1"){
 	     //document.getElementById("tj_jdc").style.display = "none";
 	    // document.getElementById("tj_fc").style.display = "block";
 	     $("#tj_fc").show();
 	     $("#tj_jdc").hide();
-	    }else if(options.val()=="1"){
+	    }else if(options.val()=="2"){
 	     //document.getElementById("tj_fc").style.display = "none";
 	    // document.getElementById("tj_fc").style.display = "block";
 	     $("#tj_jdc").show();
@@ -261,12 +261,12 @@
 	
 	//抵押类型改变事件
     function changeMortgageType(val){
-    if(val=="0"){
+    if(val=="1"){
      //document.getElementById("tj_jdc").style.display = "none";
     // document.getElementById("tj_fc").style.display = "block";
      $("#tj_fc").show();
      $("#tj_jdc").hide();
-    }else if(val=="1"){
+    }else if(val=="2"){
      //document.getElementById("tj_fc").style.display = "none";
     // document.getElementById("tj_fc").style.display = "block";
      $("#tj_jdc").show();
@@ -275,7 +275,7 @@
     }
 	//清空
 	function clears(){
-		$("#mortgageType").val("");
+		
 		$("#whetherOverrun").val("");
 		//清空JSP页面时间控件显示的值
 		$("#queryTime_input").val("");

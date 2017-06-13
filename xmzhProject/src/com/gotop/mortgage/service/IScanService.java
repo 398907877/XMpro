@@ -15,7 +15,7 @@ public interface IScanService extends Serializable {
 	 * @return 新增的条数
 	 * @throws Exception
 	 */
-	public int insertScan(Scan scan) throws Exception;
+	public int insertScan(Long pkey,Scan scan,MUOUserSession muo) throws Exception;
 	
 	/**
 	 * 扫描件查询

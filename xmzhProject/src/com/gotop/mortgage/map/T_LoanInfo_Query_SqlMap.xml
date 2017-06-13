@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="T_LoanInfo_Query_SqlMap">
 	<resultMap class="com.gotop.mortgage.model.LoanInfo" id="houseLoanInfoMap">
-		<!-- <result property="loanID" jdbcType="string" column="ID"/> -->
+		<result property="loanID" jdbcType="string" column="LOANID"/>
 		<result property="checkTime" jdbcType="string" column="INSERT_TIME"/>
 		<result property="otherType" jdbcType="string" column="OTHER_TYPE"/>
 		<result property="repertoryID" jdbcType="string" column="PROJECT_NUMBER"/>
@@ -10,7 +10,7 @@
 		<result property="propertyPerson" jdbcType="string" column="PROPERTY_NAME"/>
 		
 		<result property="checkNums" jdbcType="string" column="BORROWER_NUMS"/>
-		<!--  <result property="orgnaizationBranch" jdbcType="string" column="ORG_CODE"/>-->
+		<result property="orgnaizationBranch" jdbcType="string" column="ORGNAME"/>
 		<result property="orgnaizationCustomerManager" jdbcType="string" column="MANGER_NAME"/>
 		
 		<result property="alreadyLoanDay" jdbcType="string" column="ALREADYLOANDAY"/>
@@ -21,7 +21,7 @@
 	</resultMap>
 	
 	<resultMap class="com.gotop.mortgage.model.LoanInfo" id="carLoanInfoMap">
-		<!-- <result property="loanID" jdbcType="string" column="ID"/> -->
+		<result property="loanID" jdbcType="string" column="LOANID"/>
 		<result property="checkTime" jdbcType="string" column="INSERT_TIME"/>
 		<result property="otherType" jdbcType="string" column="OTHER_TYPE"/>
 		<result property="repertoryID" jdbcType="string" column="PROJECT_NUMBER"/>
@@ -29,7 +29,7 @@
 		
 		
 		<result property="checkNums" jdbcType="string" column="BORROWER_NUMS"/>
-		<!--  <result property="orgnaizationBranch" jdbcType="string" column="ORG_CODE"/>-->
+		<result property="orgnaizationBranch" jdbcType="string" column="ORGNAME"/>
 		<result property="orgnaizationCustomerManager" jdbcType="string" column="MANGER_NAME"/>
 		
 		<result property="alreadyLoanDay" jdbcType="string" column="ALREADYLOANDAY"/>
@@ -43,143 +43,46 @@
 	
 	<!-- 外借情况查询  房产-->
 	<select id="queryHouseLoanInfoList" parameterClass="java.util.HashMap" resultMap="houseLoanInfoMap">
-	 <!-- select * 
-	 from 
-	   (select t.*,
-        case
-          when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
-           0
-          when t.OTHER_TYPE in ('1', '2', '4') AND t.ALREADYLOANDAY > 15 then
-           0
-          else
-           1
-        end as WHETHEROVERRUN
-   from (select a.INSERT_TIME,
-                d.OTHER_TYPE,
-                d.PROJECT_NUMBER,
-                d.MORTGAGE_TYPE,
-                b.PROPERTY_NO,
-                b.PROPERTY_NAME,
-                a.BORROWER_NUMS,
-                d.MANGER_NAME,
-                to_char(round(sysdate-to_date(a.INSERT_TIME,'yyyy-mm-dd hh24:mi:ss'),2),'fm99990.0099') as ALREADYLOANDAY,
-                a.REMARK
-           from T_MORTGAGE_LIST       a,
-                T_MORTGAGE_HOUSE_INFO b,
-                T_WARRANTS_INFO       d
-          where a.warrants_id = b.warrants_id
-            and a.warrants_id = d.id
-            and a.OPERATING_MATTERS = '1'
-      ) t
-      ) p
-      where 1=1
-       -->
-       select * 
-   from 
-     (select t.*,
-        case
-          when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
-           0
-          when t.OTHER_TYPE in ('1', '2', '4') AND t.ALREADYLOANDAY > 15 then
-           0
-          else
-           1
-        end as WHETHEROVERRUN
-   from (select a.INSERT_TIME,
-                d.OTHER_TYPE,
-                d.PROJECT_NUMBER,
-                d.MORTGAGE_TYPE,
-                b.PROPERTY_NO,
-                b.PROPERTY_NAME,
-                a.BORROWER_NUMS,
-                d.MANGER_NAME,
-                to_char(round(sysdate-to_date(a.INSERT_TIME,'yyyy-mm-dd hh24:mi:ss'),2),'fm99990.0099') as ALREADYLOANDAY,
-                a.REMARK
-           from T_MORTGAGE_LIST       a
-               left join T_MORTGAGE_HOUSE_INFO b on a.warrants_id = b.warrants_id
-               left join T_WARRANTS_INFO       d on b.warrants_id =d.id
-          where a.OPERATING_MATTERS = '1'
-      ) t
-      ) p
-      where 1=1
-       <isNotNull prepend="and" property="mortgageType" >
-         <![CDATA[
-            p.MORTGAGE_TYPE = '$mortgageType$'
-               ]]>
-      </isNotNull>
-      <isNotNull prepend="and" property="queryTime" >
-        <![CDATA[
-            substr(p.INSERT_TIME,0,8) =  '$queryTime$'
-               ]]>
-      </isNotNull>
-       <isNotNull prepend="and" property="whetherOverrun" >
-         <![CDATA[
-            p.WHETHEROVERRUN = '$whetherOverrun$'
-               ]]>
-      </isNotNull>
-	</select>
-	<!-- 外借情况查询  机动车-->
-	<select id="queryCarLoanInfoList" parameterClass="java.util.HashMap" resultMap="carLoanInfoMap">
-	 <!-- select * 
-	 from 
-	   (select t.*,
-        case
-          when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
-           0
-          when t.OTHER_TYPE in ('1', '2', '4') AND t.ALREADYLOANDAY > 15 then
-           0
-          else
-           1
-        end as WHETHEROVERRUN
-   from (select a.INSERT_TIME,
-                d.OTHER_TYPE,
-                d.PROJECT_NUMBER,
-                d.MORTGAGE_TYPE,
-                c.CAR_NO,
-                c.CAR_NAME,
-                a.BORROWER_NUMS,
-                d.MANGER_NAME,
-                to_char(round(sysdate-to_date(a.INSERT_TIME,'yyyy-mm-dd hh24:mi:ss'),2),'fm99990.0099') as ALREADYLOANDAY,
-                a.REMARK
-           from T_MORTGAGE_LIST       a,
-                T_MORTGAGE_CAR_INFO   c,
-                T_WARRANTS_INFO       d
-          where a.warrants_id = c.warrants_id
-            and a.warrants_id = d.id
-            and a.OPERATING_MATTERS = '1'
-      ) t
-      ) p
-      where 1=1
-       -->
        
-       select * 
-	 from 
-	   (select t.*,
-        case
-          when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
-           0
-          when t.OTHER_TYPE in ('1', '2', '4') AND t.ALREADYLOANDAY > 15 then
-           0
-          else
-           1
-        end as WHETHEROVERRUN
-   from (select a.INSERT_TIME,
-                d.OTHER_TYPE,
-                d.PROJECT_NUMBER,
-                d.MORTGAGE_TYPE,
-                c.CAR_NO,
-                c.CAR_NAME,
-                a.BORROWER_NUMS,
-                d.MANGER_NAME,
-                to_char(round(sysdate-to_date(a.INSERT_TIME,'yyyy-mm-dd hh24:mi:ss'),2),'fm99990.0099') as ALREADYLOANDAY,
-                a.REMARK
-           from T_MORTGAGE_LIST       a 
-               left join T_MORTGAGE_CAR_INFO c on a.warrants_id = c.warrants_id
-               left join T_WARRANTS_INFO       d on c.warrants_id =d.id
-          where a.OPERATING_MATTERS = '1'
-      ) t
-      ) p
-      where 1=1
+<![CDATA[ 
+select M.*,Y.ORGNAME
+from(
+  select rownum LOANID,P.*  
+   from (select t.*,
+                case
+                  when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
+                   0
+                  when t.OTHER_TYPE in ('1', '2', '4') AND
+                       t.ALREADYLOANDAY > 15 then
+                   0
+                  else
+                   1
+                end as WHETHEROVERRUN
+           from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
+                                'yyyy-mm-dd hh24:mi:ss') AS INSERT_TIME,
+                        d.OTHER_TYPE,
+                        d.PROJECT_NUMBER,
+                        d.MORTGAGE_TYPE,
+                        b.PROPERTY_NO,
+                        b.PROPERTY_NAME,
+                        a.BORROWER_NUMS,
+                        d.ORG_CODE,
+                        d.MANGER_NAME,
+                        to_char(round(sysdate -
+                                      to_date(a.INSERT_TIME,
+                                              'yyyy-mm-dd hh24:mi:ss'),
+                                      2),
+                                'fm99990.0099') as ALREADYLOANDAY,
+                        a.REMARK
+                   
+             from T_MORTGAGE_LIST       a
+               left join T_MORTGAGE_HOUSE_INFO b on a.warrants_id = b.warrants_id and a.operating_id = b.id
+               left join T_WARRANTS_INFO       d on a.warrants_id =d.id 
+             where a.OPERATING_MATTERS = '1'
+          ) t
+          ) p
+  where 1 = 1
+ ]]>   
        <isNotNull prepend="and" property="mortgageType" >
          <![CDATA[
             p.MORTGAGE_TYPE = '$mortgageType$'
@@ -187,7 +90,8 @@
       </isNotNull>
       <isNotNull prepend="and" property="queryTime" >
         <![CDATA[
-            substr(p.INSERT_TIME,0,8) =  '$queryTime$'
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyymmddhh24miss'),0,8) =  '$queryTime$'
                ]]>
       </isNotNull>
        <isNotNull prepend="and" property="whetherOverrun" >
@@ -195,5 +99,73 @@
             p.WHETHEROVERRUN = '$whetherOverrun$'
                ]]>
       </isNotNull>
+      ) M,
+      OM_ORGANIZATION    Y
+   WHERE M.ORG_CODE = Y.ORGCODE
+     
+     order by M.INSERT_TIME desc
+	</select>
+  <!-- 外借情况查询  机动车-->
+ <select id="queryCarLoanInfoList" parameterClass="java.util.HashMap" resultMap="carLoanInfoMap">
+      
+  <![CDATA[ 
+  select M.*,Y.ORGNAME
+from(
+      select rownum LOANID,P.*  
+   from (select t.*,
+                case
+                  when t.OTHER_TYPE = '3' AND t.ALREADYLOANDAY > 90 then
+                   0
+                  when t.OTHER_TYPE in ('1', '2', '4') AND
+                       t.ALREADYLOANDAY > 15 then
+                   0
+                  else
+                   1
+                end as WHETHEROVERRUN
+           from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
+                                'yyyy-mm-dd hh24:mi:ss') AS INSERT_TIME,
+                        d.OTHER_TYPE,
+                        d.PROJECT_NUMBER,
+                        d.MORTGAGE_TYPE,
+                        c.CAR_NO,
+                        c.CAR_NAME,
+                        a.BORROWER_NUMS,
+                        d.ORG_CODE,
+                        d.MANGER_NAME,
+                        to_char(round(sysdate -
+                                      to_date(a.INSERT_TIME,
+                                              'yyyy-mm-dd hh24:mi:ss'),
+                                      2),
+                                'fm99990.0099') as ALREADYLOANDAY,
+                        a.REMARK
+                   from T_MORTGAGE_LIST a
+                   left join T_MORTGAGE_CAR_INFO c
+                     on a.warrants_id = c.warrants_id and a.operating_id = c.id
+                   left join T_WARRANTS_INFO d
+                     on a.warrants_id = d.id
+                  where a.OPERATING_MATTERS = '1') t) p
+  where 1 = 1
+    ]]>   
+       <isNotNull prepend="and" property="mortgageType" >
+         <![CDATA[
+            p.MORTGAGE_TYPE = '$mortgageType$'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="queryTime" >
+        <![CDATA[
+            substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyyMMddhh24miss'),0,8) =  '$queryTime$'
+               ]]>
+      </isNotNull>
+       <isNotNull prepend="and" property="whetherOverrun" >
+         <![CDATA[
+            p.WHETHEROVERRUN = '$whetherOverrun$'
+               ]]>
+      </isNotNull>
+      ) M,
+      OM_ORGANIZATION    Y
+   WHERE M.ORG_CODE = Y.ORGCODE
+     
+     order by M.INSERT_TIME desc
 	</select>
 </sqlMap>
