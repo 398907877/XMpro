@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="T_Mortgage_Reserve_House_SqlMap">
+	<resultMap class="com.gotop.mortgage.model.MortgageReserveHouse" id="mortgageReserveHouse">
+		<result column="WARRANTS_ID" property="warrantsId" jdbcType="VARCHAR"/>
+     	<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR" />
+     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />
+     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
+     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
+     	<result column="STATUS" property="status" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_ADDRES" property="propertyAddres" jdbcType="VARCHAR" />
+     </resultMap>
+     
+     <resultMap id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" >
+    <!--Bean方式返回全表-->
+    	<result column="ID" property="id" jdbcType="VARCHAR"/>
+  		<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList2">
+  		<result column="ID" property="id" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TIME" property="operatingTime" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TYPE" property="operatingType" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
+  		<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR"/>
+  		<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR"/>
+     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_USERID" property="operatingUserId" jdbcType="VARCHAR"/>
+     	<result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_REMARK" property="operatingRemark" jdbcType="VARCHAR"/>
+  		
+  </resultMap>
+  <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList4">
+  		<result column="ID" property="id" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TIME" property="operatingTime" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TYPE" property="operatingType" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
+  		<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR"/>
+  		<result column="CAR_NO" property="propertyNo" jdbcType="VARCHAR"/>
+     	<result column="CAR_NAME" property="propertyName" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_USERID" property="operatingUserId" jdbcType="VARCHAR"/>
+     	<result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_REMARK" property="operatingRemark" jdbcType="VARCHAR"/>
+  		
+  </resultMap>
+     <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList">
+     	<result column="ID" property="id" jdbcType="VARCHAR"/>
+     	<result column="MORTGAGE_TYPE" property="mortgageType" jdbcType="VARCHAR"/>
+     	<result column="WARRANTS_ID" property="warrantsId" jdbcType="VARCHAR"/>
+     	<result column="BORROWER_NUMS" property="borrowerNums" jdbcType="VARCHAR"/>
+     	<result column="BORROWER_LOG" property="borrowerLog" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
+     	<result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TIME" property="operatingTime" jdbcType="VARCHAR"/>
+     	<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_NUMS" property="propertyNums" jdbcType="VARCHAR"/>
+     	<!-- 他项权证数 -->
+     	<result column="PROPERTY_NUMS" property="otherWarrantsNums" jdbcType="VARCHAR"/>
+     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_USERID" property="operatingUserId" jdbcType="VARCHAR"/>
+     	<result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_REMARK" property="operatingRemark" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_TYPE" property="operatingType" jdbcType="VARCHAR"/>
+     	<result column="CAR_NO" property="carNo" jdbcType="VARCHAR"/>
+     	<result column="CAR_NAME" property="carName" jdbcType="VARCHAR"/>
+     	<result column="STATUS" property="status" jdbcType="VARCHAR"/>
+     	<!-- 记录数 -->
+     	<result property="alls" jdbcType="VARCHAR"/>
+     	<!-- 对否外借 -->
+     	<result column="OPERATING_MATTERS" property="isBorrow" jdbcType="VARCHAR"/>
+     	<!-- 操作日志外键，权证号 -->
+     	<result column="OPERATING_MORTGAG_ID" property="operatingMortgagId" jdbcType="VARCHAR"/>
+     </resultMap>
+     
+     <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList1">
+     	<result column="OPERATING_TYPE" property="operatingType" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
+     	<result column="PROPERTY_NUMS" property="propertyNums" jdbcType="VARCHAR"/>
+     	<result column="alls" property="alls" jdbcType="VARCHAR"/>
+     </resultMap>
+     <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList3">
+     	<result column="OPERATING_TYPE" property="operatingType" jdbcType="VARCHAR"/>
+     	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
+     	<result column="alls" property="alls" jdbcType="VARCHAR"/>
+     	<result column="cars" property="cars" jdbcType="VARCHAR"/>
+     	<result column="others" property="others" jdbcType="VARCHAR"/>
+     </resultMap>
+     
+     
+     <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouse">
+		select a.project_number as PROJECT_NUMBER,b.WARRANTS_ID as WARRANTS_ID, a.loan_type as LOAN_TYPE,a.other_warrants_number as OTHER_WARRANTS_NUMBER,a.borrower_name AS BORROWER_NAME,
+		a.status AS STATUS,b.property_no AS PROPERTY_NO,b.property_name AS PROPERTY_NAME,b.property_addres AS PROPERTY_ADDRES from T_WARRANTS_INFO a,T_MORTGAGE_HOUSE_INFO b 
+		where a.id=b.warrants_id
+		<dynamic>  
+       <isNotEmpty prepend=" and" property="propertyName">
+        b.PROPERTY_NAME like '%$propertyName$%'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyCardNo">
+        b.PROPERTY_CARDNO = '$propertyCardNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyNo">
+        b.PROPERTY_NO = '$propertyNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyAddres">
+        b.PROPERTY_ADDRES like '%$propertyAddres$%'
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="noRegisterSign">
+        a.NO_REGISTER_SIGN = '$noRegisterSign$'
+        </isNotEmpty>
+		</dynamic>
+		
+  </select>  
+  <select id="queryMortgageReserveById" parameterClass="java.util.HashMap" resultMap="mortgageReserve">
+  	select a.id as id,a.no_register_sign as NO_REGISTER_SIGN from T_WARRANTS_INFO a 
+  	 where a.id='$id$'
+  </select>
+  <update id="noRegisterSignUpdate" parameterClass="java.util.HashMap">
+  update T_WARRANTS_INFO a set 
+        NO_REGISTER_SIGN = '$noRegisterSign$'
+  where a.ID='$id$'
+  </update>
+     
+<select id="queryMortgageQueryForExcel" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouse">
+	select a.project_number as PROJECT_NUMBER,b.WARRANTS_ID as WARRANTS_ID, a.loan_type as LOAN_TYPE,a.other_warrants_number as OTHER_WARRANTS_NUMBER,a.borrower_name AS BORROWER_NAME,
+		a.status AS STATUS,b.property_no AS PROPERTY_NO,b.property_name AS PROPERTY_NAME,b.property_addres AS PROPERTY_ADDRES from T_WARRANTS_INFO a,T_MORTGAGE_HOUSE_INFO b 
+		where a.id=b.warrants_id
+		<dynamic>  
+       <isNotEmpty prepend=" and" property="propertyName">
+        b.PROPERTY_NAME like '%$propertyName$%'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyCardNo">
+        b.PROPERTY_CARDNO = '$propertyCardNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyNo">
+        b.PROPERTY_NO = '$propertyNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyAddres">
+        b.PROPERTY_ADDRES like '%$propertyAddres$%'
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="noRegisterSign">
+        a.NO_REGISTER_SIGN = '$noRegisterSign$'
+        </isNotEmpty>
+        
+		</dynamic>
+	
+</select>
+<!-- 补登记确认的日志记录插入 -->
+<insert id="MortgageLog_insert" parameterClass="java.util.HashMap">
+	<![CDATA[
+		insert into T_MORTGAGE_LOG (ID,OPERATING_TIME,OPERATING_USERID,OPERATING_TYPE,OPERATING_MORTGAG_ID,OPERATING_REMARK)
+		values (SEQ_T_MORTGAGE_LOG.NEXTVAL,'$operatingTime$','$operatingUserId$','$operatingType$','$warrantsId$','$operatingRemark$')
+	]]>
+</insert>
+
+<!-- 押品类型为房产的分类汇总统计表 -->
+<select id="queryMortgageReserveHouseInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList1">
+	   select a.operating_type as operating_type,
+        c.operating_matters as operating_matters,
+        count(a.operating_mortgag_id) alls,
+        b.property_nums as property_nums
+   from T_MORTGAGE_LOG a, T_MORTGAGE_HOUSE_INFO b, T_MORTGAGE_LIST c,T_WARRANTS_INFO d
+  where a.operating_mortgag_id = b.warrants_id
+    and a.operating_mortgag_id = c.warrants_id
+    and a.operating_mortgag_id = d.id
+
+	<isNotEmpty prepend="and" property="mortgageType">
+			d.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			c.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.operating_type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			d.STATUS='$status$'
+		</isNotEmpty>
+	
+	 group by 
+           a.operating_type,
+           c.operating_matters,
+           b.property_nums,
+           b.property_nums
+	
+		
+</select>
+<!-- 押品类型为机动车的分类汇总统计表===== -->
+<select id="queryMortgageReserveCarInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList3">
+  select a.operating_type as OPERATING_TYPE,
+       b.operating_matters AS operating_matters,
+       count(c.warrants_id) alls,
+       count(c.warrants_id) cars,
+       count(c.warrants_id) others
+  from T_MORTGAGE_LOG a, T_MORTGAGE_LIST b, T_MORTGAGE_CAR_INFO c,T_WARRANTS_INFO d
+ where c.warrants_id = a.operating_mortgag_id
+   and c.warrants_id = b.warrants_id
+   and c.warrants_id = d.id
+
+<dynamic>
+		<isNotEmpty prepend="and" property="mortgageType">
+			d.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			b.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.operating_type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			d.STATUS='$status$'
+		</isNotEmpty>
+	</dynamic>
+ group by a.operating_type, b.operating_matters
+</select>
+<!-- 押品类型为房产的出入库明细表 -->
+<select id="queryMortgageReserveHouseDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList2">
+	  select d.id                    as ID,
+         a.operating_time        as OPERATING_TIME,
+         a.operating_type        as OPERATING_TYPE,
+         d.operating_matters     as OPERATING_MATTERS,
+         c.project_number        as PROJECT_NUMBER,
+         b.property_no           AS PROPERTY_NO,
+         b.property_name         AS PROPERTY_NAME,
+         c.other_warrants_number AS OTHER_WARRANTS_NUMBER,
+         a.operating_userid      AS OPERATING_USERID,
+         c.next_name             AS NEXT_NAME,
+         a.operating_remark      AS OPERATING_REMARK
+    from T_MORTGAGE_LOG        a,
+         T_MORTGAGE_HOUSE_INFO b,
+         T_WARRANTS_INFO       c,
+         T_MORTGAGE_LIST       d
+   where d.warrants_id = b.warrants_id
+     and d.warrants_id = a.operating_mortgag_id
+     and c.id = d.warrants_id
+	 
+	<dynamic>
+		<isNotEmpty prepend="and" property="mortgageType">
+			c.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			d.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.operating_type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			c.STATUS='$status$'
+		</isNotEmpty>
+	</dynamic>
+		
+</select>
+<!-- 押品类型为机动车的出入库明细表 -->
+<select id="queryMortgageReserveCarDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList">
+	  select d.id                    AS id,
+         a.operating_time        AS operating_time,
+         a.operating_type        AS operating_type,
+         d.operating_matters     AS operating_matters,
+         c.project_number        AS project_number,
+         b.car_no                AS car_no,
+         b.car_name              AS car_name,
+         a.operating_userid      AS operating_userid,
+         c.next_name             AS next_name,
+         a.operating_remark      AS operating_remark
+    from T_MORTGAGE_LOG      a,
+         T_MORTGAGE_CAR_INFO b,
+         T_WARRANTS_INFO     c,
+         T_MORTGAGE_LIST     d
+   where d.warrants_id = b.warrants_id
+     and d.warrants_id = a.operating_mortgag_id
+     and c.id = d.warrants_id
+  <dynamic>
+		<isNotEmpty prepend="and" property="mortgageType">
+			c.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.OPERATING_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			d.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.operating_type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			c.STATUS='$status$'
+		</isNotEmpty>
+	</dynamic>
+
+</select>
+
+
+
+
+</sqlMap>

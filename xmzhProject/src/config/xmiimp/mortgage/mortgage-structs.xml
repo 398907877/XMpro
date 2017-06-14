@@ -87,5 +87,38 @@
                 /jsp/mortgage/inventory_Stat_excel.jsp
             </result>  
 		</action>
+		<action name="mortgageReserveHouseAction_*" class="mortgageReserveHouseAction"
+			method="{1}">
+	      <result name="mortgageReserveHouseList">
+				/jsp/mortgage/mortgage_query.jsp
+			</result>
+			<result name="queryMortgageQueryForExcel">
+				/jsp/mortgage/mortgage_query_Excel.jsp
+			</result>
+			<result name="RegisterSignConfirm">
+				/jsp/mortgage/mortgage_check_confirm.jsp
+			</result>
+			<result name="queryMortgageInOut">
+				/jsp/mortgage/mortgage_in_out.jsp
+			</result>
+			<result name="queryMortgageReserveCarDetailInOutForExcel">
+				/jsp/mortgage/mortgage_InOutCarDetail_Excel.jsp
+			</result>
+			<result name="queryMortgageReserveHouseDetailInOutForExcel">
+				/jsp/mortgage/mortgage_InOutHouseDetail_Excel.jsp
+			</result>
+			<result name="queryMortgageReserveCarDetailInOutForExcel1">
+				/jsp/mortgage/mortgage_InOutCarDetail1_Excel.jsp
+			</result>
+			<result name="queryMortgageReserveHouseDetailInOutForExcel1">
+				/jsp/mortgage/mortgage_InOutHouseDetail1_Excel.jsp
+			</result>
+			<result name="queryMortgageReserveCarInOutForExcel">
+				/jsp/mortgage/mortgage_InOutCarTotal_Excel.jsp
+			</result>
+			<result name="queryMortgageReserveHouseInOutForExcel">
+				/jsp/mortgage/mortgage_InOutHouseTotal_Excel.jsp
+			</result>
+		</action>
 	</package>
 </struts>

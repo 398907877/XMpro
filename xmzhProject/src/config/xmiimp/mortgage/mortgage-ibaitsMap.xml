@@ -5,6 +5,7 @@
  	
   <sqlMap resource="com/gotop/mortgage/map/T_Mortgage_Reserve_SqlMap.xml" />
 
+
   <sqlMap resource="com/gotop/mortgage/map/T_Scan_Management_SqlMap.xml" />
   
   <sqlMap resource="com/gotop/mortgage/map/T_LoanInfo_Query_SqlMap.xml" />
@@ -12,4 +13,7 @@
   <sqlMap resource="com/gotop/mortgage/map/T_MortgageLog_Query_SqlMap.xml" />
   
   <sqlMap resource="com/gotop/mortgage/map/T_InventoryStat_Query_SqlMap.xml" />
+
+  <sqlMap resource="com/gotop/mortgage/map/T_Mortgage_Reserve_House_SqlMap.xml"/>
+
 </sqlMapConfig>

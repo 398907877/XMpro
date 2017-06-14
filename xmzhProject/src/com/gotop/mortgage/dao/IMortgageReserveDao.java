@@ -170,4 +170,6 @@ public interface IMortgageReserveDao {
 	 * 检验机动车登记证号是否已存在
 	 */
 	String checkCarRegisterNo(Map<String, Object> map);
+	List<MortgageReserve> queryMortgageReserveList(Map<String, Object> map, Page page);
+
 }

@@ -24,6 +24,7 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	}
 
 	
+
 	
 	@Override
 	public String checkOtherWarrantsNumber(Map<String, Object> map) {
@@ -170,6 +171,7 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkCarRegisterNo", map);
 		return String.valueOf(obj);
 	}
+
 
 
 

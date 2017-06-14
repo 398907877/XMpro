@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
 <beans >
   
-    <bean id="mortgageReserveDao" class="com.gotop.mortgage.dao.impl.MortgageReserveDao" >
+  <bean id="mortgageReserveDao" class="com.gotop.mortgage.dao.impl.MortgageReserveDao" >
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
@@ -20,5 +20,8 @@
   
   <bean id="inventoryStatDao" class="com.gotop.mortgage.dao.impl.InventoryStatDao" >
     <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  <bean id="mortgageReserveHouseDao" class="com.gotop.mortgage.dao.impl.MortgageReserveHouseDao">
+  	<property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
 </beans>

@@ -27,6 +27,7 @@
     <result column="status" property="status" jdbcType="VARCHAR" />                           
     <result column="AFTER_MORTGAGE_STATUS" property="afterMortgageStatus" jdbcType="VARCHAR" />                               
   </resultMap> 
+
  
    
     <select id="queryMortgageReserveListInfo" parameterClass="java.util.HashMap" resultMap="tMortgageReserve">
@@ -66,6 +67,23 @@
 	  t.project_number='$projectNumber$'
 	 </isNotNull>
   </select>  
+
+     <resultMap class="com.gotop.mortgage.model.MortgageReserveHouse" id="mortgageReserveHouse">
+     	<result column="ID" property="id" jdbcType="DECIMAL" />
+     	<result column="WARRANTS_ID" property="warrantsId" jdbcType="DECIMAL" />
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_CARDNO" property="propertyCardNo" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_ADDRES" property="propertyAddres" jdbcType="VARCHAR" />
+     	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
+     	<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR" />
+     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />
+     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
+     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
+     	<result column="STATUS" property="status" jdbcType="VARCHAR" />
+     	
+     </resultMap>
+
   
   
   <select id="backqueryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
@@ -85,6 +103,7 @@
 
   </select>  
   
+<<<<<<< 83285d0488352da759d2b79e1d1744b7f70b11c4
   
   <select id="queryMortgageReserveListHouseInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
 	select 
@@ -102,6 +121,42 @@
 	 <isNotNull prepend="and" property="id" >
 	  o.warrants_id='$id$'
 	 </isNotNull>
+	 
+  <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouse">
+		select a.project_number as projectNumber,a.loan_type as loanType,a.other_warrants_number as ,a.borrower_name,
+		a.status,b.property_no,b.property_name,b.property_addres  from T_WARRANTS_INFO a,T_MORTGAGE_HOUSE_INFO b 
+		where a.id=b.warrants_id
+		<dynamic>  
+       <isNotEmpty prepend=" and" property="propertyName">
+        b.PROPERTY_NAME like '%$propertyName$%'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyCardNo">
+        b.PROPERTY_CARDNO = '$propertyCardNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyNo">
+        b.PROPERTY_NO = '$propertyNo$'
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyAddres">
+        b.PROPERTY_ADDRES like '%$propertyAddres$%'
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="noRegisterSign">
+        a.NO_REGISTER_SIGN = '$noRegisterSign$'
+        </isNotEmpty>
+        
+		</dynamic>
+		
+  </select>  
+  
+  <update id="noRegisterSignUpdate" parameterClass="com.gotop.mortgage.model.MortgageReserve">
+  update T_MORTGAGE_INFO 
+  <dynamic prepend="set" >
+  	 <isNotNull prepend="," property="noRegisterSign" >
+        NO_REGISTER_SIGN = #noRegisterSign:VARCHAR#
+      </isNotNull>
+  </dynamic>
+  
+  </update>
+>>>>>>> 2dc2c5a524f17ab43de528d3d7e3b1595d3c0c34
 
   </select>  
   

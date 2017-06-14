@@ -6,6 +6,8 @@
   <bean name="mortgageReserve" id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" singleton="false" ></bean> 
   <bean name="mortgageReserveCar" id="mortgageReserveCar" class="com.gotop.mortgage.model.MortgageReserveCar" singleton="false" ></bean> 
   <bean name="mortgageReserveHouse" id="mortgageReserveHouse" class="com.gotop.mortgage.model.MortgageReserveHouse" singleton="false" ></bean> 
+   <bean name="mortgageList" id="mortgageList" class="com.gotop.mortgage.model.MortgageList" singleton="false"></bean>
+   <bean name="mortgageLog" id="mortgageLog" class="com.gotop.mortgage.model.MortgageLog" singleton="false"></bean>
    <bean name="mortgageReserveAction" id="mortgageReserveAction" class="com.gotop.mortgage.action.MortgageReserveAction" singleton="false" >
      <property name="mortgageReserveService" ref="mortgageReserveService" />
     <property name="mortgageReserveOut" ref="mortgageReserveOut" />
@@ -13,6 +15,13 @@
     <property name="mortgageReserve" ref="mortgageReserve" />
     <property name="mortgageReserveCar" ref="mortgageReserveCar" />
     <property name="mortgageReserveHouse" ref="mortgageReserveHouse" />
+  </bean>
+  <bean name="mortgageReserveHouseAction" id="mortgageReserveHouseAction" class="com.gotop.mortgage.action.MortgageReserveHouseAction" singleton="false">
+  	<property name="mortgageReserveHouse" ref="mortgageReserveHouse"></property>
+  	<property name="mortgageReserveHouseService" ref="mortgageReserveHouseService"></property>
+  	<property name="mortgageReserve" ref="mortgageReserve"></property>
+  	<property name="mortgageList" ref="mortgageList"></property>
+  	<property name="mortgageLog" ref="mortgageLog"></property>
   </bean>
   
   

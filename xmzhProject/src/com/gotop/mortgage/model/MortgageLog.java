@@ -1,5 +1,6 @@
 package com.gotop.mortgage.model;
 
+
 import java.io.Serializable;
 
 /**
@@ -74,6 +75,8 @@ public class MortgageLog implements Serializable{
 		this.remark = remark;
 	}
 
+	
+	
 	
 	
 	
