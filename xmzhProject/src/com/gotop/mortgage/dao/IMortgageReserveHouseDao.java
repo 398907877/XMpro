@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.gotop.mortgage.model.MortgageList;
 import com.gotop.mortgage.model.MortgageReserve;
-import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.primeton.utils.Page;
 
 public interface IMortgageReserveHouseDao {
@@ -16,7 +16,7 @@ public interface IMortgageReserveHouseDao {
 	 * @param page
 	 * @return
 	 */
-	public List<MortgageReserveHouse> queryMortgageReserveList(Map<String, Object> map, Page page);
+	public List<MortgageReserveHouseCar> queryMortgageReserveList(Map<String, Object> map, Page page);
 	/**
      * 通过主键更新部分字段，部分字段说明：当字段为null时不更新，当字段值为''空值是更新为空值
      * @abatorgenerated
@@ -29,7 +29,7 @@ public interface IMortgageReserveHouseDao {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveHouse> queryMortgageReserveHouseForExcel(Map<String, Object> map);
+	List<MortgageReserveHouseCar> queryMortgageReserveHouseForExcel(Map<String, Object> map);
 	/**
      * 插入一条新数据.
      * @abatorgenerated

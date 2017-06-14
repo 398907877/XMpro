@@ -1,9 +1,7 @@
 package com.gotop.mortgage.model;
 
+public class MortgageReserveHouseCar {
 
-public class MortgageReserveHouse {
-	
-	
 	/*
 	 * 主键id
 	 * */
@@ -225,5 +223,4 @@ public class MortgageReserveHouse {
 		this.nextName = nextName;
 	}
 
-	
 }

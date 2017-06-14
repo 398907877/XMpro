@@ -1,18 +1,14 @@
 package com.gotop.mortgage.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.gotop.jbpm.model.TProcessConfig;
-import com.gotop.jbpm.model.TProcessConfigPerson;
 import com.gotop.mortgage.dao.IMortgageReserveHouseDao;
 import com.gotop.mortgage.model.MortgageList;
-import com.gotop.mortgage.model.MortgageLog;
 import com.gotop.mortgage.model.MortgageReserve;
-import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.gotop.mortgage.service.IMortgageReserveHouseService;
 import com.primeton.utils.Page;
 
@@ -23,9 +19,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	 * 根据条件查询房产库存信息
 	 * */
 	@Override
-	public List<MortgageReserveHouse> queryHouseStockList(
-			MortgageReserveHouse mortgageReserveHouse, Page page){
-		List<MortgageReserveHouse> mortgageReserveList =new ArrayList<MortgageReserveHouse>();
+	public List<MortgageReserveHouseCar> queryHouseStockList(
+			MortgageReserveHouseCar mortgageReserveHouse, Page page){
+		List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		map.put("propertyName", mortgageReserveHouse.getPropertyName());
 		map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());
@@ -48,8 +44,8 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     }
     
     @Override
-	public List<MortgageReserveHouse> queryMortgageHouseForExcel(
-			MortgageReserveHouse mortgageReserveHouse) {
+	public List<MortgageReserveHouseCar> queryMortgageHouseForExcel(
+			MortgageReserveHouseCar mortgageReserveHouse) {
     	Map<String, Object> map = new HashMap<String, Object>();
     	if (mortgageReserveHouse!=null) {
 			if (mortgageReserveHouse.getNoRegisterSign()!=null

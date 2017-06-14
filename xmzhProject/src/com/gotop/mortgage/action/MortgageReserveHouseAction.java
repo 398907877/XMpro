@@ -9,21 +9,20 @@ import com.gotop.crm.util.BaseAction;
 import com.gotop.mortgage.model.MortgageList;
 import com.gotop.mortgage.model.MortgageLog;
 import com.gotop.mortgage.model.MortgageReserve;
-import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.gotop.mortgage.service.IMortgageReserveHouseService;
 import com.gotop.util.Struts2Utils;
 import com.gotop.util.time.TimeUtil;
-import com.informix.util.stringUtil;
 import com.primeton.utils.Page;
 import com.primeton.utils.pageCondExpand;
 
 public class MortgageReserveHouseAction extends BaseAction{
-	private MortgageReserveHouse mortgageReserveHouse;
+	private MortgageReserveHouseCar mortgageReserveHouse;
 	private MortgageReserve mortgageReserve;
 	private MortgageList mortgageList;
 	private MortgageLog mortgageLog;
 	private IMortgageReserveHouseService mortgageReserveHouseService;
-	private List<MortgageReserveHouse> mortgageReserveHouseList=new ArrayList<MortgageReserveHouse>();
+	private List<MortgageReserveHouseCar> mortgageReserveHouseList=new ArrayList<MortgageReserveHouseCar>();
 	private List<MortgageList> mortgageLists = new ArrayList<MortgageList>();
 	public Page page2;
 	private String result_flag;
@@ -200,10 +199,10 @@ public class MortgageReserveHouseAction extends BaseAction{
 	}
 	
 	
-	public MortgageReserveHouse getMortgageReserveHouse() {
+	public MortgageReserveHouseCar getMortgageReserveHouse() {
 		return mortgageReserveHouse;
 	}
-	public void setMortgageReserveHouse(MortgageReserveHouse mortgageReserveHouse) {
+	public void setMortgageReserveHouse(MortgageReserveHouseCar mortgageReserveHouse) {
 		this.mortgageReserveHouse = mortgageReserveHouse;
 	}
 	public IMortgageReserveHouseService getMortgageReserveHouseService() {
@@ -213,17 +212,18 @@ public class MortgageReserveHouseAction extends BaseAction{
 			IMortgageReserveHouseService mortgageReserveHouseService) {
 		this.mortgageReserveHouseService = mortgageReserveHouseService;
 	}
-	public List<MortgageReserveHouse> getMortgageReserveHouseList() {
-		return mortgageReserveHouseList;
-	}
 	public MortgageReserve getMortgageReserve() {
 		return mortgageReserve;
 	}
 	public void setMortgageReserve(MortgageReserve mortgageReserve) {
 		this.mortgageReserve = mortgageReserve;
 	}
+	
+	public List<MortgageReserveHouseCar> getMortgageReserveHouseList() {
+		return mortgageReserveHouseList;
+	}
 	public void setMortgageReserveHouseList(
-			List<MortgageReserveHouse> mortgageReserveHouseList) {
+			List<MortgageReserveHouseCar> mortgageReserveHouseList) {
 		this.mortgageReserveHouseList = mortgageReserveHouseList;
 	}
 	public MortgageList getMortgageList() {

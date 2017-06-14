@@ -173,6 +173,4 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	}
 
 
-
-
 }

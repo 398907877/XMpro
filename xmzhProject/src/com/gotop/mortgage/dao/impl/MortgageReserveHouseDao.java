@@ -6,14 +6,14 @@ import java.util.Map;
 import com.gotop.mortgage.dao.IMortgageReserveHouseDao;
 import com.gotop.mortgage.model.MortgageList;
 import com.gotop.mortgage.model.MortgageReserve;
-import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.gotop.util.dataSource.SqlMapClientDao;
 import com.primeton.utils.Page;
 
 public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgageReserveHouseDao{
 
 	@Override
-	public List<MortgageReserveHouse> queryMortgageReserveList(
+	public List<MortgageReserveHouseCar> queryMortgageReserveList(
 		Map<String, Object> map, Page page){
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseList",map,page);
 	}
@@ -25,7 +25,7 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 	}
 
 	@Override
-	public List<MortgageReserveHouse> queryMortgageReserveHouseForExcel(
+	public List<MortgageReserveHouseCar> queryMortgageReserveHouseForExcel(
 			Map<String, Object> map) {
 		return queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseList",map);
 	}
