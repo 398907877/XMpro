@@ -18,13 +18,13 @@
 					<td >
 						<d:select id="mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" property="mortgageReserve.mortgageType" onchange="changeMortgageType(this.value)"  ></d:select>
 					</td>
-					<td class="form_label" align="right" >项目说明备注：</td>
-					<td>
-					 <h:text property="mortgageReserve.projectRemark" id="projectRemark" style="width:130px;" />	
-					</td>	
 					<td class="form_label" align="right" >库存序号：</td>
 					<td>
 					 <h:text property="mortgageReserve.projectNumber" id="projectNumber" style="width:130px;" />	
+					</td>
+					<td class="form_label" align="right">库存状态：</td>
+					<td >
+						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageReserve.status"  nullLabel="全部" ></d:select>
 					</td>
 				</tr>
 				<tr>
@@ -33,7 +33,7 @@
 					<h:text property="mortgageReserve.borrowerName" id="borrowerName" style="width:130px;" />	
 				   </td>
 				   <td  class="form_label" align="right" >借款人身份证号：</td>
-				   <td >
+				   <td  colspan="3">
 					<h:text property="mortgageReserve.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
 				   </td>
 				</tr>
@@ -72,13 +72,13 @@
 					<h:text property="mortgageReserve.orgCode" id="orgCode" style="width:130px;" readonly="true"/>	
 					<a href="#" onclick="open_slzhej_fun1()">选择</a>
 					</td>	
-					 <td class="form_label" align="right" >库存状态：</td>
+					 <td class="form_label" align="right" >已注销未领取：</td>
 					<td>
-					<h:text property="mortgageReserve.status" id="status" style="width:130px;" />	
-					</td>	
+					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserve.noRegisterSign"  nullLabel="全部" ></d:select>
+					</td>
 					 <td class="form_label" align="right" >补登记标志：</td>
 					<td>
-					<h:text property="mortgageReserve.noRegisterSign" id="noRegisterSign" style="width:130px;" />	
+					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserve.noRegisterSign"  nullLabel="全部" ></d:select>
 					</td>
 				  </tr>		
 				</tbody>
@@ -169,13 +169,13 @@
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="OTHERTYPE" />
+								 <d:write  iterateId="id2" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="PROJECTNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="LOANTYPE" />
+									<d:write  iterateId="id2" dictTypeId="LOAN_TYPE_VIEW" property="LOANTYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
@@ -184,7 +184,7 @@
 									<b:write iterateId="id2" property="BORROWERNAME" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="STATUS" />
+									<d:write  iterateId="id2" dictTypeId="MORTGAG_STATUS" property="STATUS"/>
 								</td>
 							</tr>
 						</l:iterate>
@@ -196,10 +196,9 @@
 							<input type="button" class="button" value="新增入库" onclick="add();"/>
 							<input type="button" class="button" value="添加押品" onclick="add_coll();"/>
 							<input type="button" class="button" value="库存详情" onclick="view_Infos();"/>
-							<input type="button" class="button" value="出库处理" onclick="add1();"/>
-							<input type="button" class="button" value="入库处理" onclick="add1();"/>
-							<input type="button" class="button" value="库存变更" onclick="add1();"/>
-							<input type="button" class="button" value="扫描文件上传" onclick="add1();"/>
+							<input type="button" class="button" value="出入库处理" onclick="outIn_coll();"/>
+							<input type="button" class="button" value="库存变更" onclick="upd_coll();"/>
+							<input type="button" class="button" value="扫描文件上传" onclick="scan_import();"/>
 					
 				</div>
 							
@@ -241,12 +240,12 @@
 		
        //抵押类型改变事件
        function changeMortgageType(val){
-       if(val=="0"){
+       if(val=="1"){
         //document.getElementById("tj_jdc").style.display = "none";
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_fc").show();
         $("#tj_jdc").hide();
-       }else if(val=="1"){
+       }else if(val=="2"){
         //document.getElementById("tj_fc").style.display = "none";
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_jdc").show();
@@ -260,12 +259,12 @@
        //抵押类型改变事件
        function init(){
        var val=$("#mortgageType").val();
-       if(val=="0"){
+       if(val=="1"){
         //document.getElementById("tj_jdc").style.display = "none";
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_fc").show();
         $("#tj_jdc").hide();
-       }else if(val=="1"){
+       }else if(val=="2"){
         //document.getElementById("tj_fc").style.display = "none";
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_jdc").show();
@@ -296,8 +295,9 @@
 		
 		//新增
 		function add(){
+		  var mortgageType=$("#mortgageType").val();
 			 var url="/mortgage/mortgageReserveAction_toAddItem.action";
-			  showModalCenter(url, null,callBackFunc, 700, 500, '新增入库');
+			  showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '新增入库');
 		}
         //添加押品
 		function add_coll(){
@@ -311,10 +311,50 @@
 	  		}else{
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
-			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id;
-			    showModalCenter(url, mortgageType,callBackFunc, 700, 230, '添加押品');
+			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
+			    showModalCenter(url, "",callBackFunc, 1050, 230, '添加押品');
 			  }
 		}
+		
+		
+		
+        //出入库处理
+		function outIn_coll(){
+		  var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/mortgageReserveAction_toOutInColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
+			    parent.window.frames["mainFrame"].location.href = encodeURI(url);	
+			    //showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '出入库处理');
+			  }
+		}
+		
+		
+		
+		//库存变更
+		function upd_coll(){
+		 var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/mortgageReserveAction_toUpdColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
+			    showModalCenter(url, "",callBackFunc, 1050, 520, '库存变更');
+			  }
+		}
+		
 		//库存详情
 		function view_Infos(){
 		 var gop;
@@ -327,10 +367,27 @@
 	  		}else{
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
-			    var url="/mortgage/mortgageReserveAction_toViewInfos.action?mortgageReserveRes.warrantsId="+id+"&mortgageType="+mortgageType;
+			    var url="/mortgage/mortgageReserveAction_toViewInfos.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
 			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存详情');
 			  }
 		}
+		//扫描件上传
+		function scan_import(){
+		  var gop;
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/scanManagementAction_toAddScanImport.action?scan.warrantsID="+id;
+			    showModalCenter(url, "",callBackFunc, 580, 300, '扫描件上传');
+			  }
+		}
+
+		
 		function callBackFunc(){
 			var frm = $name("query_form");
             frm.submit();

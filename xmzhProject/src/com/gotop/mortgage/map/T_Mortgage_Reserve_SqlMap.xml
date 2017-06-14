@@ -12,7 +12,8 @@
     <result column="OTHERWARRANTSDATE" property="otherWarrantsDate" jdbcType="VARCHAR" />   
     <result column="BORROWERNAME" property="borrowerName" jdbcType="VARCHAR" />  
     <result column="BORROWERCARDNO" property="borrowerCardNo" jdbcType="VARCHAR" />    
-    <result column="ORGCODE" property="orgCode" jdbcType="VARCHAR" />    
+    <result column="ORGCODE" property="orgCode" jdbcType="VARCHAR" />      
+    <result column="ORGNAME" property="orgName" jdbcType="VARCHAR" />    
     <result column="MANGER_NAME" property="mangerName" jdbcType="VARCHAR" />    
     <result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />     
     <result column="BORROWER_CONTRACTNO" property="borrowerContractNo" jdbcType="VARCHAR" />        
@@ -34,10 +35,11 @@
        t.other_type OTHERTYPE,
        t.project_number PROJECTNUMBER,
        t.other_warrants_number OTHERWARRANTSNUMBER,
-       t.other_warrants_date OTHERWARRANTSDATE,
+       to_char(to_date(t.other_warrants_date,'yyyy-mm-dd'),'yyyy-mm-dd') OTHERWARRANTSDATE,
        t.borrower_name BORROWERNAME,
        t.borrower_cardno BORROWERCARDNO,
        t.org_code ORGCODE,
+       o.orgname ORGNAME,
        t.manger_name  MANGER_NAME,
        t.loan_type LOAN_TYPE,
        t.borrower_contractno BORROWER_CONTRACTNO,
@@ -51,6 +53,8 @@
        t.status STATUS,
        t.after_mortgage_status AFTER_MORTGAGE_STATUS
   from t_warrants_info t
+  left join OM_ORGANIZATION O
+ on t.org_code=o.orgcode
  where  1=1
 	 <isNotNull prepend="and" property="mortgageType" >
 	  t.mortgage_type='$mortgageType$'
@@ -58,7 +62,9 @@
 	 <isNotNull prepend="and" property="id" >
 	  t.id='$id$'
 	 </isNotNull>
-
+	 <isNotNull prepend="and" property="projectNumber" >
+	  t.project_number='$projectNumber$'
+	 </isNotNull>
   </select>  
   
   
@@ -75,10 +81,50 @@
        o.property_addres PROPERTYADDRES
   from t_warrants_info t, t_mortgage_house_info o
  where t.id = o.warrants_id
-  and t.mortgage_type='0'
+  and t.mortgage_type='1'
 
   </select>  
   
+  
+  <select id="queryMortgageReserveListHouseInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	select 
+	   o.id ID,
+       o.warrants_id WARRANTSID, 
+       o.property_no PROPERTYNO,
+       o.property_name PROPERTYNAME,
+       o.property_cardno PROPERTYCARDNO,
+       o.property_addres PROPERTYADDRES,
+       o.property_nums PROPERTYNUMS,
+       to_char(to_date(o.property_date,'yyyy-mm-dd'),'yyyy-mm-dd') PROPERTYDATE,
+       rownum NOWCOUNT
+  from t_mortgage_house_info o
+ where 1=1
+	 <isNotNull prepend="and" property="id" >
+	  o.warrants_id='$id$'
+	 </isNotNull>
+
+  </select>  
+  
+   <select id="queryMortgageReserveListCarInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	select
+	   o.id ID,
+       o.warrants_id WARRANTSID, 
+       o.car_name CARNAME,
+       o.car_cardno CARCARDNO,
+       o.car_registerno CARREGISTERNO,
+       o.car_no CARNO,
+       o.car_frameno CARFRAMENO,
+       o.car_invoiceno CARINVOICENO,
+       o.car_duesno CARDUESNO,
+       o.car_safeno CARSAFENO,
+       rownum NOWCOUNT
+  from  t_mortgage_car_info o
+ where 1=1
+	 <isNotNull prepend="and" property="id" >
+	  o.warrants_id='$id$'
+	 </isNotNull>
+
+  </select>  
    
   <select id="queryMortgageReserveList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
 	select t.id WARRANTSID,
@@ -93,6 +139,7 @@
 	 <isNotNull prepend="and" property="mortgageType" >
 	  t.mortgage_type='$mortgageType$'
 	 </isNotNull>
+    order by id
   </select>  
    
   <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
@@ -102,9 +149,18 @@
        t.loan_type LOANTYPE,
        t.other_warrants_number OTHERWARRANTSNUMBER,
        t.borrower_name BORROWERNAME,
-       t.status
-  from t_warrants_info t
- where  t.mortgage_type='0'
+       t.borrower_cardno BORROWERCARDNO,
+       o.id HOUSEID,
+       o.property_no PROPERTYNO,
+       o.property_name PROPERTYNAME,
+       o.property_cardno PROPERTYCARDNO,
+       o.property_addres PROPERTYADDRES
+  from t_warrants_info t left join t_mortgage_house_info o 
+  on t.id=o.warrants_id
+ where  t.mortgage_type='1'
+	 <isNotNull prepend="and" property="id" >
+	  t.id='$id$'
+	 </isNotNull>
 
   </select>  
   
@@ -121,7 +177,7 @@
        o.car_registerno CARREGISTERNO
   from t_warrants_info t, t_mortgage_car_info o
  where t.id = o.warrants_id
-  and t.mortgage_type='1'
+  and t.mortgage_type='2'
 
   </select>  
   
@@ -132,9 +188,19 @@
        t.loan_type LOANTYPE,
        t.other_warrants_number OTHERWARRANTSNUMBER,
        t.borrower_name BORROWERNAME,
-       t.status
-  from t_warrants_info t
- where  t.mortgage_type='1'
+       t.borrower_cardno,
+       o.id CARID,
+       o.car_no CARNO,
+       o.car_registerno CARREGISTERNO,
+       o.car_name CARNAME,
+       o.car_cardno CARCARDNO
+  from t_warrants_info t left join t_mortgage_car_info o 
+  on t.id=o.warrants_id
+ where  t.mortgage_type='2'
+	 <isNotNull prepend="and" property="id" >
+	  t.id='$id$'
+	 </isNotNull>
+
 
   </select>  
   
@@ -143,9 +209,38 @@
 	select count(t.other_warrants_number) as reslutNums
   from T_WARRANTS_INFO t
  where STATUS = '1'
-   and t.other_warrants_number = '$otherWarrantsNumber$'
 	
 	   ]]>
+	 <isNotNull prepend="and" property="otherWarrantsNumber" >
+	 t.other_warrants_number = '$otherWarrantsNumber$'
+	 </isNotNull>
+	</select>
+	
+	
+<select id="checkProjectNumber"   parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+	<![CDATA[
+	select count(t.Project_Number) as reslutProjectNums
+  from T_WARRANTS_INFO t
+ where STATUS = '1'
+	   ]]>
+   <isNotNull prepend="and" property="projectNumber" >
+	 t.Project_Number = '$projectNumber$'
+	 </isNotNull>
+	
+	</select>
+	
+	
+	
+<select id="checkCarRegisterNo"   parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+	<![CDATA[
+	select count(t.car_registerno)
+  from t_mortgage_car_info t
+  where 1=1
+	   ]]>
+   <isNotNull prepend="and" property="carRegisterNo" >
+	 t.car_registerno='$carRegisterNo$'
+	 </isNotNull>
+	
 	</select>
 	
 	<!-- 获取序列 -->
@@ -303,4 +398,88 @@
     from T_WARRANTS_FILE
     where FILE_ID = '$id$'
   </select>
+  
+  
+	<!-- 修改一条权证信息记录 -->
+	<update id="updMortgage" parameterClass="java.util.HashMap">
+    <![CDATA[
+		update  t_warrants_info set
+		OTHER_TYPE='$otherType$', 
+		PROJECT_NUMBER='$projectNumber$',
+		OTHER_WARRANTS_NUMBER='$otherWarrantsNumber$', 
+		OTHER_WARRANTS_DATE='$otherWarrantsDate$', 
+		BORROWER_NAME='$borrowerName$',
+		BORROWER_CARDNO='$borrowerCardNo$',
+		ORG_CODE='$orgCode$',
+		MANGER_NAME='$mangerName$',
+		LOAN_TYPE='$loanType$',
+		BORROWER_CONTRACTNO='$borrowerContractNo$',
+		LOAN_YEARS='$loanYears$',
+		RECORD_VALUE='$recordValue$',
+		PACKET_NUMBER='$packetNumber$',
+		NEXT_NAME='$nextName$',
+		REMARK='$remark$',
+		INSERT_TIME='$inserttime$'
+		where id='$id$'
+		
+	]]>
+	</update>
+	
+	<!-- 修改一条房产押品信息记录 -->
+	<update id="updMortgageHouse" parameterClass="java.util.HashMap">
+    <![CDATA[
+		update T_MORTGAGE_house_INFO set
+		PROPERTY_NO='$propertyNo$', 
+		PROPERTY_NAME='$propertyName$',
+		PROPERTY_CARDNO='$propertyCardNo$', 
+		PROPERTY_ADDRES='$propertyAddres$', 
+		PROPERTY_NUMS='$propertyNums$', 
+		PROPERTY_DATE='$propertyDate$'
+		where id='$id$'
+			
+		
+	]]>
+	</update>
+	
+	<!-- 修改一条机动车押品信息记录 -->
+	<update id="updMortgageCar" parameterClass="java.util.HashMap">
+    <![CDATA[
+		update T_MORTGAGE_CAR_INFO set
+		CAR_NAME='$carName$', 
+		CAR_CARDNO='$carCardNo$', 
+		CAR_REGISTERNO='$carRegisterNo$', 
+		CAR_NO='$carNo$',
+		CAR_FRAMENO='$carFrameNo$',
+		CAR_INVOICENO='$carInvoiceNo$',
+		CAR_DUESNO='$carDuesNo$',
+		CAR_SAFENO='$carSafeNo$'
+		where id='$id$'
+			
+		
+	]]>
+	</update>
+	
+	
+	<!-- 入权证上传文件信息记录 -->
+	<insert id="insertMortgageReserveOutMap" parameterClass="java.util.HashMap">
+    <![CDATA[
+		insert into T_MORTGAGE_LIST 
+			(WARRANTS_ID, 
+			BORROWER_NUMS,
+			BORROWER_LOG,
+			OPERATING_MATTERS,
+			REMARK,
+			INSERT_TIME,
+			OPERATING_ID)
+		values
+			('$warrantsId$',
+			'$borrowerNums$',
+			'$borrowerlog$',  
+			'$operatingMatters$', 
+			'$remark$', 
+			'$insertTime$',
+			'$operatingId$')
+		
+	]]>
+	</insert>
 </sqlMap>

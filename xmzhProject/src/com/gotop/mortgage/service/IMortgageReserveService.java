@@ -2,11 +2,10 @@ package com.gotop.mortgage.service;
 
 import java.io.File;
 import java.util.List;
-
-import com.gotop.file.model.TFileResourceTable;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.vo.system.MUOUserSession;
@@ -24,24 +23,22 @@ public interface IMortgageReserveService {
 	
 	/**
 	 * 查询权证信息详情
-	 * @param mortgageReserve
-	 * @param page
+	 * @param id
+	 * @param mortgageType
 	 * @return
 	 */
 	MortgageReserve queryMortgageReserveListInfo(String id,String mortgageType);
 	
 	/**
 	 * 查询房产抵押品详情
-	 * @param mortgageReserve
-	 * @param page
+	 * @param id
 	 * @return
 	 */
 	List<MortgageReserveHouse> queryMortgageReserveListHouseInfo(String id);
 	
 	/**
 	 * 查询机动车抵押品详情
-	 * @param mortgageReserve
-	 * @param page
+	 * @param id
 	 * @return
 	 */
 	List<MortgageReserveCar> queryMortgageReserveListCarInfo(String id);
@@ -53,6 +50,8 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	String checkOtherWarrantsNumber(MortgageReserve mortgageReserve);
+	
+	
 	
 	/**
 	 * 插入押品类型为房产时
@@ -99,4 +98,57 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	public WarrantsFile getFileResource(String fileId);
+	
+	/**
+	 * 库存变更为房产时
+	 * @param mortgageReserve
+	 * @param mortgageReserveHouse
+	 */
+	boolean updCollHouse(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,File[] files,String[] filesFileName,MUOUserSession muo);
+	/**
+	 * 库存变更为机动车时
+	 * @param mortgageReserve
+	 * @param mortgageReserveHouse
+	 */
+	boolean updCollCar(MortgageReserve mortgageReserve,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
+	
+	/**
+	 * 查询房产类型押品信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveHouseList(String id,Page page);
+	
+
+	/**
+	 * 查询机动车类型押品信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveCarList(String id,Page page);
+	
+	
+
+	/**
+	 * 出入库变更操作
+	 * @param mortgageReserve
+	 * @param mortgageReserveHouse
+	 */
+	boolean insertMortgageReserveOut(MortgageReserveOut mortgageReserveOut,MUOUserSession muo);
+	
+	/**
+	 * 检验 机动车登记证号是否已存在
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkCarRegisterNo(MortgageReserveCar mortgageReserveCar);
+	
+	/**
+	 * 生成部分权证信息详情
+	 * @param mortgageReserve
+	 * @return
+	 */
+	MortgageReserve queryMortgageReserveListInfo(String noticeRegisterRelation);
 }

@@ -13,6 +13,7 @@ public class MortgageReserve {
 	private String borrowerName;
 	private String borrowerCardNo;
 	private String orgCode;
+	private String orgName;
 	private String mangerName;
 	private String loanType;
 	private String borrowerContractNo;
@@ -29,6 +30,12 @@ public class MortgageReserve {
 	private String insertTime;
 	private String updateTime;
 	
+	public String getOrgName() {
+		return orgName;
+	}
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
 	public String getId() {
 		return id;
 	}

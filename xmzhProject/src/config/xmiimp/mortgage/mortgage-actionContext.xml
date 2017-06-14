@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
 <beans >
+ <bean name="mortgageReserveOut" id="mortgageReserveOut" class="com.gotop.mortgage.model.MortgageReserveOut" singleton="false" ></bean> 
  <bean name="mortgageReserveRes" id="mortgageReserveRes" class="com.gotop.mortgage.model.MortgageReserveRes" singleton="false" ></bean> 
   <bean name="mortgageReserve" id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" singleton="false" ></bean> 
   <bean name="mortgageReserveCar" id="mortgageReserveCar" class="com.gotop.mortgage.model.MortgageReserveCar" singleton="false" ></bean> 
   <bean name="mortgageReserveHouse" id="mortgageReserveHouse" class="com.gotop.mortgage.model.MortgageReserveHouse" singleton="false" ></bean> 
    <bean name="mortgageReserveAction" id="mortgageReserveAction" class="com.gotop.mortgage.action.MortgageReserveAction" singleton="false" >
      <property name="mortgageReserveService" ref="mortgageReserveService" />
+    <property name="mortgageReserveOut" ref="mortgageReserveOut" />
     <property name="mortgageReserveRes" ref="mortgageReserveRes" />
     <property name="mortgageReserve" ref="mortgageReserve" />
     <property name="mortgageReserveCar" ref="mortgageReserveCar" />

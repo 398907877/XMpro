@@ -3,7 +3,10 @@
 <%@include file="/common/skins/skin0/component.jsp"%>
 
 <h:css href="/css/style1/style-custom.css" />
+<link rel="stylesheet" type="text/css" href="/css/fileDown.css">
+<script type="text/javascript" src="/common/gotop/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.form.js"></script>
+<script type="text/javascript" src="/js/fileDownWarrants.js"></script>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -25,95 +28,106 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">他项类型：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="otherType_fc">
-					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="tempMortgage.otherTypeFC"  nullLabel="请选择"></d:select><font style="color: red">*</font>
+					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="tempMortgage.otherTypeFC"  nullLabel="请选择"  ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
 				</div>
 				<div id="otherType_jdc"  style="display:none">
-					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="tempMortgage.otherTypeJDC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
+					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="tempMortgage.otherTypeJDC" nullLabel="请选择"  ></d:select><font id="otherTypeJDC_msg" style="color: red">*</font>
 				</div>
 				</td>						
 			</tr>
 			<tr>	
 				<td class="form_label" align="right" width="15%">预告登记关联：</td>
-				<td colspan="1" width="30%">
+				<td colspan="3" width="30%">
 				<h:text id="noticeRegisterRelation" property="mortgageReserve.noticeRegisterRelation" />
-				</td>	
+				<a href="#" onclick="open_generate_fun1()">关联</a> 
+				<font id="noticeRegisterRelation_msg"  style="color: red"></font>
+				</td>					
+			</tr>
+			<tr>					
+			</tr>
+			<tr>	
 				<td class="form_label" align="right" width="15%">库存序号：</td>
 				<td colspan="1" width="30%">
 				<h:text id="projectNumber" property="mortgageReserve.projectNumber"/><font style="color: red">*</font>
 				</td>
-											
-			</tr>
-			<tr>					
-			</tr>
-			<tr>
 				<td class="form_label" align="right" width="15%">他项权证号：</td>
 				<td colspan="1" width="30%">
 				<h:text id="otherWarrantsNumber" property="mortgageReserve.otherWarrantsNumber"/><font style="color: red">*</font>
-				</td>		
-				<td class="form_label" align="right" width="15%">他项登记日期：</td>
-				<td colspan="1" width="30%">
-				<w:date id="otherWarrantsDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd" property="mortgageReserve.otherWarrantsDate" />
-				</td>						
-			</tr>
-			<tr>		
-				<td class="form_label" align="right" width="15%">借款人姓名：</td>
-				<td colspan="1" width="30%">
-				<h:text id="borrowerName" property="mortgageReserve.borrowerName"/><font style="color: red">*</font>
-				</td>	
-				<td class="form_label" align="right" width="17%">借款人身份证号：</td>
-				<td colspan="1" width="30%">
-				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo"/><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>		
+				<td class="form_label" align="right" width="15%">他项登记日期：</td>
+				<td colspan="1" width="30%">
+				<w:date id="otherWarrantsDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserve.otherWarrantsDate" />
+				</td>			
+				<td class="form_label" align="right" width="15%">借款人姓名：</td>
+				<td colspan="1" width="30%">
+				<h:text id="borrowerName" property="mortgageReserve.borrowerName"/><font style="color: red">*</font>
+				</td>					
+			</tr>
+			<tr>	
+				<td class="form_label" align="right" width="17%">借款人身份证号：</td>
+				<td colspan="1" width="30%">
+				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo"/><font style="color: red">*</font>
+				</td>		
 				<td class="form_label" align="right" width="15%">经办机构：</td>
 				<td colspan="1" width="30%">
 				<h:hidden id="orgCode" property="mortgageReserve.orgCode" />
 				<h:text id="orgName" property="mortgageReserve.orgName"  readonly="true" /><font style="color: red">*</font>
 				<a href="#" onclick="open_slzhej_fun1()">选择</a>
-				</td>	
+				</td>				
+			</tr>
+			<tr>	
 				<td class="form_label" align="right" width="15%">经办客户经理：</td>
 				<td colspan="1" width="30%">
 				<h:text id="mangerName" property="mortgageReserve.mangerName"/><font style="color: red">*</font>
 				</td>	
-										
-			</tr>
-			
-			<tr>	
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="loanType_fc">
-					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="tempMortgage.loanTypeFC" nullLabel="请选择"></d:select><font style="color: red">*</font>
+					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="tempMortgage.loanTypeFC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
 				</div>
 				<div id="loanType_jdc"  style="display:none">
-					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="tempMortgage.loanTypeJDC" nullLabel="请选择"></d:select><font style="color: red">*</font>
+					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="tempMortgage.loanTypeJDC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
 				</div>
-				</td>	
+				</td>					
+			</tr>
+			<tr>	
 				<td class="form_label" align="right" width="15%">借款合同号：</td>
 				<td colspan="1" width="30%">
 				<h:text id="borrowerContractNo" property="mortgageReserve.borrowerContractNo"/><font style="color: red">*</font>
-				</td>					
-			</tr>
-			<tr>
+				</td>
 				<td class="form_label" align="right" width="15%">贷款年限：</td>
 				<td colspan="1" width="30%">
 				<h:text id="loanYears" size="5"  property="mortgageReserve.loanYears" />年
+				</td>					
+			</tr>
+			<tr>		
+				<td class="form_label" align="right" width="15%">入账价值：</td>
+				<td colspan="1" width="30%">
+				<h:text id="recordValue"   property="mortgageReserve.recordValue" />
 				</td>		
 				<td class="form_label" align="right" width="15%">封包编号：</td>
 				<td colspan="1" width="30%">
 				<h:text id="packetNumber"   property="mortgageReserve.packetNumber" /><font style="color: red">*</font>
-				</td>					
+				</td>				
 			</tr>
-			<tr>	
+			<tr>				
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
 				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font>
-				</td>	
-				<td class="form_label" align="right" width="15%">备注信息：</td>
+				</td>		
+				<td class="form_label" align="right" width="15%">购房合同号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="remark"   property="mortgageReserve.remark" />
+				<h:text id="purchaseNumber"   property="mortgageReserve.purchaseNumber" />
 				</td>					
 			</tr>
+		    <tr id="row1" style="display:none" >
+		      <td class="form_label" align="right">附件下载：</td>
+		      <td colspan="3">
+		      <div id="tag"></div>
+		      </td>
+		     </tr>
 		     <tr id="rowFile">
 		     	<td class="form_label" align="right">上传附件：</td>
 		     	<td colspan="3">
@@ -125,6 +139,12 @@
 						</table>
 		     	</td>
 		     </tr>
+			<tr>
+				<td class="form_label" align="right" width="15%">备注信息：</td>
+				<td colspan="3" width="30%">
+				 <h:textarea rows="5"  cols="30"   property="mortgageReserve.remark" />
+				</td>					
+			</tr>
 			  <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
 	        		抵质押品信息
@@ -158,7 +178,7 @@
 				</td>	
 				<td class="form_label" align="right" width="17%">产权证填发日期：</td>
 				<td colspan="1" width="30%">
-				<w:date id="propertyDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd" property="mortgageReserveHouse.propertyDate" />
+				<w:date id="propertyDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserveHouse.propertyDate" />
 				</td>					
 			</tr>
 			</tbody>
@@ -213,17 +233,32 @@
 		</table>
 	</h:form>
 <script type="text/javascript">
+ window.onload = function () {
+     var parWin = window.dialogArguments;
+     $id("mortgageType").value=parWin;
+          changeMortgageType(parWin);
 
+        };
 
 function changeMortgageType(val){
-        if(val=="0"){
+        //$(".alert_message").hide();
+	       // $("#otherTypeFC").attr("validateAttr",""); 
+	      //  $("#otherTypeJDC").attr("validateAttr",""); 
+        $("#otherTypeFC").val("");
+        $("#otherTypeJDC").val("");
+        //$("#otherTypeFC_msg").text("*");
+        //$("#otherTypeJDC_msg").text("*");
+        $("#otherTypeJDC").val("");
+        $("#loanTypeFC").val("");
+        $("#loanTypeJDC").val("");
+        if(val=="1"){
 	        $("#otherType_fc").show();
 	        $("#otherType_jdc").hide();
 	        $("#loanType_fc").show();
 	        $("#loanType_jdc").hide();
 	        $("#dzypxx_fc").show();
 	        $("#dzypxx_jdc").hide();
-	       }else if(val=="1"){
+	       }else if(val=="2"){
 	        $("#otherType_jdc").show();
 	        $("#otherType_fc").hide();
 	        $("#loanType_jdc").show();
@@ -233,14 +268,12 @@ function changeMortgageType(val){
 	       }
 }
 	function save(){
-	   var frm=$name("data_form");
-	 
-	   if($id("mortgageType").value == "0"){
+	     if($id("mortgageType").value == "1"){
 			if($id("otherTypeFC").value == ""){
 			 alert("他项类型不能为空！");
 			 return;
 			}
-		}else if($id("mortgageType").value == "1"){
+		}else if($id("mortgageType").value == "2"){
 			if($id("otherTypeJDC").value == ""){
 				 alert("他项类型不能为空！");
 				 return;
@@ -277,12 +310,12 @@ function changeMortgageType(val){
 			return;
 		}
 		
-	   if($id("mortgageType").value == "0"){
+	   if($id("mortgageType").value == "1"){
 			if($id("loanTypeFC").value == ""){
 			 alert("贷款种类不能为空！");
 			 return;
 			}
-		}else if($id("mortgageType").value == "1"){
+		}else if($id("mortgageType").value == "2"){
 			if($id("loanTypeJDC").value == ""){
 				 alert("贷款种类不能为空！");
 				 return;
@@ -308,7 +341,7 @@ function changeMortgageType(val){
 		}
 		
 		
-	   if($id("mortgageType").value == "0"){
+	   if($id("mortgageType").value == "1"){
 		   if($id("propertyNo").value == ""){
 				alert("产权证号不能为空！");
 				$id("propertyNo").focus();
@@ -336,7 +369,7 @@ function changeMortgageType(val){
 				$id("propertyNums").focus();
 				return;
 			}
-		}else if($id("mortgageType").value == "1"){
+		}else if($id("mortgageType").value == "2"){
 		   if($id("carName").value == ""){
 				alert("车主姓名不能为空！");
 				$id("carName").focus();
@@ -381,21 +414,29 @@ function changeMortgageType(val){
  		///if(!checkForm(frm)){
 		//	 return ;
 		// }
+	   
 		 var otherWarrantsNumber= $id("otherWarrantsNumber").value;  //他项权证号
+		 var projectNumber= $id("projectNumber").value;  //库存序号
 	    $.ajax({
 			      url: "/mortgage/mortgageReserveAction_checkOtherWarrantsNumber.action",
 			      async: false,
 			      type: 'post',
-			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber,
+			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber+"&mortgageReserve.projectNumber="+projectNumber,
 			      timeout: 60000,
 			      success: function (data) {
 					   if (data.indexOf("noExist") >= 0) {
 				    		  ajaxsubmitO();
-						}else if (data.indexOf("exist") >= 0) {
+						} else if (data.indexOf("twoexist") >= 0) {
 			                 $id("otherWarrantsNumber").focus();	
-							alert("操作失败！该他项权证号("+data+")系统中号码不重复！请重新填写！");
+							alert("操作失败！该他项权证号("+otherWarrantsNumber+")和库存序号("+projectNumber+")系统中号码重复！请重新填写！");
+						} else if (data.indexOf("othexist") >= 0) {
+			                 $id("otherWarrantsNumber").focus();	
+							alert("操作失败！该他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
+						} else if (data.indexOf("proexist") >= 0) {
+			                 $id("projectNumber").focus();	
+							alert("操作失败！库存序号("+projectNumber+")系统中号码重复！请重新填写！");
 						} else if (data.indexOf("fails") >= 0) {
-							alert("他项权证号校验失败！");
+							alert("库存序号和他项权证号校验失败！");
 						} else {
 							alert("操作失败!");
 						}
@@ -404,7 +445,11 @@ function changeMortgageType(val){
 			}); 
 		
 	}
-
+	
+	//验证表单非空
+    function check_sumbmit(){
+	
+    }
 
 	function ajaxsubmitO() {
 		maskTop();
@@ -432,6 +477,77 @@ function changeMortgageType(val){
 		
 		$("#data_form").ajaxSubmit(options);
 	}
+	
+	
+	function open_generate_fun1(){
+		 var noticeRegisterRelation= $id("noticeRegisterRelation").value;  //库存序号
+		 var mortgageType= $id("mortgageType").value;  //库存序号
+		 if(noticeRegisterRelation!=null&&noticeRegisterRelation!=""){
+		  $.ajax({
+				      url: "/mortgage/mortgageReserveAction_openGenerate.action",
+				      async: false,
+				      type: 'post',
+				      data: "mortgageReserve.noticeRegisterRelation="+noticeRegisterRelation,
+				      timeout: 60000,
+				      dataType: "json",
+				      success: function (data) {
+					      var obj= eval(data);
+					      var code=obj.errcode;
+					      var errmsg=obj.errmsg;
+					      if(code=="0001"){
+					       $("#noticeRegisterRelation_msg").text(errmsg);
+					      }else{
+					       $("#noticeRegisterRelation_msg").text("");
+					       $("#borrowerName").val(obj.borrowerName);
+					       $("#borrowerCardNo").val(obj.borrowerCardNo);
+					       $("#borrowerContractNo").val(obj.borrowerContractNo);
+					       $("#orgCode").val(obj.orgCode);
+					       $("#orgName").val(obj.orgName);
+					       $("#mangerName").val(obj.mangerName);
+					       $("#loanYears").val(obj.loanYears);
+					       if(mortgageType=="1"){
+					         $("#loanTypeFC").val(obj.loanType);
+					       }else if(mortgageType=="2"){
+					         $("#loanTypeJDC").val(obj.loanType);
+					       }
+					       $("#recordValue").val(obj.recordValue);
+					       file_app(obj.id)
+					      }
+				      
+				      },
+					error : function(data) {
+						$("#noticeRegisterRelation_msg").text("系统查无此记录!");
+					}
+				});
+		 }else{
+		  $("#noticeRegisterRelation_msg").text("系统查无此记录!");
+		 }
+        
+	}
+	
+	function file_app(param){
+	  $.ajax({
+	        url: '/mortgage/mortgageReserveAction_queryFileList.action',
+	        async: false,
+	        type: 'post',
+	        data: "resourceId="+param,
+	        dataType: 'json',
+	        timeout: 60000,
+	        success: function (files) {
+		        if(files!=""){
+		         	$.each(files,function( i,item ){
+		        	    $("#row1").show(); 
+		    	        $("#tag").fileDown({filename:item.fileName,filevalue:item.fileId});
+		          		});	
+		        }else{
+		        	 $("#row1").css("display","none");  
+		        }  
+	        }
+      });
+	  
+	
+	}
+	
 
 	    //经办机构
 		function open_slzhej_fun1(){

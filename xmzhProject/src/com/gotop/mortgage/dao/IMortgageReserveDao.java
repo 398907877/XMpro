@@ -3,8 +3,6 @@ package com.gotop.mortgage.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.gotop.file.model.TFileResourceTable;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
@@ -56,6 +54,13 @@ public interface IMortgageReserveDao {
 	 * 检验 他项权证号是否已存在
 	 */
 	String checkOtherWarrantsNumber(Map<String, Object> map);
+	
+	/**
+	 * 检验 库存序号是否已存在
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkProjectNumber(Map<String, Object> map);
 	
 	/**
 	 * 插入权证信息
@@ -114,4 +119,55 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	public WarrantsFile getFileResource(String fileId);
+	
+
+	/**
+	 * 修改权证信息
+	 * @param map
+	 * @return
+	 */
+	boolean updMortgage(Map<String, Object> map);
+	
+	/**
+	 * 修改房产押品信息
+	 * @param map
+	 * @return
+	 */
+	boolean updMortgageHouse(Map<String, Object> map);
+	
+	/**
+	 * 修改机动车押品信息
+	 * @param map
+	 * @return
+	 */
+	boolean updMortgageCar(Map<String, Object> map);
+
+	/**
+	 * 查询房产类型押品信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveHouseList(Map<String, Object> map, Page page);
+
+	/**
+	 * 查询机动车类型押品信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveCarList(Map<String, Object> map, Page page);
+	
+
+	/**
+	 * 出入库处理信息
+	 * @param map
+	 * @return
+	 */
+	boolean insertMortgageReserveOutMap(Map<String, Object> map);
+	
+	/**
+	 * 检验机动车登记证号是否已存在
+	 */
+	String checkCarRegisterNo(Map<String, Object> map);
 }

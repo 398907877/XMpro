@@ -10,11 +10,26 @@
 	      <result name="add_mortgageReserve" >
 	        /jsp/mortgage/add_mortgageReserve.jsp
 	      </result>
-	      <result name="add_collateral_info" >
-	        /jsp/mortgage/add_collateral_info.jsp
+	      <result name="out_in_mortgageReserveList" >
+	       /jsp/mortgage/outIn_collateral_list.jsp
+	      </result>
+	      <result name="out_in_mortgageReserve" >
+	       /jsp/mortgage/out_in_collateral.jsp
+	      </result>
+	      <result name="add_collateral_house_info" >
+	        /jsp/mortgage/add_collateral_house_info.jsp
+	      </result>
+	      <result name="add_collateral_car_info" >
+	        /jsp/mortgage/add_collateral_car_info.jsp
 	      </result>
 	      <result name="view_collateral_info" >
 	        /jsp/mortgage/view_collateral_info.jsp
+	      </result>
+	      <result name="upd_collateral_house_info" >
+	        /jsp/mortgage/upd_collateral_house_info.jsp
+	      </result>
+	      <result name="upd_collateral_car_info" >
+	        /jsp/mortgage/upd_collateral_car_info.jsp
 	      </result>
 	      <result name="list1" type="json">
 			   <param name="root">fileResourceTables</param>

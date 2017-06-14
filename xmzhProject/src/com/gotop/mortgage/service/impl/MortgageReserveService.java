@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.gotop.mortgage.dao.IMortgageReserveDao;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.mortgage.service.IMortgageReserveService;
@@ -44,14 +47,38 @@ public class MortgageReserveService implements IMortgageReserveService {
 	@Override
 	public String checkOtherWarrantsNumber(MortgageReserve mortgageReserve) {
         String reslutNums="fails";
+        String proNums="";
+        String othNums="";
 		Map<String, Object>map=new HashMap<String, Object>();
-		if(mortgageReserve.getOtherWarrantsNumber()!= null && !"".equals(mortgageReserve.getOtherWarrantsNumber())){
-			map.put("otherWarrantsNumber",mortgageReserve.getOtherWarrantsNumber());
+		try {
+			if(mortgageReserve.getOtherWarrantsNumber()!= null && !"".equals(mortgageReserve.getOtherWarrantsNumber())){
+				map.put("otherWarrantsNumber",mortgageReserve.getOtherWarrantsNumber());
+			}
+			if(mortgageReserve.getProjectNumber()!= null && !"".equals(mortgageReserve.getProjectNumber())){
+				map.put("projectNumber",mortgageReserve.getProjectNumber());
+			}
+			othNums=mortgageReserveDao.checkOtherWarrantsNumber(map);
+			proNums=mortgageReserveDao.checkProjectNumber(map);
+			if("0".equals(othNums)&&"0".equals(proNums)){
+				return reslutNums="0";
+			}
+			if(!"0".equals(othNums)&&!"0".equals(proNums)){
+				return reslutNums="twofails";
+			}
+			if(!"0".equals(othNums)){
+				reslutNums="othfails";
+			}
+			if(!"0".equals(proNums)){
+				reslutNums="profails";
+			}
+		} catch (Exception e) {
+			reslutNums="fails";
+			e.printStackTrace();
 		}
-		reslutNums=mortgageReserveDao.checkOtherWarrantsNumber(map);
 		return reslutNums;
 	}
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public boolean insertItemHouse(MortgageReserve mortgageReserve,
 			MortgageReserveHouse mortgageReserveHouse,File[] files,String[] filesFileName,MUOUserSession muo) {
 		Map<String, Object>map=new HashMap<String, Object>();
@@ -67,7 +94,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
     		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
-			map=resMortgageReserveMap(pkey,mortgageReserve,address,inserttime);
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
 			result=mortgageReserveDao.insertMortgage(map);
             try {
    	    		 //上传文件,不为空时
@@ -85,7 +112,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 				if(result){
 					String operatingType="4";//新增入库
 					//插入日志
-					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "新增入库");
+					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "新增入库押品类型为房产时");
 				}
 				
 			}
@@ -113,7 +140,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
     		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
-			map=resMortgageReserveMap(pkey,mortgageReserve,address,inserttime);
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
 			result=mortgageReserveDao.insertMortgage(map);
             try {
    	    		 //上传文件,不为空时
@@ -131,7 +158,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 				if(result){
 					String operatingType="4";//新增入库
 					//插入日志
-					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加机动车押品信息");
+					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "新增入库押品类型为机动车时");
 				}
 				
 			}
@@ -191,6 +218,170 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		return result;
 	}
+
+	@Override
+	public boolean updCollHouse(MortgageReserve mortgageReserve,
+			MortgageReserveHouse mortgageReserveHouse,File[] files,String[] filesFileName, MUOUserSession muo) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		boolean result=false;
+		try {
+			Long pkey=Long.valueOf(mortgageReserve.getId());
+			Long userID=muo.getEmpid();
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
+    		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
+			result=mortgageReserveDao.updMortgage(map);
+            try {
+   	    		 //上传文件,不为空时
+            	 if(filesFileName!=null&&!"".equals(filesFileName.toString())){
+       	    		 uploadFileName(files, filesFileName, address,pkey,userID);
+            	 }
+   				 
+				} catch (Exception e) {
+					result=false;
+					e.printStackTrace();
+			}
+    		if(result){
+    			if(mortgageReserveHouse.getId()!=null&&mortgageReserveHouse.getId()!=""){
+        		  result=updateMortgageHouse(mortgageReserveHouse);
+    			}
+				if(result){
+					String operatingType="3";//库存变更
+					//插入日志
+					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "库存变更押品类型为房产时");
+				}
+				
+			}
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public boolean updCollCar(MortgageReserve mortgageReserve,
+			MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName, MUOUserSession muo) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		System.out.println("car......");
+		boolean result=false;
+		try {
+			//获取权证信息表id
+			Long pkey=Long.valueOf(mortgageReserve.getId());
+			Long userID=muo.getEmpid();
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
+    		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
+			result=mortgageReserveDao.updMortgage(map);
+            try {
+   	    		 //上传文件,不为空时
+            	 if(filesFileName!=null&&!"".equals(filesFileName.toString())){
+       	    		 uploadFileName(files, filesFileName, address,pkey,userID);
+            	 }
+   				 
+				} catch (Exception e) {
+					result=false;
+					e.printStackTrace();
+			}
+    		if(result){
+    			if(mortgageReserveCar.getId()!=null&&mortgageReserveCar.getId()!=""){
+    			  result=updateMortgageCar( mortgageReserveCar);
+    			}
+				if(result){
+					String operatingType="3";//库存变更
+					//插入日志
+					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "库存变更押品类型为机动车时");
+				}
+				
+			}
+    		
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * 更新押品信息押品类型为房产时
+	 * @param pkey
+	 * @param mortgageReserveHouse
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateMortgageHouse(MortgageReserveHouse mortgageReserveHouse)  throws Exception{
+		boolean result=false;
+		try {
+			String [] resId=mortgageReserveHouse.getId().split(",");
+			String [] resPropertyAddres=mortgageReserveHouse.getPropertyAddres().split(",");
+			String [] resPropertyCardNo=mortgageReserveHouse.getPropertyCardNo().split(",");
+			String [] resPropertyDate=mortgageReserveHouse.getPropertyDate().split(",");
+			String [] resPropertyName=mortgageReserveHouse.getPropertyName().split(",");
+			String [] resPropertyNo=mortgageReserveHouse.getPropertyNo().split(",");
+			String [] resPropertyNums=mortgageReserveHouse.getPropertyNums().split(",");
+			for (int i = 0; i <resId.length; i++) {
+				Map<String, Object>map=new HashMap<String, Object>();
+				map.put("id", resId[i]);
+				map.put("propertyNo", resPropertyNo[i]);
+				map.put("propertyName",resPropertyName[i]);
+				map.put("propertyCardNo", resPropertyCardNo[i]);
+				map.put("propertyAddres", resPropertyAddres[i]);
+				map.put("propertyNums", resPropertyNums[i]);
+				map.put("propertyDate", resPropertyDate[i]);
+				result=mortgageReserveDao.updMortgageHouse(map);
+			}
+			result=true;
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+
+	/**
+	 * 更新押品信息押品类型为机动车时
+	 * @param pkey
+	 * @param mortgageReserveHouse
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateMortgageCar(MortgageReserveCar mortgageReserveCar)  throws Exception{
+		boolean result=false;
+		try {
+			String [] resId=mortgageReserveCar.getId().split(",");
+			String [] resCarCardNo=mortgageReserveCar.getCarCardNo().split(",");
+			String [] resCarDuesNo=mortgageReserveCar.getCarDuesNo().split(",");
+			String [] resCarFrameNo=mortgageReserveCar.getCarFrameNo().split(",");
+			String [] resCarInvoiceNo=mortgageReserveCar.getCarInvoiceNo().split(",");
+			String [] resCarName=mortgageReserveCar.getCarName().split(",");
+			String [] resCarNo=mortgageReserveCar.getCarNo().split(",");
+			String [] resCarRegisterNo=mortgageReserveCar.getCarRegisterNo().split(",");
+			String [] resCarSafeNo=mortgageReserveCar.getCarSafeNo().split(",");
+			for (int i = 0; i <resId.length; i++) {
+				Map<String, Object>map=new HashMap<String, Object>();
+				map.put("id", resId[i]);
+				map.put("carName", resCarName[i]);
+				map.put("carCardNo", resCarCardNo[i]);
+				map.put("carRegisterNo",resCarRegisterNo[i]);
+				map.put("carNo", resCarNo[i]);
+				map.put("carFrameNo", resCarFrameNo[i]);
+				map.put("carInvoiceNo",resCarInvoiceNo[i]);
+				map.put("carDuesNo", resCarDuesNo[i]);
+				map.put("carSafeNo", resCarSafeNo[i]);
+				result=mortgageReserveDao.updMortgageCar(map);
+			}
+			result=true;
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 	/**
@@ -199,7 +390,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	public Map<String, Object> resMortgageReserveMap(Long pkey,MortgageReserve mortgageReserve,String address,String inserttime)  throws Exception{
+	public Map<String, Object> resMortgageReserveMap(Long pkey,MortgageReserve mortgageReserve,String inserttime)  throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		try {
 			map.put("id", pkey);
@@ -219,7 +410,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("recordValue", mortgageReserve.getRecordValue());
 			map.put("packetNumber", mortgageReserve.getPacketNumber());
 			map.put("nextName", mortgageReserve.getNextName());
-			map.put("fileName",address);
 			map.put("remark", mortgageReserve.getRemark());
 			map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			map.put("status", mortgageReserve.getStatus());
@@ -274,6 +464,30 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("carInvoiceNo", mortgageReserveCar.getCarInvoiceNo());
 			map.put("carDuesNo", mortgageReserveCar.getCarDuesNo());
 			map.put("carSafeNo", mortgageReserveCar.getCarSafeNo());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+		
+	}
+	
+	/**
+	 * 生成库存处理Map值
+	 * @param pkey
+	 * @param mortgageReserve
+	 * @return
+	 */
+	public Map<String, Object> resMortgageReserveOutMap(MortgageReserveOut mortgageReserveOut) throws Exception{
+		Map<String, Object>map=new HashMap<String, Object>();
+		try {
+			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
+			map.put("borrowerNums", mortgageReserveOut.getBorrowerNums());
+			map.put("borrowerLog", mortgageReserveOut.getBorrowerLog());
+			map.put("operatingMatters", mortgageReserveOut.getOperatingMatters());
+			map.put("remark", mortgageReserveOut.getRemark());
+			map.put("operatingId", mortgageReserveOut.getOperatingId());
+			map.put("insertTime", mortgageReserveOut.getInsertTime());
+			map.put("nextName", mortgageReserveOut.getNextName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -379,5 +593,76 @@ public class MortgageReserveService implements IMortgageReserveService {
 	@Override
 	public WarrantsFile getFileResource(String fileId) {
 		return mortgageReserveDao.getFileResource(fileId);
+	}
+	@Override
+	public List<MortgageReserveRes> queryMortgageReserveHouseList(String id, Page page) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
+		map.put("id", id);
+		mortgageReserveList=mortgageReserveDao.queryMortgageReserveHouseList(map,page);
+		return mortgageReserveList;
+	}
+	@Override
+	public List<MortgageReserveRes> queryMortgageReserveCarList(String id, Page page) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
+		map.put("id", id);
+		mortgageReserveList=mortgageReserveDao.queryMortgageReserveCarList(map,page);
+		return mortgageReserveList;
+	}
+	@Override
+	public boolean insertMortgageReserveOut(
+			MortgageReserveOut mortgageReserveOut, MUOUserSession muo) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		boolean result=false;
+		try {
+			long pkey=Long.valueOf(mortgageReserveOut.getWarrantsId());
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
+			mortgageReserveOut.setInsertTime(inserttime);
+			map=resMortgageReserveOutMap(mortgageReserveOut);
+			result=mortgageReserveDao.insertMortgageReserveOutMap(map);
+			if(result){
+				String operatingType="4";//新增入库
+				Long userID=muo.getEmpid();
+				//插入日志
+				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加房产押品信息");
+			}
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public String checkCarRegisterNo(MortgageReserveCar mortgageReserveCar) {
+		 String reslutNums="fails";
+	        String carNums="";
+			Map<String, Object>map=new HashMap<String, Object>();
+			try {
+				if(mortgageReserveCar.getCarRegisterNo()!= null && !"".equals(mortgageReserveCar.getCarRegisterNo())){
+					map.put("carRegisterNo",mortgageReserveCar.getCarRegisterNo());
+				}
+				carNums=mortgageReserveDao.checkCarRegisterNo(map);
+				
+				if(!"0".equals(carNums)){
+					reslutNums="carfails";
+				}
+			} catch (Exception e) {
+				reslutNums="fails";
+				e.printStackTrace();
+			}
+			return reslutNums;
+	}
+	@Override
+	public MortgageReserve queryMortgageReserveListInfo(String noticeRegisterRelation) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		if(!"".equals(noticeRegisterRelation)&& noticeRegisterRelation!=null){
+			map.put("projectNumber", noticeRegisterRelation);
+		}
+		MortgageReserve mortgageReserves=mortgageReserveDao.queryMortgageReserveListInfo(map);
+		System.out.println("ww"+mortgageReserves);
+		return mortgageReserves;
 	}
 }

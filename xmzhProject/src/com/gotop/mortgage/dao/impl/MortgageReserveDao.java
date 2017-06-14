@@ -109,4 +109,68 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 
 
 
+	@Override
+	public String checkProjectNumber(Map<String, Object> map) {
+		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkProjectNumber", map);
+		return String.valueOf(obj);
+	}
+
+
+
+	@Override
+	public boolean updMortgage(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgage", map);
+		return true;
+	}
+
+
+
+	@Override
+	public boolean updMortgageHouse(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageHouse", map);
+		return true;
+	}
+
+
+
+	@Override
+	public boolean updMortgageCar(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageCar", map);
+		return true;
+	}
+
+
+
+	@Override
+	public List<MortgageReserveRes> queryMortgageReserveHouseList(
+			Map<String, Object> map, Page page) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveHouseList", map,page);
+	}
+
+
+
+	@Override
+	public List<MortgageReserveRes> queryMortgageReserveCarList(
+			Map<String, Object> map, Page page) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveCarList", map,page);
+	}
+
+
+
+	@Override
+	public boolean insertMortgageReserveOutMap(Map<String, Object> map) {
+		this.insert("T_Mortgage_Reserve_SqlMap.insertMortgageReserveOutMap", map);
+		return true;
+	}
+
+
+
+	@Override
+	public String checkCarRegisterNo(Map<String, Object> map) {
+		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkCarRegisterNo", map);
+		return String.valueOf(obj);
+	}
+
+
+
 }

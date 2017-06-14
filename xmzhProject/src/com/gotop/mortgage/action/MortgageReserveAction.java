@@ -6,15 +6,19 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
+
+import com.fr.base.core.json.JSONArray;
 import com.gotop.crm.util.BaseAction;
-import com.gotop.file.model.TFileResourceTable;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.mortgage.service.IMortgageReserveService;
@@ -26,6 +30,7 @@ public class MortgageReserveAction extends BaseAction {
 	private MortgageReserveCar mortgageReserveCar;
 	private MortgageReserveHouse mortgageReserveHouse;
 	private MortgageReserveRes mortgageReserveRes;
+	private MortgageReserveOut mortgageReserveOut;
 	
 	private IMortgageReserveService mortgageReserveService;
 	private List<MortgageReserveRes> mortgageReserveList=new ArrayList<MortgageReserveRes>();
@@ -142,11 +147,20 @@ public class MortgageReserveAction extends BaseAction {
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
+	
+	
+	public MortgageReserveOut getMortgageReserveOut() {
+		return mortgageReserveOut;
+	}
+	public void setMortgageReserveOut(MortgageReserveOut mortgageReserveOut) {
+		this.mortgageReserveOut = mortgageReserveOut;
+	}
 	/**
 	 * 查询库存信息
 	 * @return
 	 */
 	public String queryMortgageReserveList(){
+		System.out.println("111111111:"+mortgageReserve.getMortgageType());
 		mortgageReserveList=mortgageReserveService.queryMortgageReserveList(mortgageReserve, this.getPage());
 		this.setPage(page);
 		this.setMortgageReserveList(mortgageReserveList);
@@ -164,11 +178,48 @@ public class MortgageReserveAction extends BaseAction {
 	
 
 	/**
+	 * 跳转到 出入库处理页面
+	 * @return
+	 */
+	public String toOutInColl(){
+		String warrantsId=mortgageReserveRes.getWarrantsId();
+		String mortgageType=mortgageReserveRes.getMortgageType();
+		System.out.println("ppppppp:"+warrantsId);
+		if("1".equals(mortgageType)){
+			mortgageReserveList=mortgageReserveService.queryMortgageReserveHouseList(warrantsId,this.getPage());
+		}else if ("2".equals(mortgageType)){
+			mortgageReserveList=mortgageReserveService.queryMortgageReserveCarList(warrantsId,this.getPage());
+		}
+		this.setPage(page);
+		this.setMortgageReserveList(mortgageReserveList);
+		return "out_in_mortgageReserveList";
+	}
+	
+
+	/**
+	 * 跳转到 出入库处理页面
+	 * @return
+	 */
+	public String toInsertOutInColl(){
+		return "out_in_mortgageReserve";
+	}
+	
+	
+
+
+	/**
 	 * 跳转到 添加押品页面
 	 * @return
 	 */
 	public String toAddColl(){
-		return "add_collateral_info";
+		String res="add_collateral_house_info";
+		String mortgageType=mortgageReserveRes.getMortgageType();
+		if("1".equals(mortgageType)){
+			res="add_collateral_house_info";
+		}else if("2".equals(mortgageType)){
+			res="add_collateral_car_info";
+		}
+		return res;
 	}
 	
 
@@ -181,15 +232,68 @@ public class MortgageReserveAction extends BaseAction {
 		String mortgageType=mortgageReserveRes.getMortgageType();
 		System.out.println("111:"+mortgageType);
 		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
-		if("0".equals(mortgageType)){
+		if("1".equals(mortgageType)){
 			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
 			this.setMortgageReserveListHouseInfo(mortgageReserveListHouseInfo);
-		}else if ("1".equals(mortgageType)){
+		}else if ("2".equals(mortgageType)){
 			mortgageReserveListCarInfo=mortgageReserveService.queryMortgageReserveListCarInfo(id);
 			this.setMortgageReserveListCarInfo(mortgageReserveListCarInfo);
 		}
 		this.setMortgageReserve(mortgageReserve);
 		return "view_collateral_info";
+	}
+	
+
+	/**
+	 * 跳转到 库存变更页面
+	 * @return
+	 */
+	public String toUpdColl(){
+		String res="upd_collateral_house_info";
+		String id=mortgageReserveRes.getWarrantsId();
+		String mortgageType=mortgageReserveRes.getMortgageType();
+		System.out.println("111:"+mortgageType);
+		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
+		if("1".equals(mortgageType)){
+			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
+			this.setMortgageReserveListHouseInfo(mortgageReserveListHouseInfo);
+			res="upd_collateral_house_info";
+		}else if ("2".equals(mortgageType)){
+			mortgageReserveListCarInfo=mortgageReserveService.queryMortgageReserveListCarInfo(id);
+			this.setMortgageReserveListCarInfo(mortgageReserveListCarInfo);
+			res="upd_collateral_car_info";
+		}
+		this.setMortgageReserve(mortgageReserve);
+		return res;
+	}
+	
+	/**
+	 * 修改库存
+	 * @throws Exception
+	 */
+	public void updColl() throws Exception{
+		String info ="fails";
+	       boolean reslut=false;
+			try {
+				String mortgageType= mortgageReserve.getMortgageType();
+				MUOUserSession muo=getCurrentOnlineUser();
+				if("1".equals(mortgageType)){
+					reslut=mortgageReserveService.updCollHouse(mortgageReserve, mortgageReserveHouse,files,filesFileName,muo);
+				}else if ("2".equals(mortgageType)){
+					reslut=mortgageReserveService.updCollCar(mortgageReserve, mortgageReserveCar,files,filesFileName,muo);
+				}
+				if(reslut){
+					info="success";	
+				}
+				
+			} catch (Exception e) {
+				info="fails";
+				log.error("[失败！]", e);
+				throw e;
+			}finally{	
+				Struts2Utils.renderText(info);
+			}
+    
 	}
 	
 	/**
@@ -202,11 +306,11 @@ public class MortgageReserveAction extends BaseAction {
 		try {
 			String mortgageType= mortgageReserve.getMortgageType();
 			MUOUserSession muo=getCurrentOnlineUser();
-			if("0".equals(mortgageType)){
+			if("1".equals(mortgageType)){
 				mortgageReserve.setOtherType(tempMortgage.get("otherTypeFC"));
 				mortgageReserve.setLoanType(tempMortgage.get("loanTypeFC"));
 				reslut=mortgageReserveService.insertItemHouse(mortgageReserve, mortgageReserveHouse,files,filesFileName,muo);
-			}else if ("1".equals(mortgageType)){
+			}else if ("2".equals(mortgageType)){
 				mortgageReserve.setOtherType(tempMortgage.get("otherTypeJDC"));
 				mortgageReserve.setLoanType(tempMortgage.get("loanTypeJDC"));
 				reslut=mortgageReserveService.insertItemCar(mortgageReserve, mortgageReserveCar,files,filesFileName,muo);
@@ -230,16 +334,16 @@ public class MortgageReserveAction extends BaseAction {
 	 */
 	public void addCollateral() throws Exception{
 		System.out.println("id="+mortgageReserveRes.getWarrantsId());
-	       String info ="fails";
+	       String info ="success";
 	       boolean reslut=false;
 			try {
 				String mortgageType= mortgageReserveRes.getMortgageType();
 				String warrantsId= mortgageReserveRes.getWarrantsId();
 				Long pkey=Long.valueOf(warrantsId);
 				MUOUserSession muo=getCurrentOnlineUser();
-				if("0".equals(mortgageType)){
+				if("1".equals(mortgageType)){
 					reslut=mortgageReserveService.insertCollateralHouse(pkey,mortgageReserveHouse, muo);
-				}else if ("1".equals(mortgageType)){
+				}else if ("2".equals(mortgageType)){
 					reslut=mortgageReserveService.insertCollateralCar( pkey,mortgageReserveCar,muo);
 				}
 				if(reslut){
@@ -267,8 +371,14 @@ public class MortgageReserveAction extends BaseAction {
 			info ="fails";
 		}else if("0".equals(result)) {
 			info = "noExist";
+		}else if("othfails".equals(result)){
+			info = "othexist";
+		}else if("profails".equals(result)){
+			info = "proexist";
+		}else if("twofails".equals(result)){
+			info = "twoexist";
 		}else{
-			info = "exist";
+			info ="fails";
 		}
     	} catch (Exception e) {
 			info="fails";
@@ -281,6 +391,82 @@ public class MortgageReserveAction extends BaseAction {
     	
 		
 	}
+	
+	/**
+	 * 检验机动车登记证号是否已存在
+	 */
+	public void checkCarRegisterNo() throws Exception{
+		String 	info ="fails";
+    	try {
+		String result = this.mortgageReserveService.checkCarRegisterNo(mortgageReserveCar);
+		if("fails".equals(result)){
+			info ="fails";
+		}else if("0".equals(result)) {
+			info = "noExist";
+		}else if("carfails".equals(result)){
+			info = "carfails";
+		}else{
+			info ="fails";
+		}
+    	} catch (Exception e) {
+			info="fails";
+			log.error("[失败！]", e);
+			throw e;
+		}finally{
+
+			Struts2Utils.renderText(info);
+		}
+    	
+		
+	}
+	
+	
+	/**
+	 * 关联系统库存序号是否已存在
+	 */
+	public void openGenerate() throws Exception{
+		//String 	info ="fails";
+		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
+		try {
+			String  noticeRegisterRelation=mortgageReserve.getNoticeRegisterRelation();
+			System.out.println("1111111:"+noticeRegisterRelation);
+			mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(noticeRegisterRelation);
+			JSONObject jsonObject = JSONObject.fromObject(mortgageReserve);
+			System.out.println("res:"+jsonObject);
+			res=jsonObject.toString();
+			System.out.println("res:"+res);
+		} catch (Exception e) {
+			res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
+			e.printStackTrace();
+		}
+		Struts2Utils.renderText(res);
+		
+	}
+
+	/**
+	 * 出入库处理
+	 * @throws Exception
+	 */
+	public void outInCollateral() throws Exception{
+       String info ="fails";
+       boolean reslut=false;
+		try {
+
+			MUOUserSession muo=getCurrentOnlineUser();
+			reslut=mortgageReserveService.insertMortgageReserveOut(mortgageReserveOut, muo);
+			if(reslut){
+				info="success";	
+			}
+			
+		} catch (Exception e) {
+			info="fails";
+			log.error("[失败！]", e);
+			throw e;
+		}finally{	
+			Struts2Utils.renderText(info);
+		}
+	}
+	
 
 	 /**
     * 异步加载文件
