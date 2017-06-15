@@ -87,7 +87,7 @@ function clears(){
 					扫描文件：
 				</td>
 				<td class="form_label" style="text-align: left;">
-					<input type="file" name="upload"  accept="image/jpeg" multiple="multiple"><font style="color: red">*请上传合适的JPEG照片</font>
+					<input type="file" name="upload"  accept="image/png,image/jpeg" multiple="multiple"><font style="color: red">*请上传合适的JPEG或PNG照片</font>
 					<br>
 					<font style="color: red">(说明：最多上传10张照片)</font>
 					
