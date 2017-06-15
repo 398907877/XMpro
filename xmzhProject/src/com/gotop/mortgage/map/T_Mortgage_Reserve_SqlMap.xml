@@ -68,22 +68,7 @@
 	 </isNotNull>
   </select>  
 
-     <resultMap class="com.gotop.mortgage.model.MortgageReserveHouse" id="mortgageReserveHouse">
-     	<result column="ID" property="id" jdbcType="DECIMAL" />
-     	<result column="WARRANTS_ID" property="warrantsId" jdbcType="DECIMAL" />
-     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
-     	<result column="PROPERTY_CARDNO" property="propertyCardNo" jdbcType="VARCHAR" />
-     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
-     	<result column="PROPERTY_ADDRES" property="propertyAddres" jdbcType="VARCHAR" />
-     	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
-     	<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR" />
-     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />
-     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
-     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
-     	<result column="STATUS" property="status" jdbcType="VARCHAR" />
-     	
-     </resultMap>
-
+  
   
   
   <select id="backqueryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
