@@ -18,11 +18,8 @@
 				<tr>
 					<td class="form_label" align="right">补登记标志：</td>
 					<td >
-						<select id="noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" onchange= "changeCheckSign(this.value)" style="width:80px;">
-						<option value="">全部</option>
-						<option value="1">未确认</option>
-						<option value="2">已确认</option>
-						</select>
+					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserveHouseCar.noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" nullLabel="全部"  style="width:80px;">
+					</d:select>
 					</td>
 					<td class="form_label" align="right" >产权人姓名：</td>
 					<td>

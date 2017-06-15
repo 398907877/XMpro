@@ -38,7 +38,7 @@ String str_date = TimeUtil.today();
 					</td>
 					<td class="form_label" align="right">出入库：</td>
 					<td >
-						<d:select id="operatingType" dictTypeId="MORTGAGE_OUT_IN" name="mortgageList.operatingType" style="width:80px;">
+						<d:select id="operatingType" dictTypeId="MORTGAGE_OUT_IN" name="mortgageList.operatingType" nullLabel="全部" style="width:80px;">
 						</d:select>
 					</td>
 				</tr>
@@ -46,7 +46,7 @@ String str_date = TimeUtil.today();
 				   
 					<td class="form_label" align="right">操作事项：</td>
 					<td >
-						<d:select id="operatingMatters" dictTypeId="OPERATING_MORTGAGE_TYPE" property="mortgageList.operatingMatters" name="mortgageList.operatingMatters"  style="width:80px;">
+						<d:select id="operatingMatters" dictTypeId="OPERATING_MORTGAGE_TYPE" property="mortgageList.operatingMatters" name="mortgageList.operatingMatters" nullLabel="全部"  style="width:80px;">
 							
 						</d:select>
 					</td>
@@ -54,7 +54,7 @@ String str_date = TimeUtil.today();
 					<td >
 					<!-- 状态：正常，注销 -->
 					<!-- <input type="hidden" id="status" name="mortgageList.status"> -->
-						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" value="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
+						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" nullLabel="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
 							
 						</d:select>
 					</td>
