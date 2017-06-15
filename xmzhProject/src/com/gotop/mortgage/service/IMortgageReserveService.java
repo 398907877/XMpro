@@ -19,7 +19,7 @@ public interface IMortgageReserveService {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveRes> queryMortgageReserveList(MortgageReserve mortgageReserve, Page page);
+	List<MortgageReserveRes> queryMortgageReserveList(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar, Page page);
 	
 	/**
 	 * 查询权证信息详情

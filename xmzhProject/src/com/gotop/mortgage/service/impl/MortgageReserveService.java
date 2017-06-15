@@ -34,12 +34,55 @@ public class MortgageReserveService implements IMortgageReserveService {
 	}
 	@Override
 	public List<MortgageReserveRes> queryMortgageReserveList(
-			MortgageReserve mortgageReserve, Page page) {
+			MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar MortgageReserveCar, Page page) {
 		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		String mortgageType= mortgageReserve.getMortgageType();
-		if(!"".equals(mortgageType)&&mortgageType!=null){
-			map.put("mortgageType", mortgageType);
+		map.put("mortgageType", mortgageType);
+		if("1".equals(mortgageType)){
+			if(!"".equals(mortgageReserve.getProjectNumber())&&mortgageReserve.getProjectNumber()!=null){
+				map.put("projectNumber", mortgageReserve.getProjectNumber());
+			}
+			if(!"".equals(mortgageReserve.getStatus())&&mortgageReserve.getStatus()!=null){
+				map.put("status", mortgageReserve.getStatus());
+			}
+			if(!"".equals(mortgageReserve.getBorrowerName())&&mortgageReserve.getBorrowerName()!=null){
+				map.put("borrowerName", mortgageReserve.getBorrowerName());
+			}
+			if(!"".equals(mortgageReserve.getBorrowerCardNo())&&mortgageReserve.getBorrowerCardNo()!=null){
+				map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
+			}
+			if(!"".equals(mortgageReserveHouse.getPropertyName())&&mortgageReserveHouse.getPropertyName()!=null){
+				map.put("propertyName", mortgageReserveHouse.getPropertyName());
+			}
+			if(!"".equals(mortgageReserveHouse.getPropertyCardNo())&&mortgageReserveHouse.getPropertyCardNo()!=null){
+				map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());
+			}
+			if(!"".equals(mortgageReserveHouse.getPropertyNo())&&mortgageReserveHouse.getPropertyNo()!=null){
+				map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
+			}
+			if(!"".equals(mortgageReserve.getOtherWarrantsNumber())&&mortgageReserve.getOtherWarrantsNumber()!=null){
+				map.put("otherWarrantsNumber", mortgageReserve.getOtherWarrantsNumber());
+			}
+			if(!"".equals(mortgageReserveHouse.getPropertyAddres())&&mortgageReserveHouse.getPropertyAddres()!=null){
+				map.put("propertyAddres", mortgageReserveHouse.getPropertyAddres());
+			}
+			if(!"".equals(mortgageReserve.getLoanType())&&mortgageReserve.getLoanType()!=null){
+				map.put("loanType", mortgageReserve.getLoanType());
+			}
+			if(!"".equals(mortgageReserve.getOrgCode())&&mortgageReserve.getOrgCode()!=null){
+				map.put("orgCode", mortgageReserve.getOrgCode());
+			}
+			if(!"".equals(mortgageReserve.getNoRegisterSign())&&mortgageReserve.getNoRegisterSign()!=null){
+				map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
+			}
+			if("1".equals(mortgageReserve.getLogOutSign())){
+				map.put("status", "1");
+				map.put("afterMortgageStatus", "3");
+			}else if("2".equals(mortgageReserve.getLogOutSign())){
+				map.put("status", "2");
+				map.put("afterMortgageStatus", "2");
+			}
 		}
 		mortgageReserveList=mortgageReserveDao.queryMortgageReserveList(map, page);
 		return mortgageReserveList;

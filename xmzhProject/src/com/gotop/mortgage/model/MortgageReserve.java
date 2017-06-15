@@ -29,6 +29,7 @@ public class MortgageReserve {
 	private String afterMortgageStatus;
 	private String insertTime;
 	private String updateTime;
+	private String logOutSign;
 	
 	public String getOrgName() {
 		return orgName;
@@ -185,6 +186,12 @@ public class MortgageReserve {
 	}
 	public void setPurchaseNumber(String purchaseNumber) {
 		this.purchaseNumber = purchaseNumber;
+	}
+	public String getLogOutSign() {
+		return logOutSign;
+	}
+	public void setLogOutSign(String logOutSign) {
+		this.logOutSign = logOutSign;
 	}
 
 

@@ -41,15 +41,15 @@
 				  <tr>
 				    <td class="form_label" align="right" >产权人姓名：</td>
 					<td>
-					<h:text property="mortgageReserve.propertyName" id="propertyName" style="width:130px;" />	
+					<h:text property="mortgageReserveHouse.propertyName" id="propertyName" style="width:130px;" />	
 					</td>	
 					 <td class="form_label" align="right" >产权人身份证号：</td>
 					<td>
-					<h:text property="mortgageReserve.propertyCardNo" id="propertyCardNo" style="width:130px;" />	
+					<h:text property="mortgageReserveHouse.propertyCardNo" id="propertyCardNo" style="width:130px;" />	
 					</td>	
 					 <td class="form_label" align="right" >产权证号：</td>
 					<td>
-					<h:text property="mortgageReserve.propertyNo" id="propertyNo" style="width:130px;" />	
+					<h:text property="mortgageReserveHouse.propertyNo" id="propertyNo" style="width:130px;" />	
 					</td>
 				  </tr>		
 				  <tr>
@@ -59,7 +59,7 @@
 					</td>	
 					 <td class="form_label" align="right" >产权地址：</td>
 					<td>
-					<h:text property="mortgageReserve.propertyAddres" id="propertyAddres" style="width:130px;" />	
+					<h:text property="mortgageReserveHouse.propertyAddres" id="propertyAddres" style="width:130px;" />	
 					</td>	
 					 <td class="form_label" align="right" >贷款种类：</td>
 					<td>
@@ -74,7 +74,7 @@
 					</td>	
 					 <td class="form_label" align="right" >已注销未领取：</td>
 					<td>
-					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserve.noRegisterSign"  nullLabel="全部" ></d:select>
+					<d:select id="logOutSign" dictTypeId="LOGOUT_MORTGAG_REGISTER" property="mortgageReserve.logOutSign"  nullLabel="全部" ></d:select>
 					</td>
 					 <td class="form_label" align="right" >补登记标志：</td>
 					<td>
@@ -86,29 +86,29 @@
 				  <tr>
 				    <td class="form_label" align="right" >机动车登记证号：</td>
 					<td>
-					<h:text property="mortgageReserve.carRegisterno" id="carRegisterNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carRegisterno" id="carRegisterNo" style="width:130px;" />	
 					</td>
 					 <td class="form_label" align="right" >车牌号：</td>
 					<td>
-					<h:text property="mortgageReserve.carNo" id="carNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carNo" id="carNo" style="width:130px;" />	
 					</td>
 					 <td class="form_label" align="right" >车架号：</td>
 					<td>
-					<h:text property="mortgageReserve.carFrameNo" id="carFrameNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carFrameNo" id="carFrameNo" style="width:130px;" />	
 					</td>
 				  </tr>		
 				  <tr>
 				    <td class="form_label" align="right" >购车发票号：</td>
 					<td>
-					<h:text property="mortgageReserve.carInvoiceNo" id="carInvoiceNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carInvoiceNo" id="carInvoiceNo" style="width:130px;" />	
 					</td>
 					 <td class="form_label" align="right" >完税证明号：</td>
 					<td>
-					<h:text property="mortgageReserve.carDuesNo" id="carDuesNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carDuesNo" id="carDuesNo" style="width:130px;" />	
 					</td>
 					 <td class="form_label" align="right" >保单号：</td>
 					<td>
-					<h:text property="mortgageReserve.carSafeNo" id="carSafeNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carSafeNo" id="carSafeNo" style="width:130px;" />	
 					</td>
 				  </tr>			
 				</tbody>

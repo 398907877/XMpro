@@ -161,7 +161,7 @@ public class MortgageReserveAction extends BaseAction {
 	 */
 	public String queryMortgageReserveList(){
 		System.out.println("111111111:"+mortgageReserve.getMortgageType());
-		mortgageReserveList=mortgageReserveService.queryMortgageReserveList(mortgageReserve, this.getPage());
+		mortgageReserveList=mortgageReserveService.queryMortgageReserveList(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, this.getPage());
 		this.setPage(page);
 		this.setMortgageReserveList(mortgageReserveList);
 		return "mortgageReserveList";
