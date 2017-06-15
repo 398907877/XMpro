@@ -146,6 +146,78 @@
 	 <isNotNull prepend="and" property="mortgageType" >
 	  t.mortgage_type='$mortgageType$'
 	 </isNotNull>
+	 <isNotNull prepend="and" property="projectNumber" >
+	  t.project_number='$projectNumber$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="status" >
+	  t.status='$status$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerName" >
+	  t.borrower_name='$borrowerName$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerCardNo" >
+	  t.borrower_cardno='$borrowerCardNo$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="otherWarrantsNumber" >
+	  t.other_warrants_number='$otherWarrantsNumber$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="loanType" >
+	  t.loan_type='$loanType$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="orgCode" >
+	  t.org_code='$orgCode$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="noRegisterSign" >
+	  t.no_register_sign='$noRegisterSign$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="propertyName" >
+	  t.id in (select h.warrants_id
+	  from t_mortgage_house_info h
+	 where h.property_name like '%$propertyName$%'
+	  )
+	 </isNotNull>
+	 <isNotNull prepend="and" property="propertyCardNo" >
+	  t.id in (select h.warrants_id
+	  from t_mortgage_house_info h
+	 where h.property_cardno='$propertyCardNo$'
+	  )
+	 </isNotNull>  
+	 <isNotNull prepend="and" property="propertyAddres" >
+	  t.id in (select h.warrants_id
+	  from t_mortgage_house_info h
+	 where h.property_addres='$propertyAddres$'
+	  )
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carRegisterno" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_registerno = '$carRegisterno%')
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carNo" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_no = '$carNo$')
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carFrameNo" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_frameno = '$carFrameNo$')
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carInvoiceNo" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_invoiceno = '$carInvoiceNo$')
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carDuesNo" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_duesno = '$carDuesNo$')
+	 </isNotNull>
+	 <isNotNull prepend="and" property="carSafeNo" >
+	  t.id in (select o.warrants_id
+		  from t_mortgage_car_info o
+		 where o.car_safeno = '$carSafeNo$')
+	 </isNotNull>
     order by id
   </select>  
    

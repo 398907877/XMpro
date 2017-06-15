@@ -34,24 +34,24 @@ public class MortgageReserveService implements IMortgageReserveService {
 	}
 	@Override
 	public List<MortgageReserveRes> queryMortgageReserveList(
-			MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar MortgageReserveCar, Page page) {
+			MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar, Page page) {
 		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		String mortgageType= mortgageReserve.getMortgageType();
 		map.put("mortgageType", mortgageType);
+		if(!"".equals(mortgageReserve.getProjectNumber())&&mortgageReserve.getProjectNumber()!=null){
+			map.put("projectNumber", mortgageReserve.getProjectNumber());
+		}
+		if(!"".equals(mortgageReserve.getStatus())&&mortgageReserve.getStatus()!=null){
+			map.put("status", mortgageReserve.getStatus());
+		}
+		if(!"".equals(mortgageReserve.getBorrowerName())&&mortgageReserve.getBorrowerName()!=null){
+			map.put("borrowerName", mortgageReserve.getBorrowerName());
+		}
+		if(!"".equals(mortgageReserve.getBorrowerCardNo())&&mortgageReserve.getBorrowerCardNo()!=null){
+			map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
+		}
 		if("1".equals(mortgageType)){
-			if(!"".equals(mortgageReserve.getProjectNumber())&&mortgageReserve.getProjectNumber()!=null){
-				map.put("projectNumber", mortgageReserve.getProjectNumber());
-			}
-			if(!"".equals(mortgageReserve.getStatus())&&mortgageReserve.getStatus()!=null){
-				map.put("status", mortgageReserve.getStatus());
-			}
-			if(!"".equals(mortgageReserve.getBorrowerName())&&mortgageReserve.getBorrowerName()!=null){
-				map.put("borrowerName", mortgageReserve.getBorrowerName());
-			}
-			if(!"".equals(mortgageReserve.getBorrowerCardNo())&&mortgageReserve.getBorrowerCardNo()!=null){
-				map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
-			}
 			if(!"".equals(mortgageReserveHouse.getPropertyName())&&mortgageReserveHouse.getPropertyName()!=null){
 				map.put("propertyName", mortgageReserveHouse.getPropertyName());
 			}
@@ -82,6 +82,25 @@ public class MortgageReserveService implements IMortgageReserveService {
 			}else if("2".equals(mortgageReserve.getLogOutSign())){
 				map.put("status", "2");
 				map.put("afterMortgageStatus", "2");
+			}
+		}else if("2".equals(mortgageType)){
+			if(!"".equals(mortgageReserveCar.getCarRegisterNo())&&mortgageReserveCar.getCarRegisterNo()!=null){
+				map.put("carRegisterno", mortgageReserveCar.getCarRegisterNo());
+			}
+			if(!"".equals(mortgageReserveCar.getCarNo())&&mortgageReserveCar.getCarNo()!=null){
+				map.put("carNo", mortgageReserveCar.getCarNo());
+			}
+			if(!"".equals(mortgageReserveCar.getCarFrameNo())&&mortgageReserveCar.getCarFrameNo()!=null){
+				map.put("carFrameNo", mortgageReserveCar.getCarFrameNo());
+			}
+			if(!"".equals(mortgageReserveCar.getCarInvoiceNo())&&mortgageReserveCar.getCarInvoiceNo()!=null){
+				map.put("carInvoiceNo", mortgageReserveCar.getCarInvoiceNo());
+			}
+			if(!"".equals(mortgageReserveCar.getCarDuesNo())&&mortgageReserveCar.getCarDuesNo()!=null){
+				map.put("carDuesNo", mortgageReserveCar.getCarDuesNo());
+			}
+			if(!"".equals(mortgageReserveCar.getCarSafeNo())&&mortgageReserveCar.getCarSafeNo()!=null){
+				map.put("carSafeNo", mortgageReserveCar.getCarSafeNo());
 			}
 		}
 		mortgageReserveList=mortgageReserveDao.queryMortgageReserveList(map, page);
