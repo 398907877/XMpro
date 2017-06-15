@@ -51,22 +51,14 @@ public interface IMortgageReserveService {
 	 */
 	String checkOtherWarrantsNumber(MortgageReserve mortgageReserve);
 	
-	
-	
 	/**
-	 * 插入押品类型为房产时
+	 * 插入权证信息和押品信息
 	 * @param mortgageReserve
 	 * @param mortgageReserveHouse
 	 */
-	boolean insertItemHouse(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,File[] files,String[] filesFileName,MUOUserSession muo);
+	boolean insertItemALL(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
 	
-
-	/**
-	 * 插入押品类型为机动车时
-	 * @param mortgageReserve
-	 * @param mortgageReserveHouse
-	 */
-	boolean insertItemCar(MortgageReserve mortgageReserve,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
+	
 	
 	
 	/**
@@ -100,34 +92,24 @@ public interface IMortgageReserveService {
 	public WarrantsFile getFileResource(String fileId);
 	
 	/**
-	 * 库存变更为房产时
+	 * 库存变更
 	 * @param mortgageReserve
 	 * @param mortgageReserveHouse
 	 */
-	boolean updCollHouse(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,File[] files,String[] filesFileName,MUOUserSession muo);
-	/**
-	 * 库存变更为机动车时
-	 * @param mortgageReserve
-	 * @param mortgageReserveHouse
-	 */
-	boolean updCollCar(MortgageReserve mortgageReserve,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
-	
-	/**
-	 * 查询房产类型押品信息详情
-	 * @param mortgageReserve
-	 * @param page
-	 * @return
-	 */
-	List<MortgageReserveRes> queryMortgageReserveHouseList(String id,Page page);
+	boolean updCollAll(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
 	
 
+	
 	/**
-	 * 查询机动车类型押品信息详情
+	 * 查询房产、机动车类型押品信息详情
 	 * @param mortgageReserve
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveRes> queryMortgageReserveCarList(String id,Page page);
+	List<MortgageReserveRes> queryMortgageReserveAllList(MortgageReserveRes mortgageReserveRes,Page page);
+	
+	
+	
 	
 	
 

@@ -191,7 +191,7 @@
 	 <isNotNull prepend="and" property="carRegisterno" >
 	  t.id in (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_registerno = '$carRegisterno%')
+		 where o.car_registerno = '$carRegisterno$')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carNo" >
 	  t.id in (select o.warrants_id
@@ -240,6 +240,12 @@
 	 <isNotNull prepend="and" property="id" >
 	  t.id='$id$'
 	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerName" >
+	  t.borrower_name like '%$borrowerName$%'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerCardNo" >
+	  t.borrower_cardno= '$borrowerCardNo$'
+	 </isNotNull>
 
   </select>  
   
@@ -278,6 +284,12 @@
  where  t.mortgage_type='2'
 	 <isNotNull prepend="and" property="id" >
 	  t.id='$id$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerName" >
+	  t.borrower_name like '%$borrowerName$%'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerCardNo" >
+	  t.borrower_cardno= '$borrowerCardNo$'
 	 </isNotNull>
 
 

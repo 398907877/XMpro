@@ -18,11 +18,11 @@
 				<tr>
 				   <td class="form_label" align="right" >借款人姓名：</td>
 				   <td>
-					<h:text property="mortgageReserve.borrowerName" id="borrowerName" style="width:130px;" />	
+					<h:text property="mortgageReserveRes.borrowerName" id="borrowerName" style="width:130px;" />	
 				   </td>
 				   <td  class="form_label" align="right" >借款人身份证号：</td>
 				   <td  colspan="3">
-					<h:text property="mortgageReserve.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
+					<h:text property="mortgageReserveRes.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
 				   </td>
 				</tr>
 				<tr class="form_bottom">
@@ -234,7 +234,10 @@
 	  		window.location.reload();
 			}
 		function back_coll(){
-	  		window.history.go(-1);
+	           var mortgageType=  $id("mortgageType").value; 
+			    var url="/mortgage/mortgageReserveAction_queryMortgageReserveList.action?mortgageReserve.mortgageType="+mortgageType;
+			    parent.window.frames["mainFrame"].location.href = encodeURI(url);	
+	  		//window.history.go(-1);
 		 }
 		function GetRequest() { 
 	    var url = location.search; //获取url中"?"符后的字串   

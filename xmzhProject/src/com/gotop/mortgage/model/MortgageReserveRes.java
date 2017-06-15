@@ -10,6 +10,7 @@ public class MortgageReserveRes {
 	private String otherWarrantsNumber;
 	private String otherWarrantsDate;
 	private String borrowerName;
+	private String borrowerCardNo;
 	private String loanType;
 	private String status;
 	private String propertyNo;
@@ -100,6 +101,12 @@ public class MortgageReserveRes {
 	}
 	public void setMortgageType(String mortgageType) {
 		this.mortgageType = mortgageType;
+	}
+	public String getBorrowerCardNo() {
+		return borrowerCardNo;
+	}
+	public void setBorrowerCardNo(String borrowerCardNo) {
+		this.borrowerCardNo = borrowerCardNo;
 	}
 	
 

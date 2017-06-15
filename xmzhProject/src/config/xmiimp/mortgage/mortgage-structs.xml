@@ -11,7 +11,7 @@
 	        /jsp/mortgage/add_mortgageReserve.jsp
 	      </result>
 	      <result name="out_in_mortgageReserveList" >
-	       /jsp/mortgage/outIn_collateral_list.jsp
+	       /jsp/mortgage/out_in_collateral_list.jsp
 	      </result>
 	      <result name="out_in_mortgageReserve" >
 	       /jsp/mortgage/out_in_collateral.jsp

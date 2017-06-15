@@ -20,7 +20,7 @@
 					</td>
 					<td class="form_label" align="right" >库存序号：</td>
 					<td>
-					 <h:text property="mortgageReserve.projectNumber" id="projectNumber" style="width:130px;" />	
+					 <h:text property="mortgageReserve.projectNumber" id="projectNumber"  style="width:130px;" />	
 					</td>
 					<td class="form_label" align="right">库存状态：</td>
 					<td >
@@ -275,7 +275,25 @@
 
 		//清空
 		function clears(){
-       $id("borrowerName").value="";
+           $id("projectNumber").value="";
+           $id("status").value="";
+           $id("borrowerName").value="";
+           $id("borrowerCardNo").value="";
+           $id("propertyName").value="";
+           $id("propertyCardNo").value="";
+           $id("propertyNo").value="";
+           $id("otherWarrantsNumber").value="";
+           $id("propertyAddres").value="";
+           $id("loanType").value="";
+           $id("orgCode").value="";
+           $id("logOutSign").value="";
+           $id("noRegisterSign").value="";
+           $id("carRegisterNo").value="";
+           $id("carNo").value="";
+           $id("carFrameNo").value="";
+           $id("carInvoiceNo").value="";
+           $id("carDuesNo").value="";
+           $id("carSafeNo").value="";
 		}
 		function add1(){
 		  var gop;

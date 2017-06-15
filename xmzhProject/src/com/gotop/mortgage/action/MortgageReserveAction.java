@@ -182,14 +182,7 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toOutInColl(){
-		String warrantsId=mortgageReserveRes.getWarrantsId();
-		String mortgageType=mortgageReserveRes.getMortgageType();
-		System.out.println("ppppppp:"+warrantsId);
-		if("1".equals(mortgageType)){
-			mortgageReserveList=mortgageReserveService.queryMortgageReserveHouseList(warrantsId,this.getPage());
-		}else if ("2".equals(mortgageType)){
-			mortgageReserveList=mortgageReserveService.queryMortgageReserveCarList(warrantsId,this.getPage());
-		}
+	    mortgageReserveList=mortgageReserveService.queryMortgageReserveAllList(mortgageReserveRes,this.getPage());
 		this.setPage(page);
 		this.setMortgageReserveList(mortgageReserveList);
 		return "out_in_mortgageReserveList";
@@ -275,13 +268,8 @@ public class MortgageReserveAction extends BaseAction {
 		String info ="fails";
 	       boolean reslut=false;
 			try {
-				String mortgageType= mortgageReserve.getMortgageType();
 				MUOUserSession muo=getCurrentOnlineUser();
-				if("1".equals(mortgageType)){
-					reslut=mortgageReserveService.updCollHouse(mortgageReserve, mortgageReserveHouse,files,filesFileName,muo);
-				}else if ("2".equals(mortgageType)){
-					reslut=mortgageReserveService.updCollCar(mortgageReserve, mortgageReserveCar,files,filesFileName,muo);
-				}
+				reslut=mortgageReserveService.updCollAll(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, files, filesFileName, muo);
 				if(reslut){
 					info="success";	
 				}
@@ -309,12 +297,12 @@ public class MortgageReserveAction extends BaseAction {
 			if("1".equals(mortgageType)){
 				mortgageReserve.setOtherType(tempMortgage.get("otherTypeFC"));
 				mortgageReserve.setLoanType(tempMortgage.get("loanTypeFC"));
-				reslut=mortgageReserveService.insertItemHouse(mortgageReserve, mortgageReserveHouse,files,filesFileName,muo);
 			}else if ("2".equals(mortgageType)){
 				mortgageReserve.setOtherType(tempMortgage.get("otherTypeJDC"));
 				mortgageReserve.setLoanType(tempMortgage.get("loanTypeJDC"));
-				reslut=mortgageReserveService.insertItemCar(mortgageReserve, mortgageReserveCar,files,filesFileName,muo);
 			}
+			reslut=mortgageReserveService.insertItemALL(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, files, filesFileName, muo);
+			
 			if(reslut){
 				info="success";	
 			}
