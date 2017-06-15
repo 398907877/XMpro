@@ -166,28 +166,28 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String queryMortgageDetailInOutForExcel(){
 		
-		if ("2".equals(mortgageList.getMortgageType())&&"01".equals(mortgageList.getOperatingMatters())) {
+		if ("2".equals(mortgageList.getMortgageType())&&"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutForExcel(mortgageList);
 			System.out.println("机动车外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveCarDetailInOutForExcel1";
 		}
-		if ("2".equals(mortgageList.getMortgageType())&&!"01".equals(mortgageList.getOperatingMatters())) {
+		if ("2".equals(mortgageList.getMortgageType())&&!"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutForExcel(mortgageList);
 			System.out.println("机动车不外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveCarDetailInOutForExcel";
 		}
-		if ("1".equals(mortgageList.getMortgageType())&&!"01".equals(mortgageList.getOperatingMatters())) {
+		if ("1".equals(mortgageList.getMortgageType())&&!"1".equals(mortgageList.getOperatingMatters())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutForExcel(mortgageList);
 			System.out.println("房产不外借导出");
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("2");
 			return "queryMortgageReserveHouseDetailInOutForExcel";
 		}
-		if ("1".equals(mortgageList.getMortgageType())&&"01".equals(mortgageList.getOperatingMatters())) {
+		if ("1".equals(mortgageList.getMortgageType())&&"1".equals(mortgageList.getOperatingMatters())) {
 			System.out.println("房产外借导出");
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutForExcel(mortgageList);
 			this.setMortgageLists(mortgageLists);

@@ -32,7 +32,7 @@
 					</td>
 					<td class="form_label" align="right">出入库：</td>
 					<td >
-						<d:select id="operatingType" dictTypeId="MORTGAGE_OPERATING_TYPE" name="mortgageList.operatingType" style="width:80px;">
+						<d:select id="operatingType" dictTypeId="MORTGAGE_OPERATING" name="mortgageList.operatingType" style="width:80px;">
 						</d:select>
 					</td>
 				</tr>
@@ -48,7 +48,7 @@
 					<td >
 					<!-- 状态：正常，注销 -->
 					<!-- <input type="hidden" id="status" name="mortgageList.status"> -->
-						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" onchange= "changeCheckSign(this.value)" style="width:80px;">
+						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" value="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
 							
 						</d:select>
 					</td>
@@ -587,26 +587,26 @@
 			}else{
 				$("#houseTotalQuery").attr("style","display:none");
 				$("#houseDetail").attr("style","display:block");
-				if(options.val()=='1'&&operatingMatters.val()!='01'){
+				if(options.val()=='1'&&operatingMatters.val()!='1'){
 				    $("#house_detail").show();
 				    $("#house_detail1").hide();
 				    $("#car_detail").hide();
 				    $("#car_detail1").hide();
 			    }
-			    if(options.val()=='1'&&operatingMatters.val()=='01'){
+			    if(options.val()=='1'&&operatingMatters.val()=='1'){
 			      	$("#house_detail1").show();
 				    $("#car_detail").hide();
 				    $("#house_detail").hide();
 				    $("#car_detail1").hide();
 			    }
-			    if(options.val()=='2'&&operatingMatters.val()!='01')
+			    if(options.val()=='2'&&operatingMatters.val()!='1')
 			    {
 			    	$("#car_detail").show();
 				    $("#house_detail1").hide();
 				    $("#house_detail").hide();
 				    $("#car_detail1").hide();
 			    }
-			    if(options.val()=='2'&&operatingMatters.val()=='01')
+			    if(options.val()=='2'&&operatingMatters.val()=='1')
 			    {
 			    	$("#car_detail1").show();
 				    $("#house_detail1").hide();
