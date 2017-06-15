@@ -302,6 +302,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			MortgageList mortgageList) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
+		
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
 		String operatingTime=sdf1.format(date);
