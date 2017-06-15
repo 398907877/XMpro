@@ -1,10 +1,16 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@page pageEncoding="UTF-8" import="java.util.*,com.gotop.util.time.TimeUtil" contentType="text/html; charset=UTF-8"%>
 <%@include file="/common/common.jsp"%>
 <%@include file="/common/skins/skin0/component.jsp"%>
 <h:css href="/css/style1/style-custom.css" />
 <script type="text/javascript" src="/js/commonUtil.js"></script>
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/org_public.js"></script>
+<script src="<%=request.getContextPath() %>/js/org_public.js"></script>
+<% 
+
+String str_date = TimeUtil.today();
+
+%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -32,7 +38,7 @@
 					</td>
 					<td class="form_label" align="right">出入库：</td>
 					<td >
-						<d:select id="operatingType" dictTypeId="MORTGAGE_OPERATING" name="mortgageList.operatingType" style="width:80px;">
+						<d:select id="operatingType" dictTypeId="MORTGAGE_OUT_IN" name="mortgageList.operatingType" style="width:80px;">
 						</d:select>
 					</td>
 				</tr>
@@ -61,7 +67,7 @@
 					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
-							<input id="querys" type="submit" value="统计" class="button">
+							<input id="querys" type="submit" value="统计" class="button" onclick="query();">
 							<input type="button" value="明细" class="button" onclick="detail();">
 							<input type="button" value="汇总导出" class="button" onclick="totalDownExl();">
 							<input type="button" value="明细导出" class="button" onclick="detailDownExl();">
@@ -637,17 +643,46 @@
 	     $("#tj_fc").hide();
 	    }
 	    }
-			
+		/*
+		//查询判断(submit改为button的判断框)
+		function query()
+		{
+			var time1=$id("d1").value;
+			var time2=$id("d2").value;
+			if(time1=="")
+			{
+				alert("开始时间为必选项！");
+			}
+			if(time2=="")
+			{
+				alert("截止时间为必选项！");
+			}
+			if(time1!=""&&time2!="")
+			{
+				var frm = $name("appQuery");
+				frm.action="/mortgage/mortgageReserveHouseAction_queryMortgageInOut.action";
+				frm.submit();
+			}
+		}
+		
+		*/
       
 		//清空
 		function clears(){
+			
+			  
+			
 			$("#d1_input").val("");
 			$("#d2_input").val("");
 			$("#status").val("");
 			
+			
 			$id("d1").value="";
 			$id("d2").value="";
 			$id("status").value="0";
+			//清空传入后台的时间控件的值,将当前时间填入
+			$name("mortgageList.operatingTime").value ="";
+			$name("mortgageList.operatingEndTime").value ="";
 		}
 		
 		//汇总导出

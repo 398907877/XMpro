@@ -20,14 +20,14 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	 * */
 	@Override
 	public List<MortgageReserveHouseCar> queryHouseStockList(
-			MortgageReserveHouseCar mortgageReserveHouse, Page page){
+			MortgageReserveHouseCar mortgageReserveHouseCar, Page page){
 		List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
 		Map<String, Object>map=new HashMap<String, Object>();
-		map.put("propertyName", mortgageReserveHouse.getPropertyName());
-		map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());
-		map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
-		map.put("propertyAddres", mortgageReserveHouse.getPropertyAddres());
-		map.put("noRegisterSign", mortgageReserveHouse.getNoRegisterSign());
+		map.put("propertyName", mortgageReserveHouseCar.getPropertyName());
+		map.put("propertyCardNo", mortgageReserveHouseCar.getPropertyCardNo());
+		map.put("propertyNo", mortgageReserveHouseCar.getPropertyNo());
+		map.put("propertyAddres", mortgageReserveHouseCar.getPropertyAddres());
+		map.put("noRegisterSign", mortgageReserveHouseCar.getNoRegisterSign());
 		mortgageReserveList=mortgageReserveHouseDao.queryMortgageReserveList(map, page);
 		return mortgageReserveList;
 
@@ -45,28 +45,28 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     
     @Override
 	public List<MortgageReserveHouseCar> queryMortgageHouseForExcel(
-			MortgageReserveHouseCar mortgageReserveHouse) {
+			MortgageReserveHouseCar mortgageReserveHouseCar) {
     	Map<String, Object> map = new HashMap<String, Object>();
-    	if (mortgageReserveHouse!=null) {
-			if (mortgageReserveHouse.getNoRegisterSign()!=null
-			&&!"".equals(mortgageReserveHouse.getNoRegisterSign())) {
-				map.put("noRegisterSign", mortgageReserveHouse.getNoRegisterSign());
+    	if (mortgageReserveHouseCar!=null) {
+			if (mortgageReserveHouseCar.getNoRegisterSign()!=null
+			&&!"".equals(mortgageReserveHouseCar.getNoRegisterSign())) {
+				map.put("noRegisterSign", mortgageReserveHouseCar.getNoRegisterSign());
 			}
-			if (mortgageReserveHouse.getPropertyName()!=null
-			&&!"".equals(mortgageReserveHouse.getPropertyName())) {
-				map.put("propertyName", mortgageReserveHouse.getPropertyName());
+			if (mortgageReserveHouseCar.getPropertyName()!=null
+			&&!"".equals(mortgageReserveHouseCar.getPropertyName())) {
+				map.put("propertyName", mortgageReserveHouseCar.getPropertyName());
 			}
-			if (mortgageReserveHouse.getPropertyCardNo()!=null
-			&& !"".equals(mortgageReserveHouse.getPropertyCardNo())) {
-				map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());		
+			if (mortgageReserveHouseCar.getPropertyCardNo()!=null
+			&& !"".equals(mortgageReserveHouseCar.getPropertyCardNo())) {
+				map.put("propertyCardNo", mortgageReserveHouseCar.getPropertyCardNo());		
 			}
-			if (mortgageReserveHouse.getPropertyNo()!=null
-					&& !"".equals(mortgageReserveHouse.getPropertyNo())) {
-				map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
+			if (mortgageReserveHouseCar.getPropertyNo()!=null
+					&& !"".equals(mortgageReserveHouseCar.getPropertyNo())) {
+				map.put("propertyNo", mortgageReserveHouseCar.getPropertyNo());
 			}
-			if (mortgageReserveHouse.getPropertyAddres()!=null
-			&& !"".equals(mortgageReserveHouse.getPropertyAddres())) {
-				map.put("propertyAddres", mortgageReserveHouse.getPropertyAddres());
+			if (mortgageReserveHouseCar.getPropertyAddres()!=null
+			&& !"".equals(mortgageReserveHouseCar.getPropertyAddres())) {
+				map.put("propertyAddres", mortgageReserveHouseCar.getPropertyAddres());
 			}
 		}
     	

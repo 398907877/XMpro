@@ -18,7 +18,7 @@
 				<tr>
 					<td class="form_label" align="right">补登记标志：</td>
 					<td >
-						<select id="noRegisterSign" name="mortgageReserveHouse.noRegisterSign" onchange= "changeCheckSign(this.value)" style="width:80px;">
+						<select id="noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" onchange= "changeCheckSign(this.value)" style="width:80px;">
 						<option value="">全部</option>
 						<option value="1">未确认</option>
 						<option value="2">已确认</option>
@@ -26,22 +26,22 @@
 					</td>
 					<td class="form_label" align="right" >产权人姓名：</td>
 					<td>
-					 <h:text property="mortgageReserveHouse.propertyName" id="propertyName" style="width:130px;" />	
+					 <h:text property="mortgageReserveHouseCar.propertyName" id="propertyName" style="width:130px;" />	
 					</td>	
 					<td class="form_label" align="right" >产权人身份证号：</td>
 					<td>
-					 <h:text property="mortgageReserveHouse.propertyCardNo" id="propertyCardNo" style="width:130px;" />	
+					 <h:text property="mortgageReserveHouseCar.propertyCardNo" id="propertyCardNo" style="width:130px;" />	
 					</td>
 					
 				</tr>
 				<tr>
 				    <td class="form_label" align="right" >产权证号：</td>
 					<td>
-					<h:text property="mortgageReserveHouse.propertyNo" id="propertyNo" style="width:130px;" />	
+					<h:text property="mortgageReserveHouseCar.propertyNo" id="propertyNo" style="width:130px;" />	
 					</td>	
 					<td class="form_label" align="right" >产权地址：</td>
 					<td>
-					<h:text property="mortgageReserveHouse.propertyAddres" id="propertyAddres" style="width:130px;" />	
+					<h:text property="mortgageReserveHouseCar.propertyAddres" id="propertyAddres" style="width:130px;" />	
 					</td>
 				</tr>
 				    
@@ -188,23 +188,23 @@
 			var strUrl = "/mortgage/mortgageReserveHouseAction_queryMortgageQueryForExcel.action?";
 			if(noRegisterSign!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouse.noRegisterSign="+noRegisterSign;
+				strUrl=strUrl+"&mortgageReserveHouseCar.noRegisterSign="+noRegisterSign;
 			}
 			if(propertyName!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouse.propertyName="+propertyName;
+				strUrl=strUrl+"&mortgageReserveHouseCar.propertyName="+propertyName;
 			}
 			if(propertyCardNo!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouse.propertyCardNo="+propertyCardNo;
+				strUrl=strUrl+"&mortgageReserveHouseCar.propertyCardNo="+propertyCardNo;
 			}
 			if(propertyNo!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouse.propertyNo="+propertyNo;
+				strUrl=strUrl+"&mortgageReserveHouseCar.propertyNo="+propertyNo;
 			}
 			if(propertyAddres!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouse.propertyAddres="+propertyAddres;
+				strUrl=strUrl+"&mortgageReserveHouseCar.propertyAddres="+propertyAddres;
 			}
 			window.location.href=strUrl;
 		}
@@ -221,7 +221,7 @@
 	  		
 	  			var rows=gop.getSelectRow();
 		  		var warrantsId=rows.getParam("warrantsId");
-	  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouse.warrantsId="+warrantsId;
+	  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId;
 	  			showModalCenter(strUrl, null, null, 300, 100, '补登记确认');  
 		  	}
 			

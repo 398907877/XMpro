@@ -12,9 +12,6 @@ import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.gotop.mortgage.service.IMortgageReserveHouseService;
 import com.gotop.util.Struts2Utils;
-import com.gotop.util.time.TimeUtil;
-import com.primeton.utils.Page;
-import com.primeton.utils.pageCondExpand;
 
 public class MortgageReserveHouseAction extends BaseAction{
 	private MortgageReserveHouseCar mortgageReserveHouseCar;
@@ -24,16 +21,12 @@ public class MortgageReserveHouseAction extends BaseAction{
 	private IMortgageReserveHouseService mortgageReserveHouseService;
 	private List<MortgageReserveHouseCar> mortgageReserveHouseList=new ArrayList<MortgageReserveHouseCar>();
 	private List<MortgageList> mortgageLists = new ArrayList<MortgageList>();
-	public Page page2;
 	private String result_flag;
 	//库存查询
 	public String queryMortgageHouseReserveList() throws Exception{
 		//System.out.println("1111111:"+mortgageReserveHouse.getWarrantsId());
 		//System.out.println("补登记确认标志："+mortgageReserveHouse.getNoRegisterSign());
 		mortgageReserveHouseList=mortgageReserveHouseService.queryHouseStockList(mortgageReserveHouseCar, this.getPage());
-		page.setBegin(0);
-		page.setCount(true);
-		page.setLength(10);
 		this.setPage(page);
 		this.setMortgageReserveHouseList(mortgageReserveHouseList);
 		return "mortgageReserveHouseList";
@@ -69,7 +62,6 @@ public class MortgageReserveHouseAction extends BaseAction{
 			map.put("warrantsId",warrantsId);
 			map.put("operatingUserId", Long.toString(this.getCurrentOnlineUser().getEmpid()));
 			map.put("operatingType", "5");
-			map.put("operatingTime", TimeUtil.today()+TimeUtil.now());
 			map.put("operatingRemark", "添加补登记确认");
 			//将修改的补登记记录插入操作日志的表
 			mortgageReserveHouseService.insert(map);
@@ -101,15 +93,11 @@ public class MortgageReserveHouseAction extends BaseAction{
 		if ("2".equals(mortgageList.getMortgageType())) {
 			System.out.println("进入机动车出入库汇总查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
-//			return "queryMortgageInOut";
 		}
-		
 		if ("1".equals(mortgageList.getMortgageType())) {
 			System.out.println("进入房产出入库汇总查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseInOutList(mortgageList, this.getPage());
-			//return "queryMortgageInOut";
 		}
-		
 		this.setPage(page);
 		this.setResult_flag("1");
 		this.setMortgageLists(mortgageLists);
@@ -120,23 +108,15 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * 
 	 */
 	public String queryMortgageQueryInOutForDetail(){
-		//System.out.println("mortgageList------->"+mortgageList);
-//		String aaa = getRequest().getParameter("aaa");
-//		System.out.println("aaaaaa------->="+aaa);
 		System.out.println("出入汇总查询的类型："+mortgageList.getMortgageType());
-//		System.out.println("mmmm"+mortgageList.getOperatingEndTime());
-//		System.out.println(""+mortgageList.getOperatingMatters());
-//		System.out.println("出入汇总查询的类型："+mortgageList2.getMortgageType());
 		if ("2".equals(mortgageList.getMortgageType())) {
 			System.out.println("进入机动车明细查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutList(mortgageList,this.getPage());
-			//this.setPage(page);
 		}
 		if ("1".equals(mortgageList.getMortgageType())) {
 			System.out.println("进入房产明细查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseDetailInOutList(mortgageList,this.getPage());
 		}
-		
 		this.setPage(page);
 		this.setMortgageLists(mortgageLists);
 		this.setResult_flag("2");
@@ -233,12 +213,6 @@ public class MortgageReserveHouseAction extends BaseAction{
 		this.mortgageList = mortgageList;
 	}
 	
-	public MortgageLog getMortgageLog() {
-		return mortgageLog;
-	}
-	public void setMortgageLog(MortgageLog mortgageLog) {
-		this.mortgageLog = mortgageLog;
-	}
 	public List<MortgageList> getMortgageLists() {
 		return mortgageLists;
 	}
@@ -251,23 +225,12 @@ public class MortgageReserveHouseAction extends BaseAction{
 	public void setResult_flag(String result_flag) {
 		this.result_flag = result_flag;
 	}
-	public Page getPage2() {
-		if (page2==null) {
-			page2=new Page();
-			page2.setBegin(0);
-			page2.setCount(0);
-			page2.setLength(10);
-			page2.setCount(true);
-			page2.setFirst(true);
-		}
-		return page2;
+	public MortgageLog getMortgageLog() {
+		return mortgageLog;
 	}
-	public void setPage2(Page page2) {
-		pageCondExpand pce = new pageCondExpand();
-		pce.putPageCond(page2);
-		this.page2 = page2;
+	public void setMortgageLog(MortgageLog mortgageLog) {
+		this.mortgageLog = mortgageLog;
 	}
-	
 	
 	
 }

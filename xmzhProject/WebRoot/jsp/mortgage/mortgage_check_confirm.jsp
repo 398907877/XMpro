@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
      <h:form name="appQuery" id="appQuery" action="" method="post">
-     <h:hidden name="mortgageReserveHouse.warrantsId" property="mortgageReserveHouse.warrantsId" id="warrantsId"/>
+     <h:hidden name="mortgageReserveHouseCar.warrantsId" property="mortgageReserveHouseCar.warrantsId" id="warrantsId"/>
 		<center>
 		<br/>
 		<br/>
@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		{
 		//var warrantsId="aaa";
 			var warrantsId = $id("warrantsId").value;
-			alert("mortgageReserveHouse.getWarrantsId()="+warrantsId);
+			alert("mortgageReserveHouseCar.getWarrantsId()="+warrantsId);
 			$.ajax({
 			 url: "/mortgage/mortgageReserveHouseAction_noRegisterSignConfirm.action?warrantsId="+warrantsId,
 		      async: false,
