@@ -103,7 +103,7 @@
 
   </select>  
   
-<<<<<<< 83285d0488352da759d2b79e1d1744b7f70b11c4
+
   
   <select id="queryMortgageReserveListHouseInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
 	select 
@@ -121,29 +121,7 @@
 	 <isNotNull prepend="and" property="id" >
 	  o.warrants_id='$id$'
 	 </isNotNull>
-	 
-  <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouse">
-		select a.project_number as projectNumber,a.loan_type as loanType,a.other_warrants_number as ,a.borrower_name,
-		a.status,b.property_no,b.property_name,b.property_addres  from T_WARRANTS_INFO a,T_MORTGAGE_HOUSE_INFO b 
-		where a.id=b.warrants_id
-		<dynamic>  
-       <isNotEmpty prepend=" and" property="propertyName">
-        b.PROPERTY_NAME like '%$propertyName$%'
-        </isNotEmpty>
-       <isNotEmpty prepend=" and" property="propertyCardNo">
-        b.PROPERTY_CARDNO = '$propertyCardNo$'
-        </isNotEmpty>
-       <isNotEmpty prepend=" and" property="propertyNo">
-        b.PROPERTY_NO = '$propertyNo$'
-        </isNotEmpty>
-       <isNotEmpty prepend=" and" property="propertyAddres">
-        b.PROPERTY_ADDRES like '%$propertyAddres$%'
-        </isNotEmpty>
-        <isNotEmpty prepend=" and" property="noRegisterSign">
-        a.NO_REGISTER_SIGN = '$noRegisterSign$'
-        </isNotEmpty>
-        
-		</dynamic>
+
 		
   </select>  
   
@@ -156,9 +134,8 @@
   </dynamic>
   
   </update>
->>>>>>> 2dc2c5a524f17ab43de528d3d7e3b1595d3c0c34
 
-  </select>  
+
   
    <select id="queryMortgageReserveListCarInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
 	select

@@ -17,7 +17,7 @@ import com.primeton.utils.Page;
 import com.primeton.utils.pageCondExpand;
 
 public class MortgageReserveHouseAction extends BaseAction{
-	private MortgageReserveHouseCar mortgageReserveHouse;
+	private MortgageReserveHouseCar mortgageReserveHouseCar;
 	private MortgageReserve mortgageReserve;
 	private MortgageList mortgageList;
 	private MortgageLog mortgageLog;
@@ -30,7 +30,7 @@ public class MortgageReserveHouseAction extends BaseAction{
 	public String queryMortgageHouseReserveList() throws Exception{
 		//System.out.println("1111111:"+mortgageReserveHouse.getWarrantsId());
 		//System.out.println("补登记确认标志："+mortgageReserveHouse.getNoRegisterSign());
-		mortgageReserveHouseList=mortgageReserveHouseService.queryHouseStockList(mortgageReserveHouse, this.getPage());
+		mortgageReserveHouseList=mortgageReserveHouseService.queryHouseStockList(mortgageReserveHouseCar, this.getPage());
 		page.setBegin(0);
 		page.setCount(true);
 		page.setLength(10);
@@ -44,9 +44,9 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * @return
 	 */
 	public String toRegisterSignConfirm() {
-		System.out.println("toRegisterSignConfirm:"+mortgageReserveHouse.getWarrantsId());
-		this.setMortgageReserveHouse(mortgageReserveHouse);
-		mortgageReserveHouse.setWarrantsId(mortgageReserveHouse.getWarrantsId());
+		System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
+		this.setMortgageReserveHouseCar(mortgageReserveHouseCar);
+		mortgageReserveHouseCar.setWarrantsId(mortgageReserveHouseCar.getWarrantsId());
 		return "RegisterSignConfirm";
 	}
 	//补登记确认
@@ -89,7 +89,7 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * @return
 	 */
 	public String queryMortgageQueryForExcel(){
-		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(mortgageReserveHouse);
+		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(mortgageReserveHouseCar);
 		this.setMortgageReserveHouseList(mortgageReserveHouseList);
 		return "queryMortgageQueryForExcel";
 	}
@@ -198,12 +198,12 @@ public class MortgageReserveHouseAction extends BaseAction{
 		
 	}
 	
-	
-	public MortgageReserveHouseCar getMortgageReserveHouse() {
-		return mortgageReserveHouse;
+	public MortgageReserveHouseCar getMortgageReserveHouseCar() {
+		return mortgageReserveHouseCar;
 	}
-	public void setMortgageReserveHouse(MortgageReserveHouseCar mortgageReserveHouse) {
-		this.mortgageReserveHouse = mortgageReserveHouse;
+	public void setMortgageReserveHouseCar(
+			MortgageReserveHouseCar mortgageReserveHouseCar) {
+		this.mortgageReserveHouseCar = mortgageReserveHouseCar;
 	}
 	public IMortgageReserveHouseService getMortgageReserveHouseService() {
 		return mortgageReserveHouseService;
