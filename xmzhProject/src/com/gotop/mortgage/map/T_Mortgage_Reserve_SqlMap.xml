@@ -125,16 +125,6 @@
 		
   </select>  
   
-  <update id="noRegisterSignUpdate" parameterClass="com.gotop.mortgage.model.MortgageReserve">
-  update T_MORTGAGE_INFO 
-  <dynamic prepend="set" >
-  	 <isNotNull prepend="," property="noRegisterSign" >
-        NO_REGISTER_SIGN = #noRegisterSign:VARCHAR#
-      </isNotNull>
-  </dynamic>
-  
-  </update>
-
 
   
    <select id="queryMortgageReserveListCarInfo" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
