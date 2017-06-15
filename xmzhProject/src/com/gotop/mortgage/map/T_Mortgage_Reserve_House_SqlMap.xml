@@ -284,7 +284,7 @@
 		
 </select>
 <!-- 押品类型为机动车的出入库明细表 -->
-<select id="queryMortgageReserveCarDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList">
+<select id="queryMortgageReserveCarDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList4">
 	  select d.id                    AS id,
          a.operating_time        AS operating_time,
          a.operating_type        AS operating_type,
