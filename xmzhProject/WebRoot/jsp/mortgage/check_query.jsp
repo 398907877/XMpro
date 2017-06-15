@@ -1,10 +1,16 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@page  language="java" import="java.util.*,com.gotop.util.time.TimeUtil"%>
 <%@include file="/common/common.jsp"%>
 <%@include file="/common/skins/skin0/component.jsp"%>
 <h:css href="/css/style1/style-custom.css" />
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
 <script type="text/javascript" src="/js/commonUtil.js"></script>
+<% 
 
+String str_date = TimeUtil.today();
+
+
+%>
 <html>
  <head>
 <title>外借情况查询</title>
@@ -18,10 +24,19 @@
 					<td >
 						<d:select id="mortgageType" name="loanInfo.mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" property="loanInfo.mortgageType" onchange="changeMortgageType(this.value)"  ></d:select>
 					</td>
-                    <td class="form_label" align="right" >查询日期：</td>
+                    <!-- <td class="form_label" align="right" >查询日期：</td>
 					<td >	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="queryTime" name="loanInfo.queryTime" 
-					property="loanInfo.queryTime" /></td>
+					property="loanInfo.queryTime" value="<%=str_date%>"/></td>
+					 -->
+					<td class="form_label" align="right">查询日期：</td>
+					<td width="30%">
+					从	
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeStart" name="loanInfo.inTimeStart" 
+					property="loanInfo.inTimeStart" /> 
+                                                            到
+					    <w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeEnd" name="loanInfo.inTimeEnd" 
+					property="loanInfo.inTimeEnd" /></td>
 					<td class="form_label" align="right">是否超限：</td>
 					<td >
 						<!-- <select id="whetherOverrun" name="loanInfo.whetherOverrun" property="loanInfo.whetherOverrun" style="width:80px;">
@@ -275,20 +290,31 @@
     }
 	//清空
 	function clears(){
+		var aaa=<%=str_date%>;
+        var date=new Date();
+        var year = date.getFullYear();  
+        var month = date.getMonth();  
+        var day = date.getDate();  
+        month = month + 1;  
+        if (month < 10) month = '0' + month;  
+        if (day < 10) day = '0' + day;  
+        var str = year + '-' + month + '-' + day;
+		  
+       // $("#queryTime_input").val("");
+		//清空传入后台的时间控件的值,将当前时间填入
+		//$name("loanInfo.queryTime").value =aaa;
+
+		$("#inTimeStart_input").val("");
+		$name("loanInfo.inTimeStart").value ="";
+		$("#inTimeEnd_input").val("");
+		$name("loanInfo.inTimeEnd").value ="";
 		
 		$("#whetherOverrun").val("");
 		//清空JSP页面时间控件显示的值
-		$("#queryTime_input").val("");
-		//$("#inTimeEnd_input").val("");
+		//$("#queryTime_input").val("");
 		//清空传入后台的时间控件的值
-		$name("loanInfo.queryTime").value = "";
+		//$name("loanInfo.queryTime").value = "";
 		
-//		$(':input','#query_formx').not(':button,:submit,#pageLeng')
-//		.val("")
-//		.removeAttr("checked");
-
-//		$("#tj_fc").show();
-//	    $("#tj_jdc").hide();
 	}
 
 	//导出excel 	
@@ -297,13 +323,21 @@
 			var options=$("#mortgageType option:selected");
 			var mortgageType=options.val();
 			//查询日期
-			var queryTime = $id("queryTime").value;
+			//var queryTime = $id("queryTime").value;
+			
+			//查询日期 -开始时间
+			var inTimeStart = $id("inTimeStart").value;
+			//查询日期 -截止时间时间
+			var inTimeEnd = $id("inTimeEnd").value;
+			
 			//是否超限
 			var whetherOverrun = $id("whetherOverrun").value;
 			
 			var strUrl = "/mortgage/loanInfoQueryAction_loanInfoExcel.action?";
 			if(mortgageType != null){strUrl=strUrl+"&loanInfo.mortgageType="+mortgageType;}
-   		    if(queryTime != null){strUrl=strUrl+"&loanInfo.queryTime="+queryTime;} 
+   		   // if(queryTime != null){strUrl=strUrl+"&loanInfo.queryTime="+queryTime;} 
+			if(inTimeStart != null){strUrl=strUrl+"&loanInfo.inTimeStart="+inTimeStart;} 
+			if(inTimeEnd != null){strUrl=strUrl+"&loanInfo.inTimeEnd="+inTimeEnd;} 
 			if(whetherOverrun != ""){strUrl=strUrl+"&loanInfo.whetherOverrun="+whetherOverrun;}
 			//alert(strUrl);
 			window.location.href=strUrl;

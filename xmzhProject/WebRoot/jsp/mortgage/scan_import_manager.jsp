@@ -3,14 +3,9 @@
 <%@include file="/common/skins/skin1/component.jsp" %>
 <%@page import="java.util.*"%>
 <h:css href="/css/style1/style-custom.css"/>
-<%
-	//获取标签中使用的国际化资源信息
-	String dict_import  = com.eos.foundation.eoscommon.ResourcesMessageUtil.getI18nResourceMessage("DictManager_l_dict_type_import");  //业务字典导入
-	String dict_item_label  = com.eos.foundation.eoscommon.ResourcesMessageUtil.getI18nResourceMessage("DictManager_l_dict_item_import");  //业务字典导入
-%>
 <html>
 <head>
-<title><b:message key="DictManager_l_dict_import"></b:message><b:message key="OperatorManager_l_manager"></b:message></title><!-- 业务字典导入管理 -->
+<title>扫描件上传</title>
 </head>
 <script language="JavaScript" type="text/javascript">
 //清空
@@ -21,11 +16,6 @@ function clears(){
 	$("#inTimeEnd_input").val("");
 	//清空传入后台的时间控件的值
 	$name("upload").value = "";
-
-	
-	//$(':input','#scanQuery').not(':button,:submit,#pageLeng')
-	//.val("")
-	//.removeAttr("checked");
 	
 }
  
@@ -87,7 +77,9 @@ function clears(){
 					扫描文件：
 				</td>
 				<td class="form_label" style="text-align: left;">
-					<input type="file" name="upload"  accept="image/png,image/jpeg" multiple="multiple"><font style="color: red">*请上传合适的JPEG或PNG照片</font>
+					<input type="file" name="upload"  accept="image/png,image/jpeg" multiple="multiple">
+					<br>
+					<font style="color: red">*请上传合适的JPEG或PNG照片</font>
 					<br>
 					<font style="color: red">(说明：最多上传10张照片)</font>
 					
@@ -105,7 +97,3 @@ function clears(){
 	<br>
 </body>
 </html>
-<script>
-	//初始化页面按钮样式
-    eventManager.add(window,"load",custInit);
-</script>

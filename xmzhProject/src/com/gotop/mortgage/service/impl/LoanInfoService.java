@@ -3,6 +3,7 @@ package com.gotop.mortgage.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +35,32 @@ public class LoanInfoService implements ILoanInfoService {
 		List<LoanInfo> loanInfoLists =new ArrayList<LoanInfo>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+		String inserttime = sdf2.format(d);
 		//押品类型
 		if (loanInfo.getMortgageType() !=null&&!"".equals(loanInfo.getMortgageType())) {
 			map.put("mortgageType", loanInfo.getMortgageType());
 	    }
-		//查询时间
+//		//查询时间
+//		if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
+//				map.put("queryTime", loanInfo.getQueryTime());
+//		}
+		
+		//查询时间 -开始时间
 		if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
-				map.put("queryTime", loanInfo.getQueryTime());
+				map.put("inTimeStart", loanInfo.getInTimeStart());
+		}else{
+			    map.put("inTimeStart", inserttime);
 		}
+		//查询时间 -截止时间
+		if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
+				map.put("inTimeEnd", loanInfo.getInTimeEnd());
+		}else{
+			 map.put("inTimeEnd", inserttime);
+		}
+		
+		
 		
 		//是否超限
 		if (loanInfo.getWhetherOverrun() !=null&&!"".equals(loanInfo.getWhetherOverrun())) {
@@ -82,7 +101,7 @@ public class LoanInfoService implements ILoanInfoService {
 	public List<LoanInfo> queryLoanInfoListForExcel(MUOUserSession muo, LoanInfo loanInfo) {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+		Date d=new Date();
 		List<LoanInfo> loanInfoLists=new ArrayList<LoanInfo>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		
@@ -101,10 +120,25 @@ public class LoanInfoService implements ILoanInfoService {
 					map.put("mortgageType", loanInfo.getMortgageType());
 			    }
 				try {
-				//查询时间
-				if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
-						map.put("queryTime", sdf1.format(sdf.parse(loanInfo.getQueryTime())));
-				}
+//				//查询时间
+//				if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
+//						map.put("queryTime", sdf1.format(sdf.parse(loanInfo.getQueryTime())));
+//				}
+					//查询时间 -开始时间
+					if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
+							map.put("inTimeStart", sdf1.format(sdf.parse(loanInfo.getQueryTime())));
+					}
+					else{
+						map.put("inTimeStart", sdf1.format(d));
+					}	
+					//查询时间 -截止时间
+					if (loanInfo.getQueryTime() !=null&&!"".equals(loanInfo.getQueryTime())) {
+							map.put("inTimeEnd", sdf1.format(sdf.parse(loanInfo.getQueryTime())));
+					}
+					else{
+						map.put("inTimeEnd", sdf1.format(d));
+					}	
+					
 				  } catch (ParseException e) {
 						e.printStackTrace();
 				}

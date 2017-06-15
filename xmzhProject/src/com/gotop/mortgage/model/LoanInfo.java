@@ -11,6 +11,14 @@ public class LoanInfo implements Serializable{
 	private String mortgageType;
 //	查询时间
 	private String queryTime;
+	
+	
+//	查询时间 -开始时间
+	private String inTimeStart;
+//	查询时间 -截止时间
+	private String inTimeEnd;
+	
+	
 //	外借时间
 	private String checkTime;
 //	他项类型
@@ -132,6 +140,18 @@ public class LoanInfo implements Serializable{
 	}
 	public void setMortgageType(String mortgageType) {
 		this.mortgageType = mortgageType;
+	}
+	public String getInTimeStart() {
+		return inTimeStart;
+	}
+	public void setInTimeStart(String inTimeStart) {
+		this.inTimeStart = inTimeStart;
+	}
+	public String getInTimeEnd() {
+		return inTimeEnd;
+	}
+	public void setInTimeEnd(String inTimeEnd) {
+		this.inTimeEnd = inTimeEnd;
 	}
 
 	

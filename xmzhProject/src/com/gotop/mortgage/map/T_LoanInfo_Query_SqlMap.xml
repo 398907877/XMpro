@@ -88,10 +88,23 @@ from(
             p.MORTGAGE_TYPE = '$mortgageType$'
                ]]>
       </isNotNull>
-      <isNotNull prepend="and" property="queryTime" >
+     <!--  <isNotNull prepend="and" property="queryTime" >
         <![CDATA[
            substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
                                 'yyyymmddhh24miss'),0,8) =  '$queryTime$'
+               ]]>
+      </isNotNull>
+       -->
+       <isNotNull prepend="and" property="inTimeStart" >
+        <![CDATA[
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyymmddhh24miss'),0,8) >=  '$inTimeStart$'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="inTimeEnd" >
+        <![CDATA[
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyymmddhh24miss'),0,8) <=  '$inTimeEnd$'
                ]]>
       </isNotNull>
        <isNotNull prepend="and" property="whetherOverrun" >

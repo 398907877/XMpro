@@ -20,9 +20,10 @@
 			 select a.OPERATING_USERID,to_char(TO_DATE(a.OPERATING_TIME,
                                        'yyyyMMddhh24miss'),
                                'yyyy-MM-dd hh24:mi:ss') AS OPERATING_TIME,a.OPERATING_TYPE,a.OPERATING_REMARK,  
-			      '库存序号：'|| b.PROJECT_NUMBER as OPERATECONTENT
+			      '库存序号：'|| b.PROJECT_NUMBER || ' '  || '他项权证号：' || b.OTHER_WARRANTS_NUMBER as OPERATECONTENT
 		       from T_MORTGAGE_LOG a
 		       LEFT JOIN T_WARRANTS_INFO b on a.operating_mortgag_id = b.id
+		      
                  where 1 = 1
       <isNotNull prepend="and" property="operateType" >
              a.OPERATING_TYPE =  '$operateType$'

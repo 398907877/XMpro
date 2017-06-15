@@ -150,18 +150,20 @@
 			//清空传入后台的时间控件的值
 			$name("mortgageLog.airTime").value = "";
 			$name("mortgageLog.stopTime").value = "";
-			
-
-
-			
-		//	$(':input','#appQuery').not(':button,:submit,#pageLeng')
-		//	.val("")
-		//	.removeAttr("checked");
+		
 		}
 		
                 function search(){
-                	var frm = $name("appQuery");
-                    frm.submit();
+                	//var airTime=$name("mortgageLog.airTime").value;  //获取开始时间
+                	//var stopTime=$name("mortgageLog.stopTime").value;  //获取结束时间
+                	//if(airTime!="" || stopTime!=""){
+                		var frm = $name("appQuery");
+                        frm.submit();
+                    //}else{
+                     //   alert("开始时间和截止日期为必选项！");
+                        
+                   // }
+                	
 			}
 
     		//导出excel 	

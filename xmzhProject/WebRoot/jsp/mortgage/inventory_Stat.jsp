@@ -26,7 +26,7 @@ String str_date = TimeUtil.today();
                      <td class="form_label" align="right" >统计日期：</td>
 					<td >	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="statTime" name="inventoryStat.statTime" 
-					property="inventoryStat.statTime" value="<%=str_date%>"/></td>
+					property="inventoryStat.statTime" /></td>
                    			
 				</tr>
 				<tr class="form_bottom">
@@ -427,11 +427,11 @@ String str_date = TimeUtil.today();
               if (month < 10) month = '0' + month;  
               if (day < 10) day = '0' + day;  
               var str = year + '-' + month + '-' + day;
-			  
-              $("#statTime_input").val(str);
-			//$("#repTimeEnd_input").val("");
+              //$("#statTime_input").val(str);
+              $("#statTime_input").val("");
 			//清空传入后台的时间控件的值,将当前时间填入
-			$name("inventoryStat.statTime").value =aaa;
+			//$name("inventoryStat.statTime").value =aaa;
+			$name("inventoryStat.statTime").value ="";
 			
 			//$name("scan.repTimeEnd").value = "";
 

@@ -3,6 +3,7 @@ package com.gotop.mortgage.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,49 +32,55 @@ public class InventoryStatService implements IInventoryStatService {
 
 	@Override
     public List<InventoryStat> queryInventoryStatList(MUOUserSession muo, InventoryStat inventoryStat, Page page) {
-        List<InventoryStat> inventoryStatLists=new ArrayList<InventoryStat>();
+      //  List<InventoryStat> inventoryStatLists=new ArrayList<InventoryStat>();
 		
 		List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
 		
 		Map<String, Object>map=new HashMap<String, Object>();
 		
-//		//统计时间
-//		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-//			map.put("statTime", inventoryStat.getStatTime());
-//	    }
-//		
-//		
-//		List<InventoryStat> inventoryStatLists =inventoryStatDao.queryInventoryStatList(map,page);
 		
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+		String inserttime = sdf2.format(d);
+		//统计时间
 		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-					
-						map.put("statTime",inventoryStat.getStatTime());
-						inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
-					}else{
-						//获取表中所有的时间（包含去除重复）
-						inventoryStatLists =inventoryStatDao.queryTimeList(map);
-						ArrayList<String> arr = new ArrayList<String>();
-						int n=0;
-						if(inventoryStatLists!=null){
-							
-							for(InventoryStat vcc:inventoryStatLists){
-								arr.add(vcc.getStatTime());
-							}
-							//去除重复
-							arr = (ArrayList<String>) getNewList(arr);
-							
-							//遍历所有时间  以每个时间统计数据
-							for(int i=0;i<arr.size();i++){
-								String str=arr.get(i);
-								map.put("statTime", str);
-								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
-								inventoryStatLists2.addAll(inventoryStatLists);
-								n+=inventoryStatLists.size();
-							}
-							
-						}
-						page.setCount(n);
-					}	
+			map.put("statTime", inventoryStat.getStatTime());
+	    }else{
+	    	map.put("statTime", inserttime);
+	    }
+		
+		
+		inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
+		
+//		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
+//					
+//						map.put("statTime",inventoryStat.getStatTime());
+//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
+//					}else{
+//						//获取表中所有的时间（包含去除重复）
+//						inventoryStatLists =inventoryStatDao.queryTimeList(map);
+//						ArrayList<String> arr = new ArrayList<String>();
+//						int n=0;
+//						if(inventoryStatLists!=null){
+//							
+//							for(InventoryStat vcc:inventoryStatLists){
+//								arr.add(vcc.getStatTime());
+//							}
+//							//去除重复
+//							arr = (ArrayList<String>) getNewList(arr);
+//							
+//							//遍历所有时间  以每个时间统计数据
+//							for(int i=0;i<arr.size();i++){
+//								String str=arr.get(i);
+//								map.put("statTime", str);
+//								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
+//								inventoryStatLists2.addAll(inventoryStatLists);
+//								n+=inventoryStatLists.size();
+//							}
+//							
+//						}
+//						page.setCount(n);
+//					}	
 				return inventoryStatLists2;
 	}
 	
@@ -81,43 +88,48 @@ public class InventoryStatService implements IInventoryStatService {
 	public List<InventoryStat> queryInventoryStatListForExcel(MUOUserSession muo, InventoryStat inventoryStat) {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		List<InventoryStat> inventoryStatList=new ArrayList<InventoryStat>();
+		Date d=new Date();
+		
 		Map<String, Object>map=new HashMap<String, Object>();
 		
-		List<InventoryStat> inventoryStatLists=new ArrayList<InventoryStat>();
+	//	List<InventoryStat> inventoryStatLists=new ArrayList<InventoryStat>();
 		
 		List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
 		
 		String orgcode = muo.getOrgcode();
 		
-		//统计时间
-		try {
-				if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-					
-						map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
-						inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
-					}else{
-						inventoryStatLists =inventoryStatDao.queryTimeList(map);
-						ArrayList<String> arr = new ArrayList<String>();
-						if(inventoryStatLists!=null){
-							
-							for(InventoryStat vcc:inventoryStatLists){
-								arr.add(vcc.getStatTime());
-							}
-							arr = (ArrayList<String>) getNewList(arr);
-							for(int i=0;i<arr.size();i++){
-								String str=arr.get(i);
-								map.put("statTime", str);
-								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
-								inventoryStatLists2.addAll(inventoryStatLists);
-							}
-							
-						}
-					}
-			    }
-		catch (ParseException e) {
-			e.printStackTrace();
-		}	
+			//统计时间
+			if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
+				map.put("statTime", inventoryStat.getStatTime());
+		    }else{
+		    	map.put("statTime", sdf1.format(d));
+		    }
+			inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
+			
+//				if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
+//					
+//						map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
+//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
+//					}else{
+//						inventoryStatLists =inventoryStatDao.queryTimeList(map);
+//						ArrayList<String> arr = new ArrayList<String>();
+//						if(inventoryStatLists!=null){
+//							
+//							for(InventoryStat vcc:inventoryStatLists){
+//								arr.add(vcc.getStatTime());
+//							}
+//							arr = (ArrayList<String>) getNewList(arr);
+//							for(int i=0;i<arr.size();i++){
+//								String str=arr.get(i);
+//								map.put("statTime", str);
+//								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
+//								inventoryStatLists2.addAll(inventoryStatLists);
+//							}
+//							
+//						}
+//					}
+			    
+		
 		return inventoryStatLists2;
 	}
 	

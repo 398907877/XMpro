@@ -113,12 +113,20 @@ public class ScanService implements IScanService,Serializable {
 		Map<String, Object>map=new HashMap<String, Object>();
 		
 		
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+		String inserttime = sdf2.format(d);
+		
 		if (scan.getInTimeStart() !=null&&!"".equals(scan.getInTimeStart())) {
 				map.put("inTimeStrat", scan.getInTimeStart());
+		}else{
+			map.put("inTimeStrat", inserttime);
 		}
 		
 		if (scan.getInTimeEnd() !=null&&!"".equals(scan.getInTimeEnd())) {
 				map.put("inTimeEnd",  scan.getInTimeEnd());
+		}else{
+			map.put("inTimeEnd",  inserttime);
 		}
 		//扫描件种类
 		if(scan.getScanType()!=null && !"".equals(scan.getScanType())){

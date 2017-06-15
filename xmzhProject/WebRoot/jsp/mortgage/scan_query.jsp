@@ -141,12 +141,6 @@
 			//清空传入后台的时间控件的值
 			$name("scan.inTimeStart").value = "";
 			$name("scan.inTimeEnd").value = "";
-
-			
-			//$(':input','#scanQuery').not(':button,:submit,#pageLeng')
-			//.val("")
-			//.removeAttr("checked");
-			
 		}
 
 		
