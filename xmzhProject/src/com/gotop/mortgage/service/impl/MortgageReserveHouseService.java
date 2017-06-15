@@ -1,6 +1,8 @@
 package com.gotop.mortgage.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,33 +103,28 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			MortgageList mortgageList, Page page) {
     	
     	List<MortgageList> lists = new ArrayList<MortgageList>();
-//    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -155,6 +152,11 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     public List<MortgageList> queryMortgageReserveCarInOutList(
 			MortgageList mortgageList, Page page) {
     	System.out.println("queryMortgageReserveCarInOutList+111111111");
+    	Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
     	List<MortgageList> lists = new ArrayList<MortgageList>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (mortgageList!=null) {
@@ -162,25 +164,17 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -211,30 +205,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			MortgageList mortgageList) {
 		List<MortgageList> lists = new ArrayList<MortgageList>();
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -263,30 +254,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	public List<MortgageList> queryMortgageReserveCarInOutForExcel(
 			MortgageList mortgageList) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -313,30 +301,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	public List<MortgageList> queryMortgageReserveCarDetailInOutForExcel(
 			MortgageList mortgageList) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -363,30 +348,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutForExcel(
 			MortgageList mortgageList) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -411,30 +393,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		System.out.println("queryMortgageReserveHouseDetailInOutList++++++++++"+mortgageList.getMortgageType());
 		List<MortgageList> lists = new ArrayList<MortgageList>();
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
@@ -460,30 +439,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			MortgageList mortgageList, Page page) {
 		List<MortgageList> lists = new ArrayList<MortgageList>();
 		Map<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		String operatingTime=sdf1.format(date);
+		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
 			if (mortgageList.getMortgageType()!=null
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
-//			try {
-//				if (mortgageList.getOperatingTime()!=null
-//						&&!"".equals(mortgageList.getOperatingTime())) {
-//					map.put("operatingTime", sdf.format(sdf1.parse(mortgageList.getOperatingTime())));		
-//				}
-//				if (mortgageList.getOperatingEndTime()!=null
-//						&&!"".equals(mortgageList.getOperatingEndTime())) {
-//					map.put("operatingEndTime", sdf.format(sdf1.parse(mortgageList.getOperatingEndTime())));
-//				}		
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
+			}else {
+				map.put("operatingTime", operatingTime);
 			}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+			}else {
+				map.put("operatingEndTime", operatingEndTime);
 			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
