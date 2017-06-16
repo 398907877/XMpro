@@ -347,11 +347,12 @@ String str_date = TimeUtil.today();
 								押品类别
 							</th>
 							<th nowrap="nowrap">
-								他项类型
-							</th>
-							<th nowrap="nowrap">
 								贷款种类
 							</th>
+							<th nowrap="nowrap">
+								他项类型
+							</th>
+							
 							<th nowrap="nowrap">
 								数量
 							</th>
@@ -366,11 +367,12 @@ String str_date = TimeUtil.today();
 									<d:write iterateId="id1" property="mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<d:write iterateId="id1" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
-								</td>
-								<td nowrap="nowrap"> 
 									<d:write iterateId="id1" property="loanType" dictTypeId="LOAN_TYPE_VIEW"/>
 								</td>
+								<td nowrap="nowrap"> 
+									<d:write iterateId="id1" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
+								</td>
+								
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="num" />
 								</td>

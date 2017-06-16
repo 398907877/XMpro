@@ -62,7 +62,7 @@ from T_MORTGAGE_LIST T
 group by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
 order by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
       -->
-      
+ <!--  没有小计和总计的    
 select 
       
        '$statTime$' STATTIME,  
@@ -80,6 +80,56 @@ select
       </isNotNull>
 group by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
 order by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
+-->
+<!--  select  比较完整的
+       '$statTime$' STATTIME,  
+       T.MORTGAGE_TYPE,  
+       decode(grouping(T.LOAN_TYPE) + grouping(T.NUM),
+              1,
+              '小计',
+              2,
+              '总计',
+              T.LOAN_TYPE) LOAN_TYPE,
+       T.OTHER_TYPE,
+       decode(grouping(T.NUM), 1, sum(T.NUM) || '条', T.NUM) NUM
+  from (select MAX(P.insert_time) INSERT_TIME,P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE, count(*) as NUM
+          from T_WARRANTS_INFO P
+         where 1 = 1
+         group by P.MORTGAGE_TYPE, P.LOAN_TYPE, P.OTHER_TYPE) T
+ where 1 = 1
+      <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+               ]]>
+      </isNotNull>
+ group by rollup(T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE, T.NUM)
+ -->
+ select '20170616' STATTIME,
+       T.MORTGAGE_TYPE,
+       T.LOAN_TYPE,
+       decode(grouping(T.LOAN_TYPE) + grouping(T.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              T.OTHER_TYPE) OTHER_TYPE,
+       sum(T.NUM) NUM
+  from (select MAX(P.insert_time) INSERT_TIME,
+               P.MORTGAGE_TYPE,
+               P.OTHER_TYPE,
+               P.LOAN_TYPE,
+               count(*) as NUM
+          from T_WARRANTS_INFO P
+         where 1 = 1
+         group by P.MORTGAGE_TYPE, P.LOAN_TYPE, P.OTHER_TYPE) T
+ where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS((T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE),(T.LOAN_TYPE),())
+ 
 	</select>
 	
 	<select id="queryTime" parameterClass="java.util.HashMap" resultMap="timeMap">
