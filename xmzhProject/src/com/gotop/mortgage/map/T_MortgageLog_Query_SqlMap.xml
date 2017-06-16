@@ -15,16 +15,38 @@
 	
 	<!-- 操作日志查询  -->
 	<select id="queryMortgageLogList" parameterClass="java.util.HashMap" resultMap="mortgageLogMap">
-	 select T.*,E.EMPNAME,Y.ORGNAME
-	 from(
-			 select a.OPERATING_USERID,to_char(TO_DATE(a.OPERATING_TIME,
-                                       'yyyyMMddhh24miss'),
-                               'yyyy-MM-dd hh24:mi:ss') AS OPERATING_TIME,a.OPERATING_TYPE,a.OPERATING_REMARK,  
-			      '库存序号：'|| b.PROJECT_NUMBER || ' '  || '他项权证号：' || b.OTHER_WARRANTS_NUMBER as OPERATECONTENT
-		       from T_MORTGAGE_LOG a
-		       LEFT JOIN T_WARRANTS_INFO b on a.operating_mortgag_id = b.id
-		      
-                 where 1 = 1
+	 select T.*, E.EMPNAME, Y.ORGNAME
+  from (select a.OPERATING_USERID,
+               to_char(TO_DATE(a.OPERATING_TIME, 'yyyyMMddhh24miss'),
+                       'yyyy-MM-dd hh24:mi:ss') AS OPERATING_TIME,
+               a.OPERATING_TYPE,
+               a.OPERATING_REMARK,
+               '押品类型:' || 
+               case
+                 when b.MORTGAGE_TYPE = '1' then
+                  '房产'
+                 when b.MORTGAGE_TYPE = '2' then
+                  '机动车'
+                 else
+                   to_char(b.MORTGAGE_TYPE)
+               end || ' ' || '他项类型:' || 
+               case
+                 when b.OTHER_TYPE = '1' then
+                  '不动产抵押权'
+                 when b.OTHER_TYPE = '2' then
+                  '不动产登记预告'
+                 when b.OTHER_TYPE = '3' then
+                  '预告登记证明'
+                 when b.OTHER_TYPE = '4' then
+                  '机动车登记证明'
+                 else
+                  to_char(b.OTHER_TYPE)
+               end || ' ' || '库存序号:' || b.PROJECT_NUMBER || ' ' || '他项权证号:' ||
+               b.OTHER_WARRANTS_NUMBER as OPERATECONTENT
+          from T_MORTGAGE_LOG a
+          LEFT JOIN T_WARRANTS_INFO b
+            on a.operating_mortgag_id = b.id
+         where 1 = 1
       <isNotNull prepend="and" property="operateType" >
              a.OPERATING_TYPE =  '$operateType$'
       </isNotNull>

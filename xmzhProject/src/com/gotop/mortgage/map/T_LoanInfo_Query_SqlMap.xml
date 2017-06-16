@@ -78,7 +78,7 @@ from(
              from T_MORTGAGE_LIST       a
                left join T_MORTGAGE_HOUSE_INFO b on a.warrants_id = b.warrants_id and a.operating_id = b.id
                left join T_WARRANTS_INFO       d on a.warrants_id =d.id 
-             where a.OPERATING_MATTERS = '1'
+             where (a.BORROWER_LOG ='1' or  a.BORROWER_LOG is null) and a.OPERATING_MATTERS = '1'
           ) t
           ) p
   where 1 = 1
@@ -156,7 +156,8 @@ from(
                      on a.warrants_id = c.warrants_id and a.operating_id = c.id
                    left join T_WARRANTS_INFO d
                      on a.warrants_id = d.id
-                  where a.OPERATING_MATTERS = '1') t) p
+                  where (a.BORROWER_LOG ='1' or  a.BORROWER_LOG is null) and a.OPERATING_MATTERS = '1'
+                  ) t) p
   where 1 = 1
     ]]>   
        <isNotNull prepend="and" property="mortgageType" >

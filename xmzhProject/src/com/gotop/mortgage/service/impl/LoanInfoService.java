@@ -74,6 +74,7 @@ public class LoanInfoService implements ILoanInfoService {
 			loanInfoLists =loanInfoDao.queryCarLoanInfoList(map,page);
 		}
 
+		
 //		for (int i = 0; i < loanInfoLists.size(); i++) {
 //			if(loanInfoLists.get(i).getOtherType()=="3"){
 //				if(Double.valueOf(loanInfoLists.get(i).getAlreadyLoanDay())>90){

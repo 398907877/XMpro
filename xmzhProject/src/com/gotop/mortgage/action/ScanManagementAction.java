@@ -92,8 +92,8 @@ public class ScanManagementAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String addScan()throws Exception{
-		
+	public String addScan()throws Exception{		
+
 		MUOUserSession muo=getCurrentOnlineUser();
 		Long userID=muo.getEmpid();
 		
@@ -234,10 +234,9 @@ public class ScanManagementAction extends BaseAction {
 	          aaa=fileurl.replace('\\', '/');
 	          InputStream inputStream = new FileInputStream(aaa);
 	          global_inputStream=inputStream;
-	        //  global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
 	          global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
 	          global_filename = global_filename.replaceAll("\\+", "%20").replaceAll("%28", "\\(").replaceAll("%29", "\\)").replaceAll("%3B", ";").replaceAll("%40", "@").replaceAll("%23", "\\#").replaceAll("%26", "\\&");
-	       
+	         
 	          return "download";
 	     }
 	    /**
