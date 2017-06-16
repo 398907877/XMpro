@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		{
 		//var warrantsId="aaa";
 			var warrantsId = $id("warrantsId").value;
-			alert("mortgageReserveHouseCar.getWarrantsId()="+warrantsId);
+			//alert("mortgageReserveHouseCar.getWarrantsId()="+warrantsId);
 			$.ajax({
 			 url: "/mortgage/mortgageReserveHouseAction_noRegisterSignConfirm.action?warrantsId="+warrantsId,
 		      async: false,
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      success: function (data) {
 		    	  try {
 					if (data.indexOf("success") >= 0) {
-						alert("确认成功!");
+						//alert("确认成功!");
 						//unMaskTop();
 						window.parent.location.reload();
 						window.close();
