@@ -45,14 +45,12 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 	@Override
 	public List<MortgageList> queryMortgageReserveHouseInOutList(
 			Map<String, Object> map, Page page) {
-		System.out.println("queryMortgageReserveHouseInOutList+dao=====");
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseInOutList",map,page);
 	}
 
 	@Override
 	public List<MortgageList> queryMortgageReserveCarInOutList(
 			Map<String, Object> map, Page page) {
-		System.out.println("queryMortgageReserveCarInOutList+11111111dao");
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveCarInOutList",map,page);
 	}
 	@Override

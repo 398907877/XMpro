@@ -93,7 +93,6 @@ public class ScanManagementAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String addScan()throws Exception{
-		System.out.println("id="+scan.getWarrantsID());
 		
 		MUOUserSession muo=getCurrentOnlineUser();
 		Long userID=muo.getEmpid();
@@ -114,7 +113,6 @@ public class ScanManagementAction extends BaseAction {
 			String fail="";
 			//循环上传文件
 			for(int i=0;i<upload.size();i++){
-				System.out.println(uploadFileName.get(i));
 			this.uploadFileToServer(uploadFileName.get(i),upload.get(i));//上传文件到upload文件夹
 			int count = this.getScanService().insertScan(pkey,this.getScan(),muo);
 			if(count > 0){
@@ -239,9 +237,7 @@ public class ScanManagementAction extends BaseAction {
 	        //  global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
 	          global_filename=URLEncoder.encode(downloadFileName, "UTF-8");
 	          global_filename = global_filename.replaceAll("\\+", "%20").replaceAll("%28", "\\(").replaceAll("%29", "\\)").replaceAll("%3B", ";").replaceAll("%40", "@").replaceAll("%23", "\\#").replaceAll("%26", "\\&");
-	         System.out.println(inputStream);
-	         System.out.println(global_filename);
-	         System.out.println(aaa);
+	       
 	          return "download";
 	     }
 	    /**

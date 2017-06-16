@@ -73,8 +73,6 @@ public class LoanInfoService implements ILoanInfoService {
 		if("2".equals(loanInfo.getMortgageType())){
 			loanInfoLists =loanInfoDao.queryCarLoanInfoList(map,page);
 		}
-		
-		System.out.println("数据库中返回的记录个数："+loanInfoLists.size());
 
 //		for (int i = 0; i < loanInfoLists.size(); i++) {
 //			if(loanInfoLists.get(i).getOtherType()=="3"){

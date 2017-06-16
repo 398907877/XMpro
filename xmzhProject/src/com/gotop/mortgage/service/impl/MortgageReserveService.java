@@ -389,9 +389,16 @@ public class MortgageReserveService implements IMortgageReserveService {
 	public Map<String, Object> resMortgageReserveMap(Long pkey,MortgageReserve mortgageReserve,String inserttime)  throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		try {
+			String mortgageType= mortgageReserve.getMortgageType();
 			map.put("id", pkey);
 			map.put("mortgageType", mortgageReserve.getMortgageType());
-			map.put("otherType", mortgageReserve.getOtherType());
+			if("1".equals(mortgageType)){
+				mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
+				mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
+			}else if ("2".equals(mortgageType)){
+				mortgageReserve.setOtherType(mortgageReserve.getOtherTypeJDC());
+				mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
+			}
 			map.put("noticeRegisterRelation", mortgageReserve.getNoticeRegisterRelation());
 			map.put("projectNumber", mortgageReserve.getProjectNumber());
 			map.put("otherWarrantsNumber", mortgageReserve.getOtherWarrantsNumber());
@@ -400,7 +407,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
 			map.put("orgCode", mortgageReserve.getOrgCode());
 			map.put("mangerName", mortgageReserve.getMangerName());
-			map.put("loanType", mortgageReserve.getLoanType());
 			map.put("borrowerContractNo", mortgageReserve.getBorrowerContractNo());
 			map.put("loanYears", mortgageReserve.getLoanYears());
 			map.put("recordValue", mortgageReserve.getRecordValue());

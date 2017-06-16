@@ -89,7 +89,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     @Override
 	public MortgageReserve queryMortgageReserveHouseById(
 			String id) {
-    	System.out.println("queryMortgageReserveHouseById------->id==="+id);
     	Map<String, Object> map = new HashMap<String, Object>();
     	map.put("id", id);
 		return this.mortgageReserveHouseDao.queryMortgageReserveHouseById(map);
@@ -142,7 +141,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveHouseInOutList(map, page);
-		System.out.println("queryMortgageReserveHouseInOutList+service-----");
 		return lists;
 	}
     /**
@@ -151,7 +149,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
      */
     public List<MortgageList> queryMortgageReserveCarInOutList(
 			MortgageList mortgageList, Page page) {
-    	System.out.println("queryMortgageReserveCarInOutList+111111111");
     	Date date = new Date();
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
@@ -192,7 +189,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveCarInOutList(map, page);
-		System.out.println("queryMortgageReserveCarInOutList====+22222");
 		return lists;
 	}
     
@@ -391,7 +387,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	@Override
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutList(
 			MortgageList mortgageList, Page page) {
-		System.out.println("queryMortgageReserveHouseDetailInOutList++++++++++"+mortgageList.getMortgageType());
 		List<MortgageList> lists = new ArrayList<MortgageList>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
@@ -432,7 +427,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList(map, page);
-		System.out.println("queryMortgageReserveHouseDetailInOutList99999+service");
 		return lists;
 	}
 	@Override
@@ -478,7 +472,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList(map, page);
-		System.out.println("queryMortgageReserveCarDetailInOutList55555+service");
 		return lists;
 	}
     

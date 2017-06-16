@@ -30,6 +30,10 @@ public class MortgageReserve {
 	private String insertTime;
 	private String updateTime;
 	private String logOutSign;
+	private String otherTypeFC;
+	private String loanTypeFC;
+	private String otherTypeJDC;
+	private String loanTypeJDC;
 	
 	public String getOrgName() {
 		return orgName;
@@ -192,6 +196,30 @@ public class MortgageReserve {
 	}
 	public void setLogOutSign(String logOutSign) {
 		this.logOutSign = logOutSign;
+	}
+	public String getOtherTypeFC() {
+		return otherTypeFC;
+	}
+	public String getLoanTypeFC() {
+		return loanTypeFC;
+	}
+	public String getOtherTypeJDC() {
+		return otherTypeJDC;
+	}
+	public String getLoanTypeJDC() {
+		return loanTypeJDC;
+	}
+	public void setOtherTypeFC(String otherTypeFC) {
+		this.otherTypeFC = otherTypeFC;
+	}
+	public void setLoanTypeFC(String loanTypeFC) {
+		this.loanTypeFC = loanTypeFC;
+	}
+	public void setOtherTypeJDC(String otherTypeJDC) {
+		this.otherTypeJDC = otherTypeJDC;
+	}
+	public void setLoanTypeJDC(String loanTypeJDC) {
+		this.loanTypeJDC = loanTypeJDC;
 	}
 
 

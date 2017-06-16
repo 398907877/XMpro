@@ -160,7 +160,6 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String queryMortgageReserveList(){
-		System.out.println("111111111:"+mortgageReserve.getMortgageType());
 		mortgageReserveList=mortgageReserveService.queryMortgageReserveList(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, this.getPage());
 		this.setPage(page);
 		this.setMortgageReserveList(mortgageReserveList);
@@ -223,7 +222,6 @@ public class MortgageReserveAction extends BaseAction {
 	public String toViewInfos(){
 		String id=mortgageReserveRes.getWarrantsId();
 		String mortgageType=mortgageReserveRes.getMortgageType();
-		System.out.println("111:"+mortgageType);
 		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
 		if("1".equals(mortgageType)){
 			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
@@ -245,7 +243,6 @@ public class MortgageReserveAction extends BaseAction {
 		String res="upd_collateral_house_info";
 		String id=mortgageReserveRes.getWarrantsId();
 		String mortgageType=mortgageReserveRes.getMortgageType();
-		System.out.println("111:"+mortgageType);
 		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
 		if("1".equals(mortgageType)){
 			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
@@ -292,15 +289,7 @@ public class MortgageReserveAction extends BaseAction {
        String info ="fails";
        boolean reslut=false;
 		try {
-			String mortgageType= mortgageReserve.getMortgageType();
 			MUOUserSession muo=getCurrentOnlineUser();
-			if("1".equals(mortgageType)){
-				mortgageReserve.setOtherType(tempMortgage.get("otherTypeFC"));
-				mortgageReserve.setLoanType(tempMortgage.get("loanTypeFC"));
-			}else if ("2".equals(mortgageType)){
-				mortgageReserve.setOtherType(tempMortgage.get("otherTypeJDC"));
-				mortgageReserve.setLoanType(tempMortgage.get("loanTypeJDC"));
-			}
 			reslut=mortgageReserveService.insertItemALL(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, files, filesFileName, muo);
 			
 			if(reslut){
@@ -321,7 +310,6 @@ public class MortgageReserveAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public void addCollateral() throws Exception{
-		System.out.println("id="+mortgageReserveRes.getWarrantsId());
 	       String info ="success";
 	       boolean reslut=false;
 			try {
@@ -417,12 +405,9 @@ public class MortgageReserveAction extends BaseAction {
 		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
 		try {
 			String  noticeRegisterRelation=mortgageReserve.getNoticeRegisterRelation();
-			System.out.println("1111111:"+noticeRegisterRelation);
 			mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(noticeRegisterRelation);
 			JSONObject jsonObject = JSONObject.fromObject(mortgageReserve);
-			System.out.println("res:"+jsonObject);
 			res=jsonObject.toString();
-			System.out.println("res:"+res);
 		} catch (Exception e) {
 			res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
 			e.printStackTrace();
@@ -460,13 +445,13 @@ public class MortgageReserveAction extends BaseAction {
     * 异步加载文件
     * @return
     */
-   public String queryFileList(){
+   public String queryFileList() throws Exception{
    	try {
-   		System.out.println("resourceId:"+resourceId);
    		if(resourceId!=null&&!"".equals(resourceId))
    		fileResourceTables=	mortgageReserveService.queryFileByIdandType(Long.valueOf(resourceId));
 		} catch (Exception e) {
 			log.error("查询文件列表失败！！", e);
+			e.printStackTrace();
 		}
 		return "list1";
    }
@@ -484,15 +469,12 @@ public class MortgageReserveAction extends BaseAction {
 		
 			WarrantsFile tfile=mortgageReserveService.getFileResource(fileId);
 			if(tfile!=null){
-				System.out.println("33333:1111111");
 			String filePath=tfile.getFilePath();
-			System.out.println("111222:"+filePath);
 			if(filePath==null || "".equals(filePath)){
 				return;
 			}
 			log.debug("下载渲染结果路径:"+filePath);
 			File file = new File(filePath);
-			//System.out.println(new String(tfile.getFileName().getBytes("iso8859-1"),"UTF-8"));
 			// 清空response
 			response.reset();
 			//设置下载文件的类型为任意类型
