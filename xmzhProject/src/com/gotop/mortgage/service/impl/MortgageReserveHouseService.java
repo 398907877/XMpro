@@ -136,8 +136,8 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 			if (mortgageList.getStatus()!=null
 			&&!"".equals(mortgageList.getStatus())) {
-				map.put("mortgageType", null);
-				map.put("operatingMatters", null);
+				//map.put("mortgageType", null);
+				//map.put("operatingMatters", null);
 				map.put("status", mortgageList.getStatus());
 			}
 		}
@@ -186,8 +186,8 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}
 			if (mortgageList.getStatus()!=null
 			&&!"".equals(mortgageList.getStatus())) {
-				map.put("mortgageType", null);
-				map.put("operatingMatters", null);
+				//map.put("mortgageType", null);
+				//map.put("operatingMatters", null);
 				map.put("status", mortgageList.getStatus());
 			}
 		}
@@ -425,7 +425,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 				map.put("status", mortgageList.getStatus());
 			}
 		}
-		lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList(map, page);
 		//外借情况查询
 		if ("1".equals(mortgageList.getOperatingMatters())) {
 			lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList1(map, page);
@@ -476,7 +475,6 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 				map.put("status", mortgageList.getStatus());
 			}
 		}
-		lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList(map, page);
 		//外借情况查询
 		if ("1".equals(mortgageList.getOperatingMatters())) {
 			lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList1(map, page);

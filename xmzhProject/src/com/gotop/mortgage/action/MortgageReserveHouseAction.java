@@ -90,10 +90,6 @@ public class MortgageReserveHouseAction extends BaseAction{
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
 		}
 		if ("1".equals(mortgageList.getMortgageType())) {
-			//System.out.println("进入机动车出入库汇总查询"+mortgageList.getMortgageType());
-			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
-		}
-		if ("1".equals(mortgageList.getMortgageType())) {
 			//System.out.println("进入房产出入库汇总查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseInOutList(mortgageList, this.getPage());
 		}
@@ -108,12 +104,6 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String queryMortgageQueryInOutForDetail(){
 		if ("2".equals(mortgageList.getMortgageType())) {
-			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutList(mortgageList,this.getPage());
-		}
-		if ("1".equals(mortgageList.getMortgageType())) {
-		//System.out.println("出入汇总查询的类型："+mortgageList.getMortgageType());
-		if ("2".equals(mortgageList.getMortgageType())){
-			//System.out.println("进入机动车不外借明细查询"+mortgageList.getMortgageType());
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarDetailInOutList(mortgageList,this.getPage());
 		}
 		if ("1".equals(mortgageList.getMortgageType())) {
