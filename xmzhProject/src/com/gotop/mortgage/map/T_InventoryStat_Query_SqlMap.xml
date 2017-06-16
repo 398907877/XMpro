@@ -105,7 +105,12 @@ order by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
  group by rollup(T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE, T.NUM)
  -->
  select '20170616' STATTIME,
-       T.MORTGAGE_TYPE,
+       decode(grouping(T.LOAN_TYPE) + grouping(T.OTHER_TYPE),
+                      1,
+                      MAX(T.MORTGAGE_TYPE),
+                      2,
+                      '',
+                      MAX(T.MORTGAGE_TYPE)) MORTGAGE_TYPE,
        T.LOAN_TYPE,
        decode(grouping(T.LOAN_TYPE) + grouping(T.OTHER_TYPE),
               1,

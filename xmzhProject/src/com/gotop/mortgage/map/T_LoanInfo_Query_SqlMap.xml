@@ -114,9 +114,8 @@ from(
       </isNotNull>
       ) M,
       OM_ORGANIZATION    Y
-   WHERE M.ORG_CODE = Y.ORGCODE
-     
-     order by M.INSERT_TIME desc
+   WHERE M.ORG_CODE = Y.ORGCODE 
+   order by M.INSERT_TIME desc
 	</select>
   <!-- 外借情况查询  机动车-->
  <select id="queryCarLoanInfoList" parameterClass="java.util.HashMap" resultMap="carLoanInfoMap">
@@ -165,10 +164,24 @@ from(
             p.MORTGAGE_TYPE = '$mortgageType$'
                ]]>
       </isNotNull>
+      <!--  
       <isNotNull prepend="and" property="queryTime" >
         <![CDATA[
             substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
                                 'yyyyMMddhh24miss'),0,8) =  '$queryTime$'
+               ]]>
+      </isNotNull>
+      -->
+      <isNotNull prepend="and" property="inTimeStart" >
+        <![CDATA[
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyymmddhh24miss'),0,8) >=  '$inTimeStart$'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="inTimeEnd" >
+        <![CDATA[
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
+                                'yyyymmddhh24miss'),0,8) <=  '$inTimeEnd$'
                ]]>
       </isNotNull>
        <isNotNull prepend="and" property="whetherOverrun" >
