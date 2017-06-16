@@ -13,6 +13,9 @@ public class MortgageReserveOut {
 	private String operatingId;
 	private String nextName;
 	private String outInType;
+	private String proNextName;//产权人栏
+	private String outBorrowerLog;//产权人栏
+	private String inBorrowerLog;//产权人栏
 	public String getId() {
 		return id;
 	}
@@ -72,6 +75,24 @@ public class MortgageReserveOut {
 	}
 	public void setOutInType(String outInType) {
 		this.outInType = outInType;
+	}
+	public String getProNextName() {
+		return proNextName;
+	}
+	public void setProNextName(String proNextName) {
+		this.proNextName = proNextName;
+	}
+	public String getOutBorrowerLog() {
+		return outBorrowerLog;
+	}
+	public String getInBorrowerLog() {
+		return inBorrowerLog;
+	}
+	public void setOutBorrowerLog(String outBorrowerLog) {
+		this.outBorrowerLog = outBorrowerLog;
+	}
+	public void setInBorrowerLog(String inBorrowerLog) {
+		this.inBorrowerLog = inBorrowerLog;
 	}
 	
 	

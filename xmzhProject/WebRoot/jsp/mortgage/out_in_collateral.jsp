@@ -25,6 +25,7 @@
 				<td class="form_label" align="right" width="30%">交接人：</td>
 				<td colspan="1" width="60%">
 				<h:text id="nextName"   property="mortgageReserveOut.nextName" validateAttr="allowNull=false;"/><font style="color: red">*</font>
+				<d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
 				</td>					
 			</tr>
 			<tr>			
@@ -33,6 +34,22 @@
 				<h:text id="borrowerNums" size="5"  property="mortgageReserveOut.borrowerNums" validateAttr="allowNull=false;"/><font style="color: red">*</font>
 				</td>				
 			</tr>
+			<tbody id="out_log">
+			<tr>			
+				<td class="form_label" align="right" width="30%">出库记录：</td>
+				<td colspan="1" width="60%">
+				<d:select id="outBorrowerLog" dictTypeId="OUT_BORROWER_LOG"  property="mortgageReserveOut.outBorrowerLog"   nullLabel="请选择" />
+				</td>				
+			</tr>
+			</tbody>
+			<tbody id="in_log" style="display: none">
+			<tr>			
+				<td class="form_label" align="right" width="30%">入库记录：</td>
+				<td colspan="1" width="60%">
+				<d:select id="inBorrowerLog" dictTypeId="IN_BORROWER_LOG"  property="mortgageReserveOut.inBorrowerLog"   nullLabel="请选择" />
+				</td>				
+			</tr>
+			</tbody>
 			<tr>
 				<td class="form_label" align="right" width="15%">备注信息：</td>
 				<td colspan="3" width="30%">
@@ -48,6 +65,30 @@
 		</table>
 	</h:form>
 <script type="text/javascript">
+ window.onload = function () {
+     var param=$id("outInType").value;
+         init(param);
+        };
+
+
+	function init(val){
+	   if(val=="1"){
+	      $("#out_log").show();
+		  $("#in_log").hide();
+	   }else if(val=="2"){
+	      $("#in_log").show();
+		  $("#out_log").hide();
+	   }
+	
+	}
+function changeNextNmae(param){
+  if(param!="产权人"){
+    $("#nextName").val("");
+    $("#nextName").attr("readonly",true);
+  }else{
+    $("#nextName").attr("readonly",false);
+  }
+}
 function save(){
 	 var frm=$name("data_form");
 	   

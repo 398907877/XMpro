@@ -145,8 +145,8 @@
 					</tbody>
               <td colspan="23" class="command_sort_area">
               	<div class="h3"> 
-							<input type="button" class="button" value="出入处理" onclick="outIn_coll(0);"/>
-							<input type="button" class="button" value="入库处理" onclick="outIn_coll(1);"/>
+							<input type="button" class="button" value="出入处理" onclick="outIn_coll(1);"/>
+							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
 							<input type="button" class="button" value="返回" onclick="back_coll();" />
 					
 				</div>

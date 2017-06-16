@@ -483,7 +483,12 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("remark", mortgageReserveOut.getRemark());
 			map.put("operatingId", mortgageReserveOut.getOperatingId());
 			map.put("insertTime", mortgageReserveOut.getInsertTime());
-			map.put("nextName", mortgageReserveOut.getNextName());
+			if(!"".equals(mortgageReserveOut.getNextName())&&mortgageReserveOut.getNextName()!=null){
+				map.put("nextName", mortgageReserveOut.getNextName());
+			}else{
+				map.put("nextName", mortgageReserveOut.getProNextName());
+			}
+			map.put("outInType", mortgageReserveOut.getOutInType());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
