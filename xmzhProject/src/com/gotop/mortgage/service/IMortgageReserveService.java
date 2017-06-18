@@ -22,6 +22,14 @@ public interface IMortgageReserveService {
 	List<MortgageReserveRes> queryMortgageReserveList(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar, Page page);
 	
 	/**
+	 * 查询抵押品库存导出EXCEL
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveListExcel(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar);
+	
+	/**
 	 * 查询权证信息详情
 	 * @param id
 	 * @param mortgageType

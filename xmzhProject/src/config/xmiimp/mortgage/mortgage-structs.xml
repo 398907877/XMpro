@@ -7,6 +7,9 @@
 			<result name="mortgageReserveList">
 				/jsp/mortgage/mortgage_List.jsp
 			</result>
+			<result name="mortgageReserveListExcel">
+				/jsp/mortgage/mortgage_List_Excel.jsp
+			</result>
 	      <result name="add_mortgageReserve" >
 	        /jsp/mortgage/add_mortgageReserve.jsp
 	      </result>

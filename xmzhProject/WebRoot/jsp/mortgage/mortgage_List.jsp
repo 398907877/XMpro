@@ -86,7 +86,7 @@
 				  <tr>
 				    <td class="form_label" align="right" >机动车登记证号：</td>
 					<td>
-					<h:text property="mortgageReserveCar.carRegisterno" id="carRegisterNo" style="width:130px;" />	
+					<h:text property="mortgageReserveCar.carRegisterNo" id="carRegisterNo" style="width:130px;" />	
 					</td>
 					 <td class="form_label" align="right" >车牌号：</td>
 					<td>
@@ -119,7 +119,8 @@
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
 							<input id="querys" type="submit" value="查 询" class="button" >
-							<input type="button" value="清 空" class="button" onclick="clears();"></td>
+							<input type="button" value="清 空" class="button" onclick="clears();">
+                           <input id="downexl" type="button" class="button" value="导出列表" onclick="excelExport();"></td>
 					</tr>			
 			</table>
 		</w:panel>
@@ -148,7 +149,7 @@
 								库存序号
 						  </th>
 						   <th nowrap="nowrap">
-								贷种
+								贷款种类
 						  </th>
 						   <th nowrap="nowrap">
 								他项权证号
@@ -389,21 +390,93 @@
 			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存详情');
 			  }
 		}
-		//扫描件上传
-		function scan_import(){
-		  var gop;
-		    gop= $id("group1");
-		  var len= gop.getSelectLength();
-		  if(len == 0){
-	  			alert("请选择一条库存信息");
-	  			return;
-	  		}else{
-	  			var row=gop.getSelectRow();
-    			var id = row.getParam("id");
-			    var url="/mortgage/scanManagementAction_toAddScanImport.action?scan.warrantsID="+id;
-			    showModalCenter(url, "",callBackFunc, 580, 300, '扫描件上传');
-			  }
-		}
+		
+		
+			//扫描件上传
+			function scan_import(){
+			  var gop;
+			    gop= $id("group1");
+			  var len= gop.getSelectLength();
+			  if(len == 0){
+		  			alert("请选择一条库存信息");
+		  			return;
+		  		}else{
+		  			var row=gop.getSelectRow();
+	    			var id = row.getParam("id");
+				    var url="/mortgage/scanManagementAction_toAddScanImport.action?scan.warrantsID="+id;
+				    showModalCenter(url, "",callBackFunc, 580, 300, '扫描件上传');
+				  }
+			}
+
+            //导出excel 	
+             function excelExport(){
+                    //押品类型
+    				var mortgageType = $id("mortgageType").value;
+                    //库存序号
+    				var projectNumber = $id("projectNumber").value;
+                    //库存状态
+    				var status = $id("status").value;
+                    //借款人姓名
+    				var borrowerName = $id("borrowerName").value;
+                    //借款人姓名
+    				var borrowerCardNo = $id("borrowerCardNo").value;
+                    //产权人姓名
+    				var propertyName = $id("propertyName").value;
+                    //产权人身份证号
+    				var propertyCardNo = $id("propertyCardNo").value;
+                    //产权证号
+    				var propertyNo = $id("propertyNo").value;
+                    //他项权证号
+    				var otherWarrantsNumber = $id("otherWarrantsNumber").value;
+                    //产权地址
+    				var propertyAddres = $id("propertyAddres").value;
+                    //贷款种类
+    				var loanType = $id("loanType").value;
+                    //经办机构
+    				var orgCode = $id("orgCode").value;
+                    //注销未领取
+    				var logOutSign = $id("logOutSign").value;
+                    //注销未领取
+    				var noRegisterSign = $id("noRegisterSign").value;
+                    //机动车登记证号
+    				var carRegisterNo = $id("carRegisterNo").value;
+                    //车牌号
+    				var carNo = $id("carNo").value;
+                    //车架号
+    				var carFrameNo = $id("carFrameNo").value;
+                    //购车发票号
+    				var carInvoiceNo = $id("carInvoiceNo").value;
+                    //完税证明号
+    				var carDuesNo = $id("carDuesNo").value;
+                    //保单号
+    				var carSafeNo = $id("carSafeNo").value;
+    				var strUrl = "/mortgage/mortgageReserveAction_queryMortgageReserveListExcel.action?";
+    	    		strUrl=strUrl+"&mortgageReserve.mortgageType="+mortgageType;
+    				if(projectNumber != ""){strUrl=strUrl+"&mortgageReserve.projectNumber="+projectNumber;}
+    				if(status != ""){strUrl=strUrl+"&mortgageReserve.status="+status;}
+    				if(borrowerName != ""){strUrl=strUrl+"&mortgageReserve.borrowerName="+borrowerName;}
+    				if(borrowerCardNo != ""){strUrl=strUrl+"&mortgageReserve.borrowerCardNo="+borrowerCardNo;}
+    				if(propertyName != ""){strUrl=strUrl+"&mortgageReserveHouse.propertyName="+propertyName;} 
+    				if(propertyCardNo != ""){strUrl=strUrl+"&mortgageReserveHouse.propertyCardNo="+propertyCardNo;} 
+    				if(propertyNo != ""){strUrl=strUrl+"&mortgageReserveHouse.propertyNo="+propertyNo;}
+    				if(otherWarrantsNumber != ""){strUrl=strUrl+"&mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber;}
+    				if(propertyAddres != ""){strUrl=strUrl+"&mortgageReserveHouse.propertyAddres="+propertyAddres;}
+    				if(loanType != ""){strUrl=strUrl+"&mortgageReserve.loanType="+loanType;}
+    				if(orgCode != ""){strUrl=strUrl+"&mortgageReserve.orgCode="+orgCode;}
+    				if(logOutSign != ""){strUrl=strUrl+"&mortgageReserve.logOutSign="+logOutSign;}
+    				if(noRegisterSign != ""){strUrl=strUrl+"&mortgageReserve.noRegisterSign="+noRegisterSign;}
+    				if(carRegisterNo != ""){strUrl=strUrl+"&mortgageReserveCar.carRegisterNo="+carRegisterNo;}
+    				if(carNo != ""){strUrl=strUrl+"&mortgageReserveCar.carNo="+carNo;}
+    				if(carFrameNo != ""){strUrl=strUrl+"&mortgageReserveCar.carFrameNo="+carFrameNo;}
+    				if(carInvoiceNo != ""){strUrl=strUrl+"&mortgageReserveCar.carInvoiceNo="+carInvoiceNo;}
+    				if(carDuesNo != ""){strUrl=strUrl+"&mortgageReserveCar.carDuesNo="+carDuesNo;}
+    				if(carSafeNo != ""){strUrl=strUrl+"&mortgageReserveCar.carSafeNo="+carSafeNo;}
+    				
+    				//alert(strUrl);
+    				window.location.href=strUrl;
+             
+             }
+
 
 		
 		function callBackFunc(){

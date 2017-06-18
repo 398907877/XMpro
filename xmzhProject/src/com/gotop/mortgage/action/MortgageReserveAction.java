@@ -166,6 +166,19 @@ public class MortgageReserveAction extends BaseAction {
 		return "mortgageReserveList";
 	}
 	
+	
+	/**
+	 * 查询库存信息
+	 * @return
+	 */
+	public String queryMortgageReserveListExcel(){
+		System.out.println("11111");
+		mortgageReserveList=mortgageReserveService.queryMortgageReserveListExcel(mortgageReserve, mortgageReserveHouse, mortgageReserveCar);
+		this.setMortgageReserveList(mortgageReserveList);
+		return "mortgageReserveListExcel";
+	}
+	
+	
 
 	/**
 	 * 跳转到 新增 库存页面
