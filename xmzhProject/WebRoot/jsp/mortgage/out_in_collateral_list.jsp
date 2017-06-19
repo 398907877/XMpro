@@ -222,7 +222,7 @@
     			var id = row.getParam("id");
     			var operatingId=row.getParam("operatingId");
     			var textName="出库处理";
-    			if(param==1){
+    			if(param==2){
     			  textName="入库处理";
     			}
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param;

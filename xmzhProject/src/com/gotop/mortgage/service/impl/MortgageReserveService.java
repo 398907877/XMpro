@@ -416,6 +416,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			map.put("status", mortgageReserve.getStatus());
 			map.put("inserttime", inserttime);
+			map.put("otherType", mortgageReserve.getOtherType());
+			map.put("loanType", mortgageReserve.getLoanType());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

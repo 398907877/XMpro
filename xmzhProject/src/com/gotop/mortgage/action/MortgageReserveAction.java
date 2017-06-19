@@ -5,15 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSON;
 import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
-
-import com.fr.base.core.json.JSONArray;
 import com.gotop.crm.util.BaseAction;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
@@ -37,8 +31,6 @@ public class MortgageReserveAction extends BaseAction {
 	private List<MortgageReserve> mortgageReserveListInfo=new ArrayList<MortgageReserve>();
 	private List<MortgageReserveHouse> mortgageReserveListHouseInfo=new ArrayList<MortgageReserveHouse>();
 	private List<MortgageReserveCar> mortgageReserveListCarInfo=new ArrayList<MortgageReserveCar>();
-	
-	private Map<String, String> tempMortgage;
 	  
     private File[] files;
     private String[] filesFileName;
@@ -57,12 +49,6 @@ public class MortgageReserveAction extends BaseAction {
 	}
 	public void setFilesFileName(String[] filesFileName) {
 		this.filesFileName = filesFileName;
-	}
-	public Map<String, String> getTempMortgage() {
-		return tempMortgage;
-	}
-	public void setTempMortgage(Map<String, String> tempMortgage) {
-		this.tempMortgage = tempMortgage;
 	}
 	public List<MortgageReserveRes> getMortgageReserveList() {
 		return mortgageReserveList;
@@ -172,7 +158,6 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String queryMortgageReserveListExcel(){
-		System.out.println("11111");
 		mortgageReserveList=mortgageReserveService.queryMortgageReserveListExcel(mortgageReserve, mortgageReserveHouse, mortgageReserveCar);
 		this.setMortgageReserveList(mortgageReserveList);
 		return "mortgageReserveListExcel";

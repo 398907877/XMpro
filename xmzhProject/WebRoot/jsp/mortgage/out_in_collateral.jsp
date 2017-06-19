@@ -85,6 +85,7 @@ function changeNextNmae(param){
   if(param!="产权人"){
     $("#nextName").val("");
     $("#nextName").attr("readonly",true);
+    $("#nextName").attr("validateAttr","allowNull=true");
   }else{
     $("#nextName").attr("readonly",false);
   }
