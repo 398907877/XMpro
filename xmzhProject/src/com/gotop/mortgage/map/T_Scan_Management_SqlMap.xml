@@ -17,7 +17,7 @@
 	<!-- 新增扫描件 -->
 	<insert id="addScan" parameterClass="Scan">
 		  INSERT INTO T_SCANNER_FILE
-				    (ID,
+				    (
 				     INSERT_TIME,
 				     SCANNER_TYPE,
 				     FILE_NAME,
@@ -26,7 +26,7 @@
 				     FILE_RE_NAME
 				     )
 				  VALUES
-				    (seq_t_scanner_file.nextval,
+				    (
 				     #operationTime:VARCHAR#,
 				     #scanType:VARCHAR#,
 				     #fileName:VARCHAR#,
