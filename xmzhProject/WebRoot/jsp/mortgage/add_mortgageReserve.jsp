@@ -28,10 +28,10 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">他项类型：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="otherType_fc">
-					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="tempMortgage.otherTypeFC"  nullLabel="请选择"  ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
+					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="mortgageReserve.otherTypeFC"  nullLabel="请选择"  ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
 				</div>
 				<div id="otherType_jdc"  style="display:none">
-					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="tempMortgage.otherTypeJDC" nullLabel="请选择"  ></d:select><font id="otherTypeJDC_msg" style="color: red">*</font>
+					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="mortgageReserve.otherTypeJDC" nullLabel="请选择"  ></d:select><font id="otherTypeJDC_msg" style="color: red">*</font>
 				</div>
 				</td>						
 			</tr>
@@ -85,10 +85,10 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="loanType_fc">
-					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="tempMortgage.loanTypeFC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
+					<d:select id="loanTypeFC" dictTypeId="LOAN_TYPE_HOUSE" property="mortgageReserve.loanTypeFC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
 				</div>
 				<div id="loanType_jdc"  style="display:none">
-					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="tempMortgage.loanTypeJDC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
+					<d:select id="loanTypeJDC" dictTypeId="LOAN_TYPE_CAR" property="mortgageReserve.loanTypeJDC" nullLabel="请选择" ></d:select><font style="color: red">*</font>
 				</div>
 				</td>					
 			</tr>
