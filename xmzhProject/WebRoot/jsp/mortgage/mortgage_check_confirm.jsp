@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if (data.indexOf("success") >= 0) {
 						//alert("确认成功!");
 						//unMaskTop();
-						window.parent.location.reload();
+						window.location.reload();
 						window.close();
 					} else if (data.indexOf("fails") >= 0) {
 						alert("确认失败!");
