@@ -226,7 +226,7 @@
     			  textName="入库处理";
     			}
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param;
-			    showModalCenter(url,param,callBackFunc, 700, 230, textName);
+			    showModalCenter(url,param,callBackFunc, 700, 270, textName);
 			  }
 		}
 		
