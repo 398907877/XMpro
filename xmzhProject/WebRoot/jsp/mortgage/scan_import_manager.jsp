@@ -1,10 +1,11 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@include file="/common/common.jsp"%>
-<%@include file="/common/skins/skin1/component.jsp" %>
+<%@include file="/common/skins/skin0/component.jsp" %>
 <%@page import="java.util.*"%>
 <h:css href="/css/style1/style-custom.css"/>
 <html>
 <head>
+<meta http-equiv=”X-UA-Compatible” content=”IE=EmulateIE8″ />
 <title>扫描件上传</title>
 </head>
 <script language="JavaScript" type="text/javascript">
@@ -38,22 +39,10 @@ function clears(){
 		frm.submit();
 	}
 
-	/*
-	  * 功能：初始化页面
-	  */
-     function custInit(){
-     	//初始化页面按钮样式
-     	initButtonStyle();
-     }
 </script>
 <body leftmargin="0" rightmargin="0" topmargin="0">
 	<table align="center" border="0" width="100%" class="form_table">
-		<tr>
-			<td  colSpan="4" class="eos-panel-title">
-				扫描件上传
-			</td>
-		</tr>
-		<h:form id="importFormForType" action="/mortgage/scanManagementAction_addScan.action" method="post" enctype="multipart/form-data" target="tempFrame">
+		<h:form id="importFormForType"  method="post" enctype="multipart/form-data" target="tempFrame">
 			<!-- <tr>
 				<td class="form_label" align="center" width="30%">
 					操作日期：
@@ -64,7 +53,7 @@ function clears(){
 			</tr>
 			 -->
 			<tr> 
-			    <h:hidden id="id" property="scan.warrantsID"  />
+			    <h:hidden id="warrantsID" property="scan.warrantsID"  />
 				<td class="form_label" align="center" width="30%">
 					扫描件种类：
 				</td>
