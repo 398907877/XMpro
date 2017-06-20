@@ -49,7 +49,7 @@
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
 							<input id="query" type="submit" value="查 询" class="button">
-							<input type="button" value="退出" class="button" onclick="clears();">
+							<input type="button" value="清空" class="button" onclick="clears();">
 							<input type="button" value="导出" class="button" onclick="downExl();">
 							<input type="button" value="补登记确认" class="button" onclick="checkConfirm();">
 						</td>
@@ -175,6 +175,14 @@
 
 		//清空
 		function clears(){
+			
+			$("#noRegisterSign").val("");
+			 $id("propertyName").value="";
+			 $id("propertyCardNo").value="";
+			 $id("propertyNo").value="";
+			 $id("propertyAddres").value="";
+			 
+			
 		}
 		
 		//导出
@@ -188,7 +196,7 @@
 			var strUrl = "/mortgage/mortgageReserveHouseAction_queryMortgageQueryForExcel.action?";
 			if(noRegisterSign!=null)
 			{
-				strUrl=strUrl+"&mortgageReserveHouseCar.noRegisterSign="+noRegisterSign;
+				strUrl=strUrl+"&mortgageReserveHouseCar.noRegisterSign="+noRegisterSign.val();
 			}
 			if(propertyName!=null)
 			{

@@ -54,7 +54,7 @@ String str_date = TimeUtil.today();
 					<td >
 					<!-- 状态：正常，注销 -->
 					<!-- <input type="hidden" id="status" name="mortgageList.status"> -->
-						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" nullLabel="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
+						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" name="mortgageList.status" nullLabel="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
 							
 						</d:select>
 					</td>
@@ -71,7 +71,7 @@ String str_date = TimeUtil.today();
 							<input type="button" value="明细" class="button" onclick="detail();">
 							<input type="button" value="汇总导出" class="button" onclick="totalDownExl();">
 							<input type="button" value="明细导出" class="button" onclick="detailDownExl();">
-							<input type="button" value="退出" class="button" onclick="clears();">
+							<input type="button" value="清空" class="button" onclick="clears();">
 						</td>
 					</tr>			
 			</table>
@@ -675,7 +675,11 @@ String str_date = TimeUtil.today();
 						
 			$id("d1").value="";
 			$id("d2").value="";
-			
+
+			$("#mortgageType").val("");
+			$("#operatingType").val("");
+			$("#operatingMatters").val("");
+			$("#status").val("");
 			
 			//清空传入后台的时间控件的值,将当前时间填入
 			$name("mortgageList.operatingTime").value ="";
@@ -743,7 +747,7 @@ String str_date = TimeUtil.today();
 			}
 			if(status.val()!=null)
 			{
-			    strUrl=strUrl+"&mortgageList.status="+status;
+			    strUrl=strUrl+"&mortgageList.status="+status.val();
 			}
 			window.location.href=strUrl;       		      		    		
 	

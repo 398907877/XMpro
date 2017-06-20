@@ -27,7 +27,7 @@ String str_date = TimeUtil.today();
                     <!-- <td class="form_label" align="right" >查询日期：</td>
 					<td >	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="queryTime" name="loanInfo.queryTime" 
-					property="loanInfo.queryTime" value="<%=str_date%>"/></td>
+					property="loanInfo.queryTime"/></td>
 					 -->
 					<td class="form_label" align="right">查询日期：</td>
 					<td width="30%">

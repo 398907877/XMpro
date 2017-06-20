@@ -392,13 +392,15 @@ public class MortgageReserveService implements IMortgageReserveService {
 			String mortgageType= mortgageReserve.getMortgageType();
 			map.put("id", pkey);
 			map.put("mortgageType", mortgageReserve.getMortgageType());
-			if("1".equals(mortgageType)){
-				mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
-				mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
-			}else if ("2".equals(mortgageType)){
-				mortgageReserve.setOtherType(mortgageReserve.getOtherTypeJDC());
-				mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
-			}
+			if("".equals(mortgageReserve.getOtherType())||mortgageReserve.getOtherType()==null){
+				if("1".equals(mortgageType)){
+					mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
+					mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
+				}else if ("2".equals(mortgageType)){
+					mortgageReserve.setOtherType(mortgageReserve.getOtherTypeJDC());
+					mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
+				}
+		    }
 			map.put("noticeRegisterRelation", mortgageReserve.getNoticeRegisterRelation());
 			map.put("projectNumber", mortgageReserve.getProjectNumber());
 			map.put("otherWarrantsNumber", mortgageReserve.getOtherWarrantsNumber());
