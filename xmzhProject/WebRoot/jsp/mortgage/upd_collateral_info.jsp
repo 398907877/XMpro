@@ -17,6 +17,9 @@
 		<table align="center" border="0" width="100%" class="form_table">
 			<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
 			<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
+			<h:hidden id="tmpName" property="mortgageReserve.tmpName"  name="mortgageReserve.tmpName"/>
+			<h:hidden id="tmpProjectNumber" property="mortgageReserve.tmpProjectNumber"  name="mortgageReserve.tmpProjectNumber"/>
+			<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>
 			<h:hidden id="oldFileLength" value="0"/>
 		    <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
@@ -109,7 +112,7 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
-				<h:text id="nextName"   property="mortgageReserve.nextName" />
+				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
 				</td>		
 				<td class="form_label" align="right" width="15%">购房合同号：</td>
 				<td colspan="1" width="30%">
@@ -252,6 +255,8 @@ window.onload = function () {
           changeMortgageType(parWin);
 
         };
+        
+        
 $(document).ready(function(){
  $.ajax({
 	        url: '/mortgage/mortgageReserveAction_queryFileList.action',
@@ -309,32 +314,80 @@ $(document).ready(function(){
 		});
     });
         
-   
-function changeMortgageType(val){
-	if(val=="1"){
-	 $("#otherType_fc").show();
-	 $("#otherType_jdc").hide();
-     $("#loanType_fc").show();
-     $("#loanType_jdc").hide();
-      $("#dzypxx_fc").show();
-      $("#dzypxx_jdc").hide();
-	}else if(val=="2"){
-	 $("#otherType_jdc").show();
-	 $("#otherType_fc").hide();
-     $("#loanType_jdc").show();
-     $("#loanType_fc").hide();
-	        $("#dzypxx_jdc").show();
-	        $("#dzypxx_fc").hide();
-  }
-}
-function save(){
-var frm=$name("data_form");
 	   
-	if(!checkForm(frm)){
-			 return ;
-		 }
-	 ajaxsubmitO();
+	function changeMortgageType(val){
+		if(val=="1"){
+		 $("#otherType_fc").show();
+		 $("#otherType_jdc").hide();
+	     $("#loanType_fc").show();
+	     $("#loanType_jdc").hide();
+	     $("#dzypxx_fc").show();
+	     $("#dzypxx_jdc").hide();
+		}else if(val=="2"){
+		 $("#otherType_jdc").show();
+		 $("#otherType_fc").hide();
+	     $("#loanType_jdc").show();
+	     $("#loanType_fc").hide();
+	     $("#dzypxx_jdc").show();
+	     $("#dzypxx_fc").hide();
+	  }
 	}
+	
+	function save(){
+	  var frm=$name("data_form");
+		if(!checkForm(frm)){
+				 return ;
+		 }
+		
+		 
+		 check_ProOthNumber();
+		 //ajaxsubmitO();
+	}
+
+    function check_ProOthNumber(){
+	     var mortgageType=$id("mortgageType").value ;
+		 var projectNumber= $id("projectNumber").value;  //库存序号
+		 var otherWarrantsNumber= $id("otherWarrantsNumber").value;  //他项权证号
+		 var tmpProjectNumber= $id("tmpProjectNumber").value;  //临时库存序号
+		 var tmpOtherWarrantsNumber= $id("tmpOtherWarrantsNumber").value;  //临时他项权证号
+		 if(projectNumber!=tmpProjectNumber||otherWarrantsNumber!=tmpOtherWarrantsNumber){
+		   if(projectNumber==tmpProjectNumber){
+		      projectNumber="checkExits";
+		   }
+		    if(otherWarrantsNumber==tmpOtherWarrantsNumber){
+		      otherWarrantsNumber="checkExits";
+		   }
+	    $.ajax({
+			      url: "/mortgage/mortgageReserveAction_checkOtherWarrantsNumber.action",
+			      async: false,
+			      type: 'post',
+			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber+"&mortgageReserve.projectNumber="+projectNumber+"&mortgageReserve.mortgageType="+mortgageType,
+			      timeout: 60000,
+			      success: function (data) {
+					   if (data.indexOf("noExist") >= 0) {
+				    		  ajaxsubmitO();
+						} else if (data.indexOf("twoexist") >= 0) {
+			                 $id("otherWarrantsNumber").focus();	
+							alert("操作失败！该库存序号("+projectNumber+")和他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
+						} else if (data.indexOf("othexist") >= 0) {
+			                 $id("otherWarrantsNumber").focus();	
+							alert("操作失败！该他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
+						} else if (data.indexOf("proexist") >= 0) {
+			                 $id("projectNumber").focus();	
+							alert("操作失败！库存序号("+projectNumber+")系统中号码重复！请重新填写！");
+						} else if (data.indexOf("fails") >= 0) {
+							alert("库存序号和他项权证号校验失败！");
+						} else {
+							alert("操作失败!");
+						}
+			      }
+			}); 
+		 
+		 }else{
+		 ajaxsubmitO();
+		 }
+		 
+    }
 
 
 	function ajaxsubmitO() {
@@ -422,6 +475,14 @@ var frm=$name("data_form");
 		    	}
 			}
 			
+		function changeNextNmae(param){
+		  if(param!="产权人"){
+		    $("#nextName").val(param);
+		  }else{
+		    var tmp=$("#tmpName").val();
+		    $("#nextName").val(tmp);
+		  }
+		}
 </script>
 </body>
 </html>

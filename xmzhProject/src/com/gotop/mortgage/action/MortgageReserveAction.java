@@ -256,7 +256,6 @@ public class MortgageReserveAction extends BaseAction {
 	public void updColl() throws Exception{
 		String info ="fails";
 	       boolean reslut=false;
-	       System.out.println("11:"+mortgageReserve.getMortgageType());
 			try {
 				MUOUserSession muo=getCurrentOnlineUser();
 				reslut=mortgageReserveService.updCollAll(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, files, filesFileName, muo);
@@ -390,8 +389,53 @@ public class MortgageReserveAction extends BaseAction {
 	}
 	
 	
+	
+	
+	
+	
+	/**
+	 * 检验出入库是否已经归还
+	 */
+	public void checkIsLog() throws Exception{
+		String 	info ="fails";
+    	try {
+		String result = this.mortgageReserveService.checkIsLog(mortgageReserveOut);
+		if("fails".equals(result)){
+			info ="fails";
+		}else if("0".equals(result)) {
+			info = "yesexist";
+		}else if("1".equals(result)){
+			info = "noexist";
+		}else if("9".equals(result)){
+			info = "yesexist";
+		}else{
+			info ="fails";
+		}
+    	} catch (Exception e) {
+			info="fails";
+			log.error("[失败！]", e);
+			throw e;
+		}finally{
+             
+			Struts2Utils.renderText(info);
+		}
+    	
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String queryOrgs(){
-		System.out.println("1111111:"+mortgageReserve.getOrgName());
 		if (mortgageReserve.getOrgName()!=null&!"".equals(mortgageReserve.getOrgName())) {
 			mortgageReserveListInfo=mortgageReserveService.queryOrgs(mortgageReserve);
 		}

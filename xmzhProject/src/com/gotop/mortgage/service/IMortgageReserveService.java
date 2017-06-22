@@ -64,7 +64,7 @@ public interface IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @param mortgageReserveHouse
 	 */
-	boolean insertItemALL(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo);
+	boolean insertItemALL(MortgageReserve mortgageReserve,MortgageReserveHouse mortgageReserveHouse,MortgageReserveCar mortgageReserveCar,File[] files,String[] filesFileName,MUOUserSession muo) throws Exception;
 	
 	
 	
@@ -74,7 +74,7 @@ public interface IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @param mortgageReserveHouse
 	 */
-	boolean insertCollateralHouse(Long pkey,MortgageReserveHouse mortgageReserveHouse,MUOUserSession muo);
+	boolean insertCollateralHouse(Long pkey,MortgageReserveHouse mortgageReserveHouse,MUOUserSession muo) throws Exception;
 	
 
 	/**
@@ -82,7 +82,7 @@ public interface IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @param mortgageReserveHouse
 	 */
-	boolean insertCollateralCar(Long pkey,MortgageReserveCar mortgageReserveCar,MUOUserSession muo);
+	boolean insertCollateralCar(Long pkey,MortgageReserveCar mortgageReserveCar,MUOUserSession muo) throws Exception;
 	
 	/**
 	 * 根据主键和类型获得文件信息
@@ -148,4 +148,12 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	public List<MortgageReserve> queryOrgs(MortgageReserve mortgageReserve);
+	
+	
+	/**
+	 * 检验 他项权证号是否已存在
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkIsLog(MortgageReserveOut mortgageReserveOut);
 }

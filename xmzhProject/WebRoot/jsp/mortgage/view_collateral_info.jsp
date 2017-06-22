@@ -128,7 +128,7 @@
 		     <tr>
 				<td class="form_label" align="right" width="15%">备注信息：</td>
 				<td colspan="3" width="30%">
-				  <h:textarea rows="2"  cols="100"   property="mortgageReserve.remark"  readonly="true"/>
+				  <h:textarea rows="2"  cols="100"   property="mortgageReserve.remark"  disabled="true"/>
 				</td>	
 		     </tr>
 			  

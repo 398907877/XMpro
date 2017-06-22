@@ -10,7 +10,9 @@
     <result column="OTHERTYPEJDC" property="otherTypeJDC" jdbcType="VARCHAR" /> 
     <result column="OTHERTYPEFC" property="otherTypeFC" jdbcType="VARCHAR" /> 
     <result column="PROJECTNUMBER" property="projectNumber" jdbcType="VARCHAR" />  
+    <result column="PROJECTNUMBER" property="tmpProjectNumber" jdbcType="VARCHAR" />  
     <result column="OTHERWARRANTSNUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" /> 
+    <result column="OTHERWARRANTSNUMBER" property="tmpOtherWarrantsNumber" jdbcType="VARCHAR" /> 
     <result column="OTHERWARRANTSDATE" property="otherWarrantsDate" jdbcType="VARCHAR" />   
     <result column="BORROWERNAME" property="borrowerName" jdbcType="VARCHAR" />  
     <result column="BORROWERCARDNO" property="borrowerCardNo" jdbcType="VARCHAR" />    
@@ -24,7 +26,8 @@
     <result column="LOAN_YEARS" property="loanYears" jdbcType="VARCHAR" />        
     <result column="RECORD_VALUE" property="recordValue" jdbcType="VARCHAR" />        
     <result column="PACKET_NUMBER" property="packetNumber" jdbcType="VARCHAR" />        
-    <result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR" />          
+    <result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR" />       
+    <result column="NEXT_NAME" property="tmpName" jdbcType="VARCHAR" />                  
     <result column="PURCHASE_NUMBER" property="purchaseNumber" jdbcType="VARCHAR" />               
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />                   
     <result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />                        
@@ -113,7 +116,7 @@
 	 <isNotNull prepend="and" property="id" >
 	  o.warrants_id='$id$'
 	 </isNotNull>
-
+    order by id
 		
   </select>  
   
@@ -137,7 +140,7 @@
 	 <isNotNull prepend="and" property="id" >
 	  o.warrants_id='$id$'
 	 </isNotNull>
-
+   order by id
   </select>  
    
   <select id="queryMortgageReserveList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
@@ -346,6 +349,37 @@
 	 </isNotNull>
 	
 	</select>
+	
+	
+	<!-- 出入库是否已归还 -->
+	<select id="checkIsLog"   parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+    select 
+	   case when t.borrower_log=1 or borrower_log=2 then 1
+	  else 0
+	  end isFlag
+	  from t_mortgage_list t 
+	 where 1=1
+	 <isNotNull prepend="and" property="warrantsId" >
+	 t.warrants_id = '$warrantsId$'
+	 </isNotNull>
+	  <isNotNull prepend="and" property="operatingId" >
+	 t.operating_id = '$operatingId$'
+	 </isNotNull>
+	 
+	   and t.insert_time=(select max(insert_time) from t_mortgage_list g
+	   where 1=1 
+	    <isNotNull prepend="and" property="warrantsId" >
+	 g.warrants_id = '$warrantsId$'
+	 </isNotNull>
+	  <isNotNull prepend="and" property="operatingId" >
+	 g.operating_id = '$operatingId$'
+	 </isNotNull>
+	   )
+		
+	</select>
+	
+	
+	
 	
 	<!-- 获取序列 -->
 	<select id="getNextSeqValue" resultClass="java.lang.Long">
@@ -580,7 +614,7 @@
 		values
 			('$warrantsId$',
 			'$borrowerNums$',
-			'$borrowerlog$',  
+			'$borrowerLog$',  
 			'$operatingMatters$', 
 			'$remark$', 
 			'$insertTime$',

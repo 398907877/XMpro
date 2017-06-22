@@ -15,6 +15,7 @@
 		                	<h:hidden id="warrantsId" property="mortgageReserveRes.warrantsId"/>
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
+			<!-- 
 				<tr>
 				   <td class="form_label" align="right" >借款人姓名：</td>
 				   <td>
@@ -24,7 +25,7 @@
 				   <td  colspan="3">
 					<h:text property="mortgageReserveRes.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
 				   </td>
-				</tr>
+				</tr> -->
 				<tr class="form_bottom">
 						<td colspan="6" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
@@ -228,11 +229,49 @@
     			if(param==2){
     			  textName="入库处理";
     			}
+    			if(!checkIsLog(id,operatingId,param)){
+    			  return;
+    			}
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param;
 			    url=url+"&mortgageReserveOut.nextName="+nextName+"&mortgageReserveOut.tmpName="+nextName;
 			    showModalCenter(url,param,callBackFunc, 700, 300, textName);
 			  }
 		}
+		
+		function checkIsLog(id,operatingId,outInType){
+		    var flag=false;
+			$.ajax({
+				      url: "/mortgage/mortgageReserveAction_checkIsLog.action",
+				      async: false,
+				      type: 'post',
+				      data: "mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+outInType,
+				      timeout: 60000,
+				      success: function (data) {
+						   if (data.indexOf("yesexist") >= 0) {
+						     if(outInType==1){
+						         flag=true;
+						     }else{
+						       alert("未进行过出库操作,不能进行入库操作！");
+						     }
+							} else if (data.indexOf("noexist") >= 0) {
+							    if(outInType==1){
+								 alert("外借未归还或者已注销,不能再进行出库操作！");
+							    }else if(outInType==2){
+							      flag=true;
+							    }
+							}else if (data.indexOf("fails") >= 0) {
+								alert("操作失败！");
+							} else {
+								alert("操作失败!");
+							}
+				      
+				      }
+				}); 
+				
+				return flag;
+		}
+		
+		
 		
 		function callBackFunc(){
 	  		window.location.reload();

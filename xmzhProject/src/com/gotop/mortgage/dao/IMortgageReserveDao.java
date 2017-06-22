@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.primeton.utils.Page;
@@ -183,4 +184,11 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	public List<MortgageReserve> queryOrgs(Map<String, Object> map);
+	
+	/**
+	 * 检验 他项权证号是否已存在
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkIsLog(Map<String, Object> map);
 }

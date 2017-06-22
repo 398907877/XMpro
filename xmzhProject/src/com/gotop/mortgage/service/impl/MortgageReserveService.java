@@ -145,7 +145,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	public boolean insertItemALL(MortgageReserve mortgageReserve,
 			MortgageReserveHouse mortgageReserveHouse,
 			MortgageReserveCar mortgageReserveCar, File[] files,
-			String[] filesFileName, MUOUserSession muo) {
+			String[] filesFileName, MUOUserSession muo) throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		Map<String, Object>mapHouse=new HashMap<String, Object>();
 		Map<String, Object>mapCar=new HashMap<String, Object>();
@@ -204,7 +204,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 
 	@Override
 	public boolean insertCollateralHouse(
-			Long pkey,MortgageReserveHouse mortgageReserveHouse, MUOUserSession muo) {
+			Long pkey,MortgageReserveHouse mortgageReserveHouse, MUOUserSession muo) throws Exception {
 		Map<String, Object>mapHouse=new HashMap<String, Object>();
 		boolean result=false;
 		try {
@@ -228,7 +228,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	
 	@Override
 	public boolean insertCollateralCar(Long pkey,MortgageReserveCar mortgageReserveCar,
-			MUOUserSession muo) {
+			MUOUserSession muo) throws Exception{
 		Map<String, Object>mapCar=new HashMap<String, Object>();
 		boolean result=false;
 		try {
@@ -509,11 +509,23 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
 			map.put("borrowerNums", mortgageReserveOut.getBorrowerNums());
 			if("1".equals(mortgageReserveOut.getOutInType())){
-
-				map.put("borrowerLog", mortgageReserveOut.getOutBorrowerLog());
+                
+				if("1".equals(mortgageReserveOut.getOperatingMatters())||"2".equals(mortgageReserveOut.getOperatingMatters()))
+				{
+					System.out.println("11:"+mortgageReserveOut.getOperatingMatters());
+					map.put("borrowerLog", mortgageReserveOut.getOperatingMatters());
+				}
 				
 			}else if ("2".equals(mortgageReserveOut.getOutInType())){
-				map.put("borrowerLog", mortgageReserveOut.getInBorrowerLog());
+				
+				if("1".equals(mortgageReserveOut.getOperatingMatters()))
+				{
+					map.put("borrowerLog", "3");//外借已归还
+				}
+				if("2".equals(mortgageReserveOut.getOperatingMatters()))
+				{
+					map.put("borrowerLog", "4");//注销已完成
+				}
 			}
 			
 			map.put("operatingMatters", mortgageReserveOut.getOperatingMatters());
@@ -647,10 +659,14 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map=resMortgageReserveOutMap(mortgageReserveOut);
 			result=mortgageReserveDao.insertMortgageReserveOutMap(map);
 			if(result){
-				String operatingType="4";//新增入库
+				String outInType=mortgageReserveOut.getOutInType();
+				String textNmae="出库操作";
+				if("2".equals(outInType)){
+					textNmae="入库操作";
+				}
 				Long userID=muo.getEmpid();
 				//插入日志
-				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加房产押品信息");
+				result=insertMortgageOperatingLog(outInType, userID, pkey, inserttime, textNmae);
 			}
 		} catch (Exception e) {
 			result=false;
@@ -794,6 +810,30 @@ public class MortgageReserveService implements IMortgageReserveService {
 		map.put("orgName", mortgageReserve.getOrgName());
 		mortgageReserveList=mortgageReserveDao.queryOrgs(map);
 		return mortgageReserveList;
+	}
+	@Override
+	public String checkIsLog(MortgageReserveOut mortgageReserveOut) {
+		 String reslut="fails";//0:可以进行操作,1表示外借或者注销
+		Map<String, Object>map=new HashMap<String, Object>();
+		try {
+			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
+			map.put("operatingId",mortgageReserveOut.getOperatingId());
+			
+			reslut=mortgageReserveDao.checkIsLog(map);
+			if("".equals(reslut)||reslut=="null"){
+				//出库时可以没有记录,入库时必定要有记录
+				if("1".equals(mortgageReserveOut.getOutInType())){
+					reslut="0";
+				}else if ("2".equals(mortgageReserveOut.getOutInType())){
+					reslut="9";//表示没有记录
+				}
+			}
+		} catch (Exception e) {
+			reslut="fails";
+			e.printStackTrace();
+		}
+		System.out.println("33:"+reslut);
+		return reslut;
 	}
 	
 	

@@ -191,4 +191,13 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	}
 
 
+
+
+	@Override
+	public String checkIsLog(Map<String, Object> map) {
+		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkIsLog", map);
+		return String.valueOf(obj);
+	}
+
+
 }

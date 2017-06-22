@@ -35,6 +35,7 @@
 				<h:text id="borrowerNums" size="5"  property="mortgageReserveOut.borrowerNums" validateAttr="allowNull=false;"/><font style="color: red">*</font>
 				</td>				
 			</tr>
+			<!-- 
 			<tbody id="out_log">
 			<tr>			
 				<td class="form_label" align="right" width="30%">出库记录：</td>
@@ -50,6 +51,7 @@
 				<d:select id="inBorrowerLog" dictTypeId="IN_BORROWER_LOG"  property="mortgageReserveOut.inBorrowerLog"   nullLabel="请选择" />
 				</td>				
 			</tr>
+			 -->
 			</tbody>
 			<tr>
 				<td class="form_label" align="right" width="15%">备注信息：</td>
@@ -73,12 +75,8 @@
 
 
 	function init(val){
-	   if(val=="1"){
-	      $("#out_log").show();
-		  $("#in_log").hide();
-	   }else if(val=="2"){
-	      $("#in_log").show();
-		  $("#out_log").hide();
+	   if(val=="2"){ 
+	     $("#operatingMatters option[value='4']").remove(); 
 	   }
 	
 	}

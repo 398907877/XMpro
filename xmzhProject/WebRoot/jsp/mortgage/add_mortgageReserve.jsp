@@ -313,153 +313,13 @@ function changeMortgageType(val){
       }
     }
 	function save(){
-	     if($id("mortgageType").value == "1"){
-			if($id("otherTypeFC").value == ""){
-			 alert("他项类型不能为空！");
-			 return;
-			}
-		}else if($id("mortgageType").value == "2"){
-			if($id("otherTypeJDC").value == ""){
-				 alert("他项类型不能为空！");
-				 return;
-			}
-		}
-	   if($id("projectNumber").value == ""){
-			alert("库存序号不能为空！");
-			$id("projectNumber").focus();
-			return;
-		}
-	   if($id("otherWarrantsNumber").value == ""){
-			alert("他项权证号不能为空！");
-			$id("otherWarrantsNumber").focus();
-			return;
-		}
-	   if($id("borrowerName").value == ""){
-			alert("借款人姓名不能为空！");
-			$id("borrowerName").focus();
-			return;
-		}
-	   if($id("borrowerCardNo").value == ""){
-			alert("借款人身份证号不能为空！");
-			$id("borrowerCardNo").focus();
-			return;
-		}
-	   if($id("orgCode").value == ""){
-			alert("经办机构不能为空！");
-			$id("orgCode").focus();
-			return;
-		}
-	   if($id("mangerName").value == ""){
-			alert("经办客户经理不能为空！");
-			$id("mangerName").focus();
-			return;
-		}
-		
-	   if($id("mortgageType").value == "1"){
-			if($id("loanTypeFC").value == ""){
-			 alert("贷款种类不能为空！");
-			 return;
-			}
-		}else if($id("mortgageType").value == "2"){
-			if($id("loanTypeJDC").value == ""){
-				 alert("贷款种类不能为空！");
-				 return;
-			}
-		}
-		
-		
-	   if($id("borrowerContractNo").value == ""){
-			alert("借款合同号不能为空！");
-			$id("borrowerContractNo").focus();
-			return;
-		}
-		
-	   if($id("packetNumber").value == ""){
-			alert("封包编号不能为空！");
-			$id("packetNumber").focus();
-			return;
-		}
-	   if($id("nextName").value == ""){
-			alert("交接人不能为空！");
-			$id("nextName").focus();
-			return;
-		}
-		
-		
-	   if($id("mortgageType").value == "1"){
-		   if($id("propertyNo").value == ""){
-				alert("产权证号不能为空！");
-				$id("propertyNo").focus();
-				return;
-			}
-			
-		   if($id("propertyName").value == ""){
-				alert("产权人姓名不能为空！");
-				$id("propertyName").focus();
-				return;
-			}
-			
-		   if($id("propertyCardNo").value == ""){
-				alert("产权人身份证号不能为空！");
-				$id("propertyCardNo").focus();
-				return;
-			}
-			if($id("propertyAddres").value == ""){
-				alert("产权地址不能为空！");
-				$id("propertyAddres").focus();
-				return;
-			}
-			if($id("propertyNums").value == ""){
-				alert("产权证本数不能为空！");
-				$id("propertyNums").focus();
-				return;
-			}
-		}else if($id("mortgageType").value == "2"){
-		   if($id("carName").value == ""){
-				alert("车主姓名不能为空！");
-				$id("carName").focus();
-				return;
-			}
-			if($id("carCardNo").value == ""){
-				alert("车主身份证号不能为空！");
-				$id("carCardNo").focus();
-				return;
-			}
-			if($id("carRegisterNo").value == ""){
-				alert("机动车登记证号不能为空！");
-				$id("carRegisterNo").focus();
-				return;
-			}
-			if($id("carNo").value == ""){
-				alert("车牌号不能为空！");
-				$id("carNo").focus();
-				return;
-			}
-			if($id("carFrameNo").value == ""){
-				alert("车架号不能为空！");
-				$id("carFrameNo").focus();
-				return;
-			}
-			if($id("carInvoiceNo").value == ""){
-				alert("购车发票号不能为空！");
-				$id("carInvoiceNo").focus();
-				return;
-			}
-			if($id("carDuesNo").value == ""){
-				alert("完税证明号不能为空！");
-				$id("carDuesNo").focus();
-				return;
-			}
-			if($id("carSafeNo").value == ""){
-				alert("保单号不能为空！");
-				$id("carSafeNo").focus();
-				return;
-			}
-		}
+	     if(!check_sumbmit()){
+	       return ;
+	     }
  		///if(!checkForm(frm)){
 		//	 return ;
 		// }
-	   
+	     var mortgageType=$id("mortgageType").value ;
 		 var otherWarrantsNumber= $id("otherWarrantsNumber").value;  //他项权证号
 		 var projectNumber= $id("projectNumber").value;  //库存序号
 	    $.ajax({
@@ -473,7 +333,7 @@ function changeMortgageType(val){
 				    		  ajaxsubmitO();
 						} else if (data.indexOf("twoexist") >= 0) {
 			                 $id("otherWarrantsNumber").focus();	
-							alert("操作失败！该他项权证号("+otherWarrantsNumber+")和库存序号("+projectNumber+")系统中号码重复！请重新填写！");
+							alert("操作失败！该库存序号("+projectNumber+")和他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
 						} else if (data.indexOf("othexist") >= 0) {
 			                 $id("otherWarrantsNumber").focus();	
 							alert("操作失败！该他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
@@ -493,7 +353,152 @@ function changeMortgageType(val){
 	
 	//验证表单非空
     function check_sumbmit(){
-	
+        var flag=false;
+		if($id("mortgageType").value == "1"){
+				if($id("otherTypeFC").value == ""){
+				 alert("他项类型不能为空！");
+				 return flag;
+				}
+			}else if($id("mortgageType").value == "2"){
+				if($id("otherTypeJDC").value == ""){
+					 alert("他项类型不能为空！");
+					 return flag;
+				}
+			}
+		   if($id("projectNumber").value == ""){
+				alert("库存序号不能为空！");
+				$id("projectNumber").focus();
+				return flag;
+			}
+		   if($id("otherWarrantsNumber").value == ""){
+				alert("他项权证号不能为空！");
+				$id("otherWarrantsNumber").focus();
+				return flag;
+			}
+		   if($id("borrowerName").value == ""){
+				alert("借款人姓名不能为空！");
+				$id("borrowerName").focus();
+				return flag;
+			}
+		   if($id("borrowerCardNo").value == ""){
+				alert("借款人身份证号不能为空！");
+				$id("borrowerCardNo").focus();
+				return flag;
+			}
+		   if($id("orgCode").value == ""){
+				alert("经办机构不能为空！");
+				$id("orgCode").focus();
+				return flag;
+			}
+		   if($id("mangerName").value == ""){
+				alert("经办客户经理不能为空！");
+				$id("mangerName").focus();
+				return flag;
+			}
+			
+		   if($id("mortgageType").value == "1"){
+				if($id("loanTypeFC").value == ""){
+				 alert("贷款种类不能为空！");
+				 return flag;
+				}
+			}else if($id("mortgageType").value == "2"){
+				if($id("loanTypeJDC").value == ""){
+					 alert("贷款种类不能为空！");
+					 return flag;
+				}
+			}
+			
+			
+		   if($id("borrowerContractNo").value == ""){
+				alert("借款合同号不能为空！");
+				$id("borrowerContractNo").focus();
+				return flag;
+			}
+			
+		   if($id("packetNumber").value == ""){
+				alert("封包编号不能为空！");
+				$id("packetNumber").focus();
+				return flag;
+			}
+		   if($id("nextName").value == ""){
+				alert("交接人不能为空！");
+				$id("nextName").focus();
+				return flag;
+			}
+			
+			
+		   if($id("mortgageType").value == "1"){
+			   if($id("propertyNo").value == ""){
+					alert("产权证号不能为空！");
+					$id("propertyNo").focus();
+					return flag;
+				}
+				
+			   if($id("propertyName").value == ""){
+					alert("产权人姓名不能为空！");
+					$id("propertyName").focus();
+					return flag;
+				}
+				
+			   if($id("propertyCardNo").value == ""){
+					alert("产权人身份证号不能为空！");
+					$id("propertyCardNo").focus();
+					return flag;
+				}
+				if($id("propertyAddres").value == ""){
+					alert("产权地址不能为空！");
+					$id("propertyAddres").focus();
+					return flag;
+				}
+				if($id("propertyNums").value == ""){
+					alert("产权证本数不能为空！");
+					$id("propertyNums").focus();
+					return flag;
+				}
+			}else if($id("mortgageType").value == "2"){
+			   if($id("carName").value == ""){
+					alert("车主姓名不能为空！");
+					$id("carName").focus();
+					return flag;
+				}
+				if($id("carCardNo").value == ""){
+					alert("车主身份证号不能为空！");
+					$id("carCardNo").focus();
+					return flag;
+				}
+				if($id("carRegisterNo").value == ""){
+					alert("机动车登记证号不能为空！");
+					$id("carRegisterNo").focus();
+					return flag;
+				}
+				if($id("carNo").value == ""){
+					alert("车牌号不能为空！");
+					$id("carNo").focus();
+					return flag;
+				}
+				if($id("carFrameNo").value == ""){
+					alert("车架号不能为空！");
+					$id("carFrameNo").focus();
+					return flag;
+				}
+				if($id("carInvoiceNo").value == ""){
+					alert("购车发票号不能为空！");
+					$id("carInvoiceNo").focus();
+					return flag;
+				}
+				if($id("carDuesNo").value == ""){
+					alert("完税证明号不能为空！");
+					$id("carDuesNo").focus();
+					return flag;
+				}
+				if($id("carSafeNo").value == ""){
+					alert("保单号不能为空！");
+					$id("carSafeNo").focus();
+					return flag;
+				}
+			}
+			flag=true;
+			return flag;
     }
 
 	function ajaxsubmitO() {
