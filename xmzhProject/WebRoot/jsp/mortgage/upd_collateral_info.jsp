@@ -15,15 +15,15 @@
 <body topmargin="0" leftmargin="0">
 <h:form name="data_form"  id="data_form" action="/mortgage/mortgageReserveAction_updColl.action"  enctype="multipart/form-data" method="post" >
 		<table align="center" border="0" width="100%" class="form_table">
-			<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
-			<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
-			<h:hidden id="tmpName" property="mortgageReserve.tmpName"  name="mortgageReserve.tmpName"/>
-			<h:hidden id="tmpProjectNumber" property="mortgageReserve.tmpProjectNumber"  name="mortgageReserve.tmpProjectNumber"/>
-			<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>
-			<h:hidden id="oldFileLength" value="0"/>
 		    <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
 	        		权证的基本信息
+				<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
+				<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
+				<h:hidden id="tmpName" property="mortgageReserve.tmpName"  name="mortgageReserve.tmpName"/>
+				<h:hidden id="tmpProjectNumber" property="mortgageReserve.tmpProjectNumber"  name="mortgageReserve.tmpProjectNumber"/>
+				<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>
+				<h:hidden id="oldFileLength" value="0"/>
 	          </td>
 	        </tr>
 			<tr>	

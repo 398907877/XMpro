@@ -15,11 +15,11 @@
 <body topmargin="0" leftmargin="0">
 <h:form name="data_form"  id="data_form" action="/mortgage/mortgageReserveAction_addCollateral.action"  enctype="multipart/form-data" method="post" >
 		<table align="center" border="0" width="100%" class="form_table">
-			<h:hidden id="id" property="mortgageReserveRes.warrantsId"  />
-	        <h:hidden id="mortgageType"  property="mortgageReserveRes.mortgageType"/>
 		    <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
 	        		权证的基本信息
+			<h:hidden id="id" property="mortgageReserveRes.warrantsId"  />
+	        <h:hidden id="mortgageType"  property="mortgageReserveRes.mortgageType"/>
 	          </td>
 	        </tr>
 			<tr>	
