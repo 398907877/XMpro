@@ -159,7 +159,7 @@ public class ScanManagementAction extends BaseAction {
 	private void uploadFileToServer(String uploadFileName,File upload2) throws Exception{
 		if(this.upload.size()>0){
 			String fileName = uploadFileName;
-			String path = ServletActionContext.getServletContext().getRealPath("\\mortgageUpload");
+			String path = ServletActionContext.getServletContext().getRealPath("/mortgageUpload");
 			UUID uuid = UUID.randomUUID();
 			long time = System.currentTimeMillis();
 			
