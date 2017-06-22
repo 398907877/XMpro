@@ -140,5 +140,12 @@ public interface IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	MortgageReserve queryMortgageReserveListInfo(String noticeRegisterRelation);
+	MortgageReserve queryMortgageReserveListInfo(MortgageReserve mortgageReserve);
+	
+	/**
+	 * 机构号查询
+	 * @param mortgageReserve
+	 * @return
+	 */
+	public List<MortgageReserve> queryOrgs(MortgageReserve mortgageReserve);
 }

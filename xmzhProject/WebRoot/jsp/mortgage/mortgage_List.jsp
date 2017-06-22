@@ -63,14 +63,15 @@
 					</td>	
 					 <td class="form_label" align="right" >贷款种类：</td>
 					<td>
-					<h:text property="mortgageReserve.loanType" id="loanType" style="width:130px;" />	
+					<d:select id="loanType" dictTypeId="LOAN_TYPE_HOUSE" property="mortgageReserve.loanType" nullLabel="全部" ></d:select>
 					</td>
 				  </tr>		
 				  <tr>
 				    <td class="form_label" align="right" >经办机构：</td>
 					<td>
-					<h:text property="mortgageReserve.orgCode" id="orgCode" style="width:130px;" readonly="true"/>	
-					<a href="#" onclick="open_slzhej_fun1()">选择</a>
+					<h:hidden id="orgCode" property="mortgageReserve.orgCode" />
+					<h:text id="orgName" property="mortgageReserve.orgName"  style="width:130px;"/>
+					<a href="#" onclick="open_slzhej_fun1()">支行选择</a>
 					</td>	
 					 <td class="form_label" align="right" >已注销未领取：</td>
 					<td>
@@ -155,7 +156,7 @@
 								他项权证号
 						  </th>
 						   <th nowrap="nowrap">
-								借款人
+								借款人(姓名:身份证号)
 						  </th>
 						   <th nowrap="nowrap">
 								库存状态
@@ -182,7 +183,7 @@
 									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="BORROWERNAME" />
+									<b:write iterateId="id2" property="BORROWERNAME" />:<b:write iterateId="id2" property="BORROWERCARDNO" />
 								</td>
 								<td nowrap="nowrap"> 
 									<d:write  iterateId="id2" dictTypeId="MORTGAG_STATUS" property="STATUS"/>
@@ -199,7 +200,6 @@
 							<input type="button" class="button" value="库存详情" onclick="view_Infos();"/>
 							<input type="button" class="button" value="出入库处理" onclick="outIn_coll();"/>
 							<input type="button" class="button" value="库存变更" onclick="upd_coll();"/>
-							<input type="button" class="button" value="扫描文件上传" onclick="scan_import();"/>
 					
 				</div>
 							
@@ -246,11 +246,15 @@
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_fc").show();
         $("#tj_jdc").hide();
+        $("#loanType_fc").show();
+        $("#loanType_jdc").hide();
        }else if(val=="2"){
         //document.getElementById("tj_fc").style.display = "none";
        // document.getElementById("tj_fc").style.display = "block";
         $("#tj_jdc").show();
         $("#tj_fc").hide();
+        $("#loanType_jdc").show();
+        $("#loanType_fc").hide();
        }
         callBackFunc();
        }
@@ -287,6 +291,7 @@
            $id("propertyAddres").value="";
            $id("loanType").value="";
            $id("orgCode").value="";
+           $id("orgName").value="";
            $id("logOutSign").value="";
            $id("noRegisterSign").value="";
            $id("carRegisterNo").value="";
@@ -331,7 +336,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, "",callBackFunc, 1050, 230, '添加押品');
+			    showModalCenter(url, "",callBackFunc, 1050, 520, '添加押品');
 			  }
 		}
 		
@@ -391,22 +396,43 @@
 			  }
 		}
 		
-		
-			//扫描件上传
-			function scan_import(){
-			  var gop;
-			    gop= $id("group1");
-			  var len= gop.getSelectLength();
-			  if(len == 0){
-		  			alert("请选择一条库存信息");
-		  			return;
-		  		}else{
-		  			var row=gop.getSelectRow();
-	    			var id = row.getParam("id");
-				    var url="/mortgage/scanManagementAction_toAddScanImport.action?scan.warrantsID="+id;
-				    showModalCenter(url, "",callBackFunc, 580, 300, '扫描件上传');
-				  }
+		    
+             
+   $("#orgName").blur(function(){
+   
+        var orgName =$("#orgName").val();
+		$.ajax({
+			url : "/mortgage/mortgageReserveAction_queryOrgs.action",
+			async : false,
+			type : 'post',
+			data : "mortgageReserve.orgName=" + orgName,
+			timeout : 60000,
+			dataType : 'json',
+			success : function(json) {
+
+				if (json == ""||json==null) { 
+				  $("#orgName").val("");
+			      $("#orgCode").val("");
+				}else {
+				   $.each(eval(json), function (n, value) {
+					 if(n==0){
+						 var  orgname = value.orgName;
+						 var  orgCode = value.orgCode;
+						 $("#orgName").val(orgname);
+						 $("#orgCode").val(orgCode);
+					
+						 }
+	              });
+				
+				}
+
+				
+
 			}
+		});
+    });
+        
+			
 
             //导出excel 	
              function excelExport(){
@@ -489,7 +515,7 @@
 			var strUrl ="";
 			var objName="";
 			var peArgument = [];
-			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1";
+			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2";
 			objName="选择受理支行";  
 			var paramEntity = new ParamEntity('Organization');
 				paramEntity.setProperty('orgname',$id("orgCode").value);
@@ -507,7 +533,8 @@
 							argRes[0].push(sorgidArra[i].getProperty("orgcode"));
 							argRes[1].push(sorgidArra[i].getProperty("orgname"));
 						}
-						$id("orgCode").value = argRes[1];
+						$id("orgCode").value = argRes[0];
+						$id("orgName").value = argRes[1];
 					}
 		    	}
 			}

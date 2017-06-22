@@ -14,6 +14,7 @@
 		<h:hidden id="id" property="mortgageReserveOut.warrantsId"  />
 		<h:hidden id="operatingId" property="mortgageReserveOut.operatingId"  />
 		<h:hidden id="outInType" property="mortgageReserveOut.outInType"  />
+		<h:hidden id="tmpName" property="mortgageReserveOut.tmpName"  />
 		<table align="center" border="0" width="100%" class="form_table">
 			<tr>	
 				<td class="form_label" align="right" width="30%">操作事项：</td>
@@ -83,11 +84,10 @@
 	}
 function changeNextNmae(param){
   if(param!="产权人"){
-    $("#nextName").val("");
-    $("#nextName").attr("readonly",true);
-    $("#nextName").attr("validateAttr","allowNull=true");
+    $("#nextName").val(param);
   }else{
-    $("#nextName").attr("readonly",false);
+    var tmp=$("#tmpName").val();
+    $("#nextName").val(tmp);
   }
 }
 function save(){

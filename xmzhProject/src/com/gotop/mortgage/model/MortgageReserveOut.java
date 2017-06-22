@@ -16,6 +16,13 @@ public class MortgageReserveOut {
 	private String proNextName;//产权人栏
 	private String outBorrowerLog;//产权人栏
 	private String inBorrowerLog;//产权人栏
+	private String tmpName;//临时存储交接人
+	public String getTmpName() {
+		return tmpName;
+	}
+	public void setTmpName(String tmpName) {
+		this.tmpName = tmpName;
+	}
 	public String getId() {
 		return id;
 	}

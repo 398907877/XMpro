@@ -7,6 +7,8 @@
     <result column="ID" property="id" jdbcType="DECIMAL" />
     <result column="MORTGAGETYPE" property="mortgageType" jdbcType="VARCHAR" />
     <result column="OTHERTYPE" property="otherType" jdbcType="VARCHAR" /> 
+    <result column="OTHERTYPEJDC" property="otherTypeJDC" jdbcType="VARCHAR" /> 
+    <result column="OTHERTYPEFC" property="otherTypeFC" jdbcType="VARCHAR" /> 
     <result column="PROJECTNUMBER" property="projectNumber" jdbcType="VARCHAR" />  
     <result column="OTHERWARRANTSNUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" /> 
     <result column="OTHERWARRANTSDATE" property="otherWarrantsDate" jdbcType="VARCHAR" />   
@@ -15,7 +17,9 @@
     <result column="ORGCODE" property="orgCode" jdbcType="VARCHAR" />      
     <result column="ORGNAME" property="orgName" jdbcType="VARCHAR" />    
     <result column="MANGER_NAME" property="mangerName" jdbcType="VARCHAR" />    
-    <result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />     
+    <result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />      
+    <result column="LOAN_TYPE" property="loanTypeJDC" jdbcType="VARCHAR" />         
+    <result column="LOAN_TYPE" property="loanTypeFC" jdbcType="VARCHAR" />        
     <result column="BORROWER_CONTRACTNO" property="borrowerContractNo" jdbcType="VARCHAR" />        
     <result column="LOAN_YEARS" property="loanYears" jdbcType="VARCHAR" />        
     <result column="RECORD_VALUE" property="recordValue" jdbcType="VARCHAR" />        
@@ -33,6 +37,9 @@
     <select id="queryMortgageReserveListInfo" parameterClass="java.util.HashMap" resultMap="tMortgageReserve">
 	select t.id ,
        t.mortgage_type MORTGAGETYPE,
+	   t.other_type OTHERTYPE, 
+	   t.other_type OTHERTYPEFC, 
+	   t.other_type OTHERTYPEJDC,
        t.other_type OTHERTYPE,
        t.project_number PROJECTNUMBER,
        t.other_warrants_number OTHERWARRANTSNUMBER,
@@ -140,6 +147,7 @@
        t.loan_type LOANTYPE,
        t.other_warrants_number OTHERWARRANTSNUMBER,
        t.borrower_name BORROWERNAME,
+       t.borrower_cardno BORROWERCARDNO,
        t.status
   from t_warrants_info t
  where 1=1
@@ -153,13 +161,13 @@
 	  t.status='$status$'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="borrowerName" >
-	  t.borrower_name='$borrowerName$'
+	  t.borrower_name like '%$borrowerName$%'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="borrowerCardNo" >
-	  t.borrower_cardno='$borrowerCardNo$'
+	  t.borrower_cardno like '%$borrowerCardNo$%'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="otherWarrantsNumber" >
-	  t.other_warrants_number='$otherWarrantsNumber$'
+	  t.other_warrants_number like '%$otherWarrantsNumber$%'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="loanType" >
 	  t.loan_type='$loanType$'
@@ -171,52 +179,52 @@
 	  t.no_register_sign='$noRegisterSign$'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="propertyName" >
-	  t.id in (select h.warrants_id
+	  exists  (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_name like '%$propertyName$%'
+	 where t.id=h.warrants_id and h.property_name like '%$propertyName$%' 
 	  )
 	 </isNotNull>
 	 <isNotNull prepend="and" property="propertyCardNo" >
-	  t.id in (select h.warrants_id
+	  exists  (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_cardno='$propertyCardNo$'
+	 where t.id=h.warrants_id and h.property_cardno like '%$propertyCardNo$%'
 	  )
 	 </isNotNull>  
 	 <isNotNull prepend="and" property="propertyAddres" >
-	  t.id in (select h.warrants_id
+	  exists (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_addres='$propertyAddres$'
+	 where t.id=h.warrants_id and  h.property_addres like '%$propertyAddres$%'
 	  )
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carRegisterno" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_registerno = '$carRegisterno$')
+		 where t.id=o.warrants_id and  o.car_registerno like '%$carRegisterno$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carNo" >
-	  t.id in (select o.warrants_id
+	  exists  (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_no = '$carNo$')
+		 where t.id=o.warrants_id and o.car_no like '%$carNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carFrameNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_frameno = '$carFrameNo$')
+		 where t.id=o.warrants_id and o.car_frameno like '%$carFrameNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carInvoiceNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_invoiceno = '$carInvoiceNo$')
+		 where t.id=o.warrants_id and o.car_invoiceno like '%$carInvoiceNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carDuesNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_duesno = '$carDuesNo$')
+		 where t.id=o.warrants_id and o.car_duesno like '%$carDuesNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carSafeNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_safeno = '$carSafeNo$')
+		 where t.id=o.warrants_id and o.car_safeno like '%$carSafeNo$%')
 	 </isNotNull>
     order by id
   </select>  
@@ -305,6 +313,9 @@
 	 <isNotNull prepend="and" property="otherWarrantsNumber" >
 	 t.other_warrants_number = '$otherWarrantsNumber$'
 	 </isNotNull>
+	  <isNotNull prepend="and" property="mortgageType" >
+	 t.mortgage_type = '$mortgageType$'
+	 </isNotNull>
 	</select>
 	
 	
@@ -317,7 +328,9 @@
    <isNotNull prepend="and" property="projectNumber" >
 	 t.Project_Number = '$projectNumber$'
 	 </isNotNull>
-	
+	  <isNotNull prepend="and" property="mortgageType" >
+	 t.mortgage_type = '$mortgageType$'
+	 </isNotNull>
 	</select>
 	
 	
@@ -629,56 +642,74 @@
 	 <isNotNull prepend="and" property="noRegisterSign" >
 	  t.no_register_sign='$noRegisterSign$'
 	 </isNotNull>
-	 <isNotNull prepend="and" property="propertyName" >
-	  t.id in (select h.warrants_id
+	  <isNotNull prepend="and" property="propertyName" >
+	  exists  (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_name like '%$propertyName$%'
+	 where t.id=h.warrants_id and h.property_name like '%$propertyName$%' 
 	  )
 	 </isNotNull>
 	 <isNotNull prepend="and" property="propertyCardNo" >
-	  t.id in (select h.warrants_id
+	  exists  (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_cardno='$propertyCardNo$'
+	 where t.id=h.warrants_id and h.property_cardno like '%$propertyCardNo$%'
 	  )
 	 </isNotNull>  
 	 <isNotNull prepend="and" property="propertyAddres" >
-	  t.id in (select h.warrants_id
+	  exists (select h.warrants_id
 	  from t_mortgage_house_info h
-	 where h.property_addres='$propertyAddres$'
+	 where t.id=h.warrants_id and  h.property_addres like '%$propertyAddres$%'
 	  )
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carRegisterno" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_registerno = '$carRegisterno$')
+		 where t.id=o.warrants_id and  o.car_registerno like '%$carRegisterno$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carNo" >
-	  t.id in (select o.warrants_id
+	  exists  (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_no = '$carNo$')
+		 where t.id=o.warrants_id and o.car_no like '%$carNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carFrameNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_frameno = '$carFrameNo$')
+		 where t.id=o.warrants_id and o.car_frameno like '%$carFrameNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carInvoiceNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_invoiceno = '$carInvoiceNo$')
+		 where t.id=o.warrants_id and o.car_invoiceno like '%$carInvoiceNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carDuesNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_duesno = '$carDuesNo$')
+		 where t.id=o.warrants_id and o.car_duesno like '%$carDuesNo$%')
 	 </isNotNull>
 	 <isNotNull prepend="and" property="carSafeNo" >
-	  t.id in (select o.warrants_id
+	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
-		 where o.car_safeno = '$carSafeNo$')
+		 where t.id=o.warrants_id and o.car_safeno like '%$carSafeNo$%')
 	 </isNotNull>
     order by id
   </select>  
 	
+	
+	
+	<resultMap id="orgsMap" class="com.gotop.mortgage.model.MortgageReserve" >
+    <!--Bean方式返回全表-->
+    <result column="ORGCODE" property="orgCode" jdbcType="VARCHAR" />      
+    <result column="ORGNAME" property="orgName" jdbcType="VARCHAR" />                          
+  </resultMap> 
+	
+	<!-- 查询营销人员机构 -->
+  	<select id="queryOrgs"  parameterClass="java.util.HashMap"   resultMap="orgsMap">
+  	
+  	select t.orgname, t.orgcode
+  from OM_ORGANIZATION t
+ where t.orgname like '%$orgName$%'
+ <![CDATA[ 
+   and rownum < 2
+  	]]>
+  	</select>
 	
 </sqlMap>

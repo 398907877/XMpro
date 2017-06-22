@@ -182,4 +182,13 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	}
 
 
+
+
+	@Override
+	public List<MortgageReserve> queryOrgs(Map<String, Object> map) {
+		
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryOrgs", map);
+	}
+
+
 }

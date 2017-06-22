@@ -117,6 +117,9 @@ public class MortgageReserveService implements IMortgageReserveService {
 			if(mortgageReserve.getProjectNumber()!= null && !"".equals(mortgageReserve.getProjectNumber())){
 				map.put("projectNumber",mortgageReserve.getProjectNumber());
 			}
+			if(mortgageReserve.getMortgageType()!= null && !"".equals(mortgageReserve.getMortgageType())){
+				map.put("mortgageType",mortgageReserve.getMortgageType());
+			}
 			othNums=mortgageReserveDao.checkOtherWarrantsNumber(map);
 			proNums=mortgageReserveDao.checkProjectNumber(map);
 			if("0".equals(othNums)&&"0".equals(proNums)){
@@ -321,13 +324,17 @@ public class MortgageReserveService implements IMortgageReserveService {
 			String [] resPropertyNums=mortgageReserveHouse.getPropertyNums().split(",");
 			for (int i = 0; i <resId.length; i++) {
 				Map<String, Object>map=new HashMap<String, Object>();
-				map.put("id", resId[i]);
-				map.put("propertyNo", resPropertyNo[i]);
-				map.put("propertyName",resPropertyName[i]);
-				map.put("propertyCardNo", resPropertyCardNo[i]);
-				map.put("propertyAddres", resPropertyAddres[i]);
-				map.put("propertyNums", resPropertyNums[i]);
-				map.put("propertyDate", resPropertyDate[i]);
+				map.put("id", resId[i].trim());
+				map.put("propertyNo", resPropertyNo[i].trim());
+				map.put("propertyName",resPropertyName[i].trim());
+				map.put("propertyCardNo", resPropertyCardNo[i].trim());
+				map.put("propertyAddres", resPropertyAddres[i].trim());
+				String temp=resPropertyNums[i].trim();
+				if("".equals(temp)||temp==null){
+					temp="0";
+				}
+				map.put("propertyNums", temp);
+				map.put("propertyDate", resPropertyDate[i].trim());
 				result=mortgageReserveDao.updMortgageHouse(map);
 			}
 			result=true;
@@ -360,15 +367,15 @@ public class MortgageReserveService implements IMortgageReserveService {
 			String [] resCarSafeNo=mortgageReserveCar.getCarSafeNo().split(",");
 			for (int i = 0; i <resId.length; i++) {
 				Map<String, Object>map=new HashMap<String, Object>();
-				map.put("id", resId[i]);
-				map.put("carName", resCarName[i]);
-				map.put("carCardNo", resCarCardNo[i]);
-				map.put("carRegisterNo",resCarRegisterNo[i]);
-				map.put("carNo", resCarNo[i]);
-				map.put("carFrameNo", resCarFrameNo[i]);
-				map.put("carInvoiceNo",resCarInvoiceNo[i]);
-				map.put("carDuesNo", resCarDuesNo[i]);
-				map.put("carSafeNo", resCarSafeNo[i]);
+				map.put("id", resId[i].trim());
+				map.put("carName", resCarName[i].trim());
+				map.put("carCardNo", resCarCardNo[i].trim());
+				map.put("carRegisterNo",resCarRegisterNo[i].trim());
+				map.put("carNo", resCarNo[i].trim());
+				map.put("carFrameNo", resCarFrameNo[i].trim());
+				map.put("carInvoiceNo",resCarInvoiceNo[i].trim());
+				map.put("carDuesNo", resCarDuesNo[i].trim());
+				map.put("carSafeNo", resCarSafeNo[i].trim());
 				result=mortgageReserveDao.updMortgageCar(map);
 			}
 			result=true;
@@ -394,11 +401,24 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("mortgageType", mortgageReserve.getMortgageType());
 			if("".equals(mortgageReserve.getOtherType())||mortgageReserve.getOtherType()==null){
 				if("1".equals(mortgageType)){
-					mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
-					mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
+					if("".equals(mortgageReserve.getOtherTypeFC())||mortgageReserve.getOtherTypeFC()==null){
+						mortgageReserve.setOtherType("3"); //他项类型  3：预告登记证明
+					}else{
+						mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
+					}
+					if("".equals(mortgageReserve.getLoanTypeFC())||mortgageReserve.getLoanTypeFC()==null){
+						mortgageReserve.setLoanType("6");//贷款种类 6:小企业  ,旧数据处理
+					}else{
+						mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
+					}
 				}else if ("2".equals(mortgageType)){
 					mortgageReserve.setOtherType(mortgageReserve.getOtherTypeJDC());
 					mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
+//					if("".equals(mortgageReserve.getLoanTypeJDC())||mortgageReserve.getLoanTypeJDC()==null){
+//						mortgageReserve.setLoanType("8");//贷款种类 8:经营性车辆贷款  ,旧数据处理
+//					}else{
+//						mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
+//					}
 				}
 		    }
 			map.put("noticeRegisterRelation", mortgageReserve.getNoticeRegisterRelation());
@@ -488,7 +508,14 @@ public class MortgageReserveService implements IMortgageReserveService {
 		try {
 			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
 			map.put("borrowerNums", mortgageReserveOut.getBorrowerNums());
-			map.put("borrowerLog", mortgageReserveOut.getBorrowerLog());
+			if("1".equals(mortgageReserveOut.getOutInType())){
+
+				map.put("borrowerLog", mortgageReserveOut.getOutBorrowerLog());
+				
+			}else if ("2".equals(mortgageReserveOut.getOutInType())){
+				map.put("borrowerLog", mortgageReserveOut.getInBorrowerLog());
+			}
+			
 			map.put("operatingMatters", mortgageReserveOut.getOperatingMatters());
 			map.put("remark", mortgageReserveOut.getRemark());
 			map.put("operatingId", mortgageReserveOut.getOperatingId());
@@ -652,10 +679,13 @@ public class MortgageReserveService implements IMortgageReserveService {
 			return reslutNums;
 	}
 	@Override
-	public MortgageReserve queryMortgageReserveListInfo(String noticeRegisterRelation) {
+	public MortgageReserve queryMortgageReserveListInfo(MortgageReserve mortgageReserve) {
 		Map<String, Object>map=new HashMap<String, Object>();
-		if(!"".equals(noticeRegisterRelation)&& noticeRegisterRelation!=null){
-			map.put("projectNumber", noticeRegisterRelation);
+		if(!"".equals(mortgageReserve.getNoticeRegisterRelation())&& mortgageReserve.getNoticeRegisterRelation()!=null){
+			map.put("projectNumber", mortgageReserve.getNoticeRegisterRelation());
+		}
+		if(!"".equals(mortgageReserve.getMortgageType())&& mortgageReserve.getMortgageType()!=null){
+			map.put("mortgageType", mortgageReserve.getMortgageType());
 		}
 		MortgageReserve mortgageReserves=mortgageReserveDao.queryMortgageReserveListInfo(map);
 		return mortgageReserves;
@@ -755,6 +785,14 @@ public class MortgageReserveService implements IMortgageReserveService {
 			}
 		}
 		mortgageReserveList=mortgageReserveDao.queryMortgageReserveListExcel(map);
+		return mortgageReserveList;
+	}
+	@Override
+	public List<MortgageReserve> queryOrgs(MortgageReserve mortgageReserve) {
+		List<MortgageReserve> mortgageReserveList =new ArrayList<MortgageReserve>();
+		Map<String, Object>map =new HashMap<String, Object>();
+		map.put("orgName", mortgageReserve.getOrgName());
+		mortgageReserveList=mortgageReserveDao.queryOrgs(map);
 		return mortgageReserveList;
 	}
 	

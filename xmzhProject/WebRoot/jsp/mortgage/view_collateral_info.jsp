@@ -128,97 +128,104 @@
 		     <tr>
 				<td class="form_label" align="right" width="15%">备注信息：</td>
 				<td colspan="3" width="30%">
-				  <h:textarea rows="5"  cols="30"   property="mortgageReserve.remark"  readonly="true"/>
+				  <h:textarea rows="2"  cols="100"   property="mortgageReserve.remark"  readonly="true"/>
 				</td>	
 		     </tr>
 			  
-	        <tbody id="dzypxx_fc">
-		     <l:iterate property="mortgageReserveListHouseInfo" id="id1" >
 		     <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
-	        		抵质押品信息(${id1.NOWCOUNT})
+	        		抵质押品信息
 	          </td>
 	        </tr>
-			<tr>	
-				<td class="form_label" align="right" width="15%">产权证号：</td>
-				<td colspan="1" width="30%">
-				 <b:write iterateId="id1" property="PROPERTYNO" /> 
-				</td>	
-				<td class="form_label" align="right" width="15%">产权人姓名：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id1" property="PROPERTYNAME" />
-				</td>					
-			</tr>
-			<tr>	
-				<td class="form_label" align="right" width="17%">产权人身份证号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id1" property="PROPERTYCARDNO" />
-				</td>	
-				<td class="form_label" align="right" width="15%">产权地址：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id1" property="PROPERTYADDRES" />
-				</td>					
-			</tr>
-			<tr>	
-				<td class="form_label" align="right" width="15%">产权证本数：</td>
-				<td colspan="1" width="30%">
-				<b:write  iterateId="id1" property="PROPERTYNUMS" />
-				</td>	
-				<td class="form_label" align="right" width="17%">产权证填发日期：</td>
-				<td colspan="1" width="30%">
-				<b:write  iterateId="id1" property="PROPERTYDATE" /> 
-				</td>					
-			</tr>
-			</l:iterate>
+			<tbody id="dzypxx_fc">
+			<tr id="row2">
+		     <td class="form_label" align="right">抵质押品列 表：</td>
+		     <td colspan="3">
+		     <form id="form1" runat="server">
+		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		        <tr align="center">
+		            <th nowrap="nowrap">产权证号</th>
+		            <th nowrap="nowrap">产权人姓名</th>
+		            <th nowrap="nowrap">产权人身份证号</th>
+		            <th nowrap="nowrap">产权地址</th>
+		            <th nowrap="nowrap">产权证本数</th>
+		            <th nowrap="nowrap">产权证填发日期</th>
+		        </tr>
+		       <l:iterate property="mortgageReserveListHouseInfo" id="id1" >
+		        <tr align="center">
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id1" property="PROPERTYNO" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id1" property="PROPERTYNAME" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id1" property="PROPERTYCARDNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id1" property="PROPERTYADDRES" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id1" property="PROPERTYNUMS" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id1" property="PROPERTYDATE" /> 
+		            </td>
+		        </tr>
+		       </l:iterate>
+		    </table>
+		    </form>
+			</td>
+            </tr>
 			</tbody>
 			<tbody id="dzypxx_jdc" style="display:none">
-		     <l:iterate property="mortgageReserveListCarInfo" id="id2" >
-		     <tr>
-	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
-	        		抵质押品信息(${id2.NOWCOUNT})
-	          </td>
-	        </tr>
-			<tr>	
-				<td class="form_label" align="right" width="15%">车主姓名：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"   property="CARNAME" />
-				</td>	
-				<td class="form_label" align="right" width="15%">车主身份证号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"    property="CARCARDNO" />
-				</td>					
-			</tr>
-			<tr>	
-				<td class="form_label" align="right" width="17%">机动车登记证号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"    property="CARREGISTERNO" />
-				</td>	
-				<td class="form_label" align="right" width="15%">车牌号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"   property="CARNO" />
-				</td>					
-			</tr>
-			<tr>	
-				<td class="form_label" align="right" width="15%">车架号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"   property="CARFRAMENO" />
-				</td>	
-				<td class="form_label" align="right" width="15%">购车发票号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"   property="CARINVOICENO" />
-				</td>					
-			</tr>
-			<tr>	
-				<td class="form_label" align="right" width="15%">完税证明号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"  property="CARDUESNO" />
-				</td>	
-				<td class="form_label" align="right" width="15%">保单号：</td>
-				<td colspan="1" width="30%">
-				<b:write iterateId="id2"   property="CARSAFENO" />
-				</td>					
-			</tr>
-			</l:iterate>
+            <tr id="row3">
+		     <td class="form_label" align="right">抵质押品列 表：</td>
+		     <td colspan="3">
+		     <form id="form2" runat="server">
+		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		        <tr align="center">
+		            <th nowrap="nowrap">车主姓名</th>
+		            <th nowrap="nowrap">车主身份证号</th>
+		            <th nowrap="nowrap">机动车登记证号</th>
+		            <th nowrap="nowrap">车牌号</th>
+		            <th nowrap="nowrap">车架号</th>
+		            <th nowrap="nowrap">购车发票号</th>
+		            <th nowrap="nowrap">完税证明号</th>
+		            <th nowrap="nowrap">保单号</th>
+		        </tr>
+		       <l:iterate property="mortgageReserveListCarInfo" id="id2" >
+		        <tr align="center">
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id2" property="CARNAME" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id2" property="CARCARDNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id2" property="CARREGISTERNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id2" property="CARNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id2" property="CARFRAMENO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id2" property="CARINVOICENO" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id2" property="CARDUESNO" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id2" property="CARSAFENO" /> 
+		            </td>
+		        </tr>
+		       </l:iterate>
+		    </table>
+		    </form>
+			</td>
+            </tr>
 			</tbody>
 			<tr>
 				<td colspan="4" style="text-align: center"><input type="button" value="关闭"

@@ -77,6 +77,7 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id2' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id2' property='HOUSEID' />
+										<h:param name='nextName' iterateId='id2' property='PROPERTYNAME' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -124,6 +125,7 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id3' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id3' property='CARID' />
+										<h:param name='nextName' iterateId='id2' property='CARNAME' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -145,7 +147,7 @@
 					</tbody>
               <td colspan="23" class="command_sort_area">
               	<div class="h3"> 
-							<input type="button" class="button" value="出入处理" onclick="outIn_coll(1);"/>
+							<input type="button" class="button" value="出库处理" onclick="outIn_coll(1);"/>
 							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
 							<input type="button" class="button" value="返回" onclick="back_coll();" />
 					
@@ -221,12 +223,14 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
     			var operatingId=row.getParam("operatingId");
+    			var nextName=row.getParam("nextName");
     			var textName="出库处理";
     			if(param==2){
     			  textName="入库处理";
     			}
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param;
-			    showModalCenter(url,param,callBackFunc, 700, 270, textName);
+			    url=url+"&mortgageReserveOut.nextName="+nextName+"&mortgageReserveOut.tmpName="+nextName;
+			    showModalCenter(url,param,callBackFunc, 700, 300, textName);
 			  }
 		}
 		

@@ -202,14 +202,11 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toAddColl(){
-		String res="add_collateral_house_info";
 		String mortgageType=mortgageReserveRes.getMortgageType();
-		if("1".equals(mortgageType)){
-			res="add_collateral_house_info";
-		}else if("2".equals(mortgageType)){
-			res="add_collateral_car_info";
-		}
-		return res;
+		String id=mortgageReserveRes.getWarrantsId();
+		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
+		this.setMortgageReserve(mortgageReserve);
+		return "add_collateral_info";
 	}
 	
 
@@ -238,21 +235,18 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toUpdColl(){
-		String res="upd_collateral_house_info";
 		String id=mortgageReserveRes.getWarrantsId();
 		String mortgageType=mortgageReserveRes.getMortgageType();
 		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
 		if("1".equals(mortgageType)){
 			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
 			this.setMortgageReserveListHouseInfo(mortgageReserveListHouseInfo);
-			res="upd_collateral_house_info";
 		}else if ("2".equals(mortgageType)){
 			mortgageReserveListCarInfo=mortgageReserveService.queryMortgageReserveListCarInfo(id);
 			this.setMortgageReserveListCarInfo(mortgageReserveListCarInfo);
-			res="upd_collateral_car_info";
 		}
 		this.setMortgageReserve(mortgageReserve);
-		return res;
+		return "upd_collateral_info";
 	}
 	
 	/**
@@ -262,6 +256,7 @@ public class MortgageReserveAction extends BaseAction {
 	public void updColl() throws Exception{
 		String info ="fails";
 	       boolean reslut=false;
+	       System.out.println("11:"+mortgageReserve.getMortgageType());
 			try {
 				MUOUserSession muo=getCurrentOnlineUser();
 				reslut=mortgageReserveService.updCollAll(mortgageReserve, mortgageReserveHouse, mortgageReserveCar, files, filesFileName, muo);
@@ -395,6 +390,15 @@ public class MortgageReserveAction extends BaseAction {
 	}
 	
 	
+	public String queryOrgs(){
+		System.out.println("1111111:"+mortgageReserve.getOrgName());
+		if (mortgageReserve.getOrgName()!=null&!"".equals(mortgageReserve.getOrgName())) {
+			mortgageReserveListInfo=mortgageReserveService.queryOrgs(mortgageReserve);
+		}
+		
+		return "orgsList";
+	}
+	
 	/**
 	 * 关联系统库存序号是否已存在
 	 */
@@ -402,10 +406,11 @@ public class MortgageReserveAction extends BaseAction {
 		//String 	info ="fails";
 		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
 		try {
-			String  noticeRegisterRelation=mortgageReserve.getNoticeRegisterRelation();
-			mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(noticeRegisterRelation);
-			JSONObject jsonObject = JSONObject.fromObject(mortgageReserve);
-			res=jsonObject.toString();
+			mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(mortgageReserve);
+			if(mortgageReserve!=null){
+				JSONObject jsonObject = JSONObject.fromObject(mortgageReserve);
+				res=jsonObject.toString();
+			}
 		} catch (Exception e) {
 			res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
 			e.printStackTrace();
