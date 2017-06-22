@@ -28,10 +28,10 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">他项类型：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="otherType_fc">
-					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="mortgageReserve.otherTypeFC"  nullLabel="请选择"  ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
+					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="mortgageReserve.otherTypeFC"  nullLabel="请选择"  onchange="changeOtherTypeFC(this.value)" ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
 				</div>
 				<div id="otherType_jdc"  style="display:none">
-					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="mortgageReserve.otherTypeJDC" nullLabel="请选择"  ></d:select><font id="otherTypeJDC_msg" style="color: red">*</font>
+					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="mortgageReserve.otherTypeJDC" ></d:select>
 				</div>
 				</td>						
 			</tr>
@@ -73,8 +73,8 @@
 				<td class="form_label" align="right" width="15%">经办机构：</td>
 				<td colspan="1" width="30%">
 				<h:hidden id="orgCode" property="mortgageReserve.orgCode" />
-				<h:text id="orgName" property="mortgageReserve.orgName"  readonly="true" /><font style="color: red">*</font>
-				<a href="#" onclick="open_slzhej_fun1()">选择</a>
+				<h:text id="orgName" property="mortgageReserve.orgName"  /><font style="color: red">*</font>
+				<a href="#" onclick="open_slzhej_fun1()">支行选择</a>
 				</td>				
 			</tr>
 			<tr>	
@@ -115,7 +115,7 @@
 			<tr>				
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
-				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font>
+				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
 				</td>		
 				<td class="form_label" align="right" width="15%">购房合同号：</td>
 				<td colspan="1" width="30%">
@@ -142,7 +142,7 @@
 			<tr>
 				<td class="form_label" align="right" width="15%">备注信息：</td>
 				<td colspan="3" width="30%">
-				 <h:textarea rows="5"  cols="30"   property="mortgageReserve.remark" />
+				 <h:textarea rows="2"  cols="100"   property="mortgageReserve.remark" />
 				</td>					
 			</tr>
 			  <tr>
@@ -239,6 +239,41 @@
           changeMortgageType(parWin);
 
         };
+        
+        
+   $("#orgName").blur(function(){
+   
+        var orgName =$("#orgName").val();
+		$.ajax({
+			url : "/mortgage/mortgageReserveAction_queryOrgs.action",
+			async : false,
+			type : 'post',
+			data : "mortgageReserve.orgName=" + orgName,
+			timeout : 60000,
+			dataType : 'json',
+			success : function(json) {
+
+				if (json == ""||json==null) { 
+				  $("#orgName").val("");
+			      $("#orgCode").val("");
+				}else {
+				   $.each(eval(json), function (n, value) {
+					 if(n==0){
+						 var  orgname = value.orgName;
+						 var  orgCode = value.orgCode;
+						 $("#orgName").val(orgname);
+						 $("#orgCode").val(orgCode);
+					
+						 }
+	              });
+				
+				}
+
+				
+
+			}
+		});
+    });
 
 function changeMortgageType(val){
         //$(".alert_message").hide();
@@ -248,7 +283,6 @@ function changeMortgageType(val){
         $("#otherTypeJDC").val("");
         //$("#otherTypeFC_msg").text("*");
         //$("#otherTypeJDC_msg").text("*");
-        $("#otherTypeJDC").val("");
         $("#loanTypeFC").val("");
         $("#loanTypeJDC").val("");
         if(val=="1"){
@@ -267,6 +301,17 @@ function changeMortgageType(val){
 	        $("#dzypxx_fc").hide();
 	       }
 }
+
+    function changeOtherTypeFC(param){
+      var propertyNums=$id("propertyNums").value;
+      
+      if(param==2||param==3){
+       if(propertyNums==""||propertyNums==null)
+       $("#propertyNums").val(0);
+      }else{
+       $("#propertyNums").val("");
+      }
+    }
 	function save(){
 	     if($id("mortgageType").value == "1"){
 			if($id("otherTypeFC").value == ""){
@@ -421,7 +466,7 @@ function changeMortgageType(val){
 			      url: "/mortgage/mortgageReserveAction_checkOtherWarrantsNumber.action",
 			      async: false,
 			      type: 'post',
-			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber+"&mortgageReserve.projectNumber="+projectNumber,
+			      data: "mortgageReserve.otherWarrantsNumber="+otherWarrantsNumber+"&mortgageReserve.projectNumber="+projectNumber+"&mortgageReserve.mortgageType="+mortgageType,
 			      timeout: 60000,
 			      success: function (data) {
 					   if (data.indexOf("noExist") >= 0) {
@@ -487,7 +532,7 @@ function changeMortgageType(val){
 				      url: "/mortgage/mortgageReserveAction_openGenerate.action",
 				      async: false,
 				      type: 'post',
-				      data: "mortgageReserve.noticeRegisterRelation="+noticeRegisterRelation,
+				      data: "mortgageReserve.noticeRegisterRelation="+noticeRegisterRelation+"&mortgageReserve.mortgageType="+mortgageType,
 				      timeout: 60000,
 				      dataType: "json",
 				      success: function (data) {
@@ -554,7 +599,7 @@ function changeMortgageType(val){
 			var strUrl ="";
 			var objName="";
 			var peArgument = [];
-			strUrl ="/tree/initMainTree_mainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=1&changeTree.checkcount=1";
+			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2";
 			objName="选择受理支行";  
 			var paramEntity = new ParamEntity('Organization');
 				paramEntity.setProperty('orgcode',$id("orgCode").value);
@@ -602,6 +647,15 @@ function changeMortgageType(val){
 			
 		function delTr(id){
 			$("#"+id).remove();
+		}
+		
+			
+		function changeNextNmae(param){
+		  if(param!="产权人"){
+		    $("#nextName").val(param);
+		  }else{
+		    $("#nextName").val("");
+		  }
 		}
 </script>
 </body>
