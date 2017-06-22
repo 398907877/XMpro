@@ -132,6 +132,7 @@
 				<h:form name="page_form"
 					action="/mortgage/mortgageReserveAction_queryMortgageReserveList.action" method="post">
 			 <h:hiddendata property="mortgageReserveRes"/>  
+			 <h:hidden id="testmortgageType" property="mortgageReserve.mortgageType"/>  
 
             <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
@@ -235,6 +236,8 @@
 		<script type="text/javascript">
 	 
 	  window.onload = function () {
+	     var val=$("#mortgageType").val();
+	     $("#testmortgageType").val(val)
            init();
 
         };

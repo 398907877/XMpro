@@ -406,6 +406,7 @@
 			RECORD_VALUE, 
 			PACKET_NUMBER, 
 			NEXT_NAME, 
+			PURCHASE_NUMBER, 
 			REMARK, 
 			INSERT_TIME)
 		values
@@ -425,6 +426,7 @@
 			'$recordValue$',
 			'$packetNumber$',
 			'$nextName$',
+			'$purchaseNumber$',
 			'$remark$',
 			'$inserttime$')
 		
@@ -556,6 +558,7 @@
 		RECORD_VALUE='$recordValue$',
 		PACKET_NUMBER='$packetNumber$',
 		NEXT_NAME='$nextName$',
+		PURCHASE_NUMBER='$purchaseNumber$',
 		REMARK='$remark$',
 		INSERT_TIME='$inserttime$'
 		where id='$id$'

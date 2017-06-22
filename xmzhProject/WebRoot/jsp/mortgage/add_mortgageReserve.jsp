@@ -555,6 +555,7 @@ function changeMortgageType(val){
 					       $("#orgName").val(obj.orgName);
 					       $("#mangerName").val(obj.mangerName);
 					       $("#loanYears").val(obj.loanYears);
+					       $("#purchaseNumber").val(obj.purchaseNumber);
 					       if(mortgageType=="1"){
 					         $("#loanTypeFC").val(obj.loanType);
 					       }else if(mortgageType=="2"){

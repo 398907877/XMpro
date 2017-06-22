@@ -278,11 +278,10 @@ public class MortgageReserveService implements IMortgageReserveService {
 			}
     		if(result){
 				String mortgageType= mortgageReserve.getMortgageType();
-				String logName= "";
+				String logName= "库存变更押品类型为房产时";
 				if("1".equals(mortgageType)){
 	    			if(mortgageReserveHouse.getId()!=null&&mortgageReserveHouse.getId()!=""){
 	          		  result=updateMortgageHouse(mortgageReserveHouse);
-	          		  logName="库存变更押品类型为房产时";
 	      			}
 					
 				}else if("2".equals(mortgageType)){
@@ -434,6 +433,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("recordValue", mortgageReserve.getRecordValue());
 			map.put("packetNumber", mortgageReserve.getPacketNumber());
 			map.put("nextName", mortgageReserve.getNextName());
+			map.put("purchaseNumber", mortgageReserve.getPurchaseNumber());
 			map.put("remark", mortgageReserve.getRemark());
 			map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			map.put("status", mortgageReserve.getStatus());
@@ -512,7 +512,6 @@ public class MortgageReserveService implements IMortgageReserveService {
                 
 				if("1".equals(mortgageReserveOut.getOperatingMatters())||"2".equals(mortgageReserveOut.getOperatingMatters()))
 				{
-					System.out.println("11:"+mortgageReserveOut.getOperatingMatters());
 					map.put("borrowerLog", mortgageReserveOut.getOperatingMatters());
 				}
 				
@@ -832,7 +831,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 			reslut="fails";
 			e.printStackTrace();
 		}
-		System.out.println("33:"+reslut);
 		return reslut;
 	}
 	
