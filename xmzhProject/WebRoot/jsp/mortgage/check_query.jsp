@@ -88,7 +88,7 @@ String str_date = TimeUtil.today();
 				<table align="center" border="0" width="100%" class="EOS_table">
 				<tbody id="tj_fc">
 					<tr>
-						<th nowrap="nowrap">序号</th>
+						<!-- <th nowrap="nowrap">序号</th> -->
 						<th nowrap="nowrap">外借时间</th>
 						<th nowrap="nowrap">他项类型</th>
 						<th nowrap="nowrap">库存序号</th>
@@ -99,14 +99,14 @@ String str_date = TimeUtil.today();
 						<th nowrap="nowrap">经办客户经理</th>
 						<th nowrap="nowrap">已借天数</th>
 						<th nowrap="nowrap">是否超限</th>
-						<th nowrap="nowrap">备注</th>
+						<!-- <th nowrap="nowrap">备注</th> -->
 					</tr>
 					
 						<l:iterate property="loanInfoList" id="idx" indexId="index">
 							<tr class="<l:output evenOutput='EOS_table_row' />">
-								<td nowrap="nowrap">
+								<!-- <td nowrap="nowrap">
 								   <b:write iterateId="idx" property="loanID" />
-								</td>
+								</td> -->
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="checkTime" />
 								</td>
@@ -137,9 +137,9 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								  <d:write iterateId="idx" property="whetherOverrun" dictTypeId="MORTGAGE_OVERRUN_TYPE"/>
 								</td>
-								<td nowrap="nowrap">
+								<!-- <td nowrap="nowrap">
 								   <b:write iterateId="idx" property="remark" />
-								</td>
+								</td> -->
 							</tr>
 						</l:iterate>
 						<tr>
@@ -172,7 +172,7 @@ String str_date = TimeUtil.today();
 					<tbody id="tj_jdc" style="display:none">
 					
 					<tr>
-						<th nowrap="nowrap">序号</th>
+						<!-- <th nowrap="nowrap">序号</th> -->
 						<th nowrap="nowrap">外借时间</th>
 						<th nowrap="nowrap">库存序号</th>
 						<th nowrap="nowrap">车牌号</th>
@@ -182,14 +182,14 @@ String str_date = TimeUtil.today();
 						<th nowrap="nowrap">经办客户经理</th>
 						<th nowrap="nowrap">已借天数</th>
 						<th nowrap="nowrap">是否超限</th>
-						<th nowrap="nowrap">备注</th>
+						<!-- <th nowrap="nowrap">备注</th> -->
 					</tr>
 				
 						<l:iterate property="loanInfoNullList" id="idy" indexId="index">
 							<tr class="<l:output evenOutput='EOS_table_row' />">
-								<td nowrap="nowrap">
+								<!--<td nowrap="nowrap">
 								   <b:write iterateId="idy" property="loanID" />
-								</td>
+								</td>  -->
 								<td nowrap="nowrap">
 								   <b:write iterateId="idy" property="checkTime" />
 								</td>
@@ -217,9 +217,9 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								   <d:write iterateId="idy" property="whetherOverrun" dictTypeId="MORTGAGE_OVERRUN_TYPE"/>
 								</td>
-								<td nowrap="nowrap">
+								<!-- <td nowrap="nowrap">
 								   <b:write iterateId="idy" property="remark" />
-								</td>
+								</td> -->
 							</tr>
 						</l:iterate>
 						

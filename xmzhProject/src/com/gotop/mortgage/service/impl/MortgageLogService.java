@@ -43,16 +43,16 @@ public class MortgageLogService implements IMortgageLogService {
 		//操作开始日期
 		if (mortgageLog.getAirTime() !=null&&!"".equals(mortgageLog.getAirTime())) {
 				map.put("airTime", mortgageLog.getAirTime());
-		}else{
-			    map.put("airTime", inserttime);
-		}
+		}//else{
+		//	    map.put("airTime", inserttime);
+		//}
 		
 		//操作结束日期
 		if (mortgageLog.getStopTime() !=null&&!"".equals(mortgageLog.getStopTime())) {
 			map.put("stopTime", mortgageLog.getStopTime());
-	    }else{
-	    	map.put("stopTime", inserttime);
-	    }
+	    }//else{
+	    //	map.put("stopTime", inserttime);
+	   // }
 		
 		List<MortgageLog> mortgageLogLists =mortgageLogDao.queryMortgageLogList(map,page);
 		return mortgageLogLists;
@@ -77,16 +77,16 @@ public class MortgageLogService implements IMortgageLogService {
 				//操作开始日期
 				if (mortgageLog.getAirTime() !=null&&!"".equals(mortgageLog.getAirTime())) {
 						map.put("airTime", sdf1.format(sdf.parse(mortgageLog.getAirTime())));
-				}else{
-					map.put("airTime", sdf1.format(d));
-				}
+				}//else{
+				//	map.put("airTime", sdf1.format(d));
+				//}
 				
 				//操作结束日期
 				if (mortgageLog.getStopTime() !=null&&!"".equals(mortgageLog.getStopTime())) {
 					map.put("stopTime", sdf1.format(sdf.parse(mortgageLog.getStopTime())));
-			    }else{
-			    	map.put("stopTime", sdf1.format(d));
-			    }
+			    }//else{
+			    //	map.put("stopTime", sdf1.format(d));
+			  //  }
 				
 		    } catch (ParseException e) {
 						e.printStackTrace();

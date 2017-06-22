@@ -17,6 +17,8 @@ public interface IMortgageReserveHouseDao {
 	 * @return
 	 */
 	public List<MortgageReserveHouseCar> queryMortgageReserveList(Map<String, Object> map, Page page);
+	
+	public List<MortgageReserveHouseCar> queryPropertyNameAndNoList(Map<String, Object> map);
 	/**
      * 通过主键更新部分字段，部分字段说明：当字段为null时不更新，当字段值为''空值是更新为空值
      * @abatorgenerated

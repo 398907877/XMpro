@@ -15,7 +15,7 @@
 <table width="98%" border="1" cellspacing="1" cellpadding="1">
 	<tr height="34">
 
-		<th height="34" width="100" align="center" class="form_label">序号</th>
+		<!-- <th height="34" width="100" align="center" class="form_label">序号</th> -->
 		<th height="34" width="100" align="center" class="form_label">外借时间</th>
 		<th height="34" width="100" align="center" class="form_label">库存序号</th>
 		<th height="34" width="100" align="center" class="form_label">车牌号</th>
@@ -29,9 +29,9 @@
 	</tr>
 	<l:iterate property="loanInfoList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
-			  <td style="vnd.ms-excel.numberformat:@">
+			 <!--  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="loanID"/>
-			  </td>
+			  </td> -->
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="checkTime"/>
 			  </td>

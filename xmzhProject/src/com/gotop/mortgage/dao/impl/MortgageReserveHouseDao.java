@@ -17,7 +17,11 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 		Map<String, Object> map, Page page){
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseList",map,page);
 	}
-
+	@Override
+	public List<MortgageReserveHouseCar> queryPropertyNameAndNoList(
+		Map<String, Object> map){
+		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryPropertyNameAndNoList",map);
+	}
 	@Override
 	public int updateByPrimaryKeySelective(Map<String, Object> map) {
 		int rows = getSqlMapClientTemplate().update("T_Mortgage_Reserve_House_SqlMap.noRegisterSignUpdate", map);

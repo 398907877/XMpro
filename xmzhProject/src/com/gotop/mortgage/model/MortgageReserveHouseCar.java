@@ -95,6 +95,8 @@ public class MortgageReserveHouseCar {
 	 * */
 	private String nextName;   
 	
+	//借款合同号
+	private String borrowerContractno;
 	public String getId() {
 		return id;
 	}
@@ -222,5 +224,12 @@ public class MortgageReserveHouseCar {
 	public void setNextName(String nextName) {
 		this.nextName = nextName;
 	}
+	public String getBorrowerContractno() {
+		return borrowerContractno;
+	}
+	public void setBorrowerContractno(String borrowerContractno) {
+		this.borrowerContractno = borrowerContractno;
+	}
 
+	
 }

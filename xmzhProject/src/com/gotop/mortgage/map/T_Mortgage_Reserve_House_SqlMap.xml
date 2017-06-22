@@ -12,6 +12,36 @@
      	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
      </resultMap>
      
+     <resultMap class="com.gotop.mortgage.model.MortgageReserveHouseCar" id="mortgageReserveHouseCar2">
+		<!-- <result column="WARRANTS_ID" property="warrantsId" jdbcType="VARCHAR"/>
+     	<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR" />
+     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />
+     	<result column="OTHER_WARRANTS_NUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
+     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
+     	<result column="STATUS" property="status" jdbcType="VARCHAR" />
+     	<result column="OTHER_TYPE" property="otherType" jdbcType="VARCHAR" />
+     	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
+     	 -->
+     	<result column="WARRANTS_ID" property="warrantsId" jdbcType="VARCHAR"/>
+     	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
+     	<result column="OTHERWARRANTSNUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
+     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />	
+     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
+     	
+     	<result column="BORROWER_CONTRACTNO" property="borrowerContractno" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
+     </resultMap>
+     <resultMap class="com.gotop.mortgage.model.MortgageReserveHouseCar" id="mortgageReserveHouseCar3">
+     	<result column="WARRANTS_ID" property="warrantsId" jdbcType="VARCHAR"/>
+     	<result column="NO_REGISTER_SIGN" property="noRegisterSign" jdbcType="VARCHAR" />
+     	<result column="OTHERWARRANTSNUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
+     	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />	
+     	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
+     	
+     	<result column="BORROWER_CONTRACTNO" property="borrowerContractno" jdbcType="VARCHAR" />
+     </resultMap>
+     
      <resultMap id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" >
     <!--Bean方式返回全表-->
     	<result column="ID" property="id" jdbcType="VARCHAR"/>
@@ -56,8 +86,8 @@
      	<result column="type" property="type" jdbcType="VARCHAR"/>
      	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
   		<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR"/>
-  		<result column="CAR_NO" property="propertyNo" jdbcType="VARCHAR"/>
-     	<result column="CAR_NAME" property="propertyName" jdbcType="VARCHAR"/>
+  		<result column="CAR_NO" property="carNo" jdbcType="VARCHAR"/>
+     	<result column="CAR_NAME" property="carName" jdbcType="VARCHAR"/>
      	<result column="OPERATING_USERID" property="operatingUserId" jdbcType="VARCHAR"/>
      	<result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR"/>
      	<result column="OPERATING_REMARK" property="operatingRemark" jdbcType="VARCHAR"/>
@@ -70,8 +100,8 @@
      	<result column="type" property="type" jdbcType="VARCHAR"/>
      	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
   		<result column="PROJECT_NUMBER" property="projectNumber" jdbcType="VARCHAR"/>
-  		<result column="CAR_NO" property="propertyNo" jdbcType="VARCHAR"/>
-     	<result column="CAR_NAME" property="propertyName" jdbcType="VARCHAR"/>
+  		<result column="CAR_NO" property="carNo" jdbcType="VARCHAR"/>
+     	<result column="CAR_NAME" property="carName" jdbcType="VARCHAR"/>
      	<result column="BORROWER_NUMS" property="borrowerNums" jdbcType="VARCHAR"/>
      	<result column="BORROWER_LOG" property="borrowerLog" jdbcType="VARCHAR"/>
      	<result column="OPERATING_USERID" property="operatingUserId" jdbcType="VARCHAR"/>
@@ -85,6 +115,9 @@
      	<result column="OPERATING_MATTERS" property="operatingMatters" jdbcType="VARCHAR"/>
      	<result column="PROPERTY_NUMS" property="propertyNums" jdbcType="VARCHAR"/>
      	<result column="alls" property="alls" jdbcType="VARCHAR"/>
+     	
+     	<result column="OTHERWARRANTS_NUMS" property="otherWarrantsNums" jdbcType="VARCHAR"/>
+     	
      </resultMap>
      <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList3">
      	<result column="type" property="type" jdbcType="VARCHAR"/>
@@ -95,8 +128,8 @@
      </resultMap>
      
      
-     <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar">
-		select t.id as WARRANTS_ID,
+     <select id="queryMortgageReserveHouseList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar3">
+	<!-- select t.id as WARRANTS_ID,
        t.no_register_sign as no_Register_Sign,
        t.other_type as OTHER_TYPE,
        t.project_number as PROJECT_NUMBER,
@@ -136,7 +169,107 @@
         t.NO_REGISTER_SIGN = '$noRegisterSign$'
         </isNotEmpty>
 		</dynamic>
-		
+		 -->	
+		 <!--  
+  select t.id as WARRANTS_ID,
+        t.no_register_sign as no_Register_Sign,
+       t.loan_type as LOAN_TYPE,
+       t.other_warrants_number OTHERWARRANTSNUMBER,
+       t.borrower_name || ' : ' || t.BORROWER_CARDNO as BORROWER_NAME,
+       t.BORROWER_CONTRACTNO as BORROWER_CONTRACTNO,    
+       o.PROPERTY_NAME as PROPERTY_NAME,
+       o.PROPERTY_NO as PROPERTY_NO
+  from t_warrants_info t left join t_mortgage_house_info o 
+  on t.id=o.warrants_id
+ where  t.mortgage_type='1'-->
+  select t.id as WARRANTS_ID,
+       t.no_register_sign as no_Register_Sign,
+       t.loan_type as LOAN_TYPE,
+       t.other_warrants_number OTHERWARRANTSNUMBER,
+       t.borrower_name || ' : ' || t.BORROWER_CARDNO as BORROWER_NAME,
+       t.BORROWER_CONTRACTNO as BORROWER_CONTRACTNO
+       from t_warrants_info t
+       where 1=1 and t.status='1' and t.mortgage_type = '1'
+
+		<dynamic> 
+       <isNotEmpty prepend=" and" property="propertyName">
+        <!--  t.id in (select h.warrants_id
+		  from t_mortgage_house_info h
+		 where h.property_name like '%$propertyName$%' <![CDATA[ and rownum<999  ]]>
+		  ) -->
+		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.property_name like '%$propertyName$%')
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyCardNo">
+        <!-- t.id in (select h.warrants_id
+		  from t_mortgage_house_info h
+		 where h.property_cardno like '%$propertyCardNo$%'
+		  ) -->
+		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.property_cardno like '%$propertyCardNo$%')
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyNo">
+       <!--  t.id in(select h.warrants_id
+	       from t_mortgage_house_info h
+	      where h.PROPERTY_NO like '%$propertyNo$%') -->
+        exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.PROPERTY_NO like '%$propertyNo$%')
+        </isNotEmpty>
+       <isNotEmpty prepend=" and" property="propertyAddres">
+        <!-- t.id in (select h.warrants_id
+		  from t_mortgage_house_info h
+		 where h.property_addres like '%$propertyAddres$%'
+		  ) -->
+		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and  h.property_addres like '%$propertyAddres$%')
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="noRegisterSign">
+        t.NO_REGISTER_SIGN = '$noRegisterSign$'
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="warrantsId">
+        t.id = '$warrantsId$'
+        </isNotEmpty>
+		</dynamic>
+ <!-- 
+ <isNotNull prepend="and" property="propertyName" >
+         <![CDATA[
+           o.property_name like '%$propertyName$%'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="propertyCardNo" >
+         <![CDATA[
+            o.property_cardno like '%$propertyCardNo$%'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="propertyNo" >
+         <![CDATA[
+            o.PROPERTY_NO like '%$propertyNo$%'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="propertyAddres" >
+         <![CDATA[
+            o.property_addres like '%$propertyAddres$%'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="noRegisterSign" >
+         <![CDATA[
+             t.NO_REGISTER_SIGN = '$noRegisterSign$'
+               ]]>
+      </isNotNull> -->
+  </select>  
+   <select id="queryPropertyNameAndNoList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar2">
+  select t.id as WARRANTS_ID,
+        t.no_register_sign as no_Register_Sign,
+       t.loan_type as LOAN_TYPE,
+       t.other_warrants_number OTHERWARRANTSNUMBER,
+       t.borrower_name || ' : ' || t.BORROWER_CARDNO as BORROWER_NAME,
+       t.BORROWER_CONTRACTNO as BORROWER_CONTRACTNO,    
+       o.PROPERTY_NAME as PROPERTY_NAME,
+       o.PROPERTY_NO as PROPERTY_NO
+  from t_warrants_info t left join t_mortgage_house_info o 
+  on t.id=o.warrants_id
+ where  t.mortgage_type='1'
+      <isNotNull prepend="and" property="warrantsId" >
+         <![CDATA[
+             WARRANTS_ID = '$warrantsId$'
+               ]]>
+      </isNotNull>
   </select>  
   <select id="queryMortgageReserveById" parameterClass="java.util.HashMap" resultMap="mortgageReserve">
   	select a.id as id,a.no_register_sign as NO_REGISTER_SIGN from T_WARRANTS_INFO a 
@@ -202,7 +335,7 @@
 
 <!-- 押品类型为房产的分类汇总统计表 -->
 <select id="queryMortgageReserveHouseInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList1">
-	select b.type as type,
+<!-- select b.type as type,
        b.operating_matters as operating_matters,
        count(b.type) as alls,
        a.property_nums as property_nums
@@ -215,7 +348,7 @@
 
      
 
-	<isNotEmpty prepend="and" property="mortgageType">
+	   <isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="operatingTime">
@@ -239,12 +372,88 @@
 		</isNotEmpty>
 	
 	group by b.type, b.operating_matters, a.property_nums
-	
+	-->
+	select T.type as TYPE,
+       T.operating_matters as OPERATING_MATTERS,
+       (select F.alls
+          from (select a.type as type,
+                       a.operating_matters as operating_matters,
+                       count(*) as alls
+                  from T_MORTGAGE_LIST a  
+                  left join T_MORTGAGE_HOUSE_INFO b
+                    on a.warrants_id = b.warrants_id
+                   and a.operating_id = b.id
+                  left join T_WARRANTS_INFO c
+                    on a.warrants_id = c.id
+                 where 1 = 1
+			        <isNotEmpty prepend="and" property="mortgageType">
+						c.MORTGAGE_TYPE='$mortgageType$'
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="operatingTime">
+						<![CDATA[
+						substr(a.INSERT_TIME,0,8)>='$operatingTime$'
+						]]>
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="operatingEndTime">
+						<![CDATA[
+						substr(a.INSERT_TIME,0,8)<='$operatingEndTime$'
+						]]>
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="operatingMatters">
+						a.OPERATING_MATTERS = '$operatingMatters$'
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="operatingType">
+						a.type='$operatingType$'
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="status">
+						c.STATUS='$status$'
+					</isNotEmpty>
+                 group by a.type, a.operating_matters) F
+         where T.type = F.type
+           and T.operating_matters = F.operating_matters) as alls,
+       sum(T.property_nums) as PROPERTY_NUMS,
+       sum(T.otherWarrants_nums) as OTHERWARRANTS_NUMS
+  from (select a.warrants_id,
+               a.type              as type,
+               a.operating_matters as operating_matters,
+               sum(b.property_nums) as property_nums,
+               1 as otherWarrants_nums
+         from T_MORTGAGE_LIST a  
+                  left join T_MORTGAGE_HOUSE_INFO b
+                    on a.warrants_id = b.warrants_id
+                   and a.operating_id = b.id
+                  left join T_WARRANTS_INFO c
+                    on a.warrants_id = c.id
+         where 1 = 1
+         <isNotEmpty prepend="and" property="mortgageType">
+			c.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			a.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			c.STATUS='$status$'
+		</isNotEmpty>
+         group by a.warrants_id, a.type, a.operating_matters) T
+ group by T.type, T.operating_matters
 		
 </select>
 <!-- 押品类型为机动车的分类汇总统计表===== -->
 <select id="queryMortgageReserveCarInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList3">
-  select b.type as type,
+<!--  select b.type as type,
            b.operating_matters as operating_matters,
            count(b.type) as alls,
            count(a.warrants_id) as cars,
@@ -280,26 +489,105 @@
 			c.STATUS='$status$'
 		</isNotEmpty>
 	</dynamic>
- group by b.type, b.operating_matters
+ group by b.type, b.operating_matters --> 
+ select T.type as TYPE,
+       T.operating_matters as OPERATING_MATTERS,
+       (select F.alls
+          from (select a.type as type,
+                       a.operating_matters as operating_matters,
+                       count(*) as alls
+                  from T_MORTGAGE_LIST a  
+                  left join T_MORTGAGE_CAR_INFO b
+                    on a.warrants_id = b.warrants_id
+                   and a.operating_id = b.id
+                  left join T_WARRANTS_INFO c
+                    on a.warrants_id = c.id
+                 where 1 = 1
+                 <isNotEmpty prepend="and" property="mortgageType">
+			c.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			a.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			c.STATUS='$status$'
+		</isNotEmpty>
+                 group by a.type, a.operating_matters) F
+         where T.type = F.type
+           and T.operating_matters = F.operating_matters) as alls,
+       sum(T.cars) as cars,
+       sum(T.otherWarrants_nums) as others
+  from (select a.warrants_id,
+               a.type              as type,
+               a.operating_matters as operating_matters,
+               count(b.warrants_id) as cars,
+               1 as otherWarrants_nums
+         from T_MORTGAGE_LIST a  
+                  left join T_MORTGAGE_CAR_INFO b
+                    on a.warrants_id = b.warrants_id
+                   and a.operating_id = b.id
+                  left join T_WARRANTS_INFO c
+                    on a.warrants_id = c.id
+         where 1 = 1
+         <isNotEmpty prepend="and" property="mortgageType">
+			c.MORTGAGE_TYPE='$mortgageType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)>='$operatingTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingEndTime">
+			<![CDATA[
+			substr(a.INSERT_TIME,0,8)<='$operatingEndTime$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingMatters">
+			a.OPERATING_MATTERS = '$operatingMatters$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="operatingType">
+			a.type='$operatingType$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			c.STATUS='$status$'
+		</isNotEmpty>
+         group by a.warrants_id, a.type, a.operating_matters) T
+ group by T.type, T.operating_matters
 </select>
 <!-- 押品类型为房产的出入库明细表 -->
 <select id="queryMortgageReserveHouseDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList2">
+  select T.*, E.EMPNAME as OPERATING_USERID
+  from (
 	      select d.id                    as ID,
-           a.operating_time        as OPERATING_TIME,
+           to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
+                 'yyyy-mm-dd hh24:mi')   as OPERATING_TIME,
            d.type       		   as type,
            d.operating_matters     as OPERATING_MATTERS,
            c.project_number        as PROJECT_NUMBER,
            b.property_no           AS PROPERTY_NO,
            b.property_name         AS PROPERTY_NAME,
            c.other_warrants_number AS OTHER_WARRANTS_NUMBER,
-           a.operating_userid      AS OPERATING_USERID,
+           a.operating_userid      AS OPERATING_USERID2,
            c.next_name             AS NEXT_NAME,
-           a.operating_remark      AS OPERATING_REMARK
+           d.REMARK      AS OPERATING_REMARK
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_LOG a
-        on d.warrants_id = a.OPERATING_MORTGAG_ID
+        on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
       left join T_MORTGAGE_HOUSE_INFO b
-        on d.warrants_id = b.warrants_id
+        on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
       left join T_WARRANTS_INFO c
         on d.warrants_id = c.id
      where 1 = 1
@@ -329,27 +617,33 @@
 			c.STATUS='$status$'
 		</isNotEmpty>
 	</dynamic>
-		
+		 ) T,
+       OM_EMPLOYEE                 E
+	 WHERE T.OPERATING_USERID2 = E.EMPID
+	 
 </select>
 <!-- 押品类型为机动车的出入库明细表 -->
 <select id="queryMortgageReserveCarDetailInOutList" parameterClass="java.util.HashMap" resultMap="mortgageList4">
+select T.*, E.EMPNAME as OPERATING_USERID
+  from ( 
 	      select d.id                AS id,
-           a.operating_time    AS operating_time,
+           to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
+                 'yyyy-mm-dd hh24:mi')    AS operating_time,
            d.type              AS type,
            d.operating_matters AS operating_matters,
            c.project_number    AS project_number,
            b.car_no            AS car_no,
            b.car_name          AS car_name,
-           a.operating_userid  AS operating_userid,
+           a.operating_userid  AS operating_userid2,
            c.next_name         AS next_name,
-           a.operating_remark  AS operating_remark
+           d.REMARK   AS operating_remark
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_CAR_INFO b
-        on d.warrants_id = b.warrants_id
+        on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
       left join T_WARRANTS_INFO c
         on d.warrants_id = c.id
       left join T_MORTGAGE_LOG a
-        on d.warrants_id = a.OPERATING_MORTGAG_ID
+        on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
      where 1 = 1
 
   <dynamic>
@@ -376,13 +670,18 @@
 			c.STATUS='$status$'
 		</isNotEmpty>
 	</dynamic>
-
+       ) T,
+       OM_EMPLOYEE                 E
+	 WHERE T.OPERATING_USERID2 = E.EMPID
 </select>
 <!-- 房产外借明细表 -->
 
 <select id="queryMortgageReserveHouseDetailInOutList1" parameterClass="java.util.HashMap" resultMap="mortgageList5">
+select T.*, E.EMPNAME as OPERATING_USERID
+  from ( 
 	select d.id                    as ID,
-           a.operating_time        as OPERATING_TIME,
+           to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
+                 'yyyy-mm-dd hh24:mi')          as OPERATING_TIME,
            d.type       		   as type,
            d.operating_matters     as OPERATING_MATTERS,
            c.project_number        as PROJECT_NUMBER,
@@ -391,14 +690,14 @@
            d.borrower_nums         as borrower_nums,
            d.borrower_log          as borrower_log,
            c.other_warrants_number AS OTHER_WARRANTS_NUMBER,
-           a.operating_userid      AS OPERATING_USERID,
+           a.operating_userid      AS OPERATING_USERID2,
            c.next_name             AS NEXT_NAME,
-           a.operating_remark      AS OPERATING_REMARK
+           d.REMARK     AS OPERATING_REMARK
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_LOG a
-        on d.warrants_id = a.OPERATING_MORTGAG_ID
+        on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
       left join T_MORTGAGE_HOUSE_INFO b
-        on d.warrants_id = b.warrants_id
+        on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
       left join T_WARRANTS_INFO c
         on d.warrants_id = c.id
      where 1 = 1
@@ -426,12 +725,17 @@
 			c.STATUS='$status$'
 		</isNotEmpty>
 	</dynamic>
-
+      ) T,
+       OM_EMPLOYEE                 E
+	 WHERE T.OPERATING_USERID2 = E.EMPID
 </select>
  <!-- 机动车外借明细表 -->
  <select id="queryMortgageReserveCarDetailInOutList1" parameterClass="java.util.HashMap" resultMap="mortgageList6">
+  select T.*, E.EMPNAME as OPERATING_USERID
+  from (    	    
  	     select d.id                AS id,
-            a.operating_time    AS operating_time,
+           to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
+                 'yyyy-mm-dd hh24:mi')   AS operating_time,
             d.type              AS type,
             d.operating_matters AS operating_matters,
             c.project_number    AS project_number,
@@ -439,16 +743,16 @@
             b.car_name          AS car_name,
             d.borrower_nums     as borrower_nums,
             d.borrower_log      as borrower_log,
-            a.operating_userid  AS operating_userid,
+            a.operating_userid  AS operating_userid2,
             c.next_name         AS next_name,
-            a.operating_remark  AS operating_remark
+            d.REMARK  AS operating_remark
        from T_MORTGAGE_LIST d
        left join T_MORTGAGE_CAR_INFO b
-         on d.warrants_id = b.warrants_id
+         on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
        left join T_WARRANTS_INFO c
          on d.warrants_id = c.id
        left join T_MORTGAGE_LOG a
-         on d.warrants_id = a.OPERATING_MORTGAG_ID
+         on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
       where 1 = 1
  	<dynamic>
 		<isNotEmpty prepend="and" property="mortgageType">
@@ -474,7 +778,9 @@
 			c.STATUS='$status$'
 		</isNotEmpty>
 	</dynamic>
- 
+      ) T,
+       OM_EMPLOYEE                 E
+	 WHERE T.OPERATING_USERID2 = E.EMPID
  
  </select>
 

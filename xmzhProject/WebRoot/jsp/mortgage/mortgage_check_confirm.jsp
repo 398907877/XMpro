@@ -30,13 +30,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <h:hidden name="mortgageReserveHouseCar.warrantsId" property="mortgageReserveHouseCar.warrantsId" id="warrantsId"/>
 		<center>
 		<br/>
-		<br/>
-		<br/>
 		<table>
-		
+		<tr>	
+		   <td class="form_label" align="right" width="15%">产权人姓名：</td>
+				<td colspan="1" width="30%">
+				<h:text id="propertyName"   property="mortgageReserveHouseCar.propertyName" readonly="true"/>
+				</td>
+			<td class="form_label" align="right" width="15%">产权证号：</td>
+				<td colspan="1" width="30%">
+				<h:text id="propertyNo"   property="mortgageReserveHouseCar.propertyNo" readonly="true"/>
+				</td>	
+									
+			</tr>
 		<tr>
-		<td><input id="querys" type="button" value="确认" class="button" onclick="confirm();"></td>
-		<td><input id="cancel" type="button" value="退出" class="button" onclick="window.close();"></td>
+		<td colspan="4" style="text-align: center"><input id="querys" type="button" value="确认" class="button" onclick="confirm();">
+		<input id="cancel" type="button" value="退出" class="button" onclick="window.close();">
+		</td>
 		</tr>
 		
 		</table>

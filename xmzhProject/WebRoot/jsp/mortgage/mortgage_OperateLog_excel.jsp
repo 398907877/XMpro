@@ -20,7 +20,7 @@
 		<th height="34" width="100" align="center" class="form_label">操作人员</th>
 		<th height="34" width="100" align="center" class="form_label">操作类型</th>
 		<th height="34" width="100" align="center" class="form_label">操作内容(权证内容)</th>
-		<th height="34" width="100" align="center" class="form_label">备注</th>
+		<!-- <th height="34" width="100" align="center" class="form_label">备注</th> -->
 	</tr>
 	<l:iterate property="mortgageLogList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
@@ -39,9 +39,11 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="operateContent"/>
 			  </td>
+			  <!-- 
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="remark" />
 			  </td>
+			   -->
 			</tr>
 			</l:iterate>
 		</table>

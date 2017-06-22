@@ -45,7 +45,7 @@ public class ScanService implements IScanService,Serializable {
 	 * @return 新增的条数
 	 * @throws Exception
 	 */
-	public int insertScan(Long pkey,Scan scan,MUOUserSession muo) throws Exception{
+	public int insertScan(Scan scan,MUOUserSession muo) throws Exception{
 		HashMap<String, String>hmp=new HashMap<String, String>();
 		
 		Date d=new Date();
@@ -53,7 +53,12 @@ public class ScanService implements IScanService,Serializable {
 		String inserttime = sdf2.format(d);
 		
 		//上传时间
-		scan.setOperationTime(inserttime);
+		//scan.setOperationTime(inserttime);
+		//如果上传时间为空，默认当前时间
+		if(scan.getOperationTime() ==null || "".equals(scan.getOperationTime())){
+			scan.setOperationTime(inserttime);
+		}
+		
 		boolean result=false;
 		int count=0;
 		try {
@@ -68,7 +73,7 @@ public class ScanService implements IScanService,Serializable {
 		if(count > 0){
 			String operatingType="6";//扫描件上传
 			//插入日志
-			result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "扫描件上传");
+			result=insertMortgageOperatingLog(operatingType, userID, inserttime, "扫描件上传");
 			if(!result){
 				count=0;
 			}
@@ -90,14 +95,13 @@ public class ScanService implements IScanService,Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean insertMortgageOperatingLog(String operatingType,Long userID,Long pkey,String inserttime,String remark) throws Exception{
+	public boolean insertMortgageOperatingLog(String operatingType,Long userID,String inserttime,String remark) throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		boolean result=false;
 		try {
 			map.put("inserttime", inserttime);
 			map.put("userID", userID);
 			map.put("operatingType", operatingType);
-			map.put("warrantsId", pkey);
 			map.put("remark", remark);
 			result=mortgageReserveDao.insertMortgageLog(map);
 		} catch (Exception e) {
@@ -119,15 +123,15 @@ public class ScanService implements IScanService,Serializable {
 		
 		if (scan.getInTimeStart() !=null&&!"".equals(scan.getInTimeStart())) {
 				map.put("inTimeStrat", scan.getInTimeStart());
-		}else{
-			map.put("inTimeStrat", inserttime);
-		}
+		}//else{
+			//map.put("inTimeStrat", inserttime);
+		//}
 		
 		if (scan.getInTimeEnd() !=null&&!"".equals(scan.getInTimeEnd())) {
 				map.put("inTimeEnd",  scan.getInTimeEnd());
-		}else{
-			map.put("inTimeEnd",  inserttime);
-		}
+		}//else{
+		//	map.put("inTimeEnd",  inserttime);
+		//}
 		//扫描件种类
 		if(scan.getScanType()!=null && !"".equals(scan.getScanType())){
 			map.put("scanType", scan.getScanType());

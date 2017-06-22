@@ -14,7 +14,7 @@
 %>
 <table width="98%" border="1" cellspacing="1" cellpadding="1">
 	<tr height="34">
-		<th height="34" width="100" align="center" class="form_label">流水号</th>
+		<!-- <th height="34" width="100" align="center" class="form_label">流水号</th> -->
 		<th height="34" width="100" align="center" class="form_label">操作时间</th>
 		<th height="34" width="100" align="center" class="form_label">出入库</th>
 		<th height="34" width="100" align="center" class="form_label">操作事项</th>
@@ -24,13 +24,13 @@
 		<th height="34" width="200" align="center" class="form_label">他项权证号</th>
 		<th height="34" width="100" align="center" class="form_label">操作人员</th>
 		<th height="34" width="100" align="center" class="form_label">交接人员</th>
-		<th height="34" width="100" align="center" class="form_label">备注</th>
+	<!-- <th height="34" width="100" align="center" class="form_label">备注</th> -->	
 	</tr>
 	<l:iterate property="mortgageLists" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
-			  <td style="vnd.ms-excel.numberformat:@">
+			 <!-- <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="id"/>
-			  </td>
+			  </td> -->
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="operatingTime"/>
 			  </td>
@@ -58,9 +58,9 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="nextName"/>
 			  </td>
-			  <td style="vnd.ms-excel.numberformat:@">
+			<!-- <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="operatingRemark"/>
-			  </td>
+			  </td> -->  
 			</tr>
 			</l:iterate>
 		</table>

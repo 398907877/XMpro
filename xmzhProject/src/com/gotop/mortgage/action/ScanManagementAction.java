@@ -99,12 +99,9 @@ public class ScanManagementAction extends BaseAction {
 		
 		StringBuffer buffer = new StringBuffer(100);
 		try{
-			String warrantsID= scan.getWarrantsID();
-			Long pkey=Long.valueOf(warrantsID);
-			
-			
-			buffer.append("<script>");
-			
+			//String warrantsID= scan.getWarrantsID();
+			//Long pkey=Long.valueOf(warrantsID);			
+			buffer.append("<script>");		
 			//限制上次个数
 			if(upload.size()>10){
 				buffer.append("alert('扫描件上传失败，一次上传个数不能超过10个!');");
@@ -114,15 +111,14 @@ public class ScanManagementAction extends BaseAction {
 			//循环上传文件
 			for(int i=0;i<upload.size();i++){
 			this.uploadFileToServer(uploadFileName.get(i),upload.get(i));//上传文件到upload文件夹
-			int count = this.getScanService().insertScan(pkey,this.getScan(),muo);
+			int count = this.getScanService().insertScan(this.getScan(),muo);
 			if(count > 0){
 				sucess+=uploadFileName.get(i)+" ";			
 			
 			}else{
 				fail+=uploadFileName.get(i)+" ";
 				break;
-			}
-			
+			}			
 		}	
 			if(fail==""){
 				buffer.append("alert('扫描件上传成功!');");

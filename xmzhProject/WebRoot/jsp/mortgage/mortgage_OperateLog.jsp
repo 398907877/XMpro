@@ -71,10 +71,11 @@
 							<th nowrap="nowrap">
 								操作内容（权证内容）
 							</th>
+							<!-- 
 							<th nowrap="nowrap">
 								备注
 							</th>
-						
+						     -->
 						</tr>
                            <l:iterate property="mortgageLogList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
@@ -94,10 +95,11 @@
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="operateContent" />
 								</td>
+								<!-- 
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="remark" />
 								</td>
-								
+								-->
 							</tr>
 						</l:iterate>
 							<tr>

@@ -59,7 +59,7 @@ from(
                    1
                 end as WHETHEROVERRUN
            from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
-                                'yyyy-mm-dd hh24:mi:ss') AS INSERT_TIME,
+                                'yyyy-mm-dd hh24:mi') AS INSERT_TIME,
                         d.OTHER_TYPE,
                         d.PROJECT_NUMBER,
                         d.MORTGAGE_TYPE,
@@ -97,14 +97,14 @@ from(
        -->
        <isNotNull prepend="and" property="inTimeStart" >
         <![CDATA[
-           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
-                                'yyyymmddhh24miss'),0,8) >=  '$inTimeStart$'
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi'),
+                                'yyyymmddhh24mi'),0,8) >=  '$inTimeStart$'
                ]]>
       </isNotNull>
       <isNotNull prepend="and" property="inTimeEnd" >
         <![CDATA[
-           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
-                                'yyyymmddhh24miss'),0,8) <=  '$inTimeEnd$'
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi'),
+                                'yyyymmddhh24mi'),0,8) <=  '$inTimeEnd$'
                ]]>
       </isNotNull>
        <isNotNull prepend="and" property="whetherOverrun" >
@@ -135,7 +135,7 @@ from(
                    1
                 end as WHETHEROVERRUN
            from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
-                                'yyyy-mm-dd hh24:mi:ss') AS INSERT_TIME,
+                                'yyyy-mm-dd hh24:mi') AS INSERT_TIME,
                         d.OTHER_TYPE,
                         d.PROJECT_NUMBER,
                         d.MORTGAGE_TYPE,
@@ -174,14 +174,14 @@ from(
       -->
       <isNotNull prepend="and" property="inTimeStart" >
         <![CDATA[
-           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
-                                'yyyymmddhh24miss'),0,8) >=  '$inTimeStart$'
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi'),
+                                'yyyymmddhh24mi'),0,8) >=  '$inTimeStart$'
                ]]>
       </isNotNull>
       <isNotNull prepend="and" property="inTimeEnd" >
         <![CDATA[
-           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi:ss'),
-                                'yyyymmddhh24miss'),0,8) <=  '$inTimeEnd$'
+           substr(to_char(TO_DATE(P.INSERT_TIME, 'yyyy-MM-dd hh24:mi'),
+                                'yyyymmddhh24mi'),0,8) <=  '$inTimeEnd$'
                ]]>
       </isNotNull>
        <isNotNull prepend="and" property="whetherOverrun" >

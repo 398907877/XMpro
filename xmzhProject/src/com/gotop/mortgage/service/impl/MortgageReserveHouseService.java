@@ -24,13 +24,53 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 	public List<MortgageReserveHouseCar> queryHouseStockList(
 			MortgageReserveHouseCar mortgageReserveHouseCar, Page page){
 		List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
+		
+		List<MortgageReserveHouseCar> mortgageReserveList2 =new ArrayList<MortgageReserveHouseCar>();
 		Map<String, Object>map=new HashMap<String, Object>();
-		map.put("propertyName", mortgageReserveHouseCar.getPropertyName());
-		map.put("propertyCardNo", mortgageReserveHouseCar.getPropertyCardNo());
-		map.put("propertyNo", mortgageReserveHouseCar.getPropertyNo());
-		map.put("propertyAddres", mortgageReserveHouseCar.getPropertyAddres());
-		map.put("noRegisterSign", mortgageReserveHouseCar.getNoRegisterSign());
+		
+		MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
+		if(mortgageReserveHouseCar.getPropertyName()!=null && !"".equals(mortgageReserveHouseCar.getPropertyName())){
+			map.put("propertyName", mortgageReserveHouseCar.getPropertyName());			
+		}
+		if(mortgageReserveHouseCar.getPropertyCardNo()!=null && !"".equals(mortgageReserveHouseCar.getPropertyCardNo())){
+			map.put("propertyCardNo", mortgageReserveHouseCar.getPropertyCardNo());
+		}
+		if(mortgageReserveHouseCar.getPropertyNo()!=null && !"".equals(mortgageReserveHouseCar.getPropertyNo())){
+			map.put("propertyNo", mortgageReserveHouseCar.getPropertyNo());		
+		}
+		if(mortgageReserveHouseCar.getPropertyAddres()!=null && !"".equals(mortgageReserveHouseCar.getPropertyAddres())){
+			map.put("propertyAddres", mortgageReserveHouseCar.getPropertyAddres());		
+		}
+		if(mortgageReserveHouseCar.getNoRegisterSign()!=null && !"".equals(mortgageReserveHouseCar.getNoRegisterSign())){
+			map.put("noRegisterSign", mortgageReserveHouseCar.getNoRegisterSign());
+		}
+		
+		
+		
 		mortgageReserveList=mortgageReserveHouseDao.queryMortgageReserveList(map, page);
+		
+		for(int i=0;i<mortgageReserveList.size();i++){
+			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
+			  System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
+			  Map<String, Object>map2=new HashMap<String, Object>();
+			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
+						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
+						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
+						String names="";
+					     String nos="";
+					     for(int j=0;j<mortgageReserveList2.size();j++){
+					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
+					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
+					     }
+					     if(!"".equals(names) && !"".equals(nos)){
+					    	 names=names.substring(0, names.length()-1);
+						     nos=nos.substring(0, nos.length()-1);
+					     }
+					     
+					     mortgageReserveList.get(i).setPropertyName(names);
+					     mortgageReserveList.get(i).setPropertyNo(nos);
+			     }	     
+		}
 		return mortgageReserveList;
 
 	}
@@ -48,7 +88,10 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     @Override
 	public List<MortgageReserveHouseCar> queryMortgageHouseForExcel(
 			MortgageReserveHouseCar mortgageReserveHouseCar) {
+    	List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
+    	List<MortgageReserveHouseCar> mortgageReserveList2 =new ArrayList<MortgageReserveHouseCar>();
     	Map<String, Object> map = new HashMap<String, Object>();
+    	MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
     	if (mortgageReserveHouseCar!=null) {
 			if (mortgageReserveHouseCar.getNoRegisterSign()!=null
 			&&!"".equals(mortgageReserveHouseCar.getNoRegisterSign())) {
@@ -70,9 +113,36 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&& !"".equals(mortgageReserveHouseCar.getPropertyAddres())) {
 				map.put("propertyAddres", mortgageReserveHouseCar.getPropertyAddres());
 			}
+			if (mortgageReserveHouseCar.getWarrantsId()!=null
+					&& !"".equals(mortgageReserveHouseCar.getWarrantsId())) {
+						map.put("warrantsId", mortgageReserveHouseCar.getWarrantsId());
+					}
+		}
+    	mortgageReserveList=mortgageReserveHouseDao.queryMortgageReserveHouseForExcel(map);
+    	
+    	for(int i=0;i<mortgageReserveList.size();i++){
+			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
+			  System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
+			  Map<String, Object>map2=new HashMap<String, Object>();
+			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
+						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
+						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
+						String names="";
+					     String nos="";
+					     for(int j=0;j<mortgageReserveList2.size();j++){
+					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
+					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
+					     }
+					     if(!"".equals(names) && !"".equals(nos)){
+					    	 names=names.substring(0, names.length()-1);
+						     nos=nos.substring(0, nos.length()-1);
+					     }
+					     mortgageReserveList.get(i).setPropertyName(names);
+					     mortgageReserveList.get(i).setPropertyNo(nos);
+			     }	     
 		}
     	
-		return mortgageReserveHouseDao.queryMortgageReserveHouseForExcel(map);
+		return mortgageReserveList;
 	}
     
     /**
@@ -117,15 +187,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+				//map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -167,15 +237,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -217,15 +287,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -266,15 +336,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -314,15 +384,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -361,15 +431,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -403,15 +473,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -451,15 +521,15 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
 				map.put("operatingTime", mortgageList.getOperatingTime());		
-			}else {
-				map.put("operatingTime", operatingTime);
-			}
+			}//else {
+			//	map.put("operatingTime", operatingTime);
+			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
 				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
-			}else {
-				map.put("operatingEndTime", operatingEndTime);
-			}	
+			}//else {
+			//	map.put("operatingEndTime", operatingEndTime);
+			//}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());

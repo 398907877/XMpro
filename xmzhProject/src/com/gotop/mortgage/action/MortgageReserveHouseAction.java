@@ -36,8 +36,10 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String toRegisterSignConfirm() {
 		//System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
-		this.setMortgageReserveHouseCar(mortgageReserveHouseCar);
+		
 		mortgageReserveHouseCar.setWarrantsId(mortgageReserveHouseCar.getWarrantsId());
+		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(mortgageReserveHouseCar);
+		this.setMortgageReserveHouseCar(mortgageReserveHouseList.get(0));
 		return "RegisterSignConfirm";
 	}
 	//补登记确认

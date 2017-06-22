@@ -69,7 +69,7 @@ String str_date = TimeUtil.today();
 					        <input type="hidden" name="page.isCount" value="true">
 							<input id="querys" type="submit" value="统计" class="button" onclick="query();">
 							<input type="button" value="明细" class="button" onclick="detail();">
-							<input type="button" value="汇总导出" class="button" onclick="totalDownExl();">
+							<input type="button" value="统计导出" class="button" onclick="totalDownExl();">
 							<input type="button" value="明细导出" class="button" onclick="detailDownExl();">
 							<input type="button" value="清空" class="button" onclick="clears();">
 						</td>
@@ -122,7 +122,7 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyNums"/></nobr>
+			    	<nobr><b:write iterateId="issued" property="otherWarrantsNums"/></nobr>
 			    </div>
 			  </td>
 			  
@@ -220,7 +220,7 @@ String str_date = TimeUtil.today();
 	     <tbody id="house_detail">
 		<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">流水号</th>
+		 <!--  <th nowrap="nowrap">流水号</th> -->
 		  <th nowrap="nowrap">操作时间</th>
 		  <th nowrap="nowrap">出入库</th>
 		  <th nowrap="nowrap">操作事项</th>
@@ -230,16 +230,16 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap">他项权证号</th>
 		  <th nowrap="nowrap">操作人员</th>
 		  <th nowrap="nowrap">交接人员</th>
-		  <th nowrap="nowrap">备注</th>
+		<!--  <th nowrap="nowrap">备注</th> --> 
 		</tr>
 		<w:radioGroup id="group1">
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;width: 20%">
+			  <!-- <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
 			    </div>
-			  </td>
+			  </td> -->
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
@@ -285,11 +285,11 @@ String str_date = TimeUtil.today();
 			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
 			    </div>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			 <!--  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
 			    </div>
-			  </td>
+			  </td> --> 
 			</tr>
 			</l:iterate>
 		</w:radioGroup>
@@ -298,7 +298,7 @@ String str_date = TimeUtil.today();
 		      <tbody id="car_detail">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">流水号</th>
+		 <!-- <th nowrap="nowrap">流水号</th> --> 
 		  <th nowrap="nowrap">操作时间</th>
 		  <th nowrap="nowrap">出入库</th>
 		  <th nowrap="nowrap">操作事项</th>
@@ -307,15 +307,15 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap">车主姓名</th>
 		  <th nowrap="nowrap">操作人员</th>
 		  <th nowrap="nowrap">交接人员</th>
-		  <th nowrap="nowrap">备注</th>
+		<!--   <th nowrap="nowrap">备注</th> -->
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;width: 20%">
+			  <!-- <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
 			    </div>
-			  </td>
+			  </td> -->
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
@@ -356,11 +356,11 @@ String str_date = TimeUtil.today();
 			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
 			    </div>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			 <!--  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
 			    </div>
-			  </td>
+			  </td> --> 
 			</tr>
 			</l:iterate>
 		 
@@ -369,7 +369,7 @@ String str_date = TimeUtil.today();
 		      <tbody id="house_detail1">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">流水号</th>
+		 <!--  <th nowrap="nowrap">流水号</th> -->
 		  <th nowrap="nowrap">操作时间</th>
 		  <th nowrap="nowrap">出入库</th>
 		  <th nowrap="nowrap">操作事项</th>
@@ -381,15 +381,15 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap">他项权证号</th>
 		  <th nowrap="nowrap">操作人员</th>
 		  <th nowrap="nowrap">交接人员</th>
-		  <th nowrap="nowrap">备注</th>
+		<!--  <th nowrap="nowrap">备注</th> --> 
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;width: 20%">
+			  <!-- <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
 			    </div>
-			  </td>
+			  </td> -->
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
@@ -445,11 +445,11 @@ String str_date = TimeUtil.today();
 			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
 			    </div>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			 <!--  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
 			    </div>
-			  </td>
+			  </td> --> 
 			</tr>
 			</l:iterate>
 		
@@ -458,7 +458,7 @@ String str_date = TimeUtil.today();
 		      <tbody id="car_detail1">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">流水号</th>
+		<!--   <th nowrap="nowrap">流水号</th> -->
 		  <th nowrap="nowrap">操作时间</th>
 		  <th nowrap="nowrap">出入库</th>
 		  <th nowrap="nowrap">操作事项</th>
@@ -469,15 +469,15 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap">外借是否归还</th>
 		  <th nowrap="nowrap">操作人员</th>
 		  <th nowrap="nowrap">交接人员</th>
-		  <th nowrap="nowrap">备注</th>
+		<!--  <th nowrap="nowrap">备注</th> --> 
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;width: 20%">
+			<!--   <td style="text-align: center;width: 20%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
 			    </div>
-			  </td>
+			  </td> -->
 			  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
@@ -528,11 +528,11 @@ String str_date = TimeUtil.today();
 			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
 			    </div>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			<!--  <td style="text-align: center;width: 10%">
 			    <div style="padding:0px;overflow:hidden" nowrap>
 			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
 			    </div>
-			  </td>
+			  </td> -->  
 			</tr>
 			</l:iterate>
 		 
@@ -642,6 +642,7 @@ String str_date = TimeUtil.today();
 	     $("#tj_jdc").show();
 	     $("#tj_fc").hide();
 	    }
+	   // callBackFunc();
 	    }
 		/*
 		//查询判断(submit改为button的判断框)
@@ -686,7 +687,7 @@ String str_date = TimeUtil.today();
 			$name("mortgageList.operatingEndTime").value ="";
 		}
 		
-		//汇总导出
+		//汇总（统计）导出
 		function totalDownExl(){
 			//var result_flag = $id("result_flag").value;
 			var options=$("#mortgageType option:selected");  //获取选中的项
@@ -715,7 +716,7 @@ String str_date = TimeUtil.today();
 			}
 			if(status.val()!=null)
 			{
-			    strUrl=strUrl+"&mortgageList.status="+status;
+			    strUrl=strUrl+"&mortgageList.status="+status.val();
 			}	
 			window.location.href=strUrl;
 		}
@@ -760,7 +761,12 @@ String str_date = TimeUtil.today();
 			frm.action="/mortgage/mortgageReserveHouseAction_queryMortgageQueryInOutForDetail.action";
 			frm.submit();
 		 }
-			
+
+		function callBackFunc(){
+			var frm = $name("appQuery");
+            frm.submit();
+			//  location.reload(); //就算页面直接关闭，也会重新加载页面
+			}
 		</script>
 		
   </body>

@@ -50,15 +50,15 @@ public class LoanInfoService implements ILoanInfoService {
 		//查询时间 -开始时间
 		if (loanInfo.getInTimeStart() !=null&&!"".equals(loanInfo.getInTimeStart())) {
 				map.put("inTimeStart", loanInfo.getInTimeStart());
-		}else{
-			    map.put("inTimeStart", inserttime);
-		}
+		}//else{
+		//	    map.put("inTimeStart", inserttime);
+		//}
 		//查询时间 -截止时间
 		if (loanInfo.getInTimeEnd() !=null&&!"".equals(loanInfo.getInTimeEnd())) {
 				map.put("inTimeEnd", loanInfo.getInTimeEnd());
-		}else{
-			 map.put("inTimeEnd", inserttime);
-		}
+		}//else{
+		//	 map.put("inTimeEnd", inserttime);
+		//}
 		
 		
 		
@@ -127,16 +127,16 @@ public class LoanInfoService implements ILoanInfoService {
 					if (loanInfo.getInTimeStart() !=null&&!"".equals(loanInfo.getInTimeStart())) {
 							map.put("inTimeStart", sdf1.format(sdf.parse(loanInfo.getInTimeStart())));
 					}
-					else{
-						map.put("inTimeStart", sdf1.format(d));
-					}	
+					//else{
+					//	map.put("inTimeStart", sdf1.format(d));
+					//}	
 					//查询时间 -截止时间
 					if (loanInfo.getInTimeEnd() !=null&&!"".equals(loanInfo.getInTimeEnd())) {
 							map.put("inTimeEnd", sdf1.format(sdf.parse(loanInfo.getInTimeEnd())));
 					}
-					else{
-						map.put("inTimeEnd", sdf1.format(d));
-					}	
+					//else{
+					//	map.put("inTimeEnd", sdf1.format(d));
+					//}	
 					
 				  } catch (ParseException e) {
 						e.printStackTrace();

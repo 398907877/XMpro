@@ -3,8 +3,6 @@
 <%@include file="/common/skins/skin0/component.jsp"%>
 <h:css href="/css/style1/style-custom.css" />
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,14 +10,19 @@
   </head>
   
   <body>
-    <h:form name="houseQuery"action="/mortgage/mortgageReserveHouseAction_queryMortgageHouseReserveList.action" method="post">
+    <h:form name="houseQuery" action="/mortgage/mortgageReserveHouseAction_queryMortgageHouseReserveList.action" method="post">
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
 				<tr>
 					<td class="form_label" align="right">补登记标志：</td>
 					<td >
-					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserveHouseCar.noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" nullLabel="全部"  style="width:80px;">
+					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserveHouseCar.noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" nullLabel="全部"  value="2" style="width:80px;">
 					</d:select>
+					<!-- ><select id="noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" property="mortgageReserveHouseCar.noRegisterSign" style="width:80px;">
+						<option value="">全部</option>
+						<option value="1">已确认</option>
+						<option value="2">未确认</option>
+						</select>  -->
 					</td>
 					<td class="form_label" align="right" >产权人姓名：</td>
 					<td>
@@ -48,7 +51,7 @@
 					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
-							<input id="query" type="submit" value="查 询" class="button">
+							<input id="query" type="button" value="查 询" class="button" onclick="querys();">
 							<input type="button" value="清空" class="button" onclick="clears();">
 							<input type="button" value="导出" class="button" onclick="downExl();">
 							<input type="button" value="补登记确认" class="button" onclick="checkConfirm();">
@@ -67,9 +70,11 @@
 		    <h:hidden property="page.isCount"/>
 	     <table class="EOS_table" width="100%" style="overflow:scroll">
 		<tr>
+		
 		  <th align="center" nowrap="nowrap">
 					<b:message key="l_select"></b:message>
 							</th>
+					<!-- 
 						  <th nowrap="nowrap">
 								他项类型
 						  </th>
@@ -88,6 +93,25 @@
 						   <th nowrap="nowrap">
 								库存状态
 						  </th>
+				 -->
+				          <th nowrap="nowrap">
+								他项权证号
+						  </th>
+						   <th nowrap="nowrap">
+								贷款种类
+						  </th>
+						   <th nowrap="nowrap">
+								借款人(借款人姓名 ： 借款人身份证号)
+						  </th>
+						   <th nowrap="nowrap">
+								借款合同号
+						  </th>
+						   <th nowrap="nowrap">
+								产权人
+						  </th>
+						   <th nowrap="nowrap">
+								产权证号码
+						  </th>
 		</tr>
 		<w:radioGroup id="group1">
 			<l:iterate property="mortgageReserveHouseList" id="id1">
@@ -98,7 +122,7 @@
 	               <h:param name='warrantsId' iterateId='id1' property='warrantsId'/>
 	               <h:param name='noRegisterSign' iterateId='id1' property='noRegisterSign'/>
 	            </w:rowRadio>
-			  </td>		
+			  <!-- </td>		
 				<td style="text-align: center;width: 20%">
 			    	<nobr><d:write iterateId="id1" dictTypeId="OTHER_TYPE_VIEW" property="otherType"/></nobr>
 			  </td>
@@ -116,7 +140,28 @@
 			  </td>	
 			  <td style="text-align: center;width: 10%">
 			    	<d:write iterateId="id1" dictTypeId="MORTGAG_STATUS" property="status"/>
-			  </td>		
+			  </td>	
+			   -->	
+			   <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="otherWarrantsNumber"/></nobr>
+			  </td>
+			   
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/></nobr>
+			  </td>
+			   <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="borrowerName"/></nobr>
+			  </td>	
+			   <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="borrowerContractno"/></nobr>
+			  </td>	
+			 
+			  <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="propertyName"/></nobr>
+			  </td>	
+			   <td style="text-align: center;width: 10%">
+			    	<nobr><b:write iterateId="id1" property="propertyNo"/></nobr>
+			  </td>	
 			</tr>
 			</l:iterate>
 		</w:radioGroup>
@@ -155,7 +200,7 @@
    </w:panel>
    </div>
 		<script type="text/javascript">
-	
+		// $("#noRegisterSign").val("2");
 		
        //补登记标记改变事件
        function changeCheckSign(val){
@@ -171,12 +216,24 @@
 	        $("#tj_fc").hide();
 	       }
        }
-
+     //查询
+		function querys()
+		{  
+			
+			//var noRegisterSign=$id("noRegisterSign").value;
+			// alert(noRegisterSign);
+			// $("#noRegisterSign option[value='"+ noRegisterSign+"']").attr("selected",true);
+			//$("#noRegisterSign").val(noRegisterSign);
+			
+			var frm = $name("houseQuery");
+			//frm.action="/mortgage/mortgageReserveHouseAction_queryMortgageHouseReserveList.action";
+			frm.submit();
+		 }
 
 		//清空
 		function clears(){
 			
-			$("#noRegisterSign").val("");
+			$("#noRegisterSign").val("2");
 			 $id("propertyName").value="";
 			 $id("propertyCardNo").value="";
 			 $id("propertyNo").value="";
@@ -235,7 +292,7 @@
 	  			}
 	  			else if(noSign=='2'){
 		  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId+"&mortgageReserveHouseCar.noRegisterSign="+noSign;
-		  			showModalCenter(strUrl, null, callBackFunc, 300, 100, '补登记确认');  
+		  			showModalCenter(strUrl, null, callBackFunc, 600, 100, '补登记确认');  
 	  			}
 	  			
 		  	}

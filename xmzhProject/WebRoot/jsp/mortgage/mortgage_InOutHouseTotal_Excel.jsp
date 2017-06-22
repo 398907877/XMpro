@@ -35,7 +35,7 @@
 			   <b:write iterateId="id1" property="propertyNums"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="propertyNums" />
+			    <b:write iterateId="id1" property="otherWarrantsNums" />
 			</tr>
 			</l:iterate>
 		</table>
