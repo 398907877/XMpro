@@ -23,10 +23,22 @@ String str_date = TimeUtil.today();
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-                     <td class="form_label" align="right" >统计日期：</td>
-					<td >	
+				   <td class="form_label" align="right" width="20%">押品类型</td>
+					<td width="20%">
+						<d:select id="mortgageType" name="inventoryStat.mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" property="inventoryStat.mortgageType" onchange="changeMortgageType(this.value)"  ></d:select>
+					</td>
+                    <!--  <td class="form_label" align="right" width="20%">统计日期：</td>
+					<td width="30%">	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="statTime" name="inventoryStat.statTime" 
-					property="inventoryStat.statTime" /></td>
+					property="inventoryStat.statTime" /></td>-->
+					<td class="form_label" align="right" width="20%">统计日期：</td>
+					<td width="30%">
+					从	
+					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeStart" name="inventoryStat.inTimeStart" 
+					property="inventoryStat.inTimeStart" value="<%=str_date%>"/> 
+                                                            到
+					    <w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeEnd" name="inventoryStat.inTimeEnd" 
+					property="inventoryStat.inTimeEnd" value="<%=str_date%>"/></td>
                    			
 				</tr>
 				<tr class="form_bottom">
@@ -56,7 +68,7 @@ String str_date = TimeUtil.today();
 		    <h:hidden property="page.isCount"/>
 		    
 					<table align="center" border="0" width="100%" class="EOS_table">
-					<!-- 
+					<!--
 		           <tr>
 							<th nowrap="nowrap">
 								统计日期
@@ -80,13 +92,13 @@ String str_date = TimeUtil.today();
 						</tr>
                            <l:iterate property="inventoryStatList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
-								<td nowrap="nowrap" rowspan="11"> 
+								<td nowrap="nowrap" rowspan="14"> 
 									<b:write iterateId="id1" property="statTime" />
 								</td>
-								<td nowrap="nowrap" rowspan="7"> 
+								<td nowrap="nowrap" rowspan="10"> 
 									房产
 								</td>
-								<td nowrap="nowrap" rowspan="5"> 
+								<td nowrap="nowrap" rowspan="8"> 
 									他项
 								</td>
 								<td nowrap="nowrap" rowspan="4"> 
@@ -98,7 +110,7 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="num1" />
 								</td>
-								<td nowrap="nowrap" rowspan="5"> 
+								<td nowrap="nowrap" rowspan="8"> 
 									<b:write iterateId="id1" property="total1" />
 								</td>
 							</tr>
@@ -127,14 +139,38 @@ String str_date = TimeUtil.today();
 								</td>
 							</tr>
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
-								<td nowrap="nowrap"> 
+								<td nowrap="nowrap" rowspan="4"> 
 									小企业
 								</td>
 								<td nowrap="nowrap"> 
-									/
+									不动产抵押权
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="num5" />
+								</td>
+							</tr>
+							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
+								<td nowrap="nowrap"> 
+									不动产登记预告
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="num6" />
+								</td>
+							</tr>
+							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" align="center">
+								<td nowrap="nowrap"> 
+									预告登记证明
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="num7" />
+								</td>
+							</tr>
+							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
+								<td nowrap="nowrap"> 
+									小计
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="num8" />
 								</td>
 							</tr>
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
@@ -145,7 +181,7 @@ String str_date = TimeUtil.today();
 									零售
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num6" />
+									<b:write iterateId="id1" property="num9" />
 								</td>
 								<td nowrap="nowrap" rowspan="2"> 
 									<b:write iterateId="id1" property="total2" />
@@ -156,7 +192,7 @@ String str_date = TimeUtil.today();
 									小企业
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num7" />
+									<b:write iterateId="id1" property="num10" />
 								</td>
 							</tr>
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
@@ -170,7 +206,7 @@ String str_date = TimeUtil.today();
 									汽车消费
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num8" />
+									<b:write iterateId="id1" property="num11" />
 								</td>
 								<td nowrap="nowrap" rowspan="2"> 
 									<b:write iterateId="id1" property="total3" />
@@ -181,7 +217,7 @@ String str_date = TimeUtil.today();
 									经营性车辆
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num9" />
+									<b:write iterateId="id1" property="num12" />
 								</td>
 							</tr>
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
@@ -192,7 +228,7 @@ String str_date = TimeUtil.today();
 									汽车消费
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num10" />
+									<b:write iterateId="id1" property="num13" />
 								</td>
 								<td nowrap="nowrap" rowspan="2"> 
 									<b:write iterateId="id1" property="total4" />
@@ -203,12 +239,12 @@ String str_date = TimeUtil.today();
 									经营性车辆
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id1" property="num11" />
+									<b:write iterateId="id1" property="num14" />
 								</td>
 							</tr>
 						</l:iterate>
-						
-						
+						  -->
+						<!-- 
 						
 							  <tr align="center">
 								<td nowrap="nowrap" rowspan="11"> 
@@ -338,7 +374,7 @@ String str_date = TimeUtil.today();
 								</td>
 							</tr>
 						 -->
-						 
+				<!-- 
 						 <tr>
 							<th nowrap="nowrap">
 								统计日期
@@ -377,8 +413,91 @@ String str_date = TimeUtil.today();
 									<b:write iterateId="id1" property="num" />
 								</td>
 							</tr>
+						</l:iterate> --> 
+						<tbody id="tj_fc">	
+						<tr>
+							<th nowrap="nowrap">
+								统计日期
+							</th>
+							<th nowrap="nowrap">
+								押品类型
+							</th>
+							<th nowrap="nowrap">
+								权证种类
+							</th>
+							<th nowrap="nowrap">
+								贷款种类
+							</th>
+						   <th nowrap="nowrap">
+								他项类型
+							</th>
+							<th nowrap="nowrap">
+								数量
+							</th>
+						</tr>
+                           <l:iterate property="inventoryStatList" id="id1">
+							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="statTime" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="mortgageType" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="warrantsType" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="loanType"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="otherType"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="num" />
+								</td>
+							</tr>
 						</l:iterate>
+						</tbody>
+						<tbody id="tj_jdc" style="display:none">
+						<tr>
+							<th nowrap="nowrap">
+								统计日期
+							</th>
+							<th nowrap="nowrap">
+								押品类型
+							</th>
+							<th nowrap="nowrap">
+								权证种类
+							</th>
+							<th nowrap="nowrap">
+								贷款种类
+							</th>
+							<th nowrap="nowrap">
+								数量
+							</th>
+						</tr>
+                           <l:iterate property="inventoryStatList" id="id1">
+							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'/>" align="center">
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="statTime" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="mortgageType" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="warrantsType" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="loanType"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id1" property="num" />
+								</td>
+							</tr>
+						</l:iterate>
+						</tbody>
 							<tr>
+							
               <td colspan="23" class="command_sort_area">
             
 							
@@ -414,7 +533,36 @@ String str_date = TimeUtil.today();
 			</w:panel>		
 		</DIV>
 		<script type="text/javascript">
-
+		var options=$("#mortgageType option:selected");  //获取选中的项
+		// alert(options.val());
+		 if(options.val()=="1"){
+		     $("#tj_fc").show();
+		     $("#tj_jdc").hide();
+		     
+		    }else if(options.val()=="2"){
+		     $("#tj_jdc").show();
+		     $("#tj_fc").hide();
+		    }
+		//抵押类型改变事件
+	    function changeMortgageType(val){
+	    if(val=="1"){
+	     //document.getElementById("tj_jdc").style.display = "none";
+	    // document.getElementById("tj_fc").style.display = "block";
+	     $("#tj_fc").show();
+	     $("#tj_jdc").hide();
+	    }else if(val=="2"){
+	     //document.getElementById("tj_fc").style.display = "none";
+	    // document.getElementById("tj_fc").style.display = "block";
+	     $("#tj_jdc").show();
+	     $("#tj_fc").hide();
+	    }
+	    callBackFunc();
+	    }
+	    function callBackFunc(){
+			var frm = $name("statQuery");
+            frm.submit();
+			//  location.reload(); //就算页面直接关闭，也会重新加载页面
+			}
 		//清空
 		function clears(){
 			//清空JSP页面时间控件显示的值,将当前时间填入
@@ -429,11 +577,18 @@ String str_date = TimeUtil.today();
               if (month < 10) month = '0' + month;  
               if (day < 10) day = '0' + day;  
               var str = year + '-' + month + '-' + day;
-              //$("#statTime_input").val(str);
-              $("#statTime_input").val("");
+              $("#inTimeStart_input").val(str);
+              $("#inTimeEnd_input").val(str);
+
+              $id("inTimeStart").value=str;
+              $id("inTimeEnd").value=str;
+              
+              $("#mortgageType").val("");
+             // $("#statTime_input").val("");
 			//清空传入后台的时间控件的值,将当前时间填入
-			//$name("inventoryStat.statTime").value =aaa;
-			$name("inventoryStat.statTime").value ="";
+			$name("inventoryStat.inTimeStart").value =aaa;
+			$name("inventoryStat.inTimeEnd").value =aaa;
+			//$name("inventoryStat.statTime").value ="";
 			
 			//$name("scan.repTimeEnd").value = "";
 
@@ -446,21 +601,47 @@ String str_date = TimeUtil.today();
 
 		
             function search(){
-              
-            	var frm = $name("statQuery");
-                frm.submit();
+            	//alert($id("inTimeStart").value);
+        		if($id("inTimeStart").value == "" || $id("inTimeStart").value ==null ){                
+        			 alert("开始时间不能为空！");
+        			 return;
+        		}else{
+        			if($id("inTimeEnd").value == "" || $id("inTimeEnd").value ==null){
+              			 alert("截止时间不能为空！");
+              			 return;
+              		}else{
+              			document.getElementById("statQuery").submit();
+                  		}
+            		}
+        
 			}
 
           //导出excel 	
             function excelExport(){
-   				var statTime = $id("statTime").value;
+   				//var statTime = $id("statTime").value;
+   				var inTimeStart = $id("inTimeStart").value;
+   				var inTimeEnd = $id("inTimeEnd").value;
+   			   //押品类型
+   				var options=$("#mortgageType option:selected");
+   				var mortgageType=options.val();
+   				
    				var strUrl = "/mortgage/inventoryStatQueryAction_inventoryStatExcel.action?";
-                    if(statTime!=null){
-                   	 strUrl=strUrl+"&inventoryStat.statTime="+statTime;
-                    }		
+                   // if(statTime!=null){
+                   //	 strUrl=strUrl+"&inventoryStat.statTime="+statTime;
+                  //  }
+                    if(inTimeStart!=null){
+                      	 strUrl=strUrl+"&inventoryStat.inTimeStart="+inTimeStart;
+                       }
+                    if(inTimeEnd!=null){
+                     	 strUrl=strUrl+"&inventoryStat.inTimeEnd="+inTimeEnd;
+                      }	
+                    if(mortgageType!=null){
+                      	 strUrl=strUrl+"&inventoryStat.mortgageType="+mortgageType;
+                       }		
    				
    				window.location.href=strUrl;
    			}
+
 		
 		</script>
 		

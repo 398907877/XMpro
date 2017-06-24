@@ -111,7 +111,7 @@ String str_date = TimeUtil.today();
 								   <b:write iterateId="idx" property="checkTime" />
 								</td>
 								<td nowrap="nowrap">
-								   <b:write iterateId="idx" property="otherType" />
+								   <d:write iterateId="idx" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
 								</td>
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="repertoryID" />

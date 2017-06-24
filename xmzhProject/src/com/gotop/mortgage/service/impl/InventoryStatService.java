@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gotop.deviceManagement.model.DeviceDetail;
 import com.gotop.mortgage.dao.IInventoryStatDao;
 import com.gotop.mortgage.dao.IMortgageLogDao;
 import com.gotop.mortgage.model.InventoryStat;
@@ -38,97 +39,154 @@ public class InventoryStatService implements IInventoryStatService {
 		
 		Map<String, Object>map=new HashMap<String, Object>();
 		
-		
+		//押品类型
+		if (inventoryStat.getMortgageType() !=null&&!"".equals(inventoryStat.getMortgageType())) {
+			if("1".equals(inventoryStat.getMortgageType())){
+				map.put("mortgageType", "房产");
+			}
+			if("2".equals(inventoryStat.getMortgageType())){
+				map.put("mortgageType", "机动车");
+			}
+			
+	    }
+				
 		Date d=new Date();
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
 		String inserttime = sdf2.format(d);
 		//统计时间
-		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-			map.put("statTime", inventoryStat.getStatTime());
-	    }else{
-	    	map.put("statTime", inserttime);
-	    }
+		if (inventoryStat.getInTimeStart() !=null&&!"".equals(inventoryStat.getInTimeStart())) {
+			 map.put("inTimeStart", inventoryStat.getInTimeStart());
+			
+			if (inventoryStat.getInTimeEnd() !=null&&!"".equals(inventoryStat.getInTimeEnd())) {
+				map.put("inTimeEnd", inventoryStat.getInTimeEnd());
+				if(inventoryStat.getInTimeStart().equals(inventoryStat.getInTimeEnd()) && inventoryStat.getInTimeStart().equals(inserttime)){
+				//如果开始时间等于结束时间,并且是当天时间	
+					map.put("statTime", inventoryStat.getInTimeStart());
+					if("1".equals(inventoryStat.getMortgageType())){
+						inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatList(map,page);
+					}
+					if("2".equals(inventoryStat.getMortgageType())){
+						inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatList(map,page);
+					}
+				}else{
+					inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
+				}
+			}
+		}	
 		
-		
-		inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
 		
 //		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-//					
-//						map.put("statTime",inventoryStat.getStatTime());
-//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
-//					}else{
-//						//获取表中所有的时间（包含去除重复）
-//						inventoryStatLists =inventoryStatDao.queryTimeList(map);
-//						ArrayList<String> arr = new ArrayList<String>();
-//						int n=0;
-//						if(inventoryStatLists!=null){
-//							
-//							for(InventoryStat vcc:inventoryStatLists){
-//								arr.add(vcc.getStatTime());
-//							}
-//							//去除重复
-//							arr = (ArrayList<String>) getNewList(arr);
-//							
-//							//遍历所有时间  以每个时间统计数据
-//							for(int i=0;i<arr.size();i++){
-//								String str=arr.get(i);
-//								map.put("statTime", str);
-//								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
-//								inventoryStatLists2.addAll(inventoryStatLists);
-//								n+=inventoryStatLists.size();
-//							}
-//							
-//						}
-//						page.setCount(n);
-//					}	
+//			map.put("statTime", inventoryStat.getStatTime());
+//			if(inserttime.equals(inventoryStat.getStatTime())){
+//				
+//				//inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
+//				if("1".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatList(map,page);
+//				}
+//				if("2".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatList(map,page);
+//				}
+//			}else{
+//				
+//				inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
+//			}
+//	    }else{
+//	    	map.put("statTime", inserttime);
+//	    	if("1".equals(inventoryStat.getMortgageType())){
+//				inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatList(map,page);
+//			}
+//			if("2".equals(inventoryStat.getMortgageType())){
+//				inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatList(map,page);
+//			}
+//	    }
+
 				return inventoryStatLists2;
 	}
 	
 	@Override
 	public List<InventoryStat> queryInventoryStatListForExcel(MUOUserSession muo, InventoryStat inventoryStat) {
+		Map<String, Object>map=new HashMap<String, Object>();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date d=new Date();
-		
-		Map<String, Object>map=new HashMap<String, Object>();
-		
+		//Date d=new Date();
 	//	List<InventoryStat> inventoryStatLists=new ArrayList<InventoryStat>();
 		
 		List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
 		
 		String orgcode = muo.getOrgcode();
-		
-			//统计时间
-			if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-				map.put("statTime", inventoryStat.getStatTime());
-		    }else{
-		    	map.put("statTime", sdf1.format(d));
-		    }
-			inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
+		    //押品类型
+			if (inventoryStat.getMortgageType() !=null&&!"".equals(inventoryStat.getMortgageType())) {
+				if("1".equals(inventoryStat.getMortgageType())){
+					map.put("mortgageType", "房产");
+				}
+				if("2".equals(inventoryStat.getMortgageType())){
+					map.put("mortgageType", "机动车");
+				}
+			}	
+
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+			String inserttime = sdf2.format(d);
 			
-//				if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-//					
-//						map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
-//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
-//					}else{
-//						inventoryStatLists =inventoryStatDao.queryTimeList(map);
-//						ArrayList<String> arr = new ArrayList<String>();
-//						if(inventoryStatLists!=null){
-//							
-//							for(InventoryStat vcc:inventoryStatLists){
-//								arr.add(vcc.getStatTime());
-//							}
-//							arr = (ArrayList<String>) getNewList(arr);
-//							for(int i=0;i<arr.size();i++){
-//								String str=arr.get(i);
-//								map.put("statTime", str);
-//								inventoryStatLists =inventoryStatDao.queryInventoryStatListForExcel(map);
-//								inventoryStatLists2.addAll(inventoryStatLists);
-//							}
-//							
+			if (inventoryStat.getInTimeStart() !=null&&!"".equals(inventoryStat.getInTimeStart())) {
+				try {
+					map.put("inTimeStart", sdf1.format(sdf.parse(inventoryStat.getInTimeStart())));
+					
+					if (inventoryStat.getInTimeEnd() !=null&&!"".equals(inventoryStat.getInTimeEnd())) {
+				   //	map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
+						map.put("inTimeEnd", sdf1.format(sdf.parse(inventoryStat.getInTimeEnd())));
+						if(inventoryStat.getInTimeStart().equals(inventoryStat.getInTimeEnd()) && sdf1.format(sdf.parse(inventoryStat.getInTimeStart())).equals(inserttime)){
+						//如果开始时间等于结束时间,并且是当天时间	
+							map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getInTimeStart())));
+							if("1".equals(inventoryStat.getMortgageType())){
+								inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
+							}
+							if("2".equals(inventoryStat.getMortgageType())){
+								inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
+							}
+						}else{
+							inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTableForExcel(map);
+						}
+					}
+					
+				} catch (ParseException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+//				try {
+//					if(inserttime.equals(sdf1.format(sdf.parse(inventoryStat.getStatTime())))){
+//						
+//						//inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
+//						if("1".equals(inventoryStat.getMortgageType())){
+//							inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
+//						}else if("2".equals(inventoryStat.getMortgageType())){
+//							inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
+//						}else{
+//							inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
 //						}
+//					}else{
+//						System.out.println("aaaaaaaaaaHHH");
+//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTableForExcel(map);
 //					}
-			    
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+//		    }else{
+//		    	map.put("statTime", inserttime);
+//		    	if("1".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
+//				}
+//				if("2".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
+//				}
+		    }else{
+		    	try {
+					map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+		    	inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
+		    }
 		
 		return inventoryStatLists2;
 	}
@@ -149,4 +207,90 @@ public class InventoryStatService implements IInventoryStatService {
                }
              return list;//返回集合
              }
+
+	@Override
+	public boolean insertInventoryStat(MUOUserSession muo) {
+		List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
+		
+		InventoryStat inventoryStat = new InventoryStat();
+		InventoryStat delinventoryStat = new InventoryStat();
+		InventoryStat inventoryStat2 = new InventoryStat();
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMdd");
+		String inserttime = sdf2.format(d);
+		String delStatTime = sdf3.format(d);
+		inventoryStat.setStatTime(inserttime);
+		//保存要删除的某天的时间
+		delinventoryStat.setStatTime(delStatTime);
+		//实时获取当前的库存统计
+		inventoryStatLists2=queryInventoryStatListForExcel(muo,inventoryStat);
+		
+		//删除数据库表中当天的库存统计数据
+		inventoryStatDao.deleteNowInventoryStat(delinventoryStat);
+		
+		boolean result=false;
+		for(int i=0;i<inventoryStatLists2.size();i++){
+			Map<String, Object>map=new HashMap<String, Object>();
+			inventoryStat2=inventoryStatLists2.get(i);
+			try {
+				map.put("statTime", inventoryStat2.getStatTime());
+				map.put("mortgageType", inventoryStat2.getMortgageType());
+				map.put("warrantsType", inventoryStat2.getWarrantsType());
+				map.put("loanType", inventoryStat2.getLoanType());
+				map.put("otherType", inventoryStat2.getOtherType());
+				map.put("num", inventoryStat2.getNum());
+				result=inventoryStatDao.insertInventoryStat(map);
+			} catch (Exception e) {
+				result=false;
+				e.printStackTrace();
+			}
+		}			
+		return result;
+	}
+
+	@Override
+	public List<InventoryStat> queryInventoryStatListByTable(
+			MUOUserSession muo, InventoryStat inventoryStat, Page page) {
+            List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
+		
+		Map<String, Object>map=new HashMap<String, Object>();
+		
+		
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+		String inserttime = sdf2.format(d);
+		//统计时间
+		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
+			map.put("statTime", inventoryStat.getStatTime());
+	    }else{
+	    	map.put("statTime", inserttime);
+	    }
+				
+		inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
+		return inventoryStatLists2;
+	}
+
+	@Override
+	public List<InventoryStat> queryInventoryStatListByTableForExcel(
+			MUOUserSession muo, InventoryStat inventoryStat) {
+		 List<InventoryStat> inventoryStatLists2=new ArrayList<InventoryStat>();
+			
+			Map<String, Object>map=new HashMap<String, Object>();
+			
+			
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+			String inserttime = sdf2.format(d);
+			//统计时间
+			if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
+				map.put("statTime", inventoryStat.getStatTime());
+		    }else{
+		    	map.put("statTime", inserttime);
+		    }
+					
+			inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTableForExcel(map);
+			return inventoryStatLists2;
+	}
+
 }

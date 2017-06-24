@@ -38,8 +38,10 @@
      	<result column="OTHERWARRANTSNUMBER" property="otherWarrantsNumber" jdbcType="VARCHAR" />
      	<result column="LOAN_TYPE" property="loanType" jdbcType="VARCHAR" />	
      	<result column="BORROWER_NAME" property="borrowerName" jdbcType="VARCHAR" />
-     	
+     	<result column="BORROWER_CARDNO" property="borrowerCardNo" jdbcType="VARCHAR" />	
      	<result column="BORROWER_CONTRACTNO" property="borrowerContractno" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
+     	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
      </resultMap>
      
      <resultMap id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" >
@@ -182,6 +184,8 @@
   from t_warrants_info t left join t_mortgage_house_info o 
   on t.id=o.warrants_id
  where  t.mortgage_type='1'-->
+ 
+ <!--  
   select t.id as WARRANTS_ID,
        t.no_register_sign as no_Register_Sign,
        t.loan_type as LOAN_TYPE,
@@ -193,30 +197,17 @@
 
 		<dynamic> 
        <isNotEmpty prepend=" and" property="propertyName">
-        <!--  t.id in (select h.warrants_id
-		  from t_mortgage_house_info h
-		 where h.property_name like '%$propertyName$%' <![CDATA[ and rownum<999  ]]>
-		  ) -->
 		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.property_name like '%$propertyName$%')
         </isNotEmpty>
        <isNotEmpty prepend=" and" property="propertyCardNo">
-        <!-- t.id in (select h.warrants_id
-		  from t_mortgage_house_info h
-		 where h.property_cardno like '%$propertyCardNo$%'
-		  ) -->
 		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.property_cardno like '%$propertyCardNo$%')
         </isNotEmpty>
        <isNotEmpty prepend=" and" property="propertyNo">
-       <!--  t.id in(select h.warrants_id
-	       from t_mortgage_house_info h
-	      where h.PROPERTY_NO like '%$propertyNo$%') -->
+       
         exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and h.PROPERTY_NO like '%$propertyNo$%')
         </isNotEmpty>
        <isNotEmpty prepend=" and" property="propertyAddres">
-        <!-- t.id in (select h.warrants_id
-		  from t_mortgage_house_info h
-		 where h.property_addres like '%$propertyAddres$%'
-		  ) -->
+        
 		  exists(select * from t_mortgage_house_info h where t.id=h.warrants_id and  h.property_addres like '%$propertyAddres$%')
         </isNotEmpty>
         <isNotEmpty prepend=" and" property="noRegisterSign">
@@ -226,7 +217,20 @@
         t.id = '$warrantsId$'
         </isNotEmpty>
 		</dynamic>
- <!-- 
+		-->
+  select t.id as WARRANTS_ID,
+        MAX(t.no_register_sign) as no_Register_Sign,
+       MAX(t.loan_type) as LOAN_TYPE,
+       MAX(t.other_warrants_number) OTHERWARRANTSNUMBER,
+       MAX(t.borrower_name) as BORROWER_NAME,
+        MAX(t.BORROWER_CARDNO) as BORROWER_CARDNO,
+       MAX(t.BORROWER_CONTRACTNO) as BORROWER_CONTRACTNO,   
+       wm_concat(to_char(o.PROPERTY_NAME)) as PROPERTY_NAME,
+       wm_concat(to_char(o.PROPERTY_NO)) as PROPERTY_NO
+  from t_warrants_info t left join t_mortgage_house_info o 
+  on t.id=o.warrants_id
+ where  t.mortgage_type='1' and t.status = '1'
+  
  <isNotNull prepend="and" property="propertyName" >
          <![CDATA[
            o.property_name like '%$propertyName$%'
@@ -251,7 +255,8 @@
          <![CDATA[
              t.NO_REGISTER_SIGN = '$noRegisterSign$'
                ]]>
-      </isNotNull> -->
+      </isNotNull>
+      group by t.id
   </select>  
    <select id="queryPropertyNameAndNoList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar2">
   select t.id as WARRANTS_ID,

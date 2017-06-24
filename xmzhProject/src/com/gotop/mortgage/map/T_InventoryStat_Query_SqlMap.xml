@@ -3,8 +3,9 @@
 <sqlMap namespace="T_InventoryStat_Query_SqlMap">
 	<typeAlias alias="InventoryStat" type="com.gotop.mortgage.model.InventoryStat"/>
 	<resultMap class="InventoryStat" id="inventoryStatMap">
-		<result property="statTime" jdbcType="string" column="STATTIME"/>
-		<!-- <result property="num1" jdbcType="string" column="NUM1"/>
+	<!-- 2、 	
+	    <result property="statTime" jdbcType="string" column="STATTIME"/>
+		<result property="num1" jdbcType="string" column="NUM1"/>
 		<result property="num2" jdbcType="string" column="NUM2"/>
 		<result property="num3" jdbcType="string" column="NUM3"/>
 		<result property="num4" jdbcType="string" column="NUM4"/>
@@ -15,96 +16,65 @@
 		<result property="num9" jdbcType="string" column="NUM9"/>
 		<result property="num10" jdbcType="string" column="NUM10"/>
 		<result property="num11" jdbcType="string" column="NUM11"/>
+		<result property="num12" jdbcType="string" column="NUM12"/>
+		<result property="num13" jdbcType="string" column="NUM13"/>
+		<result property="num14" jdbcType="string" column="NUM14"/>
+		 -->
+		<!-- 
 		<result property="total1" jdbcType="string" column="TOTAL1"/>
 		<result property="total2" jdbcType="string" column="TOTAL2"/>
 		<result property="total3" jdbcType="string" column="TOTAL3"/>
 		<result property="total4" jdbcType="string" column="TOTAL4"/>
 		 -->
-		
+		<!-- 1、
 		<result property="mortgageType" jdbcType="string" column="MORTGAGE_TYPE"/>
 		<result property="otherType" jdbcType="string" column="OTHER_TYPE"/>
 		<result property="loanType" jdbcType="string" column="LOAN_TYPE"/>
+		<result property="num" jdbcType="string" column="NUM"/>	
+		 -->
+		<result property="statTime" jdbcType="string" column="STATTIME"/>
+		<result property="mortgageType" jdbcType="string" column="MORTGAGE_TYPE"/>
+		<result property="warrantsType" jdbcType="string" column="WARRANTS_TYPE"/>
+		<result property="otherType" jdbcType="string" column="OTHER_TYPE"/>
+		<result property="loanType" jdbcType="string" column="LOAN_TYPE"/>
+		<result property="num" jdbcType="string" column="NUM"/>
+	</resultMap>
+	
+	<resultMap class="InventoryStat" id="inventoryStatListByTable">
+		<!--<result property="statTime" jdbcType="string" column="STAT_TIME"/>
+	   <result property="num1" jdbcType="string" column="NUM1"/>
+		<result property="num2" jdbcType="string" column="NUM2"/>
+		<result property="num3" jdbcType="string" column="NUM3"/>
+		<result property="num4" jdbcType="string" column="NUM4"/>
+		<result property="num5" jdbcType="string" column="NUM5"/>
+		<result property="num6" jdbcType="string" column="NUM6"/>
+		<result property="num7" jdbcType="string" column="NUM7"/>
+		<result property="num8" jdbcType="string" column="NUM8"/>
+		<result property="num9" jdbcType="string" column="NUM9"/>
+		<result property="num10" jdbcType="string" column="NUM10"/>
+		<result property="num11" jdbcType="string" column="NUM11"/>
+		<result property="num12" jdbcType="string" column="NUM12"/>
+		<result property="num13" jdbcType="string" column="NUM13"/>
+		<result property="num14" jdbcType="string" column="NUM14"/>
+		 
+		<result property="total1" jdbcType="string" column="TOTAL1"/>
+		<result property="total2" jdbcType="string" column="TOTAL2"/>
+		<result property="total3" jdbcType="string" column="TOTAL3"/>
+		<result property="total4" jdbcType="string" column="TOTAL4"/>
+		 -->	
+		<result property="statTime" jdbcType="string" column="STATTIME"/>
+		<result property="mortgageType" jdbcType="string" column="MORTGAGETYPE"/>
+		<result property="warrantsType" jdbcType="string" column="WARRANTSTYPE"/>
+		<result property="otherType" jdbcType="string" column="OTHERTYPE"/>
+		<result property="loanType" jdbcType="string" column="LOANTYPE"/>
 		<result property="num" jdbcType="string" column="NUM"/>
 	</resultMap>
 	<resultMap class="InventoryStat" id="timeMap">
 		<result property="statTime" jdbcType="string" column="STATTIME"/>
 	</resultMap>
 	<!-- 库存统计  -->
-	<select id="queryInventoryStatList" parameterClass="java.util.HashMap" resultMap="inventoryStatMap">
-	   <!--  select sum(substr(T.Insert_Time,0,8)) as STATTIME,P.MORTGAGE_TYPE,P.OTHER_TYPE,P.Loan_Type,count(*) as NUM
-from T_MORTGAGE_LIST T
- left join T_WARRANTS_INFO P
- on T.Warrants_Id = P.ID
- where 1=1
-	  <isNotNull prepend="and" property="statTime" >
-         <![CDATA[
-            substr(T.INSERT_TIME,0,8) <= '$statTime$'
-               ]]>
-      </isNotNull>
- 
- group by P.MORTGAGE_TYPE,P.OTHER_TYPE,P.LOAN_TYPE
- order by STATTIME,P.MORTGAGE_TYPE,P.OTHER_TYPE,P.LOAN_TYPE
- -->
- <!-- 
-  select substr(P.Insert_Time, 0, 8) as STATTIME,
-       P.MORTGAGE_TYPE,
-       P.OTHER_TYPE,
-       P.Loan_Type,
-       count(*) as NUM
-  from T_WARRANTS_INFO P
- where 1 = 1
- 
-      <isNotNull prepend="and" property="statTime" >
-         <![CDATA[
-            substr(P.INSERT_TIME,0,8) <= '$statTime$'
-               ]]>
-      </isNotNull>
-group by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
-order by substr(P.Insert_Time, 0, 8),P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
-      -->
- <!--  没有小计和总计的    
-select 
-      
-       '$statTime$' STATTIME,  
-       P.MORTGAGE_TYPE,
-       P.OTHER_TYPE,
-       P.Loan_Type,
-       count(*) as NUM
-  from T_WARRANTS_INFO P
- where 1 = 1
- 
-      <isNotNull prepend="and" property="statTime" >
-         <![CDATA[
-            substr(P.INSERT_TIME,0,8) <= '$statTime$'
-               ]]>
-      </isNotNull>
-group by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
-order by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
--->
-<!--  select  比较完整的
-       '$statTime$' STATTIME,  
-       T.MORTGAGE_TYPE,  
-       decode(grouping(T.LOAN_TYPE) + grouping(T.NUM),
-              1,
-              '小计',
-              2,
-              '总计',
-              T.LOAN_TYPE) LOAN_TYPE,
-       T.OTHER_TYPE,
-       decode(grouping(T.NUM), 1, sum(T.NUM) || '条', T.NUM) NUM
-  from (select MAX(P.insert_time) INSERT_TIME,P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE, count(*) as NUM
-          from T_WARRANTS_INFO P
-         where 1 = 1
-         group by P.MORTGAGE_TYPE, P.LOAN_TYPE, P.OTHER_TYPE) T
- where 1 = 1
-      <isNotNull prepend="and" property="statTime" >
-         <![CDATA[
-            substr(T.INSERT_TIME,0,8) <= '$statTime$'
-               ]]>
-      </isNotNull>
- group by rollup(T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE, T.NUM)
- -->
- select '$statTime$' STATTIME,
+	<select id="queryInventoryStatListByHouse" parameterClass="java.util.HashMap" resultMap="inventoryStatMap">
+<!--  select '$statTime$' STATTIME,
        decode(grouping(T.LOAN_TYPE) + grouping(T.OTHER_TYPE),
                       1,
                       MAX(T.MORTGAGE_TYPE),
@@ -134,10 +104,789 @@ order by P.MORTGAGE_TYPE, P.OTHER_TYPE, P.LOAN_TYPE
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS((T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE),(T.LOAN_TYPE),())
+  -->
+  <!-- 
+  select '$statTime$' STATTIME,sum(case
+             when rownum = 1 then
+              num
+             else
+              0
+           end) as num1,
+       sum(case
+             when rownum = 2 then
+              num
+             else
+              0
+           end) as num2,
+       sum(case
+             when rownum = 3 then
+              num
+             else
+              0
+           end) as num3,
+       sum(case
+             when rownum = 4 then
+              num
+             else
+              0
+           end) as num4,
+       sum(case
+             when rownum = 5 then
+              num
+             else
+              0
+           end) as num5,
+       sum(case
+             when rownum = 6 then
+              num
+             else
+              0
+           end) as num6,
+       sum(case
+             when rownum = 7 then
+              num
+             else
+              0
+           end) as num7,
+       sum(case
+             when rownum = 8 then
+              num
+             else
+              0
+           end) as num8,
+       sum(case
+             when rownum = 9 then
+              num
+             else
+              0
+           end) as num9,
+       sum(case
+             when rownum = 10 then
+              num
+             else
+              0
+           end) as num10,
+       sum(case
+             when rownum = 11 then
+              num
+             else
+              0
+           end) as num11,
+       sum(case
+             when rownum = 12 then
+              num
+             else
+              0
+           end) as num12,
+       sum(case
+             when rownum = 13 then
+              num
+             else
+              0
+           end) as num13,
+       sum(case
+             when rownum = 14 then
+              num
+             else
+              0
+           end) as num14
+  from (select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                  <![CDATA[ and P.LOAN_TYPE <> '6'   ]]>
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '1'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                   where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   <![CDATA[ and P.LOAN_TYPE <> '6']]>
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '2'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   <![CDATA[ and P.LOAN_TYPE <> '6']]>
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '3'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   <![CDATA[ and P.LOAN_TYPE <> '6']]>
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE in ('1', '2', '3')
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        union all
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '6'
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '1'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '6'
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '2'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '6'
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE = '3'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       P.OTHER_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '6'
+                   and P.MORTGAGE_TYPE = '1'
+                   and P.OTHER_TYPE in ('1', '2', '3')
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE,
+                          P.OTHER_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(PROPERTY_NUMS) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       H.PROPERTY_NO,
+                       P.LOAN_TYPE,
+                       MAX(H.PROPERTY_NUMS) as PROPERTY_NUMS,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                  left join T_MORTGAGE_HOUSE_INFO H
+                    on P.ID = H.WARRANTS_ID
+                 where 1 = 1
+                   <![CDATA[ and P.LOAN_TYPE <> '6']]>
+                   and P.MORTGAGE_TYPE = '1'
+                 group by P.MORTGAGE_TYPE, H.PROPERTY_NO, P.LOAN_TYPE) T
+                  where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(PROPERTY_NUMS) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       H.PROPERTY_NO,
+                       P.LOAN_TYPE,
+                       MAX(H.PROPERTY_NUMS) as PROPERTY_NUMS,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                  left join T_MORTGAGE_HOUSE_INFO H
+                    on P.ID = H.WARRANTS_ID
+                 where 1 = 1
+                   and P.LOAN_TYPE = '6'
+                   and P.MORTGAGE_TYPE = '1'
+                 group by P.MORTGAGE_TYPE, H.PROPERTY_NO, P.LOAN_TYPE) T
+                  where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '7'
+                   and P.MORTGAGE_TYPE = '2'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       P.OTHER_WARRANTS_NUMBER,
+                       P.LOAN_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                 where 1 = 1
+                   and P.LOAN_TYPE = '8'
+                   and P.MORTGAGE_TYPE = '2'
+                 group by P.MORTGAGE_TYPE,
+                          P.OTHER_WARRANTS_NUMBER,
+                          P.LOAN_TYPE) T
+                           where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       H.CAR_REGISTERNO,
+                       P.LOAN_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                  left join T_MORTGAGE_CAR_INFO H
+                    on P.ID = H.WARRANTS_ID
+                 where 1 = 1
+                   and P.LOAN_TYPE = '7'
+                   and P.MORTGAGE_TYPE = '2'
+                 group by P.MORTGAGE_TYPE, H.CAR_REGISTERNO, P.LOAN_TYPE) T
+                  where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        union all
+        
+        select sum(T.NUM) NUM
+          from (select MAX(P.insert_time) INSERT_TIME,
+                       P.MORTGAGE_TYPE,
+                       H.CAR_REGISTERNO,
+                       P.LOAN_TYPE,
+                       count(*) as NUM
+                  from T_WARRANTS_INFO P
+                  left join T_MORTGAGE_CAR_INFO H
+                    on P.ID = H.WARRANTS_ID
+                 where 1 = 1
+                   and P.LOAN_TYPE = '8'
+                   and P.MORTGAGE_TYPE = '2'
+                 group by P.MORTGAGE_TYPE, H.CAR_REGISTERNO, P.LOAN_TYPE) T
+                  where 1=1
+			        <isNotNull prepend="and" property="statTime" >
+			         <![CDATA[
+			            substr(T.INSERT_TIME,0,8) <= '$statTime$'
+			               ]]>
+			     </isNotNull>
+        
+        ) G
+     -->
+     select 
+       '$statTime$' STATTIME,
+       '房产' as MORTGAGE_TYPE,'他项' as WARRANTS_TYPE,
+       decode(gg.loan_type, 6, '小企业', 99, '零售', '合计') loan_type,
+       case 
+         when 
+          decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '1' then '不动产抵押权' 
+         when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '2' then '不动产登记预告'
+          when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '3' then '预告登记证明'
+           else 
+            decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) 
+           end as OTHER_TYPE,
+       sum(NUMS) as NUM
+  from (select 
+               substr(t.insert_time,0,8) INSERT_TIME,
+               t.mortgage_type,
+               decode(loan_type, 6, 6, 99) loan_type,
+               OTHER_TYPE,
+               count(*) NUMS
+          from t_warrants_info t
+         where t.mortgage_type = '1' and t.status = '1'
+         GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+             gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
+ 
+ union all 
+ 
+ select 
+       '$statTime$' STATTIME,
+       '房产','产权证',
+       decode(gg.loan_type, 6, '小企业', 99, '零售', '合计') loan_type,
+       case 
+         when 
+          decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '1' then '不动产抵押权' 
+         when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '2' then '不动产登记预告'
+          when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '3' then '预告登记证明'
+           else 
+            decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) 
+           end as OTHER_TYPE,
+       sum(NUMS)
+  from (select 
+               substr(o.insert_time,0,8) INSERT_TIME,
+               o.mortgage_type,
+               decode(o.loan_type, 6, 6, 99) loan_type,
+               o.other_type,
+               nvl(sum(g.PROPERTY_NUMS),0) NUMS
+          from t_mortgage_house_info g
+          left join t_warrants_info o
+            on g.warrants_id = o.id
+         where o.mortgage_type = '1' and o.status = '1'
+         GROUP BY INSERT_TIME,o.loan_type, o.other_type, o.mortgage_type) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
  
 	</select>
-	
+	<!-- 押品类型为机动车的库存查询 -->
+	<select id="queryInventoryStatListByCar" parameterClass="java.util.HashMap" resultMap="inventoryStatMap">
+
+select 
+       '$statTime$' STATTIME,
+       '机动车' as MORTGAGE_TYPE, '他项' as WARRANTS_TYPE,
+       decode(gg.loan_type, 7, '汽车消费', 8, '经营性车辆贷款', '合计') loan_type,
+       '' OTHER_TYPE,
+       sum(NUMS) as NUM
+  from (select 
+               substr(t.insert_time,0,8) INSERT_TIME,
+               t.mortgage_type,
+               decode(loan_type, 7, 7, 8) loan_type,
+               count(*) NUMS
+          from t_warrants_info t
+         where t.mortgage_type = '2' and t.status = '1'
+         GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
+ 
+  union all 
+ 
+ select 
+       '$statTime$' STATTIME,
+       '机动车','机动车登记证',
+       decode(gg.loan_type, 7, '汽车消费', 8, '经营性车辆贷款', '合计') loan_type,
+       '' OTHER_TYPE,
+       sum(NUMS)
+  from (select 
+               substr(o.insert_time,0,8) INSERT_TIME,
+               o.mortgage_type,
+               decode(o.loan_type, 7, 7, 8) loan_type,
+               count(*) NUMS
+          from t_mortgage_house_info g
+          left join t_warrants_info o
+            on g.warrants_id = o.id
+         where o.mortgage_type = '2' and o.status = '1'
+         GROUP BY INSERT_TIME,o.loan_type, o.mortgage_type) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())
+	</select>
+	<!-- 库存查询 -->
+	<select id="queryInventoryStatList" parameterClass="java.util.HashMap" resultMap="inventoryStatMap">
+     select 
+       '$statTime$' STATTIME,
+       '房产' as MORTGAGE_TYPE,'他项' as WARRANTS_TYPE,
+       decode(gg.loan_type, 6, '小企业', 99, '零售', '合计') loan_type,
+       case 
+         when 
+          decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '1' then '不动产抵押权' 
+         when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '2' then '不动产登记预告'
+          when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '3' then '预告登记证明'
+           else 
+            decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) 
+           end as OTHER_TYPE,
+       sum(NUMS) as NUM
+  from (select 
+               substr(t.insert_time,0,8) INSERT_TIME,
+               t.mortgage_type,
+               decode(loan_type, 6, 6, 99) loan_type,
+               OTHER_TYPE,
+               count(*) NUMS
+          from t_warrants_info t
+         where t.mortgage_type = '1' and t.status = '1'
+         GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
+ 
+ union all 
+ 
+ select 
+       '$statTime$' STATTIME,
+       '房产','产权证',
+       decode(gg.loan_type, 6, '小企业', 99, '零售', '合计') loan_type,
+       case 
+         when 
+          decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '1' then '不动产抵押权' 
+         when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '2' then '不动产登记预告'
+          when 
+           decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) = '3' then '预告登记证明'
+           else 
+            decode(grouping(gg.LOAN_TYPE) + grouping(gg.OTHER_TYPE),
+              1,
+              '小计',
+              2,
+              '总计',
+              gg.OTHER_TYPE) 
+           end as OTHER_TYPE,
+       sum(NUMS)
+  from (select 
+               substr(o.insert_time,0,8) INSERT_TIME,
+               o.mortgage_type,
+               decode(o.loan_type, 6, 6, 99) loan_type,
+               o.other_type,
+               nvl(sum(g.PROPERTY_NUMS),0) NUMS
+          from t_mortgage_house_info g
+          left join t_warrants_info o
+            on g.warrants_id = o.id
+         where o.mortgage_type = '1' and o.status = '1'
+         GROUP BY INSERT_TIME,o.loan_type, o.other_type, o.mortgage_type) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
+ 
+  union all 
+ 
+select 
+       '$statTime$' STATTIME,
+       '机动车','他项',
+       decode(gg.loan_type, 7, '汽车消费', 8, '经营性车辆贷款', '合计') loan_type,
+       '' OTHER_TYPE,
+       sum(NUMS)
+  from (select 
+               substr(t.insert_time,0,8) INSERT_TIME,
+               t.mortgage_type,
+               decode(loan_type, 7, 7, 8) loan_type,
+               count(*) NUMS
+          from t_warrants_info t
+         where t.mortgage_type = '2' and t.status = '1'
+         GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
+ 
+  union all 
+ 
+ select 
+       '$statTime$' STATTIME,
+       '机动车','机动车登记证',
+       decode(gg.loan_type, 7, '汽车消费', 8, '经营性车辆贷款', '合计') loan_type,
+       '' OTHER_TYPE,
+       sum(NUMS)
+  from (select 
+               substr(o.insert_time,0,8) INSERT_TIME,
+               o.mortgage_type,
+               decode(o.loan_type, 7, 7, 8) loan_type,
+               count(*) NUMS
+          from t_mortgage_house_info g
+          left join t_warrants_info o
+            on g.warrants_id = o.id
+         where o.mortgage_type = '2' and o.status = '1'
+         GROUP BY INSERT_TIME,o.loan_type, o.mortgage_type) gg
+         where 1 = 1
+     <isNotNull prepend="and" property="statTime" >
+         <![CDATA[
+            gg.INSERT_TIME = '$statTime$'
+               ]]>
+     </isNotNull>
+ GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())
+	</select>
 	<select id="queryTime" parameterClass="java.util.HashMap" resultMap="timeMap">
 	  select  distinct substr(P.Insert_Time, 0, 8) as STATTIME from T_WARRANTS_INFO P
 	</select>
+	
+	<select id="queryInventoryStatListByTable" parameterClass="java.util.HashMap" resultMap="inventoryStatListByTable">
+	  select  * from T_WARRANTS_INVENTORY_STAT 
+	  where 1=1
+         <isNotNull prepend="and" property="inTimeStart" >
+        <![CDATA[
+           STATTIME >=  '$inTimeStart$'
+               ]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="inTimeEnd" >
+        <![CDATA[
+           STATTIME <=  '$inTimeEnd$'
+               ]]>
+      </isNotNull>
+	     <isNotNull prepend="and" property="mortgageType" >
+	     <![CDATA[
+	         MORTGAGETYPE = '$mortgageType$'
+	               ]]>
+	     </isNotNull>
+	</select>
+	
+	<insert id="insertInventoryStat" parameterClass="java.util.HashMap">
+    <![CDATA[
+		insert into T_WARRANTS_INVENTORY_STAT 
+		(statid,STATTIME, 
+			MORTGAGETYPE,
+			WARRANTSTYPE,
+			LOANTYPE,
+			OTHERTYPE,
+			NUM
+			)
+		values
+			(
+			seq_T_WARRANTS_INVENTORY_STAT.nextval,
+			to_char(sysdate,'yyyyMMdd'),
+			'$mortgageType$',
+			'$warrantsType$',  
+			'$loanType$', 
+			'$otherType$',
+			'$num$'	
+			)
+		
+	]]>
+	</insert>
+	<!-- 用于定时库存统计前的已存当天数据的删除 -->
+  <delete id="deleteNowInventoryStat" parameterClass="com.gotop.mortgage.model.InventoryStat">
+        delete from T_WARRANTS_INVENTORY_STAT where STATTIME='$statTime$'
+  </delete>
 </sqlMap>

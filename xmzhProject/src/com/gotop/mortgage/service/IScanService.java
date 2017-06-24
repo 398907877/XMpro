@@ -31,4 +31,7 @@ public interface IScanService extends Serializable {
 	 * @return
 	 */
 	Scan queryScan(Scan scan);
+	
+	//插入日志
+	public boolean insertMortgageOperatingLog(String operatingType,Long userID,String inserttime,String remark) throws Exception;
 }

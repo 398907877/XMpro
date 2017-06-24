@@ -82,10 +82,17 @@
 			method="{1}">
 			<result name="queryInventoryStatList">
 				/jsp/mortgage/inventory_Stat.jsp
-			</result>
-			<result name="QueryInventoryStatForExcel" >
-                /jsp/mortgage/inventory_Stat_excel.jsp
+			</result> 
+            <result name="inventoryStatTimeReport" >
+                /jsp/mortgage/inventoryStatTimeReport.jsp
+            </result> 
+            <result name="QueryHouseInventoryStatForExcel" >
+                /jsp/mortgage/inventory_Stat_House_excel.jsp
             </result>  
+            <result name="QueryCarInventoryStatForExcel" >
+                /jsp/mortgage/inventory_Stat_Car_excel.jsp
+            </result>  
+            
 		</action>
 		<action name="mortgageReserveHouseAction_*" class="mortgageReserveHouseAction"
 			method="{1}">

@@ -68,21 +68,22 @@ from(
                         a.BORROWER_NUMS,
                         d.ORG_CODE,
                         d.MANGER_NAME,
-                        to_char(round(sysdate -
+                        ceil(to_char(round(sysdate -
                                       to_date(a.INSERT_TIME,
                                               'yyyy-mm-dd hh24:mi:ss'),
                                       2),
-                                'fm99990.0099') as ALREADYLOANDAY,
+                                'fm99990.0099')) as ALREADYLOANDAY,
                         a.REMARK
                    
              from T_MORTGAGE_LIST       a
                left join T_MORTGAGE_HOUSE_INFO b on a.warrants_id = b.warrants_id and a.operating_id = b.id
                left join T_WARRANTS_INFO       d on a.warrants_id =d.id 
-             where (a.BORROWER_LOG ='1' or  a.BORROWER_LOG is null) and a.OPERATING_MATTERS = '1'
+             where a.BORROWER_LOG ='1' and a.OPERATING_MATTERS = '1'
+                     and a.TYPE = '1'
           ) t
           ) p
   where 1 = 1
- ]]>   
+ ]]>   <!-- (a.BORROWER_LOG ='1' or  a.BORROWER_LOG is null) -->
        <isNotNull prepend="and" property="mortgageType" >
          <![CDATA[
             p.MORTGAGE_TYPE = '$mortgageType$'
@@ -155,7 +156,8 @@ from(
                      on a.warrants_id = c.warrants_id and a.operating_id = c.id
                    left join T_WARRANTS_INFO d
                      on a.warrants_id = d.id
-                  where (a.BORROWER_LOG ='1' or  a.BORROWER_LOG is null) and a.OPERATING_MATTERS = '1'
+                  where a.BORROWER_LOG ='1'  and a.OPERATING_MATTERS = '1'
+                  and a.TYPE = '1'
                   ) t) p
   where 1 = 1
     ]]>   

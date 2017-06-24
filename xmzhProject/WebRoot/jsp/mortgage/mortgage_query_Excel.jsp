@@ -24,10 +24,12 @@
 	 -->
 	 <th height="34" width="100" align="center" class="form_label">他项权限号</th>
 		<th height="34" width="100" align="center" class="form_label">贷款种类</th>
-		<th height="34" width="100" align="center" class="form_label">借款人(借款人姓名 ： 借款人身份证号)</th>
+		<th height="34" width="100" align="center" class="form_label">借款人姓名 </th>
+		<th height="34" width="100" align="center" class="form_label"> 借款人身份证号</th>
 		<th height="34" width="100" align="center" class="form_label">借款合同号</th>
-		<th height="34" width="200" align="center" class="form_label">产权人</th>
+		<th height="34" width="200" align="center" class="form_label">产权人姓名</th>
 		<th height="34" width="100" align="center" class="form_label">产权证号码</th>
+		<th height="34" width="100" align="center" class="form_label">补登记标志</th>
 	</tr>
 	<l:iterate property="mortgageReserveHouseList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
@@ -58,6 +60,9 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="borrowerName"/>
 			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			    <b:write iterateId="id1" property="borrowerCardNo"/>
+			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="borrowerContractno"/>
 			  </td>
@@ -66,6 +71,9 @@
 			  </td>
 			    <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="propertyNo"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			   <d:write iterateId="id1" property="noRegisterSign" dictTypeId="MORTGAG_REGISTER"/>
 			  </td>
 			</tr>
 			</l:iterate>

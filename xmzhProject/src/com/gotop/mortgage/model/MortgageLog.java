@@ -14,6 +14,9 @@ public class MortgageLog implements Serializable{
 	private String operateTime;
 //	操作类型
 	private String operateType;
+//	库存序号
+	private String projectNumber;
+	
 //	操作开始时间
 	private String airTime;
 //	操作结束时间
@@ -73,6 +76,12 @@ public class MortgageLog implements Serializable{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getProjectNumber() {
+		return projectNumber;
+	}
+	public void setProjectNumber(String projectNumber) {
+		this.projectNumber = projectNumber;
 	}
 
 	

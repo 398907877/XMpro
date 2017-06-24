@@ -101,17 +101,24 @@
 								贷款种类
 						  </th>
 						   <th nowrap="nowrap">
-								借款人(借款人姓名 ： 借款人身份证号)
+								借款人姓名  
+						  </th>
+						  <th nowrap="nowrap">
+								借款人身份证号
 						  </th>
 						   <th nowrap="nowrap">
 								借款合同号
 						  </th>
 						   <th nowrap="nowrap">
-								产权人
+								产权人姓名
 						  </th>
 						   <th nowrap="nowrap">
 								产权证号码
 						  </th>
+						   <th nowrap="nowrap">
+								  补登记标志
+						  </th>
+						
 		</tr>
 		<w:radioGroup id="group1">
 			<l:iterate property="mortgageReserveHouseList" id="id1">
@@ -143,24 +150,30 @@
 			  </td>	
 			   -->	
 			   <td style="text-align: center;width: 10%">
-			    	<nobr><b:write iterateId="id1" property="otherWarrantsNumber"/></nobr>
+			    	<b:write iterateId="id1" property="otherWarrantsNumber"/>
 			  </td>
 			   
 			  <td style="text-align: center;width: 10%">
-			    	<nobr><d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/></nobr>
+			    	<d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/>
 			  </td>
 			   <td style="text-align: center;width: 10%">
-			    	<nobr><b:write iterateId="id1" property="borrowerName"/></nobr>
+			    	<b:write iterateId="id1" property="borrowerName"/>
 			  </td>	
+			  <td style="text-align: center;width: 10%">
+			    	<b:write iterateId="id1" property="borrowerCardNo"/>
+			  </td>
 			   <td style="text-align: center;width: 10%">
-			    	<nobr><b:write iterateId="id1" property="borrowerContractno"/></nobr>
+			    	<b:write iterateId="id1" property="borrowerContractno"/>
 			  </td>	
 			 
 			  <td style="text-align: center;width: 10%">
-			    	<nobr><b:write iterateId="id1" property="propertyName"/></nobr>
+			    	<b:write iterateId="id1" property="propertyName"/>
 			  </td>	
 			   <td style="text-align: center;width: 10%">
-			    	<nobr><b:write iterateId="id1" property="propertyNo"/></nobr>
+			    	<b:write iterateId="id1" property="propertyNo"/>
+			  </td>	
+			  <td style="text-align: center;width: 10%">
+			    	<d:write iterateId="id1" property="noRegisterSign" dictTypeId="MORTGAG_REGISTER"/>
 			  </td>	
 			</tr>
 			</l:iterate>

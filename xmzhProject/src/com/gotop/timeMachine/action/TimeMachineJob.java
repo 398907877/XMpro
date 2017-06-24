@@ -119,7 +119,39 @@ public class TimeMachineJob   {
 		
 	}
 	
-	
+	private void inventoryStatTimeReport() {
+		// TODO Auto-generated method stub
+		
+		try {
+			
+			System.out.println("+++++++++++++ 库存统计   START+++++++++++");
+			
+		Object bean = SpringContextUtil.getBean("inventoryStatQueryAction"); 
+		
+		Class<?> classes = Class.forName("com.gotop.mortgage.action.InventoryStatQueryAction");
+
+		// 目前只有值，需要加入加入 @ 注解的 值
+
+		Method thismethod = classes.getDeclaredMethod("inventoryStatTimeReport");
+
+		// bean
+		String  back = (String) thismethod.invoke(bean);
+		
+		
+		
+		
+		System.out.println("+++++++++++++ 库存统计   END+++++++++++");
+		
+		
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+		
+	}
 	
 	
 	

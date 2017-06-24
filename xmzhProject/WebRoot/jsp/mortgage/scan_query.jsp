@@ -28,7 +28,7 @@
 		            
 		            <td class="form_label" align="right" width="20%">扫描件种类：</td>
 					<td width="30%">
-					    <d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType"  style="width:150px"></d:select>
+					    <d:select id="scanType" dictTypeId="SCAN_TYPE" name="scan.scanType" property="scan.scanType"  style="width:150px" nullLabel="全部"></d:select>
 		            </td>				
 				</tr>
 				<tr class="form_bottom">

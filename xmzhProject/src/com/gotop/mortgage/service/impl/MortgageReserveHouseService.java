@@ -1,5 +1,6 @@
 package com.gotop.mortgage.service.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,10 +26,10 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			MortgageReserveHouseCar mortgageReserveHouseCar, Page page){
 		List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
 		
-		List<MortgageReserveHouseCar> mortgageReserveList2 =new ArrayList<MortgageReserveHouseCar>();
+		//List<MortgageReserveHouseCar> mortgageReserveList2 =new ArrayList<MortgageReserveHouseCar>();
 		Map<String, Object>map=new HashMap<String, Object>();
 		
-		MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
+		//MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
 		if(mortgageReserveHouseCar.getPropertyName()!=null && !"".equals(mortgageReserveHouseCar.getPropertyName())){
 			map.put("propertyName", mortgageReserveHouseCar.getPropertyName());			
 		}
@@ -49,28 +50,28 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		
 		mortgageReserveList=mortgageReserveHouseDao.queryMortgageReserveList(map, page);
 		
-		for(int i=0;i<mortgageReserveList.size();i++){
-			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
-			  System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
-			  Map<String, Object>map2=new HashMap<String, Object>();
-			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
-						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
-						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
-						String names="";
-					     String nos="";
-					     for(int j=0;j<mortgageReserveList2.size();j++){
-					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
-					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
-					     }
-					     if(!"".equals(names) && !"".equals(nos)){
-					    	 names=names.substring(0, names.length()-1);
-						     nos=nos.substring(0, nos.length()-1);
-					     }
-					     
-					     mortgageReserveList.get(i).setPropertyName(names);
-					     mortgageReserveList.get(i).setPropertyNo(nos);
-			     }	     
-		}
+//		for(int i=0;i<mortgageReserveList.size();i++){
+//			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
+//			//  System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
+//			  Map<String, Object>map2=new HashMap<String, Object>();
+//			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
+//						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
+//						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
+//						String names="";
+//					     String nos="";
+//					     for(int j=0;j<mortgageReserveList2.size();j++){
+//					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
+//					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
+//					     }
+//					     if(!"".equals(names) && !"".equals(nos)){
+//					    	 names=names.substring(0, names.length()-1);
+//						     nos=nos.substring(0, nos.length()-1);
+//					     }
+//					     
+//					     mortgageReserveList.get(i).setPropertyName(names);
+//					     mortgageReserveList.get(i).setPropertyNo(nos);
+//			     }	     
+//		}
 		return mortgageReserveList;
 
 	}
@@ -120,27 +121,27 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		}
     	mortgageReserveList=mortgageReserveHouseDao.queryMortgageReserveHouseForExcel(map);
     	
-    	for(int i=0;i<mortgageReserveList.size();i++){
-			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
-			  System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
-			  Map<String, Object>map2=new HashMap<String, Object>();
-			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
-						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
-						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
-						String names="";
-					     String nos="";
-					     for(int j=0;j<mortgageReserveList2.size();j++){
-					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
-					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
-					     }
-					     if(!"".equals(names) && !"".equals(nos)){
-					    	 names=names.substring(0, names.length()-1);
-						     nos=nos.substring(0, nos.length()-1);
-					     }
-					     mortgageReserveList.get(i).setPropertyName(names);
-					     mortgageReserveList.get(i).setPropertyNo(nos);
-			     }	     
-		}
+//    	for(int i=0;i<mortgageReserveList.size();i++){
+//			  mortgageReserveHouseCar2=mortgageReserveList.get(i);
+//			 // System.out.println("aaaaaaaa:"+mortgageReserveHouseCar2.getWarrantsId());
+//			  Map<String, Object>map2=new HashMap<String, Object>();
+//			     if(mortgageReserveHouseCar2.getWarrantsId()!=null && !"".equals(mortgageReserveHouseCar2.getWarrantsId())){
+//						map2.put("warrantsId", mortgageReserveHouseCar2.getWarrantsId());
+//						mortgageReserveList2=mortgageReserveHouseDao.queryPropertyNameAndNoList(map2);
+//						String names="";
+//					     String nos="";
+//					     for(int j=0;j<mortgageReserveList2.size();j++){
+//					    	 names+=mortgageReserveList2.get(j).getPropertyName()+",";
+//					    	 nos+=mortgageReserveList2.get(j).getPropertyNo()+",";
+//					     }
+//					     if(!"".equals(names) && !"".equals(nos)){
+//					    	 names=names.substring(0, names.length()-1);
+//						     nos=nos.substring(0, nos.length()-1);
+//					     }
+//					     mortgageReserveList.get(i).setPropertyName(names);
+//					     mortgageReserveList.get(i).setPropertyNo(nos);
+//			     }	     
+//		}
     	
 		return mortgageReserveList;
 	}
@@ -276,7 +277,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd");
 		String operatingTime=sdf1.format(date);
 		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
@@ -284,18 +285,24 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
+			try {
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
-				map.put("operatingTime", mortgageList.getOperatingTime());		
+				
+					map.put("operatingTime", sdf1.format(sdf2.parse(mortgageList.getOperatingTime())));
+					
 			}//else {
 			//	map.put("operatingTime", operatingTime);
 			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
-				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+				map.put("operatingEndTime",sdf1.format(sdf2.parse(mortgageList.getOperatingEndTime())));
 			}//else {
 			//	map.put("operatingEndTime", operatingEndTime);
 			//}	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}	
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -325,7 +332,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd");
 		String operatingTime=sdf1.format(date);
 		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
@@ -333,18 +340,24 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
+			try {
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
-				map.put("operatingTime", mortgageList.getOperatingTime());		
+				
+					map.put("operatingTime", sdf1.format(sdf2.parse(mortgageList.getOperatingTime())));
+						
 			}//else {
 			//	map.put("operatingTime", operatingTime);
 			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
-				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+				map.put("operatingEndTime", sdf1.format(sdf2.parse(mortgageList.getOperatingEndTime())));
 			}//else {
 			//	map.put("operatingEndTime", operatingEndTime);
 			//}	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -373,7 +386,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Date date = new Date();
 		
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd");
 		String operatingTime=sdf1.format(date);
 		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
@@ -381,18 +394,24 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
+			try {
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
-				map.put("operatingTime", mortgageList.getOperatingTime());		
+				
+					map.put("operatingTime", sdf1.format(sdf2.parse(mortgageList.getOperatingTime())));
+						
 			}//else {
 			//	map.put("operatingTime", operatingTime);
 			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
-				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+				map.put("operatingEndTime", sdf1.format(sdf2.parse(mortgageList.getOperatingEndTime())));
 			}//else {
 			//	map.put("operatingEndTime", operatingEndTime);
-			//}	
+			//}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());
@@ -420,7 +439,7 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
     	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd");
 		String operatingTime=sdf1.format(date);
 		String operatingEndTime=sdf2.format(date);
 		if (mortgageList!=null) {
@@ -428,18 +447,24 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			&&!"".equals(mortgageList.getMortgageType())) {
 				map.put("mortgageType", mortgageList.getMortgageType());
 			}
+			try {
 			if (mortgageList.getOperatingTime()!=null
 					&&!"".equals(mortgageList.getOperatingTime())) {
-				map.put("operatingTime", mortgageList.getOperatingTime());		
+				map.put("operatingTime", sdf1.format(sdf2.parse(mortgageList.getOperatingTime())));		
 			}//else {
 			//	map.put("operatingTime", operatingTime);
 			//}
 			if (mortgageList.getOperatingEndTime()!=null
 					&&!"".equals(mortgageList.getOperatingEndTime())) {
-				map.put("operatingEndTime", mortgageList.getOperatingEndTime());
+				
+					map.put("operatingEndTime", sdf1.format(sdf2.parse(mortgageList.getOperatingEndTime())));
+				
 			}//else {
 			//	map.put("operatingEndTime", operatingEndTime);
 			//}	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			if (mortgageList.getOperatingType()!=null
 			&&!"".equals(mortgageList.getOperatingType())) {
 				map.put("operatingType", mortgageList.getOperatingType());

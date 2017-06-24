@@ -17,10 +17,27 @@
 function clears(){
 	$("#scanType").val("");
 	//清空JSP页面时间控件显示的值
-	$("#inTimeStart_input").val("");
-	$("#inTimeEnd_input").val("");
+	//$("#inTimeStart_input").val("");	
+	//$("#inTimeEnd_input").val("");
+
+	
+	$id("operationTime").value="";
+	
+	$("#operationTime_input").val("");
 	//清空传入后台的时间控件的值
 	//$name("upload").value = "";
+	$name("scan.operationTime").value = "";
+
+	// 删除tabtest里所有行
+	var tb=document.getElementById("tabtest");
+	var i="";
+	var rowNum=tb.rows.length;
+    for (i=0;i<rowNum;i++)
+    {
+        tb.deleteRow(i);
+        rowNum=rowNum-1;
+        i=i-1;
+    };
 	
 }
 
@@ -55,10 +72,20 @@ function addFile(tabid,varName){
 	 * 功能：图片上传
 	 */
 	function scanImport(){
- 
 		
+		if($id("operationTime").value =="" ||$id("operationTime").value==null){
+			alert('请选择操作日期');
+			return;
+
+		}
+		if( $name("upload") ==null){
+			alert('请选择你要导入的扫描件');
+			return;
+		}
 		var frm = $id("importFormForType");
 		var excelFile = $name("upload").value;
+		
+		
 		//alert(excelFile);
 		if (excelFile=="") {
 			alert('请选择你要导入的扫描件');
@@ -68,6 +95,8 @@ function addFile(tabid,varName){
 		excelFile = excelFile.substr(excelFile.lastIndexOf("\\") + 1);
 		frm.action = "/mortgage/scanManagementAction_addScan.action";
 		frm.submit();
+
+		clears();
 	}
 
 </script>

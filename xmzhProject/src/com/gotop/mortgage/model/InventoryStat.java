@@ -19,34 +19,45 @@ public class InventoryStat implements Serializable{
 	private String loanType;
 // 数量
 	private String num;
+
+//权证种类
+	private String warrantsType;
+//	统计日期 -开始时间
+	private String inTimeStart;
+//	统计日期 -截止时间
+	private String inTimeEnd;	
 	
 	
-	
-	
-//  不动产抵押权-数量
+//  房产-他项-零售-不动产抵押权-数量
 	private String num1;
-//	不动产登记预告-数量
+//	房产-他项-零售-不动产登记预告-数量
 	private String num2;
-//	预告登记证明-数量
+//	房产-他项-零售-预告登记证明-数量
 	private String num3;
-//	小计-数量
+//	房产-他项-零售-小计-数量
 	private String num4;
-//	小企业--数量
+//	小企业-不动产抵押权-数量
 	private String num5;	
-//  零售-数量
+//  小企业-不动产登记预告-数量
 	private String num6;
-//  产权证-小企业-数量
+//  小企业-预告登记证明-数量
 	private String num7;
-//  他项-汽车消费-数量
+//  小企业-小计-数量
 	private String num8;
-//	他项-经营性车辆-数量
+//	房产-产权证-零售
 	private String num9;
-//	机动车登记证-汽车消费-数量
+//	房产-产权证-小企业
 	private String num10;
-//	机动车登记证-经营性车辆-数量
+//	机动车-他项-汽车消费
 	private String num11;
+//	机动车-他项-经营性消费
+	private String num12;	
+//	机动车-机动车登记证-汽车消费
+	private String num13;	
+//	机动车-机动车登记证-经营性消费
+	private String num14;	
 //	房产-他项--合计
-	private String total1;	
+	private String total1;
 //	房产-产权证--合计
 	private String total2;	
 //	机动车-他项--合计
@@ -150,6 +161,27 @@ public class InventoryStat implements Serializable{
 	public void setNum11(String num11) {
 		this.num11 = num11;
 	}
+	
+	
+	public String getNum12() {
+		return num12;
+	}
+	public void setNum12(String num12) {
+		this.num12 = num12;
+	}
+	public String getNum13() {
+		return num13;
+	}
+	public void setNum13(String num13) {
+		this.num13 = num13;
+	}
+	public String getNum14() {
+		return num14;
+	}
+	public void setNum14(String num14) {
+		this.num14 = num14;
+	}
+	
 	public String getTotal1() {
 		return total1;
 	}
@@ -179,6 +211,24 @@ public class InventoryStat implements Serializable{
 	}
 	public void setStatTime(String statTime) {
 		this.statTime = statTime;
+	}
+	public String getWarrantsType() {
+		return warrantsType;
+	}
+	public void setWarrantsType(String warrantsType) {
+		this.warrantsType = warrantsType;
+	}
+	public String getInTimeStart() {
+		return inTimeStart;
+	}
+	public void setInTimeStart(String inTimeStart) {
+		this.inTimeStart = inTimeStart;
+	}
+	public String getInTimeEnd() {
+		return inTimeEnd;
+	}
+	public void setInTimeEnd(String inTimeEnd) {
+		this.inTimeEnd = inTimeEnd;
 	}	
 	
 	

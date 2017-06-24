@@ -19,8 +19,12 @@
 					<td width="30%">
 					    <d:select id="operateType" dictTypeId="MORTGAGE_OPERATING_TYPE" name="mortgageLog.operateType" property="mortgageLog.operateType" nullLabel="全部" style="width:150px"></d:select>
 		            </td>
-                     <td class="form_label" align="right" width="20%">操作日期：</td>
-					<td width="30%">
+		            <td class="form_label" align="right" >库存序号：</td>
+					<td>
+					 <h:text id="projectNumber"  property="mortgageLog.projectNumber" name="mortgageLog.projectNumber"  style="width:130px;" />	
+					</td>
+                     <td class="form_label" align="right">操作日期：</td>
+					<td>
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="airTime" name="mortgageLog.airTime" 
 					property="mortgageLog.airTime" /> 
@@ -29,7 +33,7 @@
 					property="mortgageLog.stopTime" /></td>				
 				</tr>
 				<tr class="form_bottom">
-						<td colspan="4" class="form_bottom">
+						<td colspan="6" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
 					        <h:text id="pageLeng" size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 					        <input type="hidden" name="page.begin" value="0">
@@ -75,7 +79,7 @@
 							<th nowrap="nowrap">
 								备注
 							</th>
-						     -->
+						      --> 
 						</tr>
                            <l:iterate property="mortgageLogList" id="id1">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
@@ -99,7 +103,7 @@
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id1" property="remark" />
 								</td>
-								-->
+								 -->
 							</tr>
 						</l:iterate>
 							<tr>
@@ -143,6 +147,7 @@
 		function clears(){
 
 			$id("operateType").value="";
+			$id("projectNumber").value="";
 			$("#operateType").val("");
 		
 			//清空JSP页面时间控件显示的值
@@ -174,6 +179,7 @@
     				var stopTime = $id("stopTime").value;
     				var options=$("#operateType option:selected");
     				var operateType=options.val();
+    				var projectNumber = $id("projectNumber").value;
     				
     				var strUrl = "/mortgage/mortgageLogQueryAction_mortgageLogExcel.action?";
                      if(airTime!=null){
@@ -185,6 +191,9 @@
         				} 
     				if(operateType!=null){
     					strUrl=strUrl+"&mortgageLog.operateType="+operateType;
+        				} 	
+    				if(projectNumber!=null){
+    					strUrl=strUrl+"&mortgageLog.projectNumber="+projectNumber;
         				} 				
     				
     				window.location.href=strUrl;

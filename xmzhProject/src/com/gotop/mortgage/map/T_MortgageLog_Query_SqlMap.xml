@@ -10,7 +10,7 @@
 		
 		<result property="operateContent" jdbcType="string" column="OPERATECONTENT"/>
 		
-		<!-- <result property="remark" jdbcType="string" column="OPERATING_REMARK"/> -->
+		<result property="remark" jdbcType="string" column="OPERATING_REMARK"/>
 	</resultMap>
 	
 	<!-- 操作日志查询  -->
@@ -44,7 +44,8 @@
                   to_char(b.OTHER_TYPE)
                end || ' ' ||-->
                 '库存序号:' || b.PROJECT_NUMBER || '  ' || '他项权证号:' ||
-               b.OTHER_WARRANTS_NUMBER || '  ' || '借款人姓名:' || b.BORROWER_NAME || '  ' || '借款人身份证:' || b.BORROWER_CARDNO  as OPERATECONTENT
+               b.OTHER_WARRANTS_NUMBER || '  ' || '借款人姓名:' || b.BORROWER_NAME || '  ' || '借款人身份证:' || b.BORROWER_CARDNO  as OPERATECONTENT,
+               a.OPERATING_REMARK as OPERATING_REMARK
           from T_MORTGAGE_LOG a
           LEFT JOIN T_WARRANTS_INFO b
             on a.operating_mortgag_id = b.id
@@ -62,6 +63,12 @@
            substr(a.OPERATING_TIME,0,8)  <=  '$stopTime$'
                ]]>
       </isNotNull>
+      <isNotNull prepend="and" property="projectNumber" >
+        <![CDATA[
+           b.PROJECT_NUMBER  like  '%$projectNumber$%'
+               ]]>
+      </isNotNull>
+      
       ) T,
        OM_EMPLOYEE                 E,
        OM_EMPORG                   A,

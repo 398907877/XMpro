@@ -50,6 +50,10 @@ public class MortgageReserveHouseCar {
 	 * */
 	private String borrowerName;
 	/*
+	 * 借款人身份证号
+	 * */
+	private String borrowerCardNo;
+	/*
 	 * 库存状态
 	 * (1：正常，2：注销)
 	 * */
@@ -229,6 +233,12 @@ public class MortgageReserveHouseCar {
 	}
 	public void setBorrowerContractno(String borrowerContractno) {
 		this.borrowerContractno = borrowerContractno;
+	}
+	public String getBorrowerCardNo() {
+		return borrowerCardNo;
+	}
+	public void setBorrowerCardNo(String borrowerCardNo) {
+		this.borrowerCardNo = borrowerCardNo;
 	}
 
 	

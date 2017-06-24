@@ -48,16 +48,16 @@ public class ScanService implements IScanService,Serializable {
 	public int insertScan(Scan scan,MUOUserSession muo) throws Exception{
 		HashMap<String, String>hmp=new HashMap<String, String>();
 		
-		Date d=new Date();
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
-		String inserttime = sdf2.format(d);
-		
-		//上传时间
-		//scan.setOperationTime(inserttime);
-		//如果上传时间为空，默认当前时间
-		if(scan.getOperationTime() ==null || "".equals(scan.getOperationTime())){
-			scan.setOperationTime(inserttime);
-		}
+//		Date d=new Date();
+//		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+//		String inserttime = sdf2.format(d);
+//		
+//		//上传时间
+//		//scan.setOperationTime(inserttime);
+//		//如果上传时间为空，默认当前时间
+//		if(scan.getOperationTime() ==null || "".equals(scan.getOperationTime())){
+//			scan.setOperationTime(inserttime);
+//		}
 		
 		boolean result=false;
 		int count=0;
@@ -66,18 +66,18 @@ public class ScanService implements IScanService,Serializable {
 		 count = this.getScanDao().insertScan(scan);
 		
 		
-		//获取当前用户id
-		Long userID=muo.getEmpid();
-		
-		//插入成功
-		if(count > 0){
-			String operatingType="6";//扫描件上传
-			//插入日志
-			result=insertMortgageOperatingLog(operatingType, userID, inserttime, "扫描件上传");
-			if(!result){
-				count=0;
-			}
-		}
+//		//获取当前用户id
+//		Long userID=muo.getEmpid();
+//		
+//		//插入成功
+//		if(count > 0){
+//			String operatingType="6";//扫描件上传
+//			//插入日志
+//			result=insertMortgageOperatingLog(operatingType, userID, inserttime, "扫描件上传");
+//			if(!result){
+//				count=0;
+//			}
+//		}
 		} catch (Exception e) {
 			count=0;
 			e.printStackTrace();

@@ -37,7 +37,7 @@
 			    	<b:write iterateId="id1" property="checkTime"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
-			    <b:write iterateId="id1" property="otherType" />
+			    <d:write iterateId="id1" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="repertoryID"/>

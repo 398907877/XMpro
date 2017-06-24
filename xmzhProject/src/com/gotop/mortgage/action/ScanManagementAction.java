@@ -96,7 +96,12 @@ public class ScanManagementAction extends BaseAction {
 
 		MUOUserSession muo=getCurrentOnlineUser();
 		Long userID=muo.getEmpid();
+		//当前时间
+		Date d=new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+		String inserttime = sdf2.format(d);
 		
+		boolean result=false;
 		StringBuffer buffer = new StringBuffer(100);
 		try{
 			//String warrantsID= scan.getWarrantsID();
@@ -108,20 +113,35 @@ public class ScanManagementAction extends BaseAction {
 			}else{
 			String sucess="";
 			String fail="";
+			
+			String fileNames="";
 			//循环上传文件
 			for(int i=0;i<upload.size();i++){
 			this.uploadFileToServer(uploadFileName.get(i),upload.get(i));//上传文件到upload文件夹
+			//this.getScan().setOperationTime(inserttime);
 			int count = this.getScanService().insertScan(this.getScan(),muo);
+			
+			
+			//插入成功
 			if(count > 0){
 				sucess+=uploadFileName.get(i)+" ";			
-			
+				fileNames+=uploadFileName.get(i)+" ";
 			}else{
 				fail+=uploadFileName.get(i)+" ";
 				break;
 			}			
 		}	
 			if(fail==""){
-				buffer.append("alert('扫描件上传成功!');");
+				buffer.append("alert('扫描件上传成功!');");			
+				//上传时间
+				//scan.setOperationTime(inserttime);
+				
+//				if(scan.getOperationTime() ==null || "".equals(scan.getOperationTime())){
+//					scan.setOperationTime(inserttime);
+//				}
+//					String operatingType="6";//扫描件上传
+//					//插入日志
+//					result=this.getScanService().insertMortgageOperatingLog(operatingType, userID, inserttime, fileNames);
 			}else{
 				buffer.append("扫描件[ "+fail+" ]上传失败);");
 				

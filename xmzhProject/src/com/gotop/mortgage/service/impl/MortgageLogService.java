@@ -40,6 +40,10 @@ public class MortgageLogService implements IMortgageLogService {
 		if (mortgageLog.getOperateType() !=null&&!"".equals(mortgageLog.getOperateType())) {
 			map.put("operateType", mortgageLog.getOperateType());
 	    }
+		//库存序号
+		if(!"".equals(mortgageLog.getProjectNumber())&&mortgageLog.getProjectNumber()!=null){
+			map.put("projectNumber", mortgageLog.getProjectNumber());
+		}
 		//操作开始日期
 		if (mortgageLog.getAirTime() !=null&&!"".equals(mortgageLog.getAirTime())) {
 				map.put("airTime", mortgageLog.getAirTime());
@@ -70,9 +74,13 @@ public class MortgageLogService implements IMortgageLogService {
 		String orgcode = muo.getOrgcode();
 		
 		//操作类型
-				if (mortgageLog.getOperateType() !=null&&!"".equals(mortgageLog.getOperateType())) {
-					map.put("operateType", mortgageLog.getOperateType());
-			    }
+			if (mortgageLog.getOperateType() !=null&&!"".equals(mortgageLog.getOperateType())) {
+				map.put("operateType", mortgageLog.getOperateType());
+		    }
+		//库存序号
+			if(!"".equals(mortgageLog.getProjectNumber())&&mortgageLog.getProjectNumber()!=null){
+				map.put("projectNumber", mortgageLog.getProjectNumber());
+			}
 		try {
 				//操作开始日期
 				if (mortgageLog.getAirTime() !=null&&!"".equals(mortgageLog.getAirTime())) {
