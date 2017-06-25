@@ -7,6 +7,7 @@ import com.gotop.mortgage.model.MortgageList;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveHouseCar;
+import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
 
 public interface IMortgageReserveHouseService {
@@ -15,7 +16,7 @@ public interface IMortgageReserveHouseService {
      * 库存查询房产信息
      * @abatorgenerated
      */
-	List<MortgageReserveHouseCar> queryHouseStockList(MortgageReserveHouseCar mortgageReserveHouse, Page page);
+	List<MortgageReserveHouseCar> queryHouseStockList(MUOUserSession muo,MortgageReserveHouseCar mortgageReserveHouse, Page page);
 	/**
      * 更新单条记录，通过主键
      * @abatorgenerated
@@ -25,7 +26,7 @@ public interface IMortgageReserveHouseService {
      * 库存查询房产导出功能
      * @abatorgenerated
      */
-    List<MortgageReserveHouseCar> queryMortgageHouseForExcel(MortgageReserveHouseCar mortgageReserveHouse);
+    List<MortgageReserveHouseCar> queryMortgageHouseForExcel(MUOUserSession muo,MortgageReserveHouseCar mortgageReserveHouse);
 
     /**
      * 插入单条记录

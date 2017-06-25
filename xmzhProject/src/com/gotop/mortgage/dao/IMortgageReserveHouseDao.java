@@ -105,4 +105,6 @@ public interface IMortgageReserveHouseDao {
 	 * @return
 	 */
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutForExcel(Map<String, Object> map);
+	
+	List byOrgcodeFindParentorgid(String orgcode);
 }

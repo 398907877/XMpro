@@ -256,6 +256,12 @@
              t.NO_REGISTER_SIGN = '$noRegisterSign$'
                ]]>
       </isNotNull>
+      <isNotNull prepend="and" property="PARENTORGID">
+			t.ORG_CODE in (select orgcode
+			  from om_organization o
+			 start with orgid = '$PARENTORGID$'
+			connect by prior orgid = parentorgid)
+      </isNotNull>
       group by t.id
   </select>  
    <select id="queryPropertyNameAndNoList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar2">
@@ -788,6 +794,17 @@ select T.*, E.EMPNAME as OPERATING_USERID
 	 WHERE T.OPERATING_USERID2 = E.EMPID
  
  </select>
-
+<select id="byOrgcodeFindParentorgid"   parameterClass="java.lang.String" resultClass="java.util.HashMap">
+	<![CDATA[
+	select o.*,
+	case when parentorgid = 5425 and orgname <> '一类支行'
+	  then 'yes'
+	    else 'no'
+	      end as is_dep
+	 from om_organization o
+  where o.orgcode = '$orgcode$'
+	
+	   ]]>
+	</select>
 
 </sqlMap>

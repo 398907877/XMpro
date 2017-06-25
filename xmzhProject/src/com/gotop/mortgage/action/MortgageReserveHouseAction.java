@@ -12,6 +12,7 @@ import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveHouseCar;
 import com.gotop.mortgage.service.IMortgageReserveHouseService;
 import com.gotop.util.Struts2Utils;
+import com.gotop.vo.system.MUOUserSession;
 
 public class MortgageReserveHouseAction extends BaseAction{
 	private MortgageReserveHouseCar mortgageReserveHouseCar;
@@ -24,7 +25,8 @@ public class MortgageReserveHouseAction extends BaseAction{
 	private String result_flag;
 	//库存查询
 	public String queryMortgageHouseReserveList() throws Exception{
-		mortgageReserveHouseList=mortgageReserveHouseService.queryHouseStockList(mortgageReserveHouseCar, this.getPage());
+		MUOUserSession muo = getCurrentOnlineUser();
+		mortgageReserveHouseList=mortgageReserveHouseService.queryHouseStockList(muo,mortgageReserveHouseCar, this.getPage());
 		this.setPage(page);
 		this.setMortgageReserveHouseList(mortgageReserveHouseList);
 		return "mortgageReserveHouseList";
@@ -36,9 +38,9 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String toRegisterSignConfirm() {
 		//System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
-		
+		MUOUserSession muo = getCurrentOnlineUser();
 		mortgageReserveHouseCar.setWarrantsId(mortgageReserveHouseCar.getWarrantsId());
-		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(mortgageReserveHouseCar);
+		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(muo,mortgageReserveHouseCar);
 		this.setMortgageReserveHouseCar(mortgageReserveHouseList.get(0));
 		return "RegisterSignConfirm";
 	}
@@ -79,7 +81,8 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * @return
 	 */
 	public String queryMortgageQueryForExcel(){
-		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(mortgageReserveHouseCar);
+		MUOUserSession muo = getCurrentOnlineUser();
+		mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(muo,mortgageReserveHouseCar);
 		this.setMortgageReserveHouseList(mortgageReserveHouseList);
 		return "queryMortgageQueryForExcel";
 	}
