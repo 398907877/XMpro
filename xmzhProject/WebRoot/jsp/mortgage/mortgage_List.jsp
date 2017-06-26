@@ -33,9 +33,13 @@
 					<h:text property="mortgageReserve.borrowerName" id="borrowerName" style="width:130px;" />	
 				   </td>
 				   <td  class="form_label" align="right" >借款人身份证号：</td>
-				   <td  colspan="3">
+				   <td >
 					<h:text property="mortgageReserve.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
 				   </td>
+					<td class="form_label" align="right">他项类型：</td>
+					<td >
+						<d:select id="otherType" dictTypeId="OTHER_TYPE_VIEW" property="mortgageReserve.otherType"  nullLabel="全部"  ></d:select>
+					</td>
 				</tr>
 				<tbody id="tj_fc">
 				  <tr>
@@ -61,7 +65,7 @@
 					<td>
 					<h:text property="mortgageReserveHouse.propertyAddres" id="propertyAddres" style="width:130px;" />	
 					</td>	
-					 <td class="form_label" align="right" >保管期限：</td>
+					 <td class="form_label" align="right" >贷款种类：</td>
 					<td>
 					<d:select id="loanType" dictTypeId="LOAN_TYPE_HOUSE" property="mortgageReserve.loanType" nullLabel="全部" ></d:select>
 					</td>
@@ -157,7 +161,10 @@
 								他项权证号
 						  </th>
 						   <th nowrap="nowrap">
-								借款人(姓名:身份证号)
+								借款人姓名
+						  </th>
+						   <th nowrap="nowrap">
+								借款人身份证号
 						  </th>
 						   <th nowrap="nowrap">
 								库存状态
@@ -184,7 +191,10 @@
 									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="BORROWERNAME" />:<b:write iterateId="id2" property="BORROWERCARDNO" />
+									<b:write iterateId="id2" property="BORROWERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="BORROWERCARDNO" />
 								</td>
 								<td nowrap="nowrap"> 
 									<d:write  iterateId="id2" dictTypeId="MORTGAG_STATUS" property="STATUS"/>
@@ -412,8 +422,8 @@
 	  		}else{
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
-			    var url="/mortgage/mortgageReserveAction_toUpdColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存变更明细');
+			    var url="/mortgage/mortgageReserveAction_toDetailColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
+			    showModalCenter(url, mortgageType,callBackFunc, 1000, 500, '库存变更明细');
 			  }
 		}   
              

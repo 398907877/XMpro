@@ -7,6 +7,7 @@ import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
+import com.gotop.mortgage.model.MortgageReserveUpdLog;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.vo.system.MUOUserSession;
 import com.primeton.utils.Page;
@@ -165,6 +166,14 @@ public interface IMortgageReserveService {
 	 */
 	public MortgageReserveOut showBorrowerNums(MortgageReserveOut mortgageReserveOut);
 	
+	
+	/**
+	 * 生成权证信息状态详情
+	 * @param mortgageReserve
+	 * @return
+	 */
+	public MortgageReserveRes showStatus(MortgageReserveOut mortgageReserveOut);
+	
 
 	/**
 	 * 出入库信息详情
@@ -173,4 +182,11 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	List<MortgageReserveRes> queryOutInList(MortgageReserveRes mortgageReserveRes);
+	
+	/**
+	 * 查询房产抵押品详情
+	 * @param id
+	 * @return
+	 */
+	List<MortgageReserveUpdLog> queryDetailColl(MortgageReserveRes mortgageReserveRes,Page page);
 }

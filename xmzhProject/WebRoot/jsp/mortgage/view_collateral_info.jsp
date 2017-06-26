@@ -245,6 +245,7 @@
 		            <th nowrap="nowrap">库存序号</th>
 		            <th nowrap="nowrap">产权证号</th>
 		            <th nowrap="nowrap">产权人姓名</th>
+		            <th nowrap="nowrap">交接人</th>
 		            <th nowrap="nowrap">操作人员</th>
 		        </tr>
 		       <l:iterate property="mortgageReserveList" id="id7" >
@@ -266,6 +267,9 @@
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <b:write iterateId="id7" property="PROPERTYNAME" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id7" property="NEXTNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <b:write  iterateId="id7" property="EMPNAME" />
@@ -290,6 +294,7 @@
 		            <th nowrap="nowrap">库存序号</th>
 		            <th nowrap="nowrap">机动车登记号</th>
 		            <th nowrap="nowrap">车主姓名</th>
+		            <th nowrap="nowrap">交接人</th>
 		            <th nowrap="nowrap">操作人员</th>
 		        </tr>
 		       <l:iterate property="mortgageReserveList" id="id8" >
@@ -312,6 +317,9 @@
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <b:write iterateId="id8" property="CARNAME" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id8" property="NEXTNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <b:write  iterateId="id8" property="EMPNAME" />

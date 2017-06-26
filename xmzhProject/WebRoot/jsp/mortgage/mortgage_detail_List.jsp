@@ -7,25 +7,20 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>押品浏览列表</title>
+		<title>库存变更浏览列表</title>
 	</head>
 	<body topmargin="0" leftmargin="0">
-	<h:form name="query_form"	action="/mortgage/mortgageReserveAction_toOutInColl.action" method="post">
+	<h:form name="query_form"	action="/mortgage/mortgageReserveAction_queryDetailColl.action" method="post">
 		                	<h:hidden id="mortgageType" property="mortgageReserveRes.mortgageType"/>
 		                	<h:hidden id="warrantsId" property="mortgageReserveRes.warrantsId"/>
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
-			<!-- 
 				<tr>
-				   <td class="form_label" align="right" >借款人姓名：</td>
-				   <td>
-					<h:text property="mortgageReserveRes.borrowerName" id="borrowerName" style="width:130px;" />	
-				   </td>
-				   <td  class="form_label" align="right" >借款人身份证号：</td>
-				   <td  colspan="3">
-					<h:text property="mortgageReserveRes.borrowerCardNo" id="borrowerCardNo" style="width:130px;" />	
-				   </td>
-				</tr> -->
+					<td class="form_label" align="right" width="20%">操作员工姓名：</td>
+					<td colspan="1"  width="30%">
+						<h:text id="empName" property="mortgageReserveRes.empName"   />
+					</td>
+				</tr>
 				<tr class="form_bottom">
 						<td colspan="6" class="form_bottom">
 						    <b:message key="l_display_per_page"></b:message>
@@ -38,11 +33,11 @@
 			</table>
 		</w:panel>
 	</h:form>
-	<DIV class="divList">
-			<w:panel id="panel" width="100%" title="库存浏览列表">
+	<DIV class="divList" style="overflow:auto;width:100%; height: 380;">
+			<w:panel id="panel" width="100%" title="库存变更浏览列表">
 				<viewlist id="e2c61865-3b56-470d-bd42-fff792fb9493">
 				<h:form name="page_form"
-					action="/mortgage/mortgageReserveAction_toOutInColl.action" method="post">
+					action="/mortgage/mortgageReserveAction_queryDetailColl.action" method="post">
 			 <h:hiddendata property="mortgageReserveRes"/>  
 
             <h:hidden property="page.begin"/>
@@ -52,11 +47,56 @@
 					<table align="center" border="0" width="100%" class="EOS_table">
 					    <tbody id="list_fc">
 						<tr>
-						<th align="center" nowrap="nowrap">
-								<b:message key="l_select"></b:message>
-							</th>
 						  <th nowrap="nowrap">
+								押品类型
+						  </th>
+						   <th nowrap="nowrap">
+								他项类型
+						  </th>
+						   <th nowrap="nowrap">
+								操作人员
+						  </th>
+						   <th nowrap="nowrap">
 								库存序号
+						  </th>
+						   <th nowrap="nowrap">
+								他项权证号
+						  </th>
+						   <th nowrap="nowrap">
+								他项登记日期
+						  </th>
+						   <th nowrap="nowrap">
+								借款人姓名
+						  </th>
+						   <th nowrap="nowrap">
+								借款人身份证
+						  </th>
+						   <th nowrap="nowrap">
+								经办机构
+						  </th>
+						   <th nowrap="nowrap">
+								经办客户经理
+						  </th>
+						   <th nowrap="nowrap">
+								贷款种类
+						  </th>
+						   <th nowrap="nowrap">
+								借款合同号
+						  </th>
+						   <th nowrap="nowrap">
+								贷款年限
+						  </th>
+						   <th nowrap="nowrap">
+								入账价值
+						  </th>
+						   <th nowrap="nowrap">
+								封包编号
+						  </th>
+						   <th nowrap="nowrap">
+								交接人
+						  </th>
+						   <th nowrap="nowrap">
+								购房合同号
 						  </th>
 						   <th nowrap="nowrap">
 								产权证号
@@ -68,39 +108,85 @@
 								产权人身份证
 						  </th>
 						   <th nowrap="nowrap">
+								产权地址
+						  </th>
+						   <th nowrap="nowrap">
 								产权证本数
 						  </th>
 						   <th nowrap="nowrap">
-								产权地址
+								产权证填发日期
 						  </th>
 						  <w:radioGroup id="group1">
-						  <l:iterate property="mortgageReserveList" id="id2">
+						  <l:iterate property="mortgageReserveListLog" id="id2">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
-							  
-								<td align="center" nowrap="nowrap" width="5%">
-								<w:rowRadio>
-										<h:param name='id' iterateId='id2' property='WARRANTSID' />
-										<h:param name='operatingId' iterateId='id2' property='HOUSEID' />
-										<h:param name='logRemark' iterateId='id2' property='PROPERTYNUMS' />
-									</w:rowRadio>
+							   <td nowrap="nowrap"> 
+									<d:write  iterateId="id2" dictTypeId="MORTGAGE_RESERVE_TYPE" property="MORTGAGETYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROJECTNUMBER" />
+									<d:write  iterateId="id2" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROPERTYNO" />
+									<b:write iterateId="id2" property="EMPNAME"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROPERTYNAME" />
+									<b:write iterateId="id2" property="PROJECTNUMBER"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROPERTYCARDNO" />
+									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROPERTYNUMS" />
+									<b:write iterateId="id2" property="OTHERWARRANTSDATE" />
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id2" property="PROPERTYADDRES" />
+									<b:write iterateId="id2" property="BORROWERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="BORROWERCARDNO" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="ORGNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="MANGERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<d:write  iterateId="id2" dictTypeId="LOAN_TYPE_VIEW" property="LOANTYPE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="BORROWERCONTRACTNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="LOANYEARS"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="RECORDVALUE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PACKETNUMBER"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="NEXTNAME"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PURCHASENUMBER"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYNAME"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYCARDNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYADDRES"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYNUMS"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYDATE"/>
 								</td>
 							</tr>
 						</l:iterate>
@@ -109,14 +195,56 @@
 					</tbody>
 					<tbody id="list_jdc" style="display:none">
 						<tr>
-						<th align="center" nowrap="nowrap">
-								<b:message key="l_select"></b:message>
-							</th>
 						  <th nowrap="nowrap">
+								押品类型
+						  </th>
+						   <th nowrap="nowrap">
+								他项类型
+						  </th>
+						   <th nowrap="nowrap">
+								操作人员
+						  </th>
+						   <th nowrap="nowrap">
 								库存序号
 						  </th>
 						   <th nowrap="nowrap">
-								机动车登记号
+								他项权证号
+						  </th>
+						   <th nowrap="nowrap">
+								他项登记日期
+						  </th>
+						   <th nowrap="nowrap">
+								借款人姓名
+						  </th>
+						   <th nowrap="nowrap">
+								借款人身份证
+						  </th>
+						   <th nowrap="nowrap">
+								经办机构
+						  </th>
+						   <th nowrap="nowrap">
+								经办客户经理
+						  </th>
+						   <th nowrap="nowrap">
+								贷款种类
+						  </th>
+						   <th nowrap="nowrap">
+								借款合同号
+						  </th>
+						   <th nowrap="nowrap">
+								贷款年限
+						  </th>
+						   <th nowrap="nowrap">
+								入账价值
+						  </th>
+						   <th nowrap="nowrap">
+								封包编号
+						  </th>
+						   <th nowrap="nowrap">
+								交接人
+						  </th>
+						   <th nowrap="nowrap">
+								购房合同号
 						  </th>
 						   <th nowrap="nowrap">
 								车主姓名
@@ -124,28 +252,101 @@
 						   <th nowrap="nowrap">
 								车主身份证
 						  </th>
+						   <th nowrap="nowrap">
+								机动车登记号
+						  </th>
+						   <th nowrap="nowrap">
+								车牌号
+						  </th>
+						   <th nowrap="nowrap">
+								车架号
+						  </th>
+						   <th nowrap="nowrap">
+								购车发票号
+						  </th>
+						   <th nowrap="nowrap">
+								完税证明号
+						  </th>
+						   <th nowrap="nowrap">
+								保单号
+						  </th>
 						  <w:radioGroup id="group2">
-						  <l:iterate property="mortgageReserveList" id="id3">
+						  <l:iterate property="mortgageReserveListLog" id="id3">
 							<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />">
-							  
-								<td align="center" nowrap="nowrap" width="5%">
-								<w:rowRadio>
-										<h:param name='id' iterateId='id3' property='WARRANTSID' />
-										<h:param name='operatingId' iterateId='id3' property='CARID' />
-										<h:param name='logRemark' iterateId='id3' property='CARREGISTERNO' />
-									</w:rowRadio>
+								 <td nowrap="nowrap"> 
+									<d:write  iterateId="id3" dictTypeId="MORTGAGE_RESERVE_TYPE" property="MORTGAGETYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id3" property="PROJECTNUMBER" />
+									<d:write  iterateId="id3" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id3" property="CARREGISTERNO" />
+									<b:write iterateId="id3" property="EMPNAME"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id3" property="CARNAME" />
+									<b:write iterateId="id3" property="PROJECTNUMBER"/>
 								</td>
 								<td nowrap="nowrap"> 
-									<b:write iterateId="id3" property="CARCARDNO" />
+									<b:write iterateId="id3" property="OTHERWARRANTSNUMBER" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="OTHERWARRANTSDATE" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="BORROWERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="BORROWERCARDNO" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="ORGNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="MANGERNAME" />
+								</td>
+								<td nowrap="nowrap"> 
+									<d:write  iterateId="id3" dictTypeId="LOAN_TYPE_VIEW" property="LOANTYPE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="BORROWERCONTRACTNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="LOANYEARS"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="RECORDVALUE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="PACKETNUMBER"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="NEXTNAME"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="PURCHASENUMBER"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARNAME"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARCARDNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARREGISTERNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARFRAMENO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARINVOICENO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARDUESNO"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="CARSAFENO"/>
 								</td>
 							</tr>
 						</l:iterate>
@@ -153,18 +354,6 @@
 						</tr>
 					</tbody>
               <td colspan="23" class="command_sort_area">
-              	<div class="h3"> 
-							<input type="button" class="button" value="出库处理" onclick="outIn_coll(1);"/>
-							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
-							<input type="button" class="button" value="返回" onclick="back_coll();" />
-		                	<h:hidden id="inBorrowerNums" property="mortgageReserveRes.inBorrowerNums"/>
-		                	<h:hidden id="inBorrowerLogInfo" property="mortgageReserveRes.inBorrowerLogInfo"/>
-		                	<h:hidden id="insertTime" property="mortgageReserveRes.insertTime"/>
-		                	<h:hidden id="operatingMatters" property="mortgageReserveRes.operatingMatters"/>
-		                	<h:hidden id="status" property="mortgageReserveRes.status"/>
-		                	<h:hidden id="afterMortgageStatus" property="mortgageReserveRes.afterMortgageStatus"/>
-					
-				</div>
 							
                 <div class="h4">
 	                <l:equal property="page.isCount" targetValue="true" >
@@ -204,8 +393,7 @@
         };
 		//清空
 		function clears(){
-          $id("borrowerName").value="";
-          $id("borrowerCardNo").value="";
+          $id("empName").value="";
 		}
 		
 		
@@ -237,59 +425,30 @@
     			var id = row.getParam("id");
     			var operatingId=row.getParam("operatingId");
     			var logRemark=row.getParam("logRemark");
+    			var logRemark;
     			var textName="出库处理";
-    			//if(param==1&&mortgageType==1){
-    			 // logRemark=row.getParam("logRemark");
-    			  //if(logRemark<=0){
-    			  // alert("产权证本数未超过1本,不进行出库处理");
-    			   //return;
-    			  //}
-    			//}
-    			showStatus(id);
-    			var testParam=2;
-    			if(param==2){
-    			  testParam=1;
+    			if(param==1&&mortgageType==1){
+    			  logRemark=row.getParam("logRemark");
+    			  if(logRemark<=0){
+    			   alert("产权证本数未超过1本,不进行出库处理");
+    			   return;
+    			  }
     			}
-    		    showBorrowerNums(id,operatingId,testParam);
     			var inBorrowerNums="";
     			var inBorrowerLogInfo="";
     			var insertTime="";
-    			var signType="";
-    			var status=$("#status").val();
-    			var afterMortgageStatus=$("#afterMortgageStatus").val();
-    			//如果系统状态是正常的话,则只显示外借
-    			if(status==1){
-    			   signType=1;
-    			}else{
-    			  signType=3;
-    			  if(afterMortgageStatus==3&&param==2){
-    			    alert("抵押品已领取,不能进行入库处理");
-    			    return;
-    			  }
-    			  if(afterMortgageStatus==1&&param==2){
-    			    alert("抵押品不在库,不能进行入库处理");
-    			    return;
-    			  }
-    			  if(param==1&&inBorrowerLogInfo==2&&afterMortgageStatus==2&&status==2){
-    			    signType=2;
-    			  }
-    			alert(signType);
-    			}
-    			
-			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId;
-			    url=url+"&mortgageReserveOut.outInType="+param+"&mortgageReserveOut.logRemark="+logRemark+"&mortgageReserveOut.signType="+signType;
-			   
+			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param+"&mortgageReserveOut.logRemark="+logRemark;
 			  
     			if(!checkIsLog(id,operatingId,param)){
     			  return;
     			}
     			if(param==2){
     			    textName="入库处理";
+    			    showBorrowerNums(id,operatingId,param);
     			    inBorrowerNums=$("#inBorrowerNums").val();
     			    inBorrowerLogInfo=$("#inBorrowerLogInfo").val();
     			    insertTime=$("#insertTime").val();
-    			    operatingMatters=$("#operatingMatters").val();
-			        url=url+"&mortgageReserveOut.inBorrowerNums="+inBorrowerNums+"&mortgageReserveOut.inBorrowerLogInfo="+inBorrowerLogInfo+"&mortgageReserveOut.insertTime="+insertTime+"&mortgageReserveOut.operatingMatters="+operatingMatters;
+			        url=url+"&mortgageReserveOut.inBorrowerNums="+inBorrowerNums+"&mortgageReserveOut.inBorrowerLogInfo="+inBorrowerLogInfo+"&mortgageReserveOut.insertTime="+insertTime;
     			  
     			}
 			    showModalCenter(url,param,callBackFunc, 700, 300, textName);
@@ -342,36 +501,10 @@
 				      dataType: "json",
 				      success: function (data) {
 					        var obj= eval(data);
-					        if(obj!=null){
-						       $("#inBorrowerNums").val(obj.inBorrowerNums);
-						       $("#inBorrowerLogInfo").val(obj.inBorrowerLogInfo);
-						       $("#insertTime").val(obj.insertTime);
-						       $("#operatingMatters").val(obj.operatingMatters);
-						       flag=true;
-					        }
-					      
-				      }
-				}); 
-			return flag;	
-		}
-		
-		//查询系统状态,用于判断出入库操作事项
-		function showStatus(id){
-		 var flag=false;
-			$.ajax({
-				      url: "/mortgage/mortgageReserveAction_showStatus.action",
-				      async: false,
-				      type: 'post',
-				      data: "mortgageReserveOut.warrantsId="+id,
-				      timeout: 60000,
-				      dataType: "json",
-				      success: function (data) {
-					        var obj= eval(data);
-					        if(obj!=null){
-						       $("#status").val(obj.status);
-						       $("#afterMortgageStatus").val(obj.afterMortgageStatus);
-						       flag=true;
-					        }
+					       $("#inBorrowerNums").val(obj.inBorrowerNums);
+					       $("#inBorrowerLogInfo").val(obj.inBorrowerLogInfo);
+					       $("#insertTime").val(obj.insertTime);
+					       flag=true;
 					      
 				      }
 				}); 

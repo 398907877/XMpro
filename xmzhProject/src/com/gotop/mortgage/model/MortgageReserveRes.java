@@ -21,6 +21,14 @@ public class MortgageReserveRes {
 	private String empName;
 	private String operatingMatters;
 	private String outInType;
+	private String afterMortgageStatus;
+	
+	public String getAfterMortgageStatus() {
+		return afterMortgageStatus;
+	}
+	public void setAfterMortgageStatus(String afterMortgageStatus) {
+		this.afterMortgageStatus = afterMortgageStatus;
+	}
 	public String getWarrantsId() {
 		return warrantsId;
 	}

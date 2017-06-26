@@ -50,8 +50,15 @@ public class MortgageReserveUpdLog {
 	private String carInvoiceNo;
 	private String carDuesNo;
 	private String carSafeNo;
+	private String empName;
 	private String RN;
 	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	public String getOrgName() {
 		return orgName;
 	}

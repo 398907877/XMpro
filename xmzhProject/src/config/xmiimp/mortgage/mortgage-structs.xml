@@ -28,6 +28,9 @@
 	      <result name="view_collateral_info" >
 	        /jsp/mortgage/view_collateral_info.jsp
 	      </result>
+	      <result name="mortgage_detail_List" >
+	        /jsp/mortgage/mortgage_detail_List.jsp
+	      </result>
 	      <result name="upd_collateral_info" >
 	        /jsp/mortgage/upd_collateral_info.jsp
 	      </result>

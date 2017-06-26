@@ -14,6 +14,7 @@ import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
+import com.gotop.mortgage.model.MortgageReserveUpdLog;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.mortgage.service.IMortgageReserveService;
 import com.gotop.util.Struts2Utils;
@@ -31,6 +32,7 @@ public class MortgageReserveAction extends BaseAction {
 	private List<MortgageReserve> mortgageReserveListInfo=new ArrayList<MortgageReserve>();
 	private List<MortgageReserveHouse> mortgageReserveListHouseInfo=new ArrayList<MortgageReserveHouse>();
 	private List<MortgageReserveCar> mortgageReserveListCarInfo=new ArrayList<MortgageReserveCar>();
+	private List<MortgageReserveUpdLog> mortgageReserveListLog=new ArrayList<MortgageReserveUpdLog>();
 	  
     private File[] files;
     private String[] filesFileName;
@@ -114,6 +116,13 @@ public class MortgageReserveAction extends BaseAction {
 		this.mortgageReserveListCarInfo = mortgageReserveListCarInfo;
 	}
 	
+	public List<MortgageReserveUpdLog> getMortgageReserveListLog() {
+		return mortgageReserveListLog;
+	}
+	public void setMortgageReserveListLog(
+			List<MortgageReserveUpdLog> mortgageReserveListLog) {
+		this.mortgageReserveListLog = mortgageReserveListLog;
+	}
 	public List<WarrantsFile> getFileResourceTables() {
 		return fileResourceTables;
 	}
@@ -195,14 +204,30 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toInsertOutInColl(){
-		if("2".equals(mortgageReserveOut.getOutInType())){
-			
-		}
 		return "out_in_mortgageReserve";
 	}
 	
 	
 
+	/**
+	 * 跳转到 库存变更明细页面
+	 * @return
+	 */
+	public String toDetailColl(){
+		return "mortgage_detail_List";
+	}
+	
+	
+	public String queryDetailColl(){
+		System.out.println("11:"+mortgageReserveRes.getWarrantsId()+",="+mortgageReserveRes.getMortgageType());
+		 mortgageReserveListLog=mortgageReserveService.queryDetailColl(mortgageReserveRes,this.getPage());
+		 this.setPage(page);
+	     this.setMortgageReserveListLog(mortgageReserveListLog);
+		return "mortgage_detail_List";
+		
+	}
+	
+	
 
 	/**
 	 * 跳转到 添加押品页面
@@ -576,6 +601,25 @@ public class MortgageReserveAction extends BaseAction {
 			mortgageReserveOut=mortgageReserveService.showBorrowerNums(mortgageReserveOut);
 			if(mortgageReserve!=null){
 				JSONObject jsonObject = JSONObject.fromObject(mortgageReserveOut);
+				res=jsonObject.toString();
+			}
+		} catch (Exception e) {
+			res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
+			e.printStackTrace();
+		}
+		Struts2Utils.renderText(res);
+		
+	}
+	
+	/**
+	 * 显示系统状态信息
+	 */
+	public void showStatus() throws Exception{
+		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统操作!\"}";
+		try {
+			mortgageReserveRes=mortgageReserveService.showStatus(mortgageReserveOut);
+			if(mortgageReserveRes!=null){
+				JSONObject jsonObject = JSONObject.fromObject(mortgageReserveRes);
 				res=jsonObject.toString();
 			}
 		} catch (Exception e) {

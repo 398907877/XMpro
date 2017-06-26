@@ -259,6 +259,9 @@
 	 <isNotNull prepend="and" property="mortgageType" >
 	  t.mortgage_type='$mortgageType$'
 	 </isNotNull>
+	 <isNotNull prepend="and" property="otherType" >
+	  t.other_type='$otherType$'
+	 </isNotNull>
 	 <isNotNull prepend="and" property="projectNumber" >
 	  t.project_number='$projectNumber$'
 	 </isNotNull>
@@ -493,16 +496,17 @@
     <!--Bean方式返回全表-->
     <result column="INBORROWERNUMS" property="inBorrowerNums" jdbcType="VARCHAR" />
     <result column="INBORROWERLOGINFO" property="inBorrowerLogInfo" jdbcType="VARCHAR" />   
-    <result column="INSERTTIME" property="insertTime" jdbcType="VARCHAR" />                       
+    <result column="INSERTTIME" property="insertTime" jdbcType="VARCHAR" />  
+    <result column="OPERATINGMATTERS" property="operatingMatters" jdbcType="VARCHAR" />                                      
   </resultMap> 
 	
 	<!-- 入库时显示外借信息-->
 	<select id="showBorrowerNums"   parameterClass="java.util.HashMap" resultMap="tShowBorrowerNums">
     select t.borrower_nums INBORROWERNUMS,t.operating_matters INBORROWERLOGINFO
-    ,to_char(to_date(t.insert_time,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd') INSERTTIME
+    ,to_char(to_date(t.insert_time,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd') INSERTTIME,t.operating_matters OPERATINGMATTERS
 	  from t_mortgage_list t 
 	 where 1=1
-	 and t.type='1'
+	 and t.type='$outInType$'
 	 <isNotNull prepend="and" property="warrantsId" >
 	 t.warrants_id = '$warrantsId$'
 	 </isNotNull>
@@ -519,6 +523,24 @@
 	 g.operating_id = '$operatingId$'
 	 </isNotNull>
 	   )
+		
+	</select>
+	
+	
+	
+	<resultMap id="tShowStatus" class="com.gotop.mortgage.model.MortgageReserveRes" >
+    <!--Bean方式返回全表-->
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="AFTERMORTGAGESTATUS" property="afterMortgageStatus" jdbcType="VARCHAR" />                               
+  </resultMap> 
+	<!-- 系统状态信息-->
+	<select id="showStatus"   parameterClass="java.util.HashMap" resultMap="tShowStatus">
+      select t.status STATUS, t.after_mortgage_status AFTERMORTGAGESTATUS from t_warrants_info t
+	 where 1=1
+	 <isNotNull prepend="and" property="warrantsId" >
+	 t.id = '$warrantsId$'
+	 </isNotNull>
+	   
 		
 	</select>
 	
@@ -1315,29 +1337,30 @@ select o.id,
 	<!-- 查询出入库信息 -->
   	<select id="queryOutInHouseList"  parameterClass="java.util.HashMap"   resultClass="java.util.HashMap">
   	
-  	select gg.operating_time OPERATINGTIME,
-       gg.type TYPE,
+  	select gg.operating_time    OPERATINGTIME,
+       gg.type              TYPE,
        gg.operating_matters OPERATINGMATTERS,
-       gg.project_number PROJECTNUMBER,
-       gg.property_no PROPERTYNO,
-       gg.property_name PROPERTYNAME,
-       ee.empname EMPNAME from
-(select d.id AS id,
-       d.warrants_id,
-       to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
-               'yyyy-mm-dd hh24:mi') AS operating_time,
-       d.type AS type,
-       d.operating_matters AS operating_matters,
-       c.project_number AS project_number,
-       b.property_no,
-       b.property_name,
-       b.property_cardno,
-       b.property_addres,
-       b.property_nums,
-       a.operating_userid ,
-       c.next_name AS next_name,
-       d.REMARK AS operating_remark
-  from T_MORTGAGE_LIST d
+       gg.project_number    PROJECTNUMBER,
+       gg.property_no       PROPERTYNO,
+       gg.next_name         NEXTNAME,
+       gg.property_name     PROPERTYNAME,
+       ee.empname           EMPNAME
+  from (select d.id ,
+               d.warrants_id,
+               to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
+                      'yyyy-mm-dd hh24:mi')  operating_time,
+               d.type AS type,
+               d.operating_matters,
+               c.project_number,
+               b.property_no,
+               b.property_name,
+               b.property_cardno,
+               b.property_addres,
+               b.property_nums,
+               a.operating_userid,
+               d.borrower_next_name  next_name,
+               d.REMARK  operating_remark
+          from T_MORTGAGE_LIST d
   left join T_MORTGAGE_HOUSE_INFO b
     on d.warrants_id = b.warrants_id
    and d.OPERATING_ID = b.ID
@@ -1345,9 +1368,11 @@ select o.id,
     on d.warrants_id = c.id
   left join T_MORTGAGE_LOG a
     on d.warrants_id = a.OPERATING_MORTGAG_ID
-   and d.INSERT_TIME = a.OPERATING_TIME)gg,
+   and d.INSERT_TIME = a.OPERATING_TIME)gg
+   left join 
    om_employee ee
-   where gg.operating_userid=ee.empid
+   on gg.operating_userid=ee.empid
+   where 1=1
 	 <isNotNull prepend="and" property="id" >
 	   gg.warrants_id='$id$'
 	 </isNotNull>
@@ -1365,19 +1390,20 @@ select o.id,
        gg.project_number PROJECTNUMBER,
        gg.car_no CARNO,
        gg.car_name CARNAME,
+       gg.next_name NEXTNAME,
        ee.empname EMPNAME 
         from
-(select d.id AS id,
+(select d.id,
        d.warrants_id,
        to_char(TO_DATE(a.operating_time, 'yyyyMMddhh24miss'),
-               'yyyy-mm-dd hh24:mi') AS operating_time,
+               'yyyy-mm-dd hh24:mi')  operating_time,
        d.type,
        d.operating_matters,
        c.project_number,
        b.car_no,
        b.car_name,
        a.operating_userid ,
-       c.next_name,
+       d.borrower_next_name  next_name,
        d.REMARK
   from T_MORTGAGE_LIST d
   left join T_MORTGAGE_CAR_INFO b
@@ -1387,9 +1413,11 @@ select o.id,
     on d.warrants_id = c.id
   left join T_MORTGAGE_LOG a
     on d.warrants_id = a.OPERATING_MORTGAG_ID
-   and d.INSERT_TIME = a.OPERATING_TIME)gg,
+   and d.INSERT_TIME = a.OPERATING_TIME)gg
+   left join 
    om_employee ee
-   where gg.operating_userid=ee.empid
+   on gg.operating_userid=ee.empid
+   where 1=1
 	 <isNotNull prepend="and" property="id" >
 	   gg.warrants_id='$id$'
 	 </isNotNull>
@@ -1398,4 +1426,65 @@ select o.id,
   	</select>
 	
 	
+	
+	<!-- 查询库存变更信息日志 -->
+  	<select id="queryDetailColl"  parameterClass="java.util.HashMap"   resultClass="java.util.HashMap">
+  	select
+       kk.mortgage_type MORTGAGETYPE,
+       kk.other_type OTHERTYPE,
+       kk.empname EMPNAME, 
+       kk.project_number PROJECTNUMBER,
+       kk.other_warrants_number OTHERWARRANTSNUMBER,
+       kk.other_warrants_date OTHERWARRANTSDATE,
+       kk.borrower_name BORROWERNAME,
+       kk.borrower_cardno BORROWERCARDNO,
+       kk.ORG_NAME ORGNAME,
+       kk.manger_name MANGERNAME,
+       kk.loan_type LOANTYPE,
+       kk.borrower_contractno BORROWERCONTRACTNO,
+       kk.loan_years LOANYEARS,
+       kk.record_value RECORDVALUE,
+       kk.packet_number PACKETNUMBER,
+       kk.next_name NEXTNAME,
+       kk.purchase_number PURCHASENUMBER,
+       kk.remark REMARK,
+       kk.no_register_sign NOREGISTERSIGN,
+       kk.status STATUS,
+       kk.after_mortgage_status AFTER_MORTGAGE_STATUS,
+       kk.insert_time INSERTTIME,
+       <isEqual property="mortgageType" compareValue="1">
+       kk.property_no PROPERTYNO,
+       kk.property_name PROPERTYNAME,
+       kk.property_cardno PROPERTYCARDNO,
+       kk.property_addres PROPERTYADDRES,
+       kk.property_nums PROPERTYNUMS,
+       kk.property_date PROPERTYDATE,
+       </isEqual>
+       
+       <isEqual property="mortgageType" compareValue="2">
+       kk.car_name CARNAME,
+       kk.car_cardno CARCARDNO,
+       kk.car_registerno CARREGISTERNO,
+       kk.car_no CARNO,
+       kk.car_frameno CARFRAMENO,
+       kk.car_invoiceno CARINVOICENO,
+       kk.car_duesno CARDUESNO,
+       kk.car_safeno CARSAFENO,
+       </isEqual>
+       row_number() OVER(PARTITION BY kk.id ORDER BY kk.id,kk.property_no) RN
+  from T_WARRANTS_UPD_LOG kk
+ where 1=1
+	 <isNotNull prepend="and" property="warrantsId" >
+	   kk.warrants_id='$warrantsId$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="mortgageType" >
+        kk.mortgage_type = '$mortgageType$'
+	 </isNotNull>
+	 
+	 <isNotNull prepend="and" property="empName" >
+        kk.empname like'%$empName$%'
+	 </isNotNull>
+	 order by id
+	
+  	</select>
 </sqlMap>

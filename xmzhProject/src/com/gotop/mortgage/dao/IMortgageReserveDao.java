@@ -8,6 +8,7 @@ import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
+import com.gotop.mortgage.model.MortgageReserveUpdLog;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.primeton.utils.Page;
 
@@ -272,4 +273,22 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	void insertMortgageUpdLogSelect(Map<String, Object> map);
+	
+	
+	/**
+	 * 查询机动车类型押品信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveUpdLog> queryDetailColl(Map<String, Object> map, Page page);
+	
+
+	/**
+	 * 权证状态详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	public MortgageReserveRes showStatus(Map<String, Object> map);
 }

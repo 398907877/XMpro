@@ -15,18 +15,30 @@
 		<h:hidden id="operatingId" property="mortgageReserveOut.operatingId"  />
 		<h:hidden id="outInType" property="mortgageReserveOut.outInType"  />
 		<h:hidden id="logRemark" property="mortgageReserveOut.logRemark"  />
+		<h:hidden id="signType" property="mortgageReserveOut.signType"  />
 		<table align="center" border="0" width="100%" class="form_table">
+		
+			<tbody id="out_log_type">
 			<tr>	
 				<td class="form_label" align="right" width="30%">操作事项：</td>
 				<td colspan="1" width="60%">
 				<d:select id="operatingMatters" dictTypeId="OPERATING_MORTGAGE_TYPE"  property="mortgageReserveOut.operatingMatters"  nullLabel="请选择" extAttr="validateAttr='allowNull=false'" /><font style="color: red">*</font>
 				</td>			
 			</tr>
+			</tbody>
+			<tbody id="in_log_type" style="display: none">
+			<tr>	
+				<td class="form_label" align="right" width="30%">操作事项：</td>
+				<td colspan="1" width="60%">
+				<d:write  dictTypeId="OPERATING_MORTGAGE_TYPE"  property="mortgageReserveOut.operatingMatters"  />
+				</td>			
+			</tr>
+			</tbody>
 			<tr>
 				<td class="form_label" align="right" width="30%">交接人：</td>
 				<td colspan="1" width="60%">
 				<h:text id="nextName"   property="mortgageReserveOut.nextName" validateAttr="allowNull=false;"/><font style="color: red">*</font>
-				<d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName" nullLabel="合作岗" onchange="changeNextNmae(this.value)"   />
+				<d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName" nullLabel="产权人" onchange="changeNextNmae(this.value)"   />
 				</td>					
 			</tr>
 			<tbody id="out_log">
@@ -80,20 +92,34 @@
 <script type="text/javascript">
  window.onload = function () {
      var param=$id("outInType").value;
-         init(param);
+     var signType=$id("signType").value;
+         init(param,signType);
         };
 
 
-	function init(val){
+	function init(val,signType){
 	       if(val=="1"){
+	        $("#out_log_type").show();
+	        $("#in_log_type").hide();
 	        $("#out_log").show();
 	        $("#in_log").hide();
+	        if(signType=="3"){
+	        $("#operatingMatters option[value='1']").remove(); 
+	        }
+	        if(signType=="2"){
+	        $("#operatingMatters option[value='1']").remove(); 
+	        $("#operatingMatters option[value='2']").remove(); 
+	        $("#operatingMatters option[value='3']").remove(); 
+	        }
+	        if(signType=="1"){
+	        $("#operatingMatters option[value='4']").remove(); 
+	        }
 	       }else if(val=="2"){
-	       $("#operatingMatters option[value='3']").remove(); 
-	       $("#operatingMatters option[value='4']").remove(); 
 	       $("#borrowerNums").val("0"); 
 	        $("#in_log").show();
 	        $("#out_log").hide();
+	        $("#in_log_type").show();
+	        $("#out_log_type").hide();
 	       }
 	  
 	
@@ -110,7 +136,15 @@ function save(){
 	   
 	if(!checkForm(frm)){
 			 return ;
-		 }
+		}
+		var param=$id("outInType").value;
+		var logRemark=$id("logRemark").value;
+		var operatingMatters=$("#operatingMatters").val();
+		if(param==1&&logRemark<=0&&operatingMatters==1){
+		  alert("产权证本数未超过1本,不进行出库处理");
+		  return;
+		}
+		
 		ajaxsubmitO();
 		
 	}

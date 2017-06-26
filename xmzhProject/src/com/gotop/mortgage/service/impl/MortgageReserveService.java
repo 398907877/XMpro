@@ -15,6 +15,7 @@ import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
+import com.gotop.mortgage.model.MortgageReserveUpdLog;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.mortgage.service.IMortgageReserveService;
 import com.gotop.util.FileUploadUtil;
@@ -39,6 +40,9 @@ public class MortgageReserveService implements IMortgageReserveService {
 		map.put("mortgageType", mortgageType);
 		if(!"".equals(mortgageReserve.getProjectNumber())&&mortgageReserve.getProjectNumber()!=null){
 			map.put("projectNumber", mortgageReserve.getProjectNumber());
+		}
+		if(!"".equals(mortgageReserve.getOtherType())&&mortgageReserve.getOtherType()!=null){
+			map.put("otherType", mortgageReserve.getOtherType());
 		}
 		if(!"".equals(mortgageReserve.getStatus())&&mortgageReserve.getStatus()!=null){
 			map.put("status", mortgageReserve.getStatus());
@@ -294,10 +298,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 					String operatingType="3";//库存变更
 					//判断是否已经有记录了
 					isLog(pkey,mortgageType);
-					Map<String, Object>mapLog=new HashMap<String, Object>();
 					String empName=muo.getEmpname();
-					mapLog=resMortgageReserveLogMap(mortgageReserve,mortgageReserveHouse,mortgageReserveCar,empName,userID);
-					mortgageReserveDao.insertMortgageUpdLog(mapLog);
+					resMortgageReserveLogMap(mortgageReserve,mortgageReserveHouse,mortgageReserveCar,empName,userID);
 					//插入日志
 					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, logName);
 				}
@@ -410,7 +412,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	public Map<String, Object> resMortgageReserveLogMap(MortgageReserve mortgageReserve,
+	public void resMortgageReserveLogMap(MortgageReserve mortgageReserve,
 			MortgageReserveHouse mortgageReserveHouse,
 			MortgageReserveCar mortgageReserveCar,String empName,Long userId)  throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
@@ -458,26 +460,51 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("empName", empName);
 			map.put("empId", userId);
 			if("1".equals(mortgageType)){
-				map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
-				map.put("propertyName", mortgageReserveHouse.getPropertyName());
-				map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());
-				map.put("propertyAddres", mortgageReserveHouse.getPropertyAddres());
-				map.put("propertyNums", mortgageReserveHouse.getPropertyNums());
-				map.put("propertyDate", mortgageReserveHouse.getPropertyDate());
+				String [] resId=mortgageReserveHouse.getId().split(",");
+				String [] resPropertyAddres=mortgageReserveHouse.getPropertyAddres().split(",");
+				String [] resPropertyCardNo=mortgageReserveHouse.getPropertyCardNo().split(",");
+				String [] resPropertyDate=mortgageReserveHouse.getPropertyDate().split(",");
+				String [] resPropertyName=mortgageReserveHouse.getPropertyName().split(",");
+				String [] resPropertyNo=mortgageReserveHouse.getPropertyNo().split(",");
+				String [] resPropertyNums=mortgageReserveHouse.getPropertyNums().split(",");
+				for (int i = 0; i <resId.length; i++) {
+					map.put("propertyNo", resPropertyNo[i].trim());
+					map.put("propertyName",resPropertyName[i].trim());
+					map.put("propertyCardNo", resPropertyCardNo[i].trim());
+					map.put("propertyAddres", resPropertyAddres[i].trim());
+					String temp=resPropertyNums[i].trim();
+					if("".equals(temp)||temp==null){
+						temp="0";
+					}
+					map.put("propertyNums", temp);
+					map.put("propertyDate", resPropertyDate[i].trim());
+					mortgageReserveDao.insertMortgageUpdLog(map);
+				}
 			}else if ("2".equals(mortgageType)){
-				map.put("carName", mortgageReserveCar.getCarName());
-				map.put("carCardNo", mortgageReserveCar.getCarCardNo());
-				map.put("carRegisterNo", mortgageReserveCar.getCarRegisterNo());
-				map.put("carNo", mortgageReserveCar.getCarNo());
-				map.put("carFrameNo", mortgageReserveCar.getCarFrameNo());
-				map.put("carInvoiceNo", mortgageReserveCar.getCarInvoiceNo());
-				map.put("carDuesNo", mortgageReserveCar.getCarDuesNo());
-				map.put("carSafeNo", mortgageReserveCar.getCarSafeNo());
+				String [] resId=mortgageReserveCar.getId().split(",");
+				String [] resCarCardNo=mortgageReserveCar.getCarCardNo().split(",");
+				String [] resCarDuesNo=mortgageReserveCar.getCarDuesNo().split(",");
+				String [] resCarFrameNo=mortgageReserveCar.getCarFrameNo().split(",");
+				String [] resCarInvoiceNo=mortgageReserveCar.getCarInvoiceNo().split(",");
+				String [] resCarName=mortgageReserveCar.getCarName().split(",");
+				String [] resCarNo=mortgageReserveCar.getCarNo().split(",");
+				String [] resCarRegisterNo=mortgageReserveCar.getCarRegisterNo().split(",");
+				String [] resCarSafeNo=mortgageReserveCar.getCarSafeNo().split(",");
+				for (int i = 0; i <resId.length; i++) {
+					map.put("carName", resCarName[i].trim());
+					map.put("carCardNo", resCarCardNo[i].trim());
+					map.put("carRegisterNo",resCarRegisterNo[i].trim());
+					map.put("carNo", resCarNo[i].trim());
+					map.put("carFrameNo", resCarFrameNo[i].trim());
+					map.put("carInvoiceNo",resCarInvoiceNo[i].trim());
+					map.put("carDuesNo", resCarDuesNo[i].trim());
+					map.put("carSafeNo", resCarSafeNo[i].trim());
+					mortgageReserveDao.insertMortgageUpdLog(map);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return map;
 		
 	}
 	
@@ -975,7 +1002,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		if(!"".equals(mortgageReserveOut.getOutInType())&&mortgageReserveOut.getOutInType()!=null){
 			//只查出库的
-			map.put("outInType", "1");
+			map.put("outInType", mortgageReserveOut.getOutInType());
 		}
 		MortgageReserveOut mortgageReserveOutres=mortgageReserveDao.showBorrowerNums(map);
 		return mortgageReserveOutres;
@@ -994,6 +1021,28 @@ public class MortgageReserveService implements IMortgageReserveService {
 			mortgageReserveList=mortgageReserveDao.queryOutInCarList(map);
 		}
 		return mortgageReserveList;
+	}
+	@Override
+	public List<MortgageReserveUpdLog> queryDetailColl(
+			MortgageReserveRes mortgageReserveRes, Page page) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		List<MortgageReserveUpdLog> mortgageReserveList =new ArrayList<MortgageReserveUpdLog>();
+		map.put("warrantsId", mortgageReserveRes.getWarrantsId());
+		map.put("mortgageType", mortgageReserveRes.getMortgageType());
+       if(!"".equals(mortgageReserveRes.getEmpName())&&mortgageReserveRes.getEmpName()!=null){
+   		map.put("empName", mortgageReserveRes.getEmpName());
+       }
+		mortgageReserveList=mortgageReserveDao.queryDetailColl(map, page);
+		return mortgageReserveList;
+	}
+	@Override
+	public MortgageReserveRes showStatus(MortgageReserveOut mortgageReserveOut) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		if(!"".equals(mortgageReserveOut.getWarrantsId())&&mortgageReserveOut.getWarrantsId()!=null){
+			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
+		}
+		MortgageReserveRes mortgageReserve=mortgageReserveDao.showStatus(map);
+		return mortgageReserve;
 	}
 	
 	

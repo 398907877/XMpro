@@ -11,6 +11,7 @@ import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
 import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
+import com.gotop.mortgage.model.MortgageReserveUpdLog;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.util.dataSource.SqlMapClientDao;
 import com.primeton.utils.Page;
@@ -284,6 +285,24 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	@Override
 	public void insertMortgageUpdLogSelect(Map<String, Object> map) {
 		this.insert("T_Mortgage_Reserve_SqlMap.insertMortgageUpdLogSlect", map);
+	}
+
+
+
+
+	@Override
+	public List<MortgageReserveUpdLog> queryDetailColl(Map<String, Object> map,
+			Page page) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryDetailColl", map,page);
+	}
+
+
+
+
+	@Override
+	public MortgageReserveRes showStatus(Map<String, Object> map) {
+		MortgageReserveRes mortgageReserve=(MortgageReserveRes) queryForObject("T_Mortgage_Reserve_SqlMap.showStatus", map);
+		return mortgageReserve;
 	}
 
 }
