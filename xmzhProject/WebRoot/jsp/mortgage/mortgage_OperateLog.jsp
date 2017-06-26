@@ -15,8 +15,8 @@
 			<table align="center" border="0" width="100%" class="form_table">
 				
 				<tr>
-				 <td class="form_label" align="right" width="20%">操作类型：</td>
-					<td width="30%">
+				 <td class="form_label" align="right">操作类型：</td>
+					<td >
 					    <d:select id="operateType" dictTypeId="MORTGAGE_OPERATING_TYPE" name="mortgageLog.operateType" property="mortgageLog.operateType" nullLabel="全部" style="width:150px"></d:select>
 		            </td>
 		            <td class="form_label" align="right" >库存序号：</td>
