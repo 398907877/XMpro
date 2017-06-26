@@ -97,7 +97,7 @@
 				<td colspan="1" width="30%">
 				<h:text id="borrowerContractNo" property="mortgageReserve.borrowerContractNo"/><font style="color: red">*</font>
 				</td>
-				<td class="form_label" align="right" width="15%">贷款年限：</td>
+				<td class="form_label" align="right" width="15%">保管年限：</td>
 				<td colspan="1" width="30%">
 				<h:text id="loanYears" size="5"  property="mortgageReserve.loanYears" />年
 				</td>					
@@ -115,7 +115,7 @@
 			<tr>				
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
-				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
+				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"   nullLabel="合作岗" onchange="changeNextNmae(this.value)"   />
 				</td>		
 				<td class="form_label" align="right" width="15%">购房合同号：</td>
 				<td colspan="1" width="30%">
@@ -330,7 +330,7 @@ function changeMortgageType(val){
 			      timeout: 60000,
 			      success: function (data) {
 					   if (data.indexOf("noExist") >= 0) {
-				    		  ajaxsubmitO();
+				    		ajaxsubmitO();
 						} else if (data.indexOf("twoexist") >= 0) {
 			                 $id("otherWarrantsNumber").focus();	
 							alert("操作失败！该库存序号("+projectNumber+")和他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
@@ -408,6 +408,20 @@ function changeMortgageType(val){
 				}
 			}
 			
+			if($id("loanYears").value!=""){
+				if(!validatIntegerFlag($id("loanYears").value)){
+				     alert("请输入正确的保管年限!");  
+				     $id("loanYears").focus();
+			         return flag;
+				}
+			}
+			if($id("recordValue").value!=""){
+				if(!validatIntegerFlag($id("recordValue").value)){
+				     alert("请输入正确的入账价值!");  
+				     $id("recordValue").focus();
+			         return flag;
+				}
+			}
 			
 		   if($id("borrowerContractNo").value == ""){
 				alert("借款合同号不能为空！");
@@ -454,6 +468,13 @@ function changeMortgageType(val){
 					alert("产权证本数不能为空！");
 					$id("propertyNums").focus();
 					return flag;
+				}else{
+				  if(!validatInteger($id("propertyNums").value))
+				  {
+	                 alert("请输入正确的产权证本数!");  
+				     $id("propertyNums").focus();
+				     return flag;
+				  }
 				}
 			}else if($id("mortgageType").value == "2"){
 			   if($id("carName").value == ""){
@@ -556,6 +577,8 @@ function changeMortgageType(val){
 					       $("#mangerName").val(obj.mangerName);
 					       $("#loanYears").val(obj.loanYears);
 					       $("#purchaseNumber").val(obj.purchaseNumber);
+					       $("#propertyName").val(obj.propertyName);
+					       $("#propertyCardNo").val(obj.propertyCardNo);
 					       if(mortgageType=="1"){
 					         $("#loanTypeFC").val(obj.loanType);
 					       }else if(mortgageType=="2"){
@@ -655,6 +678,25 @@ function changeMortgageType(val){
 			$("#"+id).remove();
 		}
 		
+		//验证整数判断
+		function validatInteger(obj) {
+			var result=true;
+	        var reg = /^[0-9]\d*$/;
+	        if (!reg.test(obj)) {
+	            result=false;
+	        }
+	        return result;
+        }
+        
+        //验证小数点两位
+        function validatIntegerFlag(obj) {
+			var result=true;
+	        var reg = /^[0-9]+(.[0-9]{2})?$/;
+	        if (!reg.test(obj)) {
+	            result=false;
+	        }
+	        return result;
+        }
 			
 		function changeNextNmae(param){
 		  if(param!="产权人"){

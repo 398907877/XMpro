@@ -191,6 +191,9 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toInsertOutInColl(){
+		if("2".equals(mortgageReserveOut.getOutInType())){
+			
+		}
 		return "out_in_mortgageReserve";
 	}
 	
@@ -217,7 +220,9 @@ public class MortgageReserveAction extends BaseAction {
 	public String toViewInfos(){
 		String id=mortgageReserveRes.getWarrantsId();
 		String mortgageType=mortgageReserveRes.getMortgageType();
+		mortgageReserveRes.setWarrantsId(id);
 		mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(id,mortgageType);
+		mortgageReserveList=mortgageReserveService.queryOutInList(mortgageReserveRes);
 		if("1".equals(mortgageType)){
 			mortgageReserveListHouseInfo=mortgageReserveService.queryMortgageReserveListHouseInfo(id);
 			this.setMortgageReserveListHouseInfo(mortgageReserveListHouseInfo);
@@ -226,6 +231,7 @@ public class MortgageReserveAction extends BaseAction {
 			this.setMortgageReserveListCarInfo(mortgageReserveListCarInfo);
 		}
 		this.setMortgageReserve(mortgageReserve);
+		this.setMortgageReserveList(mortgageReserveList);
 		return "view_collateral_info";
 	}
 	
@@ -335,6 +341,7 @@ public class MortgageReserveAction extends BaseAction {
 		String 	info ="fails";
     	try {
 		String result = this.mortgageReserveService.checkOtherWarrantsNumber(mortgageReserve);
+		System.out.println("result="+result);
 		if("fails".equals(result)){
 			info ="fails";
 		}else if("0".equals(result)) {
@@ -450,7 +457,7 @@ public class MortgageReserveAction extends BaseAction {
 		//String 	info ="fails";
 		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
 		try {
-			mortgageReserve=mortgageReserveService.queryMortgageReserveListInfo(mortgageReserve);
+			mortgageReserve=mortgageReserveService.openGenerate(mortgageReserve);
 			if(mortgageReserve!=null){
 				JSONObject jsonObject = JSONObject.fromObject(mortgageReserve);
 				res=jsonObject.toString();
@@ -554,6 +561,25 @@ public class MortgageReserveAction extends BaseAction {
 				out.close();
 			}
 		}
+	}
+	
+	/**
+	 * 显示出入库处理信息
+	 */
+	public void showBorrowerNums() throws Exception{
+		String res = "{\"errcode\":\"0001\",\"errmsg\":\"系统操作!\"}";
+		try {
+			mortgageReserveOut=mortgageReserveService.showBorrowerNums(mortgageReserveOut);
+			if(mortgageReserve!=null){
+				JSONObject jsonObject = JSONObject.fromObject(mortgageReserveOut);
+				res=jsonObject.toString();
+			}
+		} catch (Exception e) {
+			res = "{\"errcode\":\"0001\",\"errmsg\":\"系统查无此记录!\"}";
+			e.printStackTrace();
+		}
+		Struts2Utils.renderText(res);
+		
 	}
 	
 }

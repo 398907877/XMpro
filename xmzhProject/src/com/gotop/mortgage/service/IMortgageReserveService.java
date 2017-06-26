@@ -140,7 +140,7 @@ public interface IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	MortgageReserve queryMortgageReserveListInfo(MortgageReserve mortgageReserve);
+	MortgageReserve openGenerate(MortgageReserve mortgageReserve);
 	
 	/**
 	 * 机构号查询
@@ -156,4 +156,21 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	String checkIsLog(MortgageReserveOut mortgageReserveOut);
+	
+
+	/**
+	 * 生成部分权证信息详情
+	 * @param mortgageReserve
+	 * @return
+	 */
+	public MortgageReserveOut showBorrowerNums(MortgageReserveOut mortgageReserveOut);
+	
+
+	/**
+	 * 出入库信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryOutInList(MortgageReserveRes mortgageReserveRes);
 }

@@ -16,13 +16,9 @@ public class MortgageReserveOut {
 	private String proNextName;//产权人栏
 	private String outBorrowerLog;//产权人栏
 	private String inBorrowerLog;//产权人栏
-	private String tmpName;//临时存储交接人
-	public String getTmpName() {
-		return tmpName;
-	}
-	public void setTmpName(String tmpName) {
-		this.tmpName = tmpName;
-	}
+	private String inBorrowerNums;//入库显示外借数量
+	private String inBorrowerLogInfo;//入库时显示外借操作事项
+	private String logRemark;//备注信息
 	public String getId() {
 		return id;
 	}
@@ -101,7 +97,25 @@ public class MortgageReserveOut {
 	public void setInBorrowerLog(String inBorrowerLog) {
 		this.inBorrowerLog = inBorrowerLog;
 	}
+	public String getInBorrowerNums() {
+		return inBorrowerNums;
+	}
+	public void setInBorrowerNums(String inBorrowerNums) {
+		this.inBorrowerNums = inBorrowerNums;
+	}
 	
-	
+
+	public String getInBorrowerLogInfo() {
+		return inBorrowerLogInfo;
+	}
+	public void setInBorrowerLogInfo(String inBorrowerLogInfo) {
+		this.inBorrowerLogInfo = inBorrowerLogInfo;
+	}
+	public String getLogRemark() {
+		return logRemark;
+	}
+	public void setLogRemark(String logRemark) {
+		this.logRemark = logRemark;
+	}
 
 }

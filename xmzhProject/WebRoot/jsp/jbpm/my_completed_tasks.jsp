@@ -446,7 +446,6 @@
 			} else {
 				var rows = gop.getSelectRow();
 				var businessType = rows.getParam("businessType");
-
 				var preTaskAssingee = rows.getParam("preTaskAssingee");
 				var preTaskAssingeeName =  rows.getParam("preTaskAssingeeName");
 				
@@ -516,7 +515,6 @@
 		var processName = rows.getParam("processName");
 		
 		if (confirm("确定要收回该流程吗？")) {
-
 			$.ajax({
 				url : "/jbpm/jbpmDemoAction_backOver.action",
 				async : false,
@@ -524,7 +522,7 @@
 				data : "isView=1&taskAssgineeDto.executionId=" + executionId+
 						 "&taskAssgineeDto.taskName="+ currentActivityName+
 						 "&taskAssgineeDto.preTaskId="+ preTaskId+
-						 "&taskAssgineeDto.businessType=" + preTaskId+
+						 "&taskAssgineeDto.businessType=" + businessType+
 						 "&taskAssgineeDto.activityName=" + activityName+
 						 "&taskAssgineeDto.processName=" + processName+
 						 "&taskAssgineeDto.nextTaskId="+nextTaskId+

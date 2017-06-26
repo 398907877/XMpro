@@ -9,6 +9,7 @@ import com.gotop.mortgage.dao.IMortgageReserveDao;
 import com.gotop.mortgage.model.MortgageReserve;
 import com.gotop.mortgage.model.MortgageReserveCar;
 import com.gotop.mortgage.model.MortgageReserveHouse;
+import com.gotop.mortgage.model.MortgageReserveOut;
 import com.gotop.mortgage.model.MortgageReserveRes;
 import com.gotop.mortgage.model.WarrantsFile;
 import com.gotop.util.dataSource.SqlMapClientDao;
@@ -197,6 +198,62 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	public String checkIsLog(Map<String, Object> map) {
 		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkIsLog", map);
 		return String.valueOf(obj);
+	}
+
+
+
+
+	@Override
+	public MortgageReserve openGenerate(Map<String, Object> map) {
+		MortgageReserve mortgageReserve=(MortgageReserve) queryForObject("T_Mortgage_Reserve_SqlMap.openGenerate", map);
+		return mortgageReserve;
+	}
+	
+
+	@Override
+	public MortgageReserveOut showBorrowerNums(Map<String, Object> map) {
+		MortgageReserveOut mortgageReserve=(MortgageReserveOut) queryForObject("T_Mortgage_Reserve_SqlMap.showBorrowerNums", map);
+		return mortgageReserve;
+	}
+
+
+
+
+	@Override
+	public void updMortgageHouseNums(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageHouseNums", map);
+	}
+
+
+
+
+	@Override
+	public void updMortgageStatus(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageStatus", map);
+	}
+
+
+
+
+	@Override
+	public void updMortgageAfterMortgageStatus(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageAfterMortgageStatus", map);
+	}
+
+
+
+
+	@Override
+	public List<MortgageReserveRes> queryOutInHouseList(Map<String, Object> map) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryOutInHouseList", map);
+	}
+
+
+
+
+	@Override
+	public List<MortgageReserveRes> queryOutInCarList(Map<String, Object> map) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryOutInCarList", map);
 	}
 
 

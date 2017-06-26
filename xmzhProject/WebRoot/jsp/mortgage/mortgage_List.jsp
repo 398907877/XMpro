@@ -61,7 +61,7 @@
 					<td>
 					<h:text property="mortgageReserveHouse.propertyAddres" id="propertyAddres" style="width:130px;" />	
 					</td>	
-					 <td class="form_label" align="right" >贷款种类：</td>
+					 <td class="form_label" align="right" >保管期限：</td>
 					<td>
 					<d:select id="loanType" dictTypeId="LOAN_TYPE_HOUSE" property="mortgageReserve.loanType" nullLabel="全部" ></d:select>
 					</td>
@@ -339,7 +339,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, "",callBackFunc, 1050, 520, '添加押品');
+			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '添加押品');
 			  }
 		}
 		
@@ -378,7 +378,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toUpdColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, "",callBackFunc, 1050, 520, '库存变更');
+			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存变更');
 			  }
 		}
 		

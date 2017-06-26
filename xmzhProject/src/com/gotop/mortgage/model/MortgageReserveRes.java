@@ -18,6 +18,9 @@ public class MortgageReserveRes {
 	private String propertyAddres;
 	private String carName;
 	private String carRegisterNo;
+	private String empName;
+	private String operatingMatters;
+	private String outInType;
 	public String getWarrantsId() {
 		return warrantsId;
 	}
@@ -107,6 +110,24 @@ public class MortgageReserveRes {
 	}
 	public void setBorrowerCardNo(String borrowerCardNo) {
 		this.borrowerCardNo = borrowerCardNo;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public String getOperatingMatters() {
+		return operatingMatters;
+	}
+	public String getOutInType() {
+		return outInType;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public void setOperatingMatters(String operatingMatters) {
+		this.operatingMatters = operatingMatters;
+	}
+	public void setOutInType(String outInType) {
+		this.outInType = outInType;
 	}
 	
 

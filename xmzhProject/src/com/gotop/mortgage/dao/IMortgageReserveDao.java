@@ -191,4 +191,56 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	String checkIsLog(Map<String, Object> map);
+	
+	
+	/**
+	 * 生成权证信息详情
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	MortgageReserve openGenerate(Map<String, Object> map);
+	
+	/**
+	 * 查询出入库信息
+	 * @param map
+	 * @return
+	 */
+	public MortgageReserveOut showBorrowerNums(Map<String, Object> map);
+	
+	/**
+	 * 注销、同注同抵产权数量归0
+	 * @param map
+	 * @return
+	 */
+	void updMortgageHouseNums(Map<String, Object> map);
+	
+	/**
+	 * 修改权证信息状态
+	 * @param map
+	 * @return
+	 */
+	void updMortgageStatus(Map<String, Object> map);
+	
+	/**
+	 * 注销后抵质押品状态
+	 * @param map
+	 * @return
+	 */
+	void updMortgageAfterMortgageStatus(Map<String, Object> map);
+	
+	/**
+	 * 出入库信息详情房产类型
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryOutInHouseList(Map<String, Object> map);
+	/**
+	 * 出入库信息详情房产类型
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryOutInCarList(Map<String, Object> map);
 }

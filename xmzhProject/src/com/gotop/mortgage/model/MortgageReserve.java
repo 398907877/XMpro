@@ -34,9 +34,10 @@ public class MortgageReserve {
 	private String loanTypeFC;
 	private String otherTypeJDC;
 	private String loanTypeJDC;
-	private String tmpName;//临时名称
 	private String tmpProjectNumber;//临时库存序号
 	private String tmpOtherWarrantsNumber;//临时他项权证号
+	private String propertyName;//产权人姓名
+	private String propertyCardNo;//产权人身份证
 	
 	public String getOrgName() {
 		return orgName;
@@ -224,12 +225,6 @@ public class MortgageReserve {
 	public void setLoanTypeJDC(String loanTypeJDC) {
 		this.loanTypeJDC = loanTypeJDC;
 	}
-	public String getTmpName() {
-		return tmpName;
-	}
-	public void setTmpName(String tmpName) {
-		this.tmpName = tmpName;
-	}
 	public String getTmpProjectNumber() {
 		return tmpProjectNumber;
 	}
@@ -241,6 +236,18 @@ public class MortgageReserve {
 	}
 	public void setTmpOtherWarrantsNumber(String tmpOtherWarrantsNumber) {
 		this.tmpOtherWarrantsNumber = tmpOtherWarrantsNumber;
+	}
+	public String getPropertyName() {
+		return propertyName;
+	}
+	public String getPropertyCardNo() {
+		return propertyCardNo;
+	}
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
+	}
+	public void setPropertyCardNo(String propertyCardNo) {
+		this.propertyCardNo = propertyCardNo;
 	}
 
 

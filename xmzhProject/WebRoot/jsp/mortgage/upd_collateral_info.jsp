@@ -20,8 +20,6 @@
 	        		权证的基本信息
 				<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
 				<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
-				<h:hidden id="tmpName" property="mortgageReserve.tmpName"  name="mortgageReserve.tmpName"/>
-				<h:hidden id="tmpProjectNumber" property="mortgageReserve.tmpProjectNumber"  name="mortgageReserve.tmpProjectNumber"/>
 				<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>
 				<h:hidden id="oldFileLength" value="0"/>
 	          </td>
@@ -46,11 +44,11 @@
 			<tr>
 				<td class="form_label" align="right" width="15%">库存序号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="projectNumber" property="mortgageReserve.projectNumber" validateAttr="allowNull=false;maxLength=125;"/><font style="color: red">*</font>
+				<b:write property="mortgageReserve.projectNumber" />
 				</td>
 				<td class="form_label" align="right" width="15%">他项权证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="otherWarrantsNumber" property="mortgageReserve.otherWarrantsNumber" validateAttr="allowNull=false;maxLength=125;"/><font style="color: red">*</font>
+				<h:text id="otherWarrantsNumber" property="mortgageReserve.otherWarrantsNumber" validateAttr="allowNull=false;"/><font style="color: red">*</font>
 				</td>						
 			</tr>
 			<tr>		
@@ -60,7 +58,7 @@
 				</td>		
 				<td class="form_label" align="right" width="15%">借款人姓名：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerName" property="mortgageReserve.borrowerName" validateAttr="allowNull=false;maxLength=10;"/><font style="color: red">*</font>
+				<h:text id="borrowerName" property="mortgageReserve.borrowerName" /><font style="color: red">*</font>
 				</td>					
 			</tr>
 			<tr>
@@ -78,7 +76,7 @@
 			<tr>
 				<td class="form_label" align="right" width="15%">经办客户经理：</td>
 				<td colspan="1" width="30%">
-				<h:text id="mangerName" property="mortgageReserve.mangerName" validateAttr="allowNull=false;maxLength=10;"/>
+				<h:text id="mangerName" property="mortgageReserve.mangerName" />
 				</td>	
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
 				<td colspan="1" width="30%" nowrap="nowrap"><div id="loanType_fc">
@@ -94,15 +92,15 @@
 				<td colspan="1" width="30%">
 				<h:text id="borrowerContractNo" property="mortgageReserve.borrowerContractNo" />
 				</td>
-				<td class="form_label" align="right" width="15%">贷款年限：</td>
+				<td class="form_label" align="right" width="15%">保管年限：</td>
 				<td colspan="1" width="30%">
-				<h:text id="loanYears" size="5"  property="mortgageReserve.loanYears" />年
+				<h:text id="loanYears" size="5"  property="mortgageReserve.loanYears" validateAttr="fracDigit=2;type=double;" />年
 				</td>				
 			</tr>
 			<tr>
 				<td class="form_label" align="right" width="15%">入账价值：</td>
 				<td colspan="1" width="30%">
-				<h:text id="recordValue"   property="mortgageReserve.recordValue"   />
+				<h:text id="recordValue"   property="mortgageReserve.recordValue"   validateAttr="fracDigit=2;type=double;" />
 				</td>				
 				<td class="form_label" align="right" width="15%">封包编号：</td>
 				<td colspan="1" width="30%">
@@ -112,11 +110,11 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">交接人：</td>
 				<td colspan="1" width="30%">
-				<h:text id="nextName"   property="mortgageReserve.nextName" /><font style="color: red">*</font><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
+				<h:text id="nextName"   property="mortgageReserve.nextName" /><d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName" nullLabel="合作岗" onchange="changeNextNmae(this.value)"   />
 				</td>		
 				<td class="form_label" align="right" width="15%">购房合同号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="purchaseNumber"   property="mortgageReserve.purchaseNumber"  validateAttr="maxLength=125;"/>
+				<h:text id="purchaseNumber"   property="mortgageReserve.purchaseNumber"  />
 				</td>					
 			</tr>
 		    <tr id="row1">
@@ -178,7 +176,7 @@
 		            <h:text id="propertyAddres"  iterateId="id3" property="mortgageReserveHouse.propertyAddres" value="${id3.PROPERTYADDRES }" validateAttr="allowNull=false;"/><font style="color: red">*</font>
 		            </td>
 		            <td nowrap="nowrap"> 
-		            <h:text id="propertyNums"  size="5"  iterateId="id3" property="mortgageReserveHouse.propertyNums" value="${id3.PROPERTYNUMS }" />
+		            <h:text id="propertyNums"  size="5"  iterateId="id3" property="mortgageReserveHouse.propertyNums" value="${id3.PROPERTYNUMS }"  validateAttr="type=naturalNumber;"/>
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <w:date  iterateId="id3"  submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserveHouse.propertyDate" value="${id3.PROPERTYDATE }" /> 
@@ -346,14 +344,10 @@ $(document).ready(function(){
 
     function check_ProOthNumber(){
 	     var mortgageType=$id("mortgageType").value ;
-		 var projectNumber= $id("projectNumber").value;  //库存序号
 		 var otherWarrantsNumber= $id("otherWarrantsNumber").value;  //他项权证号
-		 var tmpProjectNumber= $id("tmpProjectNumber").value;  //临时库存序号
 		 var tmpOtherWarrantsNumber= $id("tmpOtherWarrantsNumber").value;  //临时他项权证号
-		 if(projectNumber!=tmpProjectNumber||otherWarrantsNumber!=tmpOtherWarrantsNumber){
-		   if(projectNumber==tmpProjectNumber){
+		 if(otherWarrantsNumber!=tmpOtherWarrantsNumber){
 		      projectNumber="checkExits";
-		   }
 		    if(otherWarrantsNumber==tmpOtherWarrantsNumber){
 		      otherWarrantsNumber="checkExits";
 		   }
@@ -366,17 +360,11 @@ $(document).ready(function(){
 			      success: function (data) {
 					   if (data.indexOf("noExist") >= 0) {
 				    		  ajaxsubmitO();
-						} else if (data.indexOf("twoexist") >= 0) {
-			                 $id("otherWarrantsNumber").focus();	
-							alert("操作失败！该库存序号("+projectNumber+")和他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
 						} else if (data.indexOf("othexist") >= 0) {
 			                 $id("otherWarrantsNumber").focus();	
 							alert("操作失败！该他项权证号("+otherWarrantsNumber+")系统中号码重复！请重新填写！");
-						} else if (data.indexOf("proexist") >= 0) {
-			                 $id("projectNumber").focus();	
-							alert("操作失败！库存序号("+projectNumber+")系统中号码重复！请重新填写！");
 						} else if (data.indexOf("fails") >= 0) {
-							alert("库存序号和他项权证号校验失败！");
+							alert("他项权证号校验失败！");
 						} else {
 							alert("操作失败!");
 						}
@@ -479,8 +467,7 @@ $(document).ready(function(){
 		  if(param!="产权人"){
 		    $("#nextName").val(param);
 		  }else{
-		    var tmp=$("#tmpName").val();
-		    $("#nextName").val(tmp);
+		    $("#nextName").val("");
 		  }
 		}
 </script>

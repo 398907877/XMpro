@@ -70,7 +70,7 @@
 				<td colspan="1" width="30%">
 				<b:write property="mortgageReserve.mangerName" />
 				</td>
-				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
+				<td class="form_label" align="right" width="15%" nowrap="nowrap">保管期限：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 					<d:write dictTypeId="LOAN_TYPE_VIEW" property="mortgageReserve.loanType" />
 				</td>					
@@ -80,7 +80,7 @@
 				<td colspan="1" width="30%">
 				<b:write property="mortgageReserve.borrowerContractNo" />
 				</td>
-				<td class="form_label" align="right" width="15%">贷款年限：</td>
+				<td class="form_label" align="right" width="15%">保管期限：</td>
 				<td colspan="1" width="30%">
 				<b:write  property="mortgageReserve.loanYears" />年
 				</td>					
@@ -267,7 +267,6 @@ function save(){
 //验证表单非空
     function check_sumbmit(){
         var flag=false;
-		
 		   if($id("mortgageType").value == "1"){
 			   if($id("propertyNo").value == ""){
 					alert("产权证号不能为空！");
@@ -295,6 +294,13 @@ function save(){
 					alert("产权证本数不能为空！");
 					$id("propertyNums").focus();
 					return flag;
+				}else{
+				  if(!validatInteger($id("propertyNums").value))
+				  {
+	                 alert("请输入正确的产权证本数!");  
+				     $id("propertyNums").focus();
+				     return flag;
+				  }
 				}
 			}else if($id("mortgageType").value == "2"){
 			   if($id("carName").value == ""){
@@ -396,6 +402,17 @@ function save(){
 	function delTr(id){
 		$("#"+id).remove();
 	}
+	
+	
+		//验证整数判断
+		function validatInteger(obj) {
+			var result=true;
+	        var reg = /^[0-9]\d*$/;
+	        if (!reg.test(obj)) {
+	            result=false;
+	        }
+	        return result;
+        }
 </script>
 </body>
 </html>

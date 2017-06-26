@@ -655,13 +655,37 @@ public class MortgageReserveService implements IMortgageReserveService {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
 			mortgageReserveOut.setInsertTime(inserttime);
+			//String remark=mortgageReserveOut.getRemark();
+			String textNmae="产权证本数:"+mortgageReserveOut.getLogRemark();
 			map=resMortgageReserveOutMap(mortgageReserveOut);
 			result=mortgageReserveDao.insertMortgageReserveOutMap(map);
 			if(result){
 				String outInType=mortgageReserveOut.getOutInType();
-				String textNmae="出库操作";
+				
 				if("2".equals(outInType)){
-					textNmae="入库操作";
+					textNmae="机动车登记号:"+mortgageReserveOut.getLogRemark();
+				}else if("1".equals(outInType)){
+					//更改主表信息
+					if("2".equals(mortgageReserveOut.getOperatingMatters())||"3".equals(mortgageReserveOut.getOperatingMatters())){
+						Map<String, Object>mapHouse=new HashMap<String, Object>();
+						mapHouse.put("id", mortgageReserveOut.getOperatingId());
+						mortgageReserveDao.updMortgageHouseNums(mapHouse);
+						mapHouse.put("id", mortgageReserveOut.getWarrantsId());//注销
+						mapHouse.put("status", "2");//注销
+						mortgageReserveDao.updMortgageStatus(mapHouse);
+						if("3".equals(mortgageReserveOut.getOperatingMatters())){
+							mapHouse.put("afterMortgageStatus", "1");//不在库
+							mortgageReserveDao.updMortgageAfterMortgageStatus(mapHouse);
+						}
+					}
+					//出库领取时
+					if("4".equals(mortgageReserveOut.getOperatingMatters())){
+						Map<String, Object>mapHouse=new HashMap<String, Object>();
+						mapHouse.put("id", mortgageReserveOut.getWarrantsId());
+						mapHouse.put("afterMortgageStatus", "3");//已领取
+						mortgageReserveDao.updMortgageAfterMortgageStatus(mapHouse);
+						
+					}
 				}
 				Long userID=muo.getEmpid();
 				//插入日志
@@ -694,7 +718,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			return reslutNums;
 	}
 	@Override
-	public MortgageReserve queryMortgageReserveListInfo(MortgageReserve mortgageReserve) {
+	public MortgageReserve openGenerate(MortgageReserve mortgageReserve) {
 		Map<String, Object>map=new HashMap<String, Object>();
 		if(!"".equals(mortgageReserve.getNoticeRegisterRelation())&& mortgageReserve.getNoticeRegisterRelation()!=null){
 			map.put("projectNumber", mortgageReserve.getNoticeRegisterRelation());
@@ -702,7 +726,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 		if(!"".equals(mortgageReserve.getMortgageType())&& mortgageReserve.getMortgageType()!=null){
 			map.put("mortgageType", mortgageReserve.getMortgageType());
 		}
-		MortgageReserve mortgageReserves=mortgageReserveDao.queryMortgageReserveListInfo(map);
+		MortgageReserve mortgageReserves=mortgageReserveDao.openGenerate(map);
 		return mortgageReserves;
 	}
 	@Override
@@ -832,6 +856,38 @@ public class MortgageReserveService implements IMortgageReserveService {
 			e.printStackTrace();
 		}
 		return reslut;
+	}
+	@Override
+	public MortgageReserveOut showBorrowerNums(
+			MortgageReserveOut mortgageReserveOut) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		if(!"".equals(mortgageReserveOut.getOperatingId())&&mortgageReserveOut.getOperatingId()!=null){
+			map.put("operatingId", mortgageReserveOut.getOperatingId());
+		}
+		if(!"".equals(mortgageReserveOut.getWarrantsId())&&mortgageReserveOut.getWarrantsId()!=null){
+			map.put("warrantsId", mortgageReserveOut.getWarrantsId());
+		}
+		if(!"".equals(mortgageReserveOut.getOutInType())&&mortgageReserveOut.getOutInType()!=null){
+			//只查出库的
+			map.put("outInType", "1");
+		}
+		MortgageReserveOut mortgageReserveOutres=mortgageReserveDao.showBorrowerNums(map);
+		return mortgageReserveOutres;
+	}
+	@Override
+	public List<MortgageReserveRes> queryOutInList(
+			MortgageReserveRes mortgageReserveRes) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
+		String id=mortgageReserveRes.getWarrantsId();
+		String mortgageType=mortgageReserveRes.getMortgageType();
+	    map.put("id", id);
+		if("1".equals(mortgageType)){
+			mortgageReserveList=mortgageReserveDao.queryOutInHouseList(map);
+		}else if("2".equals(mortgageType)){
+			mortgageReserveList=mortgageReserveDao.queryOutInCarList(map);
+		}
+		return mortgageReserveList;
 	}
 	
 	

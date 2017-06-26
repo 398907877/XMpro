@@ -14,7 +14,7 @@
 		<h:hidden id="id" property="mortgageReserveOut.warrantsId"  />
 		<h:hidden id="operatingId" property="mortgageReserveOut.operatingId"  />
 		<h:hidden id="outInType" property="mortgageReserveOut.outInType"  />
-		<h:hidden id="tmpName" property="mortgageReserveOut.tmpName"  />
+		<h:hidden id="logRemark" property="mortgageReserveOut.logRemark"  />
 		<table align="center" border="0" width="100%" class="form_table">
 			<tr>	
 				<td class="form_label" align="right" width="30%">操作事项：</td>
@@ -26,15 +26,25 @@
 				<td class="form_label" align="right" width="30%">交接人：</td>
 				<td colspan="1" width="60%">
 				<h:text id="nextName"   property="mortgageReserveOut.nextName" validateAttr="allowNull=false;"/><font style="color: red">*</font>
-				<d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName"  onchange="changeNextNmae(this.value)"   />
+				<d:select id="proNextName" dictTypeId="MORTGAGE_NEXT_NAME"  property="mortgageReserveOut.proNextName" nullLabel="合作岗" onchange="changeNextNmae(this.value)"   />
 				</td>					
 			</tr>
+			<tbody id="out_log">
 			<tr>			
 				<td class="form_label" align="right" width="30%">外借数量：</td>
 				<td colspan="1" width="60%">
-				<h:text id="borrowerNums" size="5"  property="mortgageReserveOut.borrowerNums" validateAttr="allowNull=false;"/><font style="color: red">*</font>
+				<h:text id="borrowerNums" size="5"  property="mortgageReserveOut.borrowerNums" validateAttr="allowNull=false;type=naturalNumber;"/><font style="color: red">*</font>
 				</td>				
 			</tr>
+			</tbody>
+			<tbody id="in_log" style="display: none">
+			<tr>			
+				<td class="form_label" align="right" width="30%">外借数量：</td>
+				<td colspan="1" width="60%">
+				<b:write  property="mortgageReserveOut.insertTime" />&nbsp;&nbsp;<d:write  dictTypeId="OPERATING_MORTGAGE_TYPE" property="mortgageReserveOut.inBorrowerLogInfo"/>&nbsp;&nbsp;<b:write  property="mortgageReserveOut.inBorrowerNums" />本
+				</td>				
+			</tr>
+			</tbody>
 			<!-- 
 			<tbody id="out_log">
 			<tr>			
@@ -75,17 +85,24 @@
 
 
 	function init(val){
-	   if(val=="2"){ 
-	     $("#operatingMatters option[value='4']").remove(); 
-	   }
+	       if(val=="1"){
+	        $("#out_log").show();
+	        $("#in_log").hide();
+	       }else if(val=="2"){
+	       $("#operatingMatters option[value='3']").remove(); 
+	       $("#operatingMatters option[value='4']").remove(); 
+	       $("#borrowerNums").val("0"); 
+	        $("#in_log").show();
+	        $("#out_log").hide();
+	       }
+	  
 	
 	}
 function changeNextNmae(param){
   if(param!="产权人"){
     $("#nextName").val(param);
   }else{
-    var tmp=$("#tmpName").val();
-    $("#nextName").val(tmp);
+    $("#nextName").val("");
   }
 }
 function save(){

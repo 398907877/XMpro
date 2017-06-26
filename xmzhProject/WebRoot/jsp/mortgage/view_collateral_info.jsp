@@ -78,7 +78,7 @@
 				<td colspan="1" width="30%">
 				<b:write property="mortgageReserve.borrowerContractNo" />
 				</td>
-				<td class="form_label" align="right" width="15%">贷款年限：</td>
+				<td class="form_label" align="right" width="15%">保管年限：</td>
 				<td colspan="1" width="30%">
 				<b:write  property="mortgageReserve.loanYears" />年
 				</td>					
@@ -139,7 +139,7 @@
 	        </tr>
 			<tbody id="dzypxx_fc">
 			<tr id="row2">
-		     <td class="form_label" align="right">抵质押品列 表：</td>
+		     <td class="form_label" align="right">抵质押品列表：</td>
 		     <td colspan="3">
 		     <form id="form1" runat="server">
 		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
@@ -180,7 +180,7 @@
 			</tbody>
 			<tbody id="dzypxx_jdc" style="display:none">
             <tr id="row3">
-		     <td class="form_label" align="right">抵质押品列 表：</td>
+		     <td class="form_label" align="right">抵质押品列表：</td>
 		     <td colspan="3">
 		     <form id="form2" runat="server">
 		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
@@ -227,6 +227,81 @@
 			</td>
             </tr>
 			</tbody>
+			 <tr>
+	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
+	        		出入库信息
+	          </td>
+	        </tr>
+			<tbody id="churukulb_fc">
+			<tr id="row4">
+		     <td class="form_label" align="right">出入库列表：</td>
+		     <td colspan="3">
+		     <form id="form3" runat="server">
+		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		        <tr align="center">
+		            <th nowrap="nowrap">库存序号</th>
+		            <th nowrap="nowrap">产权证号</th>
+		            <th nowrap="nowrap">产权人姓名</th>
+		            <th nowrap="nowrap">产权人身份证</th>
+		            <th nowrap="nowrap">产权地址</th>
+		        </tr>
+		       <l:iterate property="mortgageReserveList" id="id7" >
+		        <tr align="center">
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id7" property="PROJECTNUMBER" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id7" property="PROPERTYNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id7" property="PROPERTYNAME" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id7" property="PROPERTYCARDNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write  iterateId="id7" property="PROPERTYADDRES" />
+		            </td>
+		        </tr>
+		       </l:iterate>
+		    </table>
+		    </form>
+			</td>
+            </tr>
+            </tbody>
+            <tbody id="churukulb_jdc"  style="display:none">
+			<tr id="row5">
+		     <td class="form_label" align="right">出入库列表：</td>
+		     <td colspan="3">
+		     <form id="form4" runat="server">
+		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		        <tr align="center">
+		            <th nowrap="nowrap">库存序号</th>
+		            <th nowrap="nowrap">机动车登记号</th>
+		            <th nowrap="nowrap">车主姓名</th>
+		            <th nowrap="nowrap">车主身份证</th>
+		        </tr>
+		       <l:iterate property="mortgageReserveList" id="id8" >
+		        <tr align="center">
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id8" property="PROJECTNUMBER" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id8" property="CARREGISTERNO" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id8" property="CARNAME" />
+		            </td>
+		            <td nowrap="nowrap"> 
+		            <b:write iterateId="id8" property="CARCARDNO" />
+		            </td>
+		        </tr>
+		       </l:iterate>
+		    </table>
+		    </form>
+			</td>
+            </tr>
+            </tbody>
 			<tr>
 				<td colspan="4" style="text-align: center"><input type="button" value="关闭"
 					onclick="window.close();" class="button"></td>
@@ -262,9 +337,13 @@ function init(val){
         if(val=="1"){
 	        $("#dzypxx_fc").show();
 	        $("#dzypxx_jdc").hide();
+	        $("#churukulb_fc").show();
+	        $("#churukulb_jdc").hide();
 	       }else if(val=="2"){
 	        $("#dzypxx_jdc").show();
 	        $("#dzypxx_fc").hide();
+	        $("#churukulb_jdc").show();
+	        $("#churukulb_fc").hide();
 	       }
 }
 </script>

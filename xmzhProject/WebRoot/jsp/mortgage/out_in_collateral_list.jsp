@@ -68,6 +68,9 @@
 								产权人身份证
 						  </th>
 						   <th nowrap="nowrap">
+								产权证本数
+						  </th>
+						   <th nowrap="nowrap">
 								产权地址
 						  </th>
 						  <w:radioGroup id="group1">
@@ -78,7 +81,7 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id2' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id2' property='HOUSEID' />
-										<h:param name='nextName' iterateId='id2' property='PROPERTYNAME' />
+										<h:param name='logRemark' iterateId='id2' property='PROPERTYNUMS' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -92,6 +95,9 @@
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="PROPERTYCARDNO" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="PROPERTYNUMS" />
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="PROPERTYADDRES" />
@@ -126,7 +132,7 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id3' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id3' property='CARID' />
-										<h:param name='nextName' iterateId='id2' property='CARNAME' />
+										<h:param name='logRemark' iterateId='id2' property='CARREGISTERNO' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -151,6 +157,9 @@
 							<input type="button" class="button" value="出库处理" onclick="outIn_coll(1);"/>
 							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
 							<input type="button" class="button" value="返回" onclick="back_coll();" />
+		                	<h:hidden id="inBorrowerNums" property="mortgageReserveRes.inBorrowerNums"/>
+		                	<h:hidden id="inBorrowerLogInfo" property="mortgageReserveRes.inBorrowerLogInfo"/>
+		                	<h:hidden id="insertTime" property="mortgageReserveRes.insertTime"/>
 					
 				</div>
 							
@@ -224,16 +233,33 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
     			var operatingId=row.getParam("operatingId");
-    			var nextName=row.getParam("nextName");
+    			var logRemark=row.getParam("logRemark");
+    			var logRemark;
     			var textName="出库处理";
-    			if(param==2){
-    			  textName="入库处理";
+    			if(param==1&&mortgageType==1){
+    			  logRemark=row.getParam("logRemark");
+    			  if(logRemark<=0){
+    			   alert("产权证本数未超过1本,不进行出库处理");
+    			   return;
+    			  }
     			}
+    			var inBorrowerNums="";
+    			var inBorrowerLogInfo="";
+    			var insertTime="";
+			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param+"&mortgageReserveOut.logRemark="+logRemark;
+			  
     			if(!checkIsLog(id,operatingId,param)){
     			  return;
     			}
-			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+param;
-			    url=url+"&mortgageReserveOut.nextName="+nextName+"&mortgageReserveOut.tmpName="+nextName;
+    			if(param==2){
+    			    textName="入库处理";
+    			    showBorrowerNums(id,operatingId,param);
+    			    inBorrowerNums=$("#inBorrowerNums").val();
+    			    inBorrowerLogInfo=$("#inBorrowerLogInfo").val();
+    			    insertTime=$("#insertTime").val();
+			        url=url+"&mortgageReserveOut.inBorrowerNums="+inBorrowerNums+"&mortgageReserveOut.inBorrowerLogInfo="+inBorrowerLogInfo+"&mortgageReserveOut.insertTime="+insertTime;
+    			  
+    			}
 			    showModalCenter(url,param,callBackFunc, 700, 300, textName);
 			  }
 		}
@@ -269,6 +295,29 @@
 				}); 
 				
 				return flag;
+		}
+		
+		
+		
+		function showBorrowerNums(id,operatingId,outInType){
+		 var flag=false;
+			$.ajax({
+				      url: "/mortgage/mortgageReserveAction_showBorrowerNums.action",
+				      async: false,
+				      type: 'post',
+				      data: "mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.outInType="+outInType,
+				      timeout: 60000,
+				      dataType: "json",
+				      success: function (data) {
+					        var obj= eval(data);
+					       $("#inBorrowerNums").val(obj.inBorrowerNums);
+					       $("#inBorrowerLogInfo").val(obj.inBorrowerLogInfo);
+					       $("#insertTime").val(obj.insertTime);
+					       flag=true;
+					      
+				      }
+				}); 
+			return flag;	
 		}
 		
 		
