@@ -27,7 +27,7 @@ String str_date = TimeUtil.today();
 				<tr>
 				<td class="form_label" align="right">押品类型：</td>
 					<td >
-						<d:select id="mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" name="mortgageList.mortgageType" property="mortgageList.mortgageType" onchange= "changeMortgageType(this.value)" style="width:80px;">	
+						<d:select id="mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" name="mortgageList.mortgageType" property="mortgageList.mortgageType"  style="width:80px;">	
 						</d:select>
 					</td>
 					<td class="form_label" align="right" width="20%">开始时间：</td>
