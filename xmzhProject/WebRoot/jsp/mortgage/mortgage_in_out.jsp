@@ -38,7 +38,7 @@ String str_date = TimeUtil.today();
 					</td>
 					<td class="form_label" align="right">出入库：</td>
 					<td >
-						<d:select id="operatingType" dictTypeId="MORTGAGE_OUT_IN" name="mortgageList.operatingType" nullLabel="全部" style="width:80px;">
+						<d:select id="operatingType" dictTypeId="MORTGAGE_OUT_IN" name="mortgageList.operatingType" property="mortgageList.operatingType"  nullLabel="全部" style="width:80px;">
 						</d:select>
 					</td>
 				</tr>

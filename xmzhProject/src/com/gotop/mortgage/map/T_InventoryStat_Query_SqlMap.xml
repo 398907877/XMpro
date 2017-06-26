@@ -865,7 +865,7 @@ select
 	<insert id="insertInventoryStat" parameterClass="java.util.HashMap">
     <![CDATA[
 		insert into T_WARRANTS_INVENTORY_STAT 
-		(statid,STATTIME, 
+		(STATTIME, 
 			MORTGAGETYPE,
 			WARRANTSTYPE,
 			LOANTYPE,
@@ -874,7 +874,6 @@ select
 			)
 		values
 			(
-			seq_T_WARRANTS_INVENTORY_STAT.nextval,
 			to_char(sysdate,'yyyyMMdd'),
 			'$mortgageType$',
 			'$warrantsType$',  

@@ -79,7 +79,7 @@ from(
                left join T_MORTGAGE_HOUSE_INFO b on a.warrants_id = b.warrants_id and a.operating_id = b.id
                left join T_WARRANTS_INFO       d on a.warrants_id =d.id 
              where a.BORROWER_LOG ='1' and a.OPERATING_MATTERS = '1'
-                     and a.TYPE = '1'
+                     and a.TYPE = '1' and d.status = '1'
           ) t
           ) p
   where 1 = 1
@@ -113,9 +113,9 @@ from(
             p.WHETHEROVERRUN = '$whetherOverrun$'
                ]]>
       </isNotNull>
-      ) M,
+      ) M left join
       OM_ORGANIZATION    Y
-   WHERE M.ORG_CODE = Y.ORGCODE 
+   on M.ORG_CODE = Y.ORGCODE 
    order by M.INSERT_TIME desc
 	</select>
   <!-- 外借情况查询  机动车-->
@@ -157,7 +157,7 @@ from(
                    left join T_WARRANTS_INFO d
                      on a.warrants_id = d.id
                   where a.BORROWER_LOG ='1'  and a.OPERATING_MATTERS = '1'
-                  and a.TYPE = '1'
+                  and a.TYPE = '1' and d.status = '1'
                   ) t) p
   where 1 = 1
     ]]>   
@@ -191,9 +191,9 @@ from(
             p.WHETHEROVERRUN = '$whetherOverrun$'
                ]]>
       </isNotNull>
-      ) M,
+      ) M left join 
       OM_ORGANIZATION    Y
-   WHERE M.ORG_CODE = Y.ORGCODE
+   on M.ORG_CODE = Y.ORGCODE
      
      order by M.INSERT_TIME desc
 	</select>
