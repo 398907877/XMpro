@@ -201,6 +201,7 @@
 							<input type="button" class="button" value="库存详情" onclick="view_Infos();"/>
 							<input type="button" class="button" value="出入库处理" onclick="outIn_coll();"/>
 							<input type="button" class="button" value="库存变更" onclick="upd_coll();"/>
+							<input type="button" class="button" value="库存变更明细" onclick="detail_coll();"/>
 					
 				</div>
 							
@@ -399,7 +400,22 @@
 			  }
 		}
 		
-		    
+		 //库存变更明细
+		function detail_coll(){
+		 var gop;
+		  var mortgageType=$("#mortgageType").val();
+		    gop= $id("group1");
+		  var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+			    var url="/mortgage/mortgageReserveAction_toUpdColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
+			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存变更明细');
+			  }
+		}   
              
    $("#orgName").blur(function(){
    

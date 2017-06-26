@@ -230,6 +230,13 @@ public interface IMortgageReserveDao {
 	void updMortgageAfterMortgageStatus(Map<String, Object> map);
 	
 	/**
+	 * 更新出入库流水表的状态
+	 * @param map
+	 * @return
+	 */
+	void updMortgageOutIn(Map<String, Object> map);
+	
+	/**
 	 * 出入库信息详情房产类型
 	 * @param mortgageReserve
 	 * @param page
@@ -243,4 +250,26 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	List<MortgageReserveRes> queryOutInCarList(Map<String, Object> map);
+	
+	/**
+	 * 插入变更操作日志信息
+	 * @param map
+	 * @return
+	 */
+	void insertMortgageUpdLog(Map<String, Object> map);
+	
+	
+	/**
+	 * 判断记录表是否有值
+	 * @param map
+	 * @return
+	 */
+	public String checkIsUpdLog(Map<String, Object> map);
+	
+	/**
+	 * 插入变更操作日志信息
+	 * @param map
+	 * @return
+	 */
+	void insertMortgageUpdLogSelect(Map<String, Object> map);
 }

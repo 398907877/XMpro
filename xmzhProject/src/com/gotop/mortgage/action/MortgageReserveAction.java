@@ -154,13 +154,17 @@ public class MortgageReserveAction extends BaseAction {
 	
 	
 	/**
-	 * 查询库存信息
+	 * 导出库存信息
 	 * @return
 	 */
 	public String queryMortgageReserveListExcel(){
+		String res="mortgageReserveListExcel";
 		mortgageReserveList=mortgageReserveService.queryMortgageReserveListExcel(mortgageReserve, mortgageReserveHouse, mortgageReserveCar);
 		this.setMortgageReserveList(mortgageReserveList);
-		return "mortgageReserveListExcel";
+		if("2".equals(mortgageReserve.getMortgageType())){
+			res="mortgageReserveListCarExcel";
+		}
+		return res;
 	}
 	
 	

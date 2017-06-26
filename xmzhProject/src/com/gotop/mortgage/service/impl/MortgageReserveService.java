@@ -292,6 +292,12 @@ public class MortgageReserveService implements IMortgageReserveService {
 				}
 				if(result){
 					String operatingType="3";//库存变更
+					//判断是否已经有记录了
+					isLog(pkey,mortgageType);
+					Map<String, Object>mapLog=new HashMap<String, Object>();
+					String empName=muo.getEmpname();
+					mapLog=resMortgageReserveLogMap(mortgageReserve,mortgageReserveHouse,mortgageReserveCar,empName,userID);
+					mortgageReserveDao.insertMortgageUpdLog(mapLog);
 					//插入日志
 					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, logName);
 				}
@@ -303,6 +309,18 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		return result;
 	}
+	
+	//判断是否已经有记录
+	public void isLog(Long pkey,String mortgageType){
+		Map<String, Object>map=new HashMap<String, Object>();
+		map.put("warrantsId", pkey);
+		map.put("mortgageType", mortgageType);
+		String reslut=mortgageReserveDao.checkIsUpdLog(map);
+		if("0".equals(reslut)){
+			mortgageReserveDao.insertMortgageUpdLogSelect(map);
+		}
+	}
+	
 	
 	/**
 	 * 更新押品信息押品类型为房产时
@@ -384,6 +402,87 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * 生成库存变更日志记录值
+	 * @param pkey
+	 * @param mortgageReserve
+	 * @return
+	 */
+	public Map<String, Object> resMortgageReserveLogMap(MortgageReserve mortgageReserve,
+			MortgageReserveHouse mortgageReserveHouse,
+			MortgageReserveCar mortgageReserveCar,String empName,Long userId)  throws Exception{
+		Map<String, Object>map=new HashMap<String, Object>();
+		try {
+			String mortgageType= mortgageReserve.getMortgageType();
+			map.put("warrantsId", mortgageReserve.getId());
+			map.put("mortgageType", mortgageReserve.getMortgageType());
+			if("".equals(mortgageReserve.getOtherType())||mortgageReserve.getOtherType()==null){
+				if("1".equals(mortgageType)){
+					if("".equals(mortgageReserve.getOtherTypeFC())||mortgageReserve.getOtherTypeFC()==null){
+						mortgageReserve.setOtherType("3"); //他项类型  3：预告登记证明
+					}else{
+						mortgageReserve.setOtherType(mortgageReserve.getOtherTypeFC());
+					}
+					if("".equals(mortgageReserve.getLoanTypeFC())||mortgageReserve.getLoanTypeFC()==null){
+						mortgageReserve.setLoanType("6");//贷款种类 6:小企业  ,旧数据处理
+					}else{
+						mortgageReserve.setLoanType(mortgageReserve.getLoanTypeFC());
+					}
+				}else if ("2".equals(mortgageType)){
+					mortgageReserve.setOtherType(mortgageReserve.getOtherTypeJDC());
+					mortgageReserve.setLoanType(mortgageReserve.getLoanTypeJDC());
+				}
+		    }
+			map.put("noticeRegisterRelation", mortgageReserve.getNoticeRegisterRelation());
+			map.put("projectNumber", mortgageReserve.getProjectNumber());
+			map.put("otherWarrantsNumber", mortgageReserve.getOtherWarrantsNumber());
+			map.put("otherWarrantsDate", mortgageReserve.getOtherWarrantsDate());
+			map.put("borrowerName", mortgageReserve.getBorrowerName());
+			map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
+			map.put("orgCode", mortgageReserve.getOrgCode());
+			map.put("orgName", mortgageReserve.getOrgCode());
+			map.put("mangerName", mortgageReserve.getMangerName());
+			map.put("borrowerContractNo", mortgageReserve.getBorrowerContractNo());
+			map.put("loanYears", mortgageReserve.getLoanYears());
+			map.put("recordValue", mortgageReserve.getRecordValue());
+			map.put("packetNumber", mortgageReserve.getPacketNumber());
+			map.put("nextName", mortgageReserve.getNextName());
+			map.put("purchaseNumber", mortgageReserve.getPurchaseNumber());
+			map.put("remark", mortgageReserve.getRemark());
+			//map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
+			//map.put("status", mortgageReserve.getStatus());
+			map.put("otherType", mortgageReserve.getOtherType());
+			map.put("loanType", mortgageReserve.getLoanType());
+			map.put("empName", empName);
+			map.put("empId", userId);
+			if("1".equals(mortgageType)){
+				map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
+				map.put("propertyName", mortgageReserveHouse.getPropertyName());
+				map.put("propertyCardNo", mortgageReserveHouse.getPropertyCardNo());
+				map.put("propertyAddres", mortgageReserveHouse.getPropertyAddres());
+				map.put("propertyNums", mortgageReserveHouse.getPropertyNums());
+				map.put("propertyDate", mortgageReserveHouse.getPropertyDate());
+			}else if ("2".equals(mortgageType)){
+				map.put("carName", mortgageReserveCar.getCarName());
+				map.put("carCardNo", mortgageReserveCar.getCarCardNo());
+				map.put("carRegisterNo", mortgageReserveCar.getCarRegisterNo());
+				map.put("carNo", mortgageReserveCar.getCarNo());
+				map.put("carFrameNo", mortgageReserveCar.getCarFrameNo());
+				map.put("carInvoiceNo", mortgageReserveCar.getCarInvoiceNo());
+				map.put("carDuesNo", mortgageReserveCar.getCarDuesNo());
+				map.put("carSafeNo", mortgageReserveCar.getCarSafeNo());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+		
+	}
+	
+	
+	
 	
 	
 	/**
@@ -664,6 +763,13 @@ public class MortgageReserveService implements IMortgageReserveService {
 				
 				if("2".equals(outInType)){
 					textNmae="机动车登记号:"+mortgageReserveOut.getLogRemark();
+					if("1".equals(mortgageReserveOut.getOperatingMatters())){
+						Map<String, Object>mapHouse=new HashMap<String, Object>();
+						mapHouse.put("operatingId", mortgageReserveOut.getOperatingId());
+						mapHouse.put("warrantsId", mortgageReserveOut.getWarrantsId());
+						mortgageReserveDao.updMortgageOutIn(mapHouse);//入库归还时修改出库状态为已归还
+						
+					}
 				}else if("1".equals(outInType)){
 					//更改主表信息
 					if("2".equals(mortgageReserveOut.getOperatingMatters())||"3".equals(mortgageReserveOut.getOperatingMatters())){

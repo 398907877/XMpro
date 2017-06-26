@@ -257,4 +257,33 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 	}
 
 
+
+
+	@Override
+	public void updMortgageOutIn(Map<String, Object> map) {
+		this.update("T_Mortgage_Reserve_SqlMap.updMortgageOutIn", map);
+	}
+
+
+
+
+	@Override
+	public void insertMortgageUpdLog(Map<String, Object> map) {
+		this.insert("T_Mortgage_Reserve_SqlMap.insertMortgageUpdLog", map);
+	}
+
+	@Override
+	public String checkIsUpdLog(Map<String, Object> map) {
+		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkIsUpdLog", map);
+		return String.valueOf(obj);
+	}
+
+
+
+
+	@Override
+	public void insertMortgageUpdLogSelect(Map<String, Object> map) {
+		this.insert("T_Mortgage_Reserve_SqlMap.insertMortgageUpdLogSlect", map);
+	}
+
 }

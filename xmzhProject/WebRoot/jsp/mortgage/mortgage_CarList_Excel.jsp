@@ -33,12 +33,14 @@
 		<th height="34" width="100" align="center" class="form_label">补登记标志</th>
 		<th height="34" width="100" align="center" class="form_label">库存状态</th>
 		<th height="34" width="100" align="center" class="form_label">注销后抵质押品状态</th>
-		<th height="34" width="100" align="center" class="form_label">产权证号</th>
-		<th height="34" width="100" align="center" class="form_label">产权人姓名</th>
-		<th height="34" width="100" align="center" class="form_label">产权人身份证号</th>
-		<th height="34" width="100" align="center" class="form_label">产权地址</th>
-		<th height="34" width="100" align="center" class="form_label">产权证本数</th>
-		<th height="34" width="100" align="center" class="form_label">产权证填发日期</th>
+		<th height="34" width="100" align="center" class="form_label">车主姓名</th>
+		<th height="34" width="100" align="center" class="form_label">车主身份证号</th>
+		<th height="34" width="100" align="center" class="form_label">机动车登记证号</th>
+		<th height="34" width="100" align="center" class="form_label">车牌号</th>
+		<th height="34" width="100" align="center" class="form_label">车架号</th>
+		<th height="34" width="100" align="center" class="form_label">购车发票号</th>
+		<th height="34" width="100" align="center" class="form_label">完税证明号</th>
+		<th height="34" width="100" align="center" class="form_label">保单号</th>
 		
 	</tr>
 	<l:iterate property="mortgageReserveList" id="id1">
@@ -101,22 +103,28 @@
 			     <d:write iterateId="id1" dictTypeId="AFTER_MORTGAGE_STATUS"  property="AFTER_MORTGAGE_STATUS"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYNO"/>
+			     <b:write iterateId="id1"  property="CARNAME"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYNAME"/>
+			     <b:write iterateId="id1"  property="CARCARDNO"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYCARDNO"/>
+			     <b:write iterateId="id1"  property="CARREGISTERNO"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYADDRES"/>
+			     <b:write iterateId="id1"  property="CARNO"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYNUMS"/>
+			     <b:write iterateId="id1"  property="CARFRAMENO"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
-			     <b:write iterateId="id1"  property="PROPERTYDATE"/>
+			     <b:write iterateId="id1"  property="CARINVOICENO"/>
+			  </td>
+			   <td style="vnd.ms-excel.numberformat:@">
+			     <b:write iterateId="id1"  property="CARDUESNO"/>
+			  </td>
+			   <td style="vnd.ms-excel.numberformat:@">
+			     <b:write iterateId="id1"  property="CARSAFENO"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			     <b:write iterateId="id1"  property="RN"/>

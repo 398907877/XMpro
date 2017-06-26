@@ -239,14 +239,25 @@
 		     <form id="form3" runat="server">
 		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
 		        <tr align="center">
+		            <th nowrap="nowrap">操作时间</th>
+		            <th nowrap="nowrap">出入库</th>
+		            <th nowrap="nowrap">操作事项</th>
 		            <th nowrap="nowrap">库存序号</th>
 		            <th nowrap="nowrap">产权证号</th>
 		            <th nowrap="nowrap">产权人姓名</th>
-		            <th nowrap="nowrap">产权人身份证</th>
-		            <th nowrap="nowrap">产权地址</th>
+		            <th nowrap="nowrap">操作人员</th>
 		        </tr>
 		       <l:iterate property="mortgageReserveList" id="id7" >
 		        <tr align="center">
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id7" property="OPERATINGTIME" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+			    	 <d:write iterateId="id7" dictTypeId="MORTGAGE_OUT_IN" property="TYPE" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+			    	 <d:write iterateId="id7" dictTypeId="OPERATING_MORTGAGE_TYPE" property="OPERATINGMATTERS" /> 
+		            </td>
 		            <td nowrap="nowrap"> 
 			    	 <b:write iterateId="id7" property="PROJECTNUMBER" /> 
 		            </td>
@@ -257,10 +268,7 @@
 		            <b:write iterateId="id7" property="PROPERTYNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
-		            <b:write iterateId="id7" property="PROPERTYCARDNO" />
-		            </td>
-		            <td nowrap="nowrap"> 
-		            <b:write  iterateId="id7" property="PROPERTYADDRES" />
+		            <b:write  iterateId="id7" property="EMPNAME" />
 		            </td>
 		        </tr>
 		       </l:iterate>
@@ -276,24 +284,37 @@
 		     <form id="form4" runat="server">
 		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
 		        <tr align="center">
+		            <th nowrap="nowrap">操作时间</th>
+		            <th nowrap="nowrap">出入库</th>
+		            <th nowrap="nowrap">操作事项</th>
 		            <th nowrap="nowrap">库存序号</th>
 		            <th nowrap="nowrap">机动车登记号</th>
 		            <th nowrap="nowrap">车主姓名</th>
-		            <th nowrap="nowrap">车主身份证</th>
+		            <th nowrap="nowrap">操作人员</th>
 		        </tr>
 		       <l:iterate property="mortgageReserveList" id="id8" >
 		        <tr align="center">
 		            <td nowrap="nowrap"> 
+		            <td nowrap="nowrap"> 
+			    	 <b:write iterateId="id8" property="OPERATINGTIME" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+			    	 <d:write iterateId="id8" dictTypeId="MORTGAGE_OUT_IN" property="TYPE" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
+			    	 <d:write iterateId="id8" dictTypeId="OPERATING_MORTGAGE_TYPE" property="OPERATINGMATTERS" /> 
+		            </td>
+		            <td nowrap="nowrap"> 
 			    	 <b:write iterateId="id8" property="PROJECTNUMBER" /> 
 		            </td>
 		            <td nowrap="nowrap"> 
-		            <b:write iterateId="id8" property="CARREGISTERNO" />
+		            <b:write iterateId="id8" property="CARNO" />
 		            </td>
 		            <td nowrap="nowrap"> 
 		            <b:write iterateId="id8" property="CARNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
-		            <b:write iterateId="id8" property="CARCARDNO" />
+		            <b:write  iterateId="id8" property="EMPNAME" />
 		            </td>
 		        </tr>
 		       </l:iterate>

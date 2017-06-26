@@ -20,6 +20,7 @@
 	        		权证的基本信息
 				<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
 				<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
+				<h:hidden id="projectNumber" property="mortgageReserve.projectNumber"  name="mortgageReserve.projectNumber"/>
 				<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>
 				<h:hidden id="oldFileLength" value="0"/>
 	          </td>
