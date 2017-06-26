@@ -90,10 +90,11 @@ String str_date = TimeUtil.today();
 					<tr>
 						<!-- <th nowrap="nowrap">序号</th> -->
 						<th nowrap="nowrap">外借时间</th>
-						<th nowrap="nowrap">他项类型</th>
+						<!-- <th nowrap="nowrap">他项类型</th> -->
 						<th nowrap="nowrap">库存序号</th>
 						<th nowrap="nowrap">产权证号</th>
 						<th nowrap="nowrap">产权人</th>
+						<th nowrap="nowrap">交接人</th>
 						<th nowrap="nowrap">外借数量</th>
 						<th nowrap="nowrap">经办支行</th>
 						<th nowrap="nowrap">经办客户经理</th>
@@ -110,9 +111,9 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="checkTime" />
 								</td>
-								<td nowrap="nowrap">
+							   <!-- <td nowrap="nowrap">
 								   <d:write iterateId="idx" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
-								</td>
+								</td> -->
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="repertoryID" />
 								</td>
@@ -122,6 +123,10 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="propertyPerson" />
 								</td>
+								<td nowrap="nowrap">
+								   <b:write iterateId="idx" property="borrowerNextName" />
+								</td>
+								
 								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="checkNums" />
 								</td>
@@ -178,6 +183,7 @@ String str_date = TimeUtil.today();
 						<th nowrap="nowrap">车牌号</th>
 						<th nowrap="nowrap">车主</th>
 						<th nowrap="nowrap">外借数量</th>
+						<th nowrap="nowrap">交接人</th>
 						<th nowrap="nowrap">经办支行</th>
 						<th nowrap="nowrap">经办客户经理</th>
 						<th nowrap="nowrap">已借天数</th>
@@ -204,6 +210,9 @@ String str_date = TimeUtil.today();
 								</td>
 								<td nowrap="nowrap">
 								   <b:write iterateId="idy" property="checkNums" />
+								</td>
+								<td nowrap="nowrap">
+								   <b:write iterateId="idy" property="borrowerNextName" />
 								</td>
 								<td nowrap="nowrap">
 								   <b:write iterateId="idy" property="orgnaizationBranch" />

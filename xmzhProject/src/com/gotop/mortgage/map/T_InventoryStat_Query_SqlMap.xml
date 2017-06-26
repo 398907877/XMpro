@@ -565,7 +565,7 @@
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-             gg.INSERT_TIME = '$statTime$'
+             gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
@@ -621,7 +621,7 @@
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
@@ -647,7 +647,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
@@ -673,7 +673,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())
@@ -727,7 +727,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
@@ -783,7 +783,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
@@ -807,7 +807,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
@@ -833,7 +833,7 @@ select
          where 1 = 1
      <isNotNull prepend="and" property="statTime" >
          <![CDATA[
-            gg.INSERT_TIME = '$statTime$'
+            gg.INSERT_TIME <= '$statTime$'
                ]]>
      </isNotNull>
  GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())

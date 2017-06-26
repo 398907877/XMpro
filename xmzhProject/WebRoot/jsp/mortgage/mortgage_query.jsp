@@ -115,6 +115,9 @@
 						   <th nowrap="nowrap">
 								产权证号码
 						  </th>
+						  <th nowrap="nowrap">
+								入库时间
+						  </th>
 						   <th nowrap="nowrap">
 								  补登记标志
 						  </th>
@@ -123,13 +126,14 @@
 		<w:radioGroup id="group1">
 			<l:iterate property="mortgageReserveHouseList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;height: 30px;width:5%">
+			  <td style="text-align: center">
 			  	<w:rowRadio>
 			  		<h:param name='id' iterateId='id1' property='id'/>
 	               <h:param name='warrantsId' iterateId='id1' property='warrantsId'/>
 	               <h:param name='noRegisterSign' iterateId='id1' property='noRegisterSign'/>
 	            </w:rowRadio>
-			  <!-- </td>		
+	            </td>
+			  <!-- 		
 				<td style="text-align: center;width: 20%">
 			    	<nobr><d:write iterateId="id1" dictTypeId="OTHER_TYPE_VIEW" property="otherType"/></nobr>
 			  </td>
@@ -149,37 +153,40 @@
 			    	<d:write iterateId="id1" dictTypeId="MORTGAG_STATUS" property="status"/>
 			  </td>	
 			   -->	
-			   <td style="text-align: center;width: 10%">
+			   <td style="text-align: center">
 			    	<b:write iterateId="id1" property="otherWarrantsNumber"/>
 			  </td>
 			   
-			  <td style="text-align: center;width: 10%">
+			  <td style="text-align: center">
 			    	<d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			   <td style="text-align: center">
 			    	<b:write iterateId="id1" property="borrowerName"/>
 			  </td>	
-			  <td style="text-align: center;width: 10%">
+			  <td style="text-align: center">
 			    	<b:write iterateId="id1" property="borrowerCardNo"/>
 			  </td>
-			   <td style="text-align: center;width: 10%">
+			   <td style="text-align: center">
 			    	<b:write iterateId="id1" property="borrowerContractno"/>
 			  </td>	
 			 
-			  <td style="text-align: center;width: 10%">
+			  <td style="text-align: center">
 			    	<b:write iterateId="id1" property="propertyName"/>
 			  </td>	
-			   <td style="text-align: center;width: 10%">
+			   <td style="text-align: center">
 			    	<b:write iterateId="id1" property="propertyNo"/>
 			  </td>	
-			  <td style="text-align: center;width: 10%">
+			   <td style="text-align: center">
+			    	<b:write iterateId="id1" property="insertTime"/>
+			  </td>	
+			  <td style="text-align: center">
 			    	<d:write iterateId="id1" property="noRegisterSign" dictTypeId="MORTGAG_REGISTER"/>
 			  </td>	
 			</tr>
 			</l:iterate>
 		</w:radioGroup>
 		 <tr>
-		        <td colspan="9" class="command_sort_area">
+		        <td colspan="10" class="command_sort_area">
 		        	<div class="h3">
 		          
 	              </div>

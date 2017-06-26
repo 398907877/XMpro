@@ -21,6 +21,7 @@
 		<th height="34" width="100" align="center" class="form_label">车牌号</th>
 		<th height="34" width="100" align="center" class="form_label">车主</th>
 		<th height="34" width="100" align="center" class="form_label">外借数量</th>
+		<th height="34" width="100" align="center" class="form_label">交接人</th>
 		<th height="34" width="200" align="center" class="form_label">经办支行</th>
 		<th height="34" width="100" align="center" class="form_label">经办客户经理</th>
 		<th height="34" width="100" align="center" class="form_label">已借天数</th>
@@ -46,6 +47,9 @@
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="checkNums" />
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			    <b:write iterateId="id1" property="borrowerNextName" />
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="orgnaizationBranch"/>

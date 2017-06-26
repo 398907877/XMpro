@@ -91,6 +91,9 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * 
 	 */
 	public String queryMortgageInOut(){
+//		if(mortgageList.getCheckboxStatus()!=null && !"1".equals(mortgageList.getCheckboxStatus())){
+//			mortgageList.setCheckboxStatus("true");
+//		}
 		if ("2".equals(mortgageList.getMortgageType())) {
 			mortgageLists = mortgageReserveHouseService.queryMortgageReserveCarInOutList(mortgageList, this.getPage());
 		}

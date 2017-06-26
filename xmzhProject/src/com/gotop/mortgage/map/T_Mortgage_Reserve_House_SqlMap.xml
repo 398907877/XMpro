@@ -42,6 +42,8 @@
      	<result column="BORROWER_CONTRACTNO" property="borrowerContractno" jdbcType="VARCHAR" />
      	<result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
      	<result column="PROPERTY_NO" property="propertyNo" jdbcType="VARCHAR" />
+     	<result column="INSERT_TIME" property="insertTime" jdbcType="VARCHAR" />
+     	
      </resultMap>
      
      <resultMap id="mortgageReserve" class="com.gotop.mortgage.model.MortgageReserve" >
@@ -226,7 +228,9 @@
         MAX(t.BORROWER_CARDNO) as BORROWER_CARDNO,
        MAX(t.BORROWER_CONTRACTNO) as BORROWER_CONTRACTNO,   
        wm_concat(to_char(o.PROPERTY_NAME)) as PROPERTY_NAME,
-       wm_concat(to_char(o.PROPERTY_NO)) as PROPERTY_NO
+       wm_concat(to_char(o.PROPERTY_NO)) as PROPERTY_NO,
+       to_char(TO_DATE(MAX(t.INSERT_TIME), 'yyyyMMddhh24miss'),
+                                'yyyy-mm-dd') as INSERT_TIME
   from t_warrants_info t left join t_mortgage_house_info o 
   on t.id=o.warrants_id
  where  t.mortgage_type='1' and t.status = '1'
@@ -396,7 +400,7 @@
                    and a.operating_id = b.id
                   left join T_WARRANTS_INFO c
                     on a.warrants_id = c.id
-                 where c.status = '1' 
+                 where 1=1 
 			        <isNotEmpty prepend="and" property="mortgageType">
 						c.MORTGAGE_TYPE='$mortgageType$'
 					</isNotEmpty>
@@ -419,6 +423,13 @@
 					<isNotEmpty prepend="and" property="status">
 						c.STATUS='$status$'
 					</isNotEmpty>
+					<isNotEmpty prepend="and" property="checkBoxStatus">
+					<![CDATA[
+						a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+		            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+		            and m.type='1' and m.operating_matters <> '2')
+					]]>
+					</isNotEmpty>
                  group by a.type, a.operating_matters) F
          where T.type = F.type
            and T.operating_matters = F.operating_matters) as alls,
@@ -435,7 +446,7 @@
                    and a.operating_id = b.id
                   left join T_WARRANTS_INFO c
                     on a.warrants_id = c.id
-         where c.status = '1' 
+         where 1=1
          <isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
 		</isNotEmpty>
@@ -458,6 +469,13 @@
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+			</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
  group by T.type, T.operating_matters
 		
@@ -513,7 +531,7 @@
                    and a.operating_id = b.id
                   left join T_WARRANTS_INFO c
                     on a.warrants_id = c.id
-                 where c.status = '1' 
+                 where 1=1
                  <isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
 		</isNotEmpty>
@@ -536,6 +554,13 @@
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+			</isNotEmpty>
                  group by a.type, a.operating_matters) F
          where T.type = F.type
            and T.operating_matters = F.operating_matters) as alls,
@@ -552,7 +577,7 @@
                    and a.operating_id = b.id
                   left join T_WARRANTS_INFO c
                     on a.warrants_id = c.id
-         where c.status = '1' 
+         where 1=1
          <isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
 		</isNotEmpty>
@@ -575,6 +600,13 @@
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+		</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
  group by T.type, T.operating_matters
 </select>
@@ -592,7 +624,7 @@
            b.property_name         AS PROPERTY_NAME,
            c.other_warrants_number AS OTHER_WARRANTS_NUMBER,
            a.operating_userid      AS OPERATING_USERID2,
-           c.next_name             AS NEXT_NAME,
+           d.BORROWER_NEXT_NAME    AS NEXT_NAME,
            d.REMARK      AS OPERATING_REMARK
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_LOG a
@@ -601,7 +633,7 @@
         on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
       left join T_WARRANTS_INFO c
         on d.warrants_id = c.id
-     where c.status = '1'
+     where 1=1
 
 	 
 	<dynamic>
@@ -627,6 +659,13 @@
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+		</isNotEmpty>
 	</dynamic>
 		 ) T,
        OM_EMPLOYEE                 E
@@ -647,7 +686,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
            b.car_no            AS car_no,
            b.car_name          AS car_name,
            a.operating_userid  AS operating_userid2,
-           c.next_name         AS next_name,
+           d.BORROWER_NEXT_NAME    AS next_name,
            d.REMARK   AS operating_remark
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_CAR_INFO b
@@ -656,7 +695,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
         on d.warrants_id = c.id
       left join T_MORTGAGE_LOG a
         on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
-     where c.status = '1'
+     where 1=1
 
   <dynamic>
 		<isNotEmpty prepend="and" property="mortgageType">
@@ -681,6 +720,13 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+		</isNotEmpty>
 	</dynamic>
        ) T,
        OM_EMPLOYEE                 E
@@ -704,7 +750,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
            d.borrower_log          as borrower_log,
            c.other_warrants_number AS OTHER_WARRANTS_NUMBER,
            a.operating_userid      AS OPERATING_USERID2,
-           c.next_name             AS NEXT_NAME,
+           d.BORROWER_NEXT_NAME    AS NEXT_NAME,
            d.REMARK     AS OPERATING_REMARK
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_LOG a
@@ -713,7 +759,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
         on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID
       left join T_WARRANTS_INFO c
         on d.warrants_id = c.id
-     where c.status = '1'
+     where 1=1
 	<dynamic>
 		<isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
@@ -737,6 +783,13 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
 		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
+		</isNotEmpty>
 	</dynamic>
       ) T,
        OM_EMPLOYEE                 E
@@ -758,7 +811,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
             d.borrower_nums     as borrower_nums,
             d.borrower_log      as borrower_log,
             a.operating_userid  AS operating_userid2,
-            c.next_name         AS next_name,
+            d.BORROWER_NEXT_NAME    AS next_name,
             d.REMARK  AS operating_remark
        from T_MORTGAGE_LIST d
        left join T_MORTGAGE_CAR_INFO b
@@ -767,7 +820,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
          on d.warrants_id = c.id
        left join T_MORTGAGE_LOG a
          on d.warrants_id = a.OPERATING_MORTGAG_ID and d.INSERT_TIME = a.OPERATING_TIME
-      where c.status = '1'
+      where 1=1
  	<dynamic>
 		<isNotEmpty prepend="and" property="mortgageType">
 			c.MORTGAGE_TYPE='$mortgageType$'
@@ -790,6 +843,13 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="status">
 			c.STATUS='$status$'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="checkBoxStatus">
+			<![CDATA[
+				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
+            and m.type='1' and m.operating_matters <> '2')
+			]]>
 		</isNotEmpty>
 	</dynamic>
       ) T,

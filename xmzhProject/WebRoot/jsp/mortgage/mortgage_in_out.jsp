@@ -11,8 +11,6 @@
 String str_date = TimeUtil.today();
 
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -50,15 +48,18 @@ String str_date = TimeUtil.today();
 							
 						</d:select>
 					</td>
-					<td class="form_label" align="right">注销是否完成：</td>
+					<!-- <td class="form_label" align="right">注销是否完成：</td>
 					<td >
-					<!-- 状态：正常，注销 -->
-					<!-- <input type="hidden" id="status" name="mortgageList.status"> -->
-						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" name="mortgageList.status" nullLabel="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">
-							
+						<d:select id="status" dictTypeId="MORTGAG_STATUS" property="mortgageList.status" name="mortgageList.status" nullLabel="全部" onchange= "changeCheckSign(this.value)" style="width:80px;">	
 						</d:select>
 					</td>
-					
+					 -->
+					 <td class="form_label" align="right">注销是否入库：</td>
+					<td >
+						<!-- <input id="checkboxStatus" name="checkboxStatus" type="checkbox"  align="left"> -->
+						<input type="checkbox" name="mortgageList.checkboxStatus"  value="${mortgageList.checkboxStatus}" onclick="this.value=this.checked?1:-1" />
+	
+					</td>
 				</tr>
 				    
 				<tr class="form_bottom">
@@ -92,38 +93,29 @@ String str_date = TimeUtil.today();
 	     <tbody id="tj_fc">
 		<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">记录数</th>
-		  <th nowrap="nowrap">产权证数</th>
-		  <th nowrap="nowrap">他项权证数</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">记录数</th>
+		  <th nowrap="nowrap" style="text-align: center">产权证数</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="alls"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="alls"/>			  
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyNums"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyNums"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="otherWarrantsNums"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    			    	<b:write iterateId="issued" property="otherWarrantsNums"/>
+			    
 			  </td>
 			  
 			</tr>
@@ -133,39 +125,29 @@ String str_date = TimeUtil.today();
 		      <tbody id="tj_jdc" style="display:none">
 		<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">记录数</th>
-		  <th nowrap="nowrap">机动车数</th>
-		  <th nowrap="nowrap">他项权证数</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">记录数</th>
+		  <th nowrap="nowrap" style="text-align: center">机动车数</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
 			  
-			  <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="alls"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="alls"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="cars"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="cars"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="others"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="others"/>			    
 			  </td>
 			  
 			</tr>
@@ -219,146 +201,97 @@ String str_date = TimeUtil.today();
 	     <table class="EOS_table" width="100%" style="overflow:scroll">
 	     <tbody id="house_detail">
 		<tr>
-		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		 <!--  <th nowrap="nowrap">流水号</th> -->
-		  <th nowrap="nowrap">操作时间</th>
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">库存序号</th>
-		  <th nowrap="nowrap">产权证号</th>
-		  <th nowrap="nowrap">产权人</th>
-		  <th nowrap="nowrap">他项权证号</th>
-		  <th nowrap="nowrap">操作人员</th>
-		  <th nowrap="nowrap">交接人员</th>
-		<!--  <th nowrap="nowrap">备注</th> --> 
+		  <th nowrap="nowrap" style="text-align: center">操作时间</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
+		  <th nowrap="nowrap" style="text-align: center">产权证号</th>
+		  <th nowrap="nowrap" style="text-align: center">产权人</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
+		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
+		  <th nowrap="nowrap" style="text-align: center">交接人员</th>	
 		</tr>
-		<w:radioGroup id="group1">
+		
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <!-- <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
-			    </div>
-			  </td> -->
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingTime"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="projectNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="projectNumber"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyNo"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyNo"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyName"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="otherWarrantsNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="otherWarrantsNumber"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingUserId"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingUserId"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
-			 <!--  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
-			    </div>
-			  </td> --> 
 			</tr>
 			</l:iterate>
-		</w:radioGroup>
-		 
 		      </tbody>
 		      <tbody id="car_detail">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		 <!-- <th nowrap="nowrap">流水号</th> --> 
-		  <th nowrap="nowrap">操作时间</th>
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">库存序号</th>
-		  <th nowrap="nowrap">车牌号</th>
-		  <th nowrap="nowrap">车主姓名</th>
-		  <th nowrap="nowrap">操作人员</th>
-		  <th nowrap="nowrap">交接人员</th>
-		<!--   <th nowrap="nowrap">备注</th> -->
+		 <!-- <th nowrap="nowrap" style="text-align: center">流水号</th> --> 
+		  <th nowrap="nowrap" style="text-align: center">操作时间</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
+		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
+		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
+		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
+		<!--   <th nowrap="nowrap" style="text-align: center">备注</th> -->
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <!-- <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
+			  <!-- <td nowrap="nowrap" style="text-align: center">
+			    
+			    	<b:write iterateId="issued" property="id"/>
 			    </div>
 			  </td> -->
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">	    
+			    	<b:write iterateId="issued" property="operatingTime"/>		    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">		    
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>	    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="projectNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="projectNumber"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="carNo"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="carNo"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="carName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="carName"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingUserId"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingUserId"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
-			 <!--  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
+			 <!--  <td nowrap="nowrap" style="text-align: center">
+			    
+			    	<b:write iterateId="issued" property="operatingRemark"/>
 			    </div>
 			  </td> --> 
 			</tr>
@@ -369,85 +302,62 @@ String str_date = TimeUtil.today();
 		      <tbody id="house_detail1">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		 <!--  <th nowrap="nowrap">流水号</th> -->
-		  <th nowrap="nowrap">操作时间</th>
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">库存序号</th>
-		  <th nowrap="nowrap">产权证号</th>
-		  <th nowrap="nowrap">产权人</th>
-		  <th nowrap="nowrap">外借数量</th>
-		  <th nowrap="nowrap">外借是否归还</th>
-		  <th nowrap="nowrap">他项权证号</th>
-		  <th nowrap="nowrap">操作人员</th>
-		  <th nowrap="nowrap">交接人员</th>
-		<!--  <th nowrap="nowrap">备注</th> --> 
+		 <!--  <th nowrap="nowrap" style="text-align: center">流水号</th> -->
+		  <th nowrap="nowrap" style="text-align: center">操作时间</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
+		  <th nowrap="nowrap" style="text-align: center">产权证号</th>
+		  <th nowrap="nowrap" style="text-align: center">产权人</th>
+		  <th nowrap="nowrap" style="text-align: center">外借数量</th>
+		  <th nowrap="nowrap" style="text-align: center">外借是否归还</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
+		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
+		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
+		<!--  <th nowrap="nowrap" style="text-align: center">备注</th> --> 
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			  <!-- <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
+			  <!-- <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="id"/>
 			    </div>
 			  </td> -->
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingTime"/>			  
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">	
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>		    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">		    
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="projectNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="projectNumber"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyNo"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyNo"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="propertyName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyName"/>			  
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="borrowerNums"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="borrowerNums"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>			    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="otherWarrantsNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="otherWarrantsNumber"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingUserId"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingUserId"/>			   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
-			 <!--  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
+			 <!--  <td nowrap="nowrap" style="text-align: center">
+			    
+			    	<b:write iterateId="issued" property="operatingRemark"/>
 			    </div>
 			  </td> --> 
 			</tr>
@@ -458,81 +368,50 @@ String str_date = TimeUtil.today();
 		      <tbody id="car_detail1">
 		      	<tr>
 		 <!--  <th><b:message key="l_select"></b:message></th> -->
-		<!--   <th nowrap="nowrap">流水号</th> -->
-		  <th nowrap="nowrap">操作时间</th>
-		  <th nowrap="nowrap">出入库</th>
-		  <th nowrap="nowrap">操作事项</th>
-		  <th nowrap="nowrap">库存序号</th>
-		  <th nowrap="nowrap">车牌号</th>
-		  <th nowrap="nowrap">车主姓名</th>
-		  <th nowrap="nowrap">外借数量</th>
-		  <th nowrap="nowrap">外借是否归还</th>
-		  <th nowrap="nowrap">操作人员</th>
-		  <th nowrap="nowrap">交接人员</th>
-		<!--  <th nowrap="nowrap">备注</th> --> 
+		<!--   <th nowrap="nowrap" style="text-align: center">流水号</th> -->
+		  <th nowrap="nowrap" style="text-align: center">操作时间</th>
+		  <th nowrap="nowrap" style="text-align: center">出入库</th>
+		  <th nowrap="nowrap" style="text-align: center">操作事项</th>
+		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
+		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
+		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">外借数量</th>
+		  <th nowrap="nowrap" style="text-align: center">外借是否归还</th>
+		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
+		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
-			<!--   <td style="text-align: center;width: 20%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="id"/></nobr>
-			    </div>
-			  </td> -->
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingTime"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="operatingTime"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<d:write iterateId="issued" dictTypeId="MORTGAGE_OUT_IN" property="type"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<d:write iterateId="issued" dictTypeId="OPERATING_MORTGAGE_TYPE" property="operatingMatters"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="projectNumber"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="projectNumber"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="carNo"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="carNo"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="carName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="carName"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="borrowerNums"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="borrowerNums"/>   
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">    
+			    	<d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>    
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingUserId"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="operatingUserId"/>
 			  </td>
-			  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="nextName"/></nobr>
-			    </div>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="nextName"/>
 			  </td>
-			<!--  <td style="text-align: center;width: 10%">
-			    <div style="padding:0px;overflow:hidden" nowrap>
-			    	<nobr><b:write iterateId="issued" property="operatingRemark"/></nobr>
-			    </div>
-			  </td> -->  
 			</tr>
 			</l:iterate>
 		 
@@ -575,7 +454,10 @@ String str_date = TimeUtil.today();
 		<script type="text/javascript">
 	
 	$(document).ready(function(){ 
-
+            var checkStatus=document.getElementsByName("mortgageList.checkboxStatus");
+            if(checkStatus[0].value=='1'){
+            	checkStatus[0].checked=true;
+             }
 			//result_flag用于区别是普通查询('1') 还是 汇总查询('2')
 			var result_flag = $id("result_flag").value;
 			var options=$("#mortgageType option:selected");  //获取选中的项
@@ -695,7 +577,10 @@ String str_date = TimeUtil.today();
 			var operatingTime=$id("d1").value;  //获取选中的项
 			var operatingEndTime=$id("d2").value;  //获取选中的项
 			var status=$("#status option:selected"); //获取选中的项
-				
+
+			//注销是否入库
+			var checkStatus=document.getElementsByName("mortgageList.checkboxStatus");		
+			
 			//alert("汇总导出");
 			var strUrl="/mortgage/mortgageReserveHouseAction_queryMortgageTotalInOutForExcel.action?";
 			if(options.val()!=null)
@@ -717,6 +602,10 @@ String str_date = TimeUtil.today();
 			if(status.val()!=null)
 			{
 			    strUrl=strUrl+"&mortgageList.status="+status.val();
+			}
+			if(checkStatus[0].value!=null && checkStatus[0].value != "")
+			{
+			    strUrl=strUrl+"&mortgageList.checkboxStatus="+checkStatus[0].value;
 			}	
 			window.location.href=strUrl;
 		}
@@ -728,7 +617,9 @@ String str_date = TimeUtil.today();
 			var operatingTime=$id("d1").value;  //获取选中的项
 			var operatingEndTime=$id("d2").value;  //获取选中的项
 			var status=$("#status option:selected");  //获取选中的项
-
+			//注销是否入库
+			var checkStatus=document.getElementsByName("mortgageList.checkboxStatus");	
+			
 			var strUrl="/mortgage/mortgageReserveHouseAction_queryMortgageDetailInOutForExcel.action?";
 			if(options.val()!=null)
 			{
@@ -749,6 +640,10 @@ String str_date = TimeUtil.today();
 			if(status.val()!=null)
 			{
 			    strUrl=strUrl+"&mortgageList.status="+status.val();
+			}
+			if(checkStatus[0].value!=null && checkStatus[0].value != "")
+			{
+			    strUrl=strUrl+"&mortgageList.checkboxStatus="+checkStatus[0].value;
 			}
 			window.location.href=strUrl;       		      		    		
 	

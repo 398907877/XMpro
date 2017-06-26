@@ -29,6 +29,8 @@ public class LoanInfo implements Serializable{
 	private String propertyCardID;
 //  产权人
 	private String propertyPerson;
+//  交接人
+	private String borrowerNextName;
 //  外借数量
 	private String checkNums;
 //  经办支行
@@ -152,6 +154,12 @@ public class LoanInfo implements Serializable{
 	}
 	public void setInTimeEnd(String inTimeEnd) {
 		this.inTimeEnd = inTimeEnd;
+	}
+	public String getBorrowerNextName() {
+		return borrowerNextName;
+	}
+	public void setBorrowerNextName(String borrowerNextName) {
+		this.borrowerNextName = borrowerNextName;
 	}
 
 	

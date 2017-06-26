@@ -120,7 +120,10 @@ public class MortgageList {
 	 * */
 	private String operatingMortgagId;
 	
-	
+	/*
+	 * 注销是否入库
+	 * */
+	private String checkboxStatus;
 	
 	public String getId() {
 		return id;
@@ -278,6 +281,12 @@ public class MortgageList {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getCheckboxStatus() {
+		return checkboxStatus;
+	}
+	public void setCheckboxStatus(String checkboxStatus) {
+		this.checkboxStatus = checkboxStatus;
 	}
 	
 	

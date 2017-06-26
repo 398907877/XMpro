@@ -17,10 +17,11 @@
 
 		<!-- <th height="34" width="100" align="center" class="form_label">序号</th> -->
 		<th height="34" width="100" align="center" class="form_label">外借时间</th>
-		<th height="34" width="200" align="center" class="form_label">他项类型</th>
+		<!-- <th height="34" width="200" align="center" class="form_label">他项类型</th> -->
 		<th height="34" width="100" align="center" class="form_label">库存序号</th>
 		<th height="34" width="100" align="center" class="form_label">产权证号</th>
 		<th height="34" width="100" align="center" class="form_label">产权人</th>
+		<th height="34" width="100" align="center" class="form_label">交接人</th>
 		<th height="34" width="100" align="center" class="form_label">外借数量</th>
 		<th height="34" width="200" align="center" class="form_label">经办支行</th>
 		<th height="34" width="100" align="center" class="form_label">经办客户经理</th>
@@ -36,9 +37,9 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="checkTime"/>
 			  </td>
-			  <td style="vnd.ms-excel.numberformat:@">
+			 <!--  <td style="vnd.ms-excel.numberformat:@">
 			    <d:write iterateId="id1" property="otherType" dictTypeId="OTHER_TYPE_VIEW"/>
-			  </td>
+			  </td> -->
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="repertoryID"/>
 			  </td>
@@ -47,6 +48,9 @@
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    	<b:write iterateId="id1" property="propertyPerson"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			    	<b:write iterateId="id1" property="borrowerNextName"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
 			    <b:write iterateId="id1" property="checkNums" />
