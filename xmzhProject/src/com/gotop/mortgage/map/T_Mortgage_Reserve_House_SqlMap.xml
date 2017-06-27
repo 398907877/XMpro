@@ -267,6 +267,7 @@
 			connect by prior orgid = parentorgid)
       </isNotNull>
       group by t.id
+      order by INSERT_TIME desc
   </select>  
    <select id="queryPropertyNameAndNoList" parameterClass="java.util.HashMap" resultMap="mortgageReserveHouseCar2">
   select t.id as WARRANTS_ID,
