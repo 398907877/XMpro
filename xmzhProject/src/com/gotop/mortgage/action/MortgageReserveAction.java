@@ -219,7 +219,6 @@ public class MortgageReserveAction extends BaseAction {
 	
 	
 	public String queryDetailColl(){
-		System.out.println("11:"+mortgageReserveRes.getWarrantsId()+",="+mortgageReserveRes.getMortgageType());
 		 mortgageReserveListLog=mortgageReserveService.queryDetailColl(mortgageReserveRes,this.getPage());
 		 this.setPage(page);
 	     this.setMortgageReserveListLog(mortgageReserveListLog);
@@ -370,7 +369,6 @@ public class MortgageReserveAction extends BaseAction {
 		String 	info ="fails";
     	try {
 		String result = this.mortgageReserveService.checkOtherWarrantsNumber(mortgageReserve);
-		System.out.println("result="+result);
 		if("fails".equals(result)){
 			info ="fails";
 		}else if("0".equals(result)) {

@@ -1016,8 +1016,7 @@ select o.id,
 		PACKET_NUMBER='$packetNumber$',
 		NEXT_NAME='$nextName$',
 		PURCHASE_NUMBER='$purchaseNumber$',
-		REMARK='$remark$',
-		INSERT_TIME='$inserttime$'
+		REMARK='$remark$'
 		where id='$id$'
 		
 	]]>
@@ -1451,7 +1450,7 @@ select o.id,
        kk.no_register_sign NOREGISTERSIGN,
        kk.status STATUS,
        kk.after_mortgage_status AFTER_MORTGAGE_STATUS,
-       kk.insert_time INSERTTIME,
+       to_char(to_date(kk.insert_time,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi') INSERTTIME,
        <isEqual property="mortgageType" compareValue="1">
        kk.property_no PROPERTYNO,
        kk.property_name PROPERTYNAME,

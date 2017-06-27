@@ -163,7 +163,7 @@
 		        <l:iterate property="mortgageReserveListHouseInfo" id="id3" >
 		        <tr align="center">
 		            <td nowrap="nowrap"> 
-	        		 <h:hidden id="id"   iterateId="id3" property="mortgageReserveHouse.id"  value="${id3.ID }"/>
+	        		 <h:hidden id="idHouse"   iterateId="id3" property="mortgageReserveHouse.id"  value="${id3.ID }"/>
 	        		 <h:hidden id="warrantsId"   iterateId="id3" property="mortgageReserveHouse.warrantsId"  value="${id3.WARRANTSID }"/>
 			    	 <h:text id="propertyNo"  size="12"  iterateId="id3" property="mortgageReserveHouse.propertyNo"  value="${id3.PROPERTYNO }" validateAttr="allowNull=false;"/><font style="color: red">*</font>
 		            </td>
@@ -208,7 +208,7 @@
 			  <l:iterate property="mortgageReserveListCarInfo" id="id5">
 			   <tr align="center">
 		            <td nowrap="nowrap"> 
-	        		  <h:hidden id="id"   iterateId="id5" property="mortgageReserveCar.id"  value="${id5.ID }"/>
+	        		  <h:hidden id="idCar"   iterateId="id5" property="mortgageReserveCar.id"  value="${id5.ID }"/>
 	        		  <h:hidden id="warrantsId"   iterateId="id5" property="mortgageReserveCar.warrantsId"  value="${id5.WARRANTSID }"/>
 			    	  <h:text id="carName" size="5"   iterateId="id5"  property="mortgageReserveCar.carName" value="${id5.CARNAME }"  /> 
 		            </td>

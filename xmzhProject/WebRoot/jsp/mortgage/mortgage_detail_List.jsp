@@ -54,6 +54,9 @@
 								他项类型
 						  </th>
 						   <th nowrap="nowrap">
+								操作时间
+						  </th>
+						   <th nowrap="nowrap">
 								操作人员
 						  </th>
 						   <th nowrap="nowrap">
@@ -124,6 +127,9 @@
 								</td>
 								<td nowrap="nowrap"> 
 									<d:write  iterateId="id2" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="INSERTTIME"/>
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="EMPNAME"/>
@@ -202,6 +208,9 @@
 								他项类型
 						  </th>
 						   <th nowrap="nowrap">
+								操作时间
+						  </th>
+						   <th nowrap="nowrap">
 								操作人员
 						  </th>
 						   <th nowrap="nowrap">
@@ -278,6 +287,9 @@
 								</td>
 								<td nowrap="nowrap"> 
 									<d:write  iterateId="id3" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="INSERTTIME"/>
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id3" property="EMPNAME"/>
