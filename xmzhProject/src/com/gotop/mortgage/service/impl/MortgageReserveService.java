@@ -864,7 +864,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	}
 	@Override
 	public List<MortgageReserveRes> queryMortgageReserveAllList(
-			MortgageReserveRes mortgageReserveRes, Page page) {
+			MortgageReserveRes mortgageReserveRes) {
 		Map<String, Object>map=new HashMap<String, Object>();
 		List<MortgageReserveRes> mortgageReserveList =new ArrayList<MortgageReserveRes>();
 		String id=mortgageReserveRes.getWarrantsId();
@@ -877,9 +877,9 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("borrowerCardNo", mortgageReserveRes.getBorrowerCardNo());
 		}
 		if("1".equals(mortgageType)){
-			mortgageReserveList=mortgageReserveDao.queryMortgageReserveHouseList(map,page);
+			mortgageReserveList=mortgageReserveDao.queryMortgageReserveHouseList(map);
 		}else if("2".equals(mortgageType)){
-			mortgageReserveList=mortgageReserveDao.queryMortgageReserveCarList(map,page);
+			mortgageReserveList=mortgageReserveDao.queryMortgageReserveCarList(map);
 		}
 		return mortgageReserveList;
 	}

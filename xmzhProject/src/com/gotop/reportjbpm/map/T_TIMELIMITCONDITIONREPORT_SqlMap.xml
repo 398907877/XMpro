@@ -32,33 +32,33 @@
        DISPLAYORDERTWO,
        ZDCUSTMANAGER,
        
-       DECODE(SUBSTR(SUM("'01'_A"), 1, 1),
+       nvl(DECODE(SUBSTR(SUM("'01'_A"), 1, 1),
               '.',
-              0 || SUM("'01'_A"),SUM("'01'_A")) ZHGPDTIMEONE,
-       DECODE(SUBSTR(SUM("'02'_A"), 1, 1),
+              0 || SUM("'01'_A"),SUM("'01'_A")),0) ZHGPDTIMEONE,
+       nvl(DECODE(SUBSTR(SUM("'02'_A"), 1, 1),
               '.',
-              0 || SUM("'02'_A"),SUM("'02'_A")) ZHGPDTIMETWO,
-       DECODE(SUBSTR(SUM("'03'_A"), 1, 1),
+              0 || SUM("'02'_A"),SUM("'02'_A")),0) ZHGPDTIMETWO,
+       nvl(DECODE(SUBSTR(SUM("'03'_A"), 1, 1),
               '.',
-              0 || SUM("'03'_A"),SUM("'03'_A")) ZHGPDTIMETHREE,
-       DECODE(SUBSTR(SUM("'04'_A"), 1, 1),
+              0 || SUM("'03'_A"),SUM("'03'_A")),0) ZHGPDTIMETHREE,
+       nvl(DECODE(SUBSTR(SUM("'04'_A"), 1, 1),
               '.',
-              0 || SUM("'04'_A"),SUM("'04'_A")) REVIEWAPPROVALONETIME,
-       DECODE(SUBSTR(SUM("'05'_A"), 1, 1),
+              0 || SUM("'04'_A"),SUM("'04'_A")),0) REVIEWAPPROVALONETIME,
+       nvl(DECODE(SUBSTR(SUM("'05'_A"), 1, 1),
               '.',
-              0 || SUM("'05'_A"),SUM("'05'_A")) REVIEWAPPROVALTWOTIME,
-       DECODE(SUBSTR(SUM("'06'_A"), 1, 1),
+              0 || SUM("'05'_A"),SUM("'05'_A")),0) REVIEWAPPROVALTWOTIME,
+       nvl(DECODE(SUBSTR(SUM("'06'_A"), 1, 1),
               '.',
-              0 || SUM("'06'_A"),SUM("'06'_A")) REVIEWAPPROVALTHREEORMORETIME,
-       DECODE(SUBSTR(SUM("'07'_A"), 1, 1),
+              0 || SUM("'06'_A"),SUM("'06'_A")),0) REVIEWAPPROVALTHREEORMORETIME,
+       nvl(DECODE(SUBSTR(SUM("'07'_A"), 1, 1),
               '.',
-              0 || SUM("'07'_A"),SUM("'07'_A")) ALLPROCESSTIMEONE,
-       DECODE(SUBSTR(SUM("'08'_A"), 1, 1),
+              0 || SUM("'07'_A"),SUM("'07'_A")),0) ALLPROCESSTIMEONE,
+       nvl(DECODE(SUBSTR(SUM("'08'_A"), 1, 1),
               '.',
-              0 || SUM("'08'_A"),SUM("'08'_A")) ALLPROCESSTIMETWO,
-       DECODE(SUBSTR(SUM("'09'_A"), 1, 1),
+              0 || SUM("'08'_A"),SUM("'08'_A")),0) ALLPROCESSTIMETWO,
+       nvl(DECODE(SUBSTR(SUM("'09'_A"), 1, 1),
               '.',
-              0 || SUM("'09'_A"),SUM("'09'_A")) ZLWZHAPPROVALTIME
+              0 || SUM("'09'_A"),SUM("'09'_A")),0) ZLWZHAPPROVALTIME
   FROM (SELECT ORGNAMEONE,
                ORGCODETWO,
                ORGNAMETWO,
@@ -68,9 +68,10 @@
                t.displayorderone,
                t.displayordertwo,
                t.TIMELIMITTYPE,
-               nvl(SUM(worktime), 0) worktime
+               round(nvl(SUM(worktime), 0) /count(*),2) worktime
           FROM process_UsedTime_Report t
          WHERE 1 = 1
+           <![CDATA[and t.worktime>0]]>
            AND T.INSERTTIME =
                (SELECT MAX(g.INSERTTIME) FROM process_UsedTime_Report g)
                <isNotNull prepend="and" property="repTimeStart">

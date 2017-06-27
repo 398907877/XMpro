@@ -115,7 +115,7 @@ public interface IMortgageReserveService {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveRes> queryMortgageReserveAllList(MortgageReserveRes mortgageReserveRes,Page page);
+	List<MortgageReserveRes> queryMortgageReserveAllList(MortgageReserveRes mortgageReserveRes);
 	
 	
 	

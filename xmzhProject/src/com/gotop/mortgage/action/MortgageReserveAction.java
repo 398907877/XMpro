@@ -192,8 +192,7 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toOutInColl(){
-	    mortgageReserveList=mortgageReserveService.queryMortgageReserveAllList(mortgageReserveRes,this.getPage());
-		this.setPage(page);
+	    mortgageReserveList=mortgageReserveService.queryMortgageReserveAllList(mortgageReserveRes);
 		this.setMortgageReserveList(mortgageReserveList);
 		return "out_in_mortgageReserveList";
 	}

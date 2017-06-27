@@ -156,7 +156,7 @@ public interface IMortgageReserveDao {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveRes> queryMortgageReserveHouseList(Map<String, Object> map, Page page);
+	List<MortgageReserveRes> queryMortgageReserveHouseList(Map<String, Object> map);
 
 	/**
 	 * 查询机动车类型押品信息详情
@@ -164,7 +164,7 @@ public interface IMortgageReserveDao {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveRes> queryMortgageReserveCarList(Map<String, Object> map, Page page);
+	List<MortgageReserveRes> queryMortgageReserveCarList(Map<String, Object> map);
 	
 
 	/**

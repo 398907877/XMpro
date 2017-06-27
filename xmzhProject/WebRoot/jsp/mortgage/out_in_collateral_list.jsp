@@ -39,10 +39,6 @@
 					action="/mortgage/mortgageReserveAction_toOutInColl.action" method="post">
 			 <h:hiddendata property="mortgageReserveRes"/>  
 
-            <h:hidden property="page.begin"/>
-		    <h:hidden property="page.length"/>
-		    <h:hidden property="page.count"/>
-		    <h:hidden property="page.isCount"/>
 					<table align="center" border="0" width="100%" class="EOS_table">
 					    <tbody id="list_fc">
 						<tr>
@@ -161,26 +157,7 @@
 				</div>
 							
                 <div class="h4">
-	                <l:equal property="page.isCount" targetValue="true" >
-	                  <b:message key="l_total"></b:message>
-	                  <b:write property="page.count" />
-	                  <b:message key="l_recordNO."></b:message>
-	                  <b:write property="page.currentPage" />
-	                  <b:message key="l_page"></b:message>
-	                  <b:write property="page.totalPage" />
-	                  <b:message key="l_page"></b:message>
-	                </l:equal>
-	                <l:equal property="page.isCount" targetValue="false" >
-	                  <b:message key="l_NO."></b:message>
-	                  <b:write property="page.currentPage" />
-	                  <b:message key="l_page"></b:message>
-	                </l:equal>
-	                <input type="button" class="button" onclick="firstPage('page', '', null, null, 'page_form');" value='<b:message key="l_firstPage"></b:message>'  <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="prevPage('page', '', null, null, 'page_form');" value='<b:message key="l_upPage"></b:message>' <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="nextPage('page', '', null, null, 'page_form');" value='<b:message key="l_nextPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
-	                <l:equal property="page.isCount" targetValue="true">
-	                  <input type="button" class="button" onclick="lastPage('page', '', null, null, 'page_form');" value='<b:message key="l_lastPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
-	                </l:equal>
+	                
               </div>
               </td>
             </tr>

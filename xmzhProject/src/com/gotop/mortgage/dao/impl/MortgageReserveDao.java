@@ -146,16 +146,16 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 
 	@Override
 	public List<MortgageReserveRes> queryMortgageReserveHouseList(
-			Map<String, Object> map, Page page) {
-		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveHouseList", map,page);
+			Map<String, Object> map) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveHouseList", map);
 	}
 
 
 
 	@Override
 	public List<MortgageReserveRes> queryMortgageReserveCarList(
-			Map<String, Object> map, Page page) {
-		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveCarList", map,page);
+			Map<String, Object> map) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveCarList", map);
 	}
 
 
