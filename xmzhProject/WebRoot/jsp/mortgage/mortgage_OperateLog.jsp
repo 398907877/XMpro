@@ -1,9 +1,15 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@page  language="java" import="java.util.*,com.gotop.util.time.TimeUtil"%>
 <%@include file="/common/common.jsp"%>
 <%@include file="/common/skins/skin0/component.jsp"%>
 <h:css href="/css/style1/style-custom.css" />
 <script src="<%=request.getContextPath() %>/common/gotop/jquery.min.js"></script>
+<% 
 
+String str_date = TimeUtil.today();
+
+
+%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -27,10 +33,10 @@
 					<td>
 					从
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="airTime" name="mortgageLog.airTime" 
-					property="mortgageLog.airTime" /> 
+					property="mortgageLog.airTime" value="<%=str_date%>"/> 
 					到
 					<w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="stopTime" name="mortgageLog.stopTime" 
-					property="mortgageLog.stopTime" /></td>				
+					property="mortgageLog.stopTime" value="<%=str_date%>"/></td>				
 				</tr>
 				<tr class="form_bottom">
 						<td colspan="6" class="form_bottom">
@@ -146,17 +152,37 @@
 		//清空
 		function clears(){
 
+			//清空JSP页面时间控件显示的值,将当前时间填入
+			var aaa=<%=str_date%>;
+            var date=new Date();
+            var year = date.getFullYear();  
+            var month = date.getMonth();  
+            var day = date.getDate();  
+            month = month + 1;  
+            if (month < 10) month = '0' + month;  
+            if (day < 10) day = '0' + day;  
+            var str = year + '-' + month + '-' + day;
+            $("#airTime_input").val(str);
+            $("#stopTime_input").val(str);
+
+            $id("airTime").value=str;
+            $id("stopTime").value=str;
+
+			
 			$id("operateType").value="";
 			$id("projectNumber").value="";
 			$("#operateType").val("");
 		
 			//清空JSP页面时间控件显示的值
-			$("#airTime_input").val("");
-			$("#stopTime_input").val("");
+			//$("#airTime_input").val("");
+			//$("#stopTime_input").val("");
 
 			//清空传入后台的时间控件的值
-			$name("mortgageLog.airTime").value = "";
-			$name("mortgageLog.stopTime").value = "";
+			//$name("mortgageLog.airTime").value = "";
+			//$name("mortgageLog.stopTime").value = "";
+			$name("mortgageLog.airTime").value = aaa;
+			$name("mortgageLog.stopTime").value = aaa;
+			
 		
 		}
 		

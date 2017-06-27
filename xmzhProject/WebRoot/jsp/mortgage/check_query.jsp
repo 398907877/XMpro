@@ -33,10 +33,10 @@ String str_date = TimeUtil.today();
 					<td width="30%">
 					从	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeStart" name="loanInfo.inTimeStart" 
-					property="loanInfo.inTimeStart" /> 
+					property="loanInfo.inTimeStart" value="<%=str_date%>"/> 
                                                             到
 					    <w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeEnd" name="loanInfo.inTimeEnd" 
-					property="loanInfo.inTimeEnd" /></td>
+					property="loanInfo.inTimeEnd" value="<%=str_date%>"/></td>
 					<td class="form_label" align="right">是否超限：</td>
 					<td >
 						<!-- <select id="whetherOverrun" name="loanInfo.whetherOverrun" property="loanInfo.whetherOverrun" style="width:80px;">
@@ -100,7 +100,7 @@ String str_date = TimeUtil.today();
 						<th nowrap="nowrap">经办客户经理</th>
 						<th nowrap="nowrap">已借天数</th>
 						<th nowrap="nowrap">是否超限</th>
-						<!-- <th nowrap="nowrap">备注</th> -->
+						<th nowrap="nowrap">备注</th>
 					</tr>
 					
 						<l:iterate property="loanInfoList" id="idx" indexId="index">
@@ -142,9 +142,9 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								  <d:write iterateId="idx" property="whetherOverrun" dictTypeId="MORTGAGE_OVERRUN_TYPE"/>
 								</td>
-								<!-- <td nowrap="nowrap">
+								<td nowrap="nowrap">
 								   <b:write iterateId="idx" property="remark" />
-								</td> -->
+								</td>
 							</tr>
 						</l:iterate>
 						<tr>
@@ -188,7 +188,7 @@ String str_date = TimeUtil.today();
 						<th nowrap="nowrap">经办客户经理</th>
 						<th nowrap="nowrap">已借天数</th>
 						<th nowrap="nowrap">是否超限</th>
-						<!-- <th nowrap="nowrap">备注</th> -->
+						<th nowrap="nowrap">备注</th>
 					</tr>
 				
 						<l:iterate property="loanInfoNullList" id="idy" indexId="index">
@@ -226,9 +226,9 @@ String str_date = TimeUtil.today();
 								<td nowrap="nowrap">
 								   <d:write iterateId="idy" property="whetherOverrun" dictTypeId="MORTGAGE_OVERRUN_TYPE"/>
 								</td>
-								<!-- <td nowrap="nowrap">
+								<td nowrap="nowrap">
 								   <b:write iterateId="idy" property="remark" />
-								</td> -->
+								</td>
 							</tr>
 						</l:iterate>
 						
@@ -299,6 +299,7 @@ String str_date = TimeUtil.today();
     }
 	//清空
 	function clears(){
+		//清空JSP页面时间控件显示的值,将当前时间填入
 		var aaa=<%=str_date%>;
         var date=new Date();
         var year = date.getFullYear();  
@@ -308,15 +309,16 @@ String str_date = TimeUtil.today();
         if (month < 10) month = '0' + month;  
         if (day < 10) day = '0' + day;  
         var str = year + '-' + month + '-' + day;
-		  
-       // $("#queryTime_input").val("");
-		//清空传入后台的时间控件的值,将当前时间填入
-		//$name("loanInfo.queryTime").value =aaa;
-
-		$("#inTimeStart_input").val("");
-		$name("loanInfo.inTimeStart").value ="";
-		$("#inTimeEnd_input").val("");
-		$name("loanInfo.inTimeEnd").value ="";
+        $("#inTimeStart_input").val(str);
+        $("#inTimeEnd_input").val(str);
+        $id("inTimeStart").value=str;
+        $id("inTimeEnd").value=str;
+        $name("loanInfo.inTimeStart").value =aaa;
+		$name("loanInfo.inTimeEnd").value =aaa;
+		//$("#inTimeStart_input").val("");
+		//$name("loanInfo.inTimeStart").value ="";
+		//$("#inTimeEnd_input").val("");
+		//$name("loanInfo.inTimeEnd").value ="";
 		
 		$("#whetherOverrun").val("");
 		//清空JSP页面时间控件显示的值

@@ -26,7 +26,7 @@
 		<th height="34" width="100" align="center" class="form_label">是否外借</th>
 		<th height="34" width="100" align="center" class="form_label">操作人员</th>
 		<th height="34" width="100" align="center" class="form_label">交接人员</th>
-	<!-- <th height="34" width="100" align="center" class="form_label">备注</th> -->	
+	    <th height="34" width="100" align="center" class="form_label">备注</th>
 	</tr>
 	<l:iterate property="mortgageLists" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
@@ -66,9 +66,9 @@
 			  <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="nextName"/>
 			  </td>
-			<!--  <td style="vnd.ms-excel.numberformat:@">
+			<td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="operatingRemark"/>
-			  </td> --> 
+			  </td>
 			</tr>
 			</l:iterate>
 		</table>

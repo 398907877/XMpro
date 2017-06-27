@@ -235,9 +235,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 			//System.out.println("注销是否入库："+mortgageList.getCheckboxStatus());
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveHouseInOutList(map, page);
@@ -288,9 +288,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}///else{
+			//	map.put("status", "1");
+			//}
 		}
 		lists = mortgageReserveHouseDao.queryMortgageReserveCarInOutList(map, page);
 		return lists;
@@ -346,9 +346,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 		}
 		lists=mortgageReserveHouseDao.queryMortgageReserveHouseInOutForExcel(map);
 		return lists;
@@ -404,9 +404,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 		}
 		return mortgageReserveHouseDao.queryMortgageReserveCarInOutForExcel(map);
 	}
@@ -460,9 +460,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 		}
 		return mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutForExcel(map);
 	}
@@ -515,9 +515,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 		}
 		return mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutForExcel(map);
 	}
@@ -561,9 +561,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+			//}
 		}
 		//外借情况查询
 		if ("1".equals(mortgageList.getOperatingMatters())) {
@@ -613,9 +613,9 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 					&&!"".equals(mortgageList.getCheckboxStatus())) {
 						map.put("checkBoxStatus", mortgageList.getCheckboxStatus());
 						map.put("status", "2");
-			}else{
-				map.put("status", "1");
-			}
+			}//else{
+			//	map.put("status", "1");
+		//	}
 		}
 		//外借情况查询
 		if ("1".equals(mortgageList.getOperatingMatters())) {

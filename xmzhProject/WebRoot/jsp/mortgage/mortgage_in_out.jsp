@@ -28,11 +28,11 @@ String str_date = TimeUtil.today();
 						<d:select id="mortgageType" dictTypeId="MORTGAGE_RESERVE_TYPE" name="mortgageList.mortgageType" property="mortgageList.mortgageType"  style="width:80px;">	
 						</d:select>
 					</td>
-					<td class="form_label" align="right" width="20%">开始时间：</td>
+					<td class="form_label" align="right" width="20%">操作时间：</td>
 					<td colspan="1"  width="30%">
-					从<w:date format="yyyy-MM-dd"submitFormat="yyyyMMdd" id="d1" name="mortgageList.operatingTime" property="mortgageList.operatingTime" />
+					从<w:date format="yyyy-MM-dd"submitFormat="yyyyMMdd" id="d1" name="mortgageList.operatingTime" property="mortgageList.operatingTime" value="<%=str_date%>"/>
 					到
-					<w:date format="yyyy-MM-dd"submitFormat="yyyyMMdd" id="d2" name="mortgageList.operatingEndTime" property="mortgageList.operatingEndTime" />
+					<w:date format="yyyy-MM-dd"submitFormat="yyyyMMdd" id="d2" name="mortgageList.operatingEndTime" property="mortgageList.operatingEndTime" value="<%=str_date%>"/>
 					</td>
 					<td class="form_label" align="right">出入库：</td>
 					<td >
@@ -210,6 +210,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>	
+		  <th nowrap="nowrap" style="text-align: center">备注</th>	
 		</tr>
 		
 			<l:iterate property="mortgageLists" id="issued">
@@ -241,6 +242,9 @@ String str_date = TimeUtil.today();
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="operatingRemark"/>			    
+			  </td>
 			</tr>
 			</l:iterate>
 		      </tbody>
@@ -256,7 +260,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
-		<!--   <th nowrap="nowrap" style="text-align: center">备注</th> -->
+		  <th nowrap="nowrap" style="text-align: center">备注</th> 
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
@@ -289,11 +293,9 @@ String str_date = TimeUtil.today();
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
-			 <!--  <td nowrap="nowrap" style="text-align: center">
-			    
+			 <td nowrap="nowrap" style="text-align: center">	    
 			    	<b:write iterateId="issued" property="operatingRemark"/>
-			    </div>
-			  </td> --> 
+			  </td>
 			</tr>
 			</l:iterate>
 		 
@@ -314,7 +316,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
-		<!--  <th nowrap="nowrap" style="text-align: center">备注</th> --> 
+		<th nowrap="nowrap" style="text-align: center">备注</th>
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
@@ -355,11 +357,9 @@ String str_date = TimeUtil.today();
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="nextName"/>			    
 			  </td>
-			 <!--  <td nowrap="nowrap" style="text-align: center">
-			    
-			    	<b:write iterateId="issued" property="operatingRemark"/>
-			    </div>
-			  </td> --> 
+			<td nowrap="nowrap" style="text-align: center">		    
+			    	<b:write iterateId="issued" property="operatingRemark"/>   
+			  </td>
 			</tr>
 			</l:iterate>
 		
@@ -379,6 +379,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">外借是否归还</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
+		  <th nowrap="nowrap" style="text-align: center">备注</th>
 		</tr>
 			<l:iterate property="mortgageLists" id="issued">
 			<tr class="<l:output evenOutput='EOS_table_row' oddOutput='EOS_table_row_o'  />" id="issuedTr">
@@ -411,6 +412,9 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="nextName"/>
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="operatingRemark"/>
 			  </td>
 			</tr>
 			</l:iterate>
@@ -552,12 +556,26 @@ String str_date = TimeUtil.today();
       
 		//清空
 		function clears(){
+			//清空JSP页面时间控件显示的值,将当前时间填入
+			var aaa=<%=str_date%>;
+            var date=new Date();
+            var year = date.getFullYear();  
+            var month = date.getMonth();  
+            var day = date.getDate();  
+            month = month + 1;  
+            if (month < 10) month = '0' + month;  
+            if (day < 10) day = '0' + day;  
+            var str = year + '-' + month + '-' + day;
+            $("#d1_input").val(str);
+            $("#d2_input").val(str);
+            $id("d1").value=str;
+            $id("d2").value=str;
 			
-			$("#d1_input").val("");
-			$("#d2_input").val("");
+			//$("#d1_input").val("");
+			//$("#d2_input").val("");
 						
-			$id("d1").value="";
-			$id("d2").value="";
+			//$id("d1").value="";
+			//$id("d2").value="";
 
 			$("#mortgageType").val("");
 			$("#operatingType").val("");
@@ -565,8 +583,10 @@ String str_date = TimeUtil.today();
 			$("#status").val("");
 			
 			//清空传入后台的时间控件的值,将当前时间填入
-			$name("mortgageList.operatingTime").value ="";
-			$name("mortgageList.operatingEndTime").value ="";
+			//$name("mortgageList.operatingTime").value ="";
+			//$name("mortgageList.operatingEndTime").value ="";
+			$name("mortgageList.operatingTime").value =aaa;
+			$name("mortgageList.operatingEndTime").value =aaa;
 
 			$("input[name='mortgageList.checkboxStatus']:checkbox:checked").each(
 					function() {
@@ -657,6 +677,15 @@ String str_date = TimeUtil.today();
 		//明细
 		function detail()
 		{
+			//if($id("d1").value == "" || $id("d1").value ==null ){                
+   			// alert("开始时间不能为空！");
+   			// return;
+   		//}
+   	   // if($id("d2").value == "" || $id("d2").value ==null){
+    		//	 alert("截止时间不能为空！");
+    		//	 return;
+       //  }
+       		
 			var frm = $name("appQuery");
 			frm.action="/mortgage/mortgageReserveHouseAction_queryMortgageQueryInOutForDetail.action";
 			frm.submit();
