@@ -665,7 +665,7 @@ select
                o.mortgage_type,
                decode(o.loan_type, 7, 7, 8) loan_type,
                count(*) NUMS
-          from t_mortgage_house_info g
+          from t_mortgage_car_info g
           left join t_warrants_info o
             on g.warrants_id = o.id
          where o.mortgage_type = '2' and o.status = '1'
@@ -825,7 +825,7 @@ select
                o.mortgage_type,
                decode(o.loan_type, 7, 7, 8) loan_type,
                count(*) NUMS
-          from t_mortgage_house_info g
+          from t_mortgage_car_info g
           left join t_warrants_info o
             on g.warrants_id = o.id
          where o.mortgage_type = '2' and o.status = '1'

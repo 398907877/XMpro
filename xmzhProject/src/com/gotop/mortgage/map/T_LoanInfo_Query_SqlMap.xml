@@ -71,7 +71,7 @@ from(
                         a.BORROWER_NUMS,
                         d.ORG_CODE,
                         d.MANGER_NAME,
-                        ceil(to_char(round(sysdate -
+                        trunc(to_char(round(sysdate -
                                       to_date(a.INSERT_TIME,
                                               'yyyy-mm-dd hh24:mi:ss'),
                                       2),
@@ -149,11 +149,11 @@ from(
                         a.BORROWER_NEXT_NAME,
                         d.ORG_CODE,
                         d.MANGER_NAME,
-                        to_char(round(sysdate -
+                        trunc(to_char(round(sysdate -
                                       to_date(a.INSERT_TIME,
                                               'yyyy-mm-dd hh24:mi:ss'),
                                       2),
-                                'fm99990.0099') as ALREADYLOANDAY,
+                                'fm99990.0099')) as ALREADYLOANDAY,
                         a.REMARK
                    from T_MORTGAGE_LIST a
                    left join T_MORTGAGE_CAR_INFO c
