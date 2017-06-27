@@ -27,13 +27,7 @@
 				   </td>
 				</tr> -->
 				<tr class="form_bottom">
-						<td colspan="6" class="form_bottom">
-						    <b:message key="l_display_per_page"></b:message>
-					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
-					        <input type="hidden" name="page.begin" value="0">
-					        <input type="hidden" name="page.isCount" value="true">
-							<input id="querys" type="submit" value="查 询" class="button" >
-							<input type="button" value="清 空" class="button" onclick="clears();"></td>
+						<td colspan="6" class="form_bottom"></td>
 					</tr>			
 			</table>
 		</w:panel>
@@ -252,7 +246,7 @@
     			}
     		    showBorrowerNums(id,operatingId,testParam);
     			var inBorrowerNums="";
-    			var inBorrowerLogInfo="";
+    			var inBorrowerLogInfo=$("#inBorrowerLogInfo").val();
     			var insertTime="";
     			var signType="";
     			var status=$("#status").val();
@@ -266,6 +260,14 @@
     			    alert("抵押品已领取,不能进行入库处理");
     			    return;
     			  }
+    			  if(afterMortgageStatus==3&&param==1){
+    			    alert("抵押品已领取,不能进行出库处理");
+    			    return;
+    			  }
+    			  if(afterMortgageStatus==1&&param==1){
+    			    alert("抵押品不在库,不能进行出库处理");
+    			    return;
+    			  }
     			  if(afterMortgageStatus==1&&param==2){
     			    alert("抵押品不在库,不能进行入库处理");
     			    return;
@@ -273,7 +275,8 @@
     			  if(param==1&&inBorrowerLogInfo==2&&afterMortgageStatus==2&&status==2){
     			    signType=2;
     			  }
-    			alert(signType);
+    			  
+    			  
     			}
     			
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId;
@@ -286,7 +289,6 @@
     			if(param==2){
     			    textName="入库处理";
     			    inBorrowerNums=$("#inBorrowerNums").val();
-    			    inBorrowerLogInfo=$("#inBorrowerLogInfo").val();
     			    insertTime=$("#insertTime").val();
     			    operatingMatters=$("#operatingMatters").val();
 			        url=url+"&mortgageReserveOut.inBorrowerNums="+inBorrowerNums+"&mortgageReserveOut.inBorrowerLogInfo="+inBorrowerLogInfo+"&mortgageReserveOut.insertTime="+insertTime+"&mortgageReserveOut.operatingMatters="+operatingMatters;

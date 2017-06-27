@@ -269,6 +269,11 @@ public class MortgageReserveService implements IMortgageReserveService {
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
     		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
 			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
+			String mortgageType= mortgageReserve.getMortgageType();
+			//判断是否已经有记录了
+			isLog(pkey,mortgageType);
+			String empName=muo.getEmpname();
+			resMortgageReserveLogMap(mortgageReserve,mortgageReserveHouse,mortgageReserveCar,empName,userID);
 			result=mortgageReserveDao.updMortgage(map);
             try {
    	    		 //上传文件,不为空时
@@ -281,7 +286,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 					e.printStackTrace();
 			}
     		if(result){
-				String mortgageType= mortgageReserve.getMortgageType();
 				String logName= "库存变更押品类型为房产时";
 				if("1".equals(mortgageType)){
 	    			if(mortgageReserveHouse.getId()!=null&&mortgageReserveHouse.getId()!=""){
@@ -296,10 +300,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 				}
 				if(result){
 					String operatingType="3";//库存变更
-					//判断是否已经有记录了
-					isLog(pkey,mortgageType);
-					String empName=muo.getEmpname();
-					resMortgageReserveLogMap(mortgageReserve,mortgageReserveHouse,mortgageReserveCar,empName,userID);
 					//插入日志
 					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, logName);
 				}

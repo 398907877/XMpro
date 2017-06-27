@@ -73,10 +73,10 @@
 			   <td style="vnd.ms-excel.numberformat:@">
 			     <b:write iterateId="id1" property="BORROWERCONTRACTNO"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			   <td>
 			     <b:write iterateId="id1" property="LOANYEARS"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			   <td >
 			     <b:write iterateId="id1" property="RECORDVALUE"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
@@ -112,7 +112,7 @@
 			   <td style="vnd.ms-excel.numberformat:@">
 			     <b:write iterateId="id1"  property="PROPERTYADDRES"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			   <td >
 			     <b:write iterateId="id1"  property="PROPERTYNUMS"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">

@@ -18,7 +18,7 @@
 		    <tr>
 	          <td  colspan="4" style="text-align: center;font-weight:bold;font-size:12pt;height:35px;background-color: rgb(145, 186, 221);" >
 	        		权证的基本信息
-				<h:hidden id="id" property="mortgageReserve.id"  name="mortgageReserve.id"/>
+				<h:hidden id="warrantsId" property="mortgageReserve.id"  name="mortgageReserve.id"/>
 				<h:hidden id="mortgageType" property="mortgageReserve.mortgageType"  name="mortgageReserve.mortgageType"/>
 				<h:hidden id="projectNumber" property="mortgageReserve.projectNumber"  name="mortgageReserve.projectNumber"/>
 				<h:hidden id="tmpOtherWarrantsNumber" property="mortgageReserve.tmpOtherWarrantsNumber"  name="mortgageReserve.tmpOtherWarrantsNumber"/>

@@ -14,6 +14,7 @@
 %>
 <table width="98%" border="1" cellspacing="1" cellpadding="1">
 	<tr height="34">
+		<th height="34" width="100" align="center" class="form_label">入库时间</th>
 		<th height="34" width="100" align="center" class="form_label">他项类型</th>
 		<th height="34" width="100" align="center" class="form_label">库存序号</th>
 		<th height="34" width="100" align="center" class="form_label">他项权证号</th>
@@ -46,6 +47,9 @@
 	<l:iterate property="mortgageReserveList" id="id1">
 			<tr class="<l:output evenOutput='EOS_table_row' />" id="id1">
 			  <td style="vnd.ms-excel.numberformat:@">
+			    	<b:write  iterateId="id1"  property="INSERTTIME"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
 			    	<d:write  iterateId="id1" dictTypeId="OTHER_TYPE_VIEW" property="OTHERTYPE"/>
 			  </td>
 			  <td style="vnd.ms-excel.numberformat:@">
@@ -75,10 +79,10 @@
 			   <td style="vnd.ms-excel.numberformat:@">
 			     <b:write iterateId="id1" property="BORROWERCONTRACTNO"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			   <td >
 			     <b:write iterateId="id1" property="LOANYEARS"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			   <td >
 			     <b:write iterateId="id1" property="RECORDVALUE"/>
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">

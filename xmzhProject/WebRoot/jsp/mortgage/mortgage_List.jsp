@@ -135,8 +135,9 @@
 				<viewlist id="e2c61865-3b56-470d-bd42-fff792fb9493">
 				<h:form name="page_form"
 					action="/mortgage/mortgageReserveAction_queryMortgageReserveList.action" method="post">
-			 <h:hiddendata property="mortgageReserveRes"/>  
-			 <h:hidden id="testmortgageType" property="mortgageReserve.mortgageType"/>  
+			 <h:hiddendata property="mortgageReserve"/>  
+			 <h:hiddendata property="mortgageReserveHouse"/> 
+			 <h:hiddendata property="mortgageReserveCar"/> 
 
             <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
@@ -248,7 +249,6 @@
 	 
 	  window.onload = function () {
 	     var val=$("#mortgageType").val();
-	     $("#testmortgageType").val(val)
            init();
 
         };
@@ -294,6 +294,7 @@
 
 		//清空
 		function clears(){
+           $id("otherType").value="";
            $id("projectNumber").value="";
            $id("status").value="";
            $id("borrowerName").value="";

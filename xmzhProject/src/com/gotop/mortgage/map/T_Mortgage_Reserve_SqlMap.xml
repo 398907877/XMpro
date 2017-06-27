@@ -1157,9 +1157,10 @@ select o.id,
        kk.purchase_number PURCHASENUMBER,
        kk.remark REMARK,
        kk.no_register_sign NOREGISTERSIGN,
+       kk.INSERTTIME,
        kk.status STATUS,
        kk.after_mortgage_status AFTER_MORTGAGE_STATUS,
-       kk.insert_time INSERTTIME,
+       
        <isEqual property="mortgageType" compareValue="1">
        kk.property_no PROPERTYNO,
        kk.property_name PROPERTYNAME,
@@ -1167,7 +1168,6 @@ select o.id,
        kk.property_addres PROPERTYADDRES,
        kk.property_nums PROPERTYNUMS,
        kk.property_date PROPERTYDATE,
-       row_number() OVER(PARTITION BY kk.id ORDER BY kk.id,kk.property_no) RN
        </isEqual>
        
        <isEqual property="mortgageType" compareValue="2">
@@ -1179,8 +1179,8 @@ select o.id,
        kk.car_invoiceno CARINVOICENO,
        kk.car_duesno CARDUESNO,
        kk.car_safeno CARSAFENO,
-       row_number() OVER(PARTITION BY kk.id ORDER BY kk.id,kk.car_registerno) RN
        </isEqual>
+       row_number() OVER(PARTITION BY kk.id ORDER BY kk.project_number) RN
   FROM (select t.id ,
                t.mortgage_type,
                t.other_type,
@@ -1201,8 +1201,9 @@ select o.id,
                t.remark,
                t.no_register_sign,
                t.status,
+               to_char(to_date(t.insert_time, 'yyyy-mm-dd hh24:mi:ss'),
+                       'yyyy-mm-dd') INSERTTIME,
                t.after_mortgage_status,
-               t.insert_time,
                 <isEqual property="mortgageType" compareValue="1">
                o.property_no,
                o.property_name,
@@ -1309,7 +1310,6 @@ select o.id,
 		  from t_mortgage_car_info o
 		 where kk.id=o.warrants_id and o.car_safeno like '%$carSafeNo$%')
 	 </isNotNull>
-    order by kk.project_number
   </select>  
 	
 	
@@ -1343,6 +1343,7 @@ select o.id,
        gg.property_no       PROPERTYNO,
        gg.next_name         NEXTNAME,
        gg.property_name     PROPERTYNAME,
+       gg.operating_remark  OPERATINGREMARK,
        ee.empname           EMPNAME
   from (select d.id ,
                d.warrants_id,
@@ -1390,6 +1391,7 @@ select o.id,
        gg.car_no CARNO,
        gg.car_name CARNAME,
        gg.next_name NEXTNAME,
+       gg.operating_remark  OPERATINGREMARK,
        ee.empname EMPNAME 
         from
 (select d.id,
@@ -1403,7 +1405,7 @@ select o.id,
        b.car_name,
        a.operating_userid ,
        d.borrower_next_name  next_name,
-       d.REMARK
+       d.REMARK  operating_remark
   from T_MORTGAGE_LIST d
   left join T_MORTGAGE_CAR_INFO b
     on d.warrants_id = b.warrants_id
@@ -1470,7 +1472,7 @@ select o.id,
        kk.car_duesno CARDUESNO,
        kk.car_safeno CARSAFENO,
        </isEqual>
-       row_number() OVER(PARTITION BY kk.id ORDER BY kk.id,kk.property_no) RN
+       row_number() OVER(PARTITION BY kk.id ORDER BY kk.project_number) RN
   from T_WARRANTS_UPD_LOG kk
  where 1=1
 	 <isNotNull prepend="and" property="warrantsId" >
