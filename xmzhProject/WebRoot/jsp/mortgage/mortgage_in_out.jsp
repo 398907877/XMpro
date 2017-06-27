@@ -567,6 +567,11 @@ String str_date = TimeUtil.today();
 			//清空传入后台的时间控件的值,将当前时间填入
 			$name("mortgageList.operatingTime").value ="";
 			$name("mortgageList.operatingEndTime").value ="";
+
+			$("input[name='mortgageList.checkboxStatus']:checkbox:checked").each(
+					function() {
+						$(this).attr("checked", false);
+					});
 		}
 		
 		//汇总（统计）导出
