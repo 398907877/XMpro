@@ -563,11 +563,11 @@
          where t.mortgage_type = '1' and t.status = '1'
          GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+    <!--  <isNotNull prepend="and" property="statTime" >
          <![CDATA[
              gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
  
  union all 
@@ -619,11 +619,11 @@
          where o.mortgage_type = '1' and o.status = '1'
          GROUP BY INSERT_TIME,o.loan_type, o.other_type, o.mortgage_type) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+    <!-- <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull>-->
  GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
  
 	</select>
@@ -645,11 +645,11 @@ select
          where t.mortgage_type = '2' and t.status = '1'
          GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+   <!--  <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> --> 
  GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
  
   union all 
@@ -671,11 +671,11 @@ select
          where o.mortgage_type = '2' and o.status = '1'
          GROUP BY INSERT_TIME,o.loan_type, o.mortgage_type) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+    <!--  <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())
 	</select>
 	<!-- 库存查询 -->
@@ -725,11 +725,11 @@ select
          where t.mortgage_type = '1' and t.status = '1'
          GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE, T.OTHER_TYPE) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+    <!--  <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('房产','他项', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
  
  union all 
@@ -781,11 +781,11 @@ select
          where o.mortgage_type = '1' and o.status = '1'
          GROUP BY INSERT_TIME,o.loan_type, o.other_type, o.mortgage_type) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+    <!--  <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('房产','产权证', gg.LOAN_TYPE, gg.OTHER_TYPE),(gg.LOAN_TYPE),())
  
   union all 
@@ -805,11 +805,11 @@ select
          where t.mortgage_type = '2' and t.status = '1'
          GROUP BY INSERT_TIME,T.MORTGAGE_TYPE, T.LOAN_TYPE) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+   <!--   <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('机动车','他项', gg.LOAN_TYPE),())
  
   union all 
@@ -831,11 +831,11 @@ select
          where o.mortgage_type = '2' and o.status = '1'
          GROUP BY INSERT_TIME,o.loan_type, o.mortgage_type) gg
          where 1 = 1
-     <isNotNull prepend="and" property="statTime" >
+   <!--   <isNotNull prepend="and" property="statTime" >
          <![CDATA[
             gg.INSERT_TIME <= '$statTime$'
                ]]>
-     </isNotNull>
+     </isNotNull> -->
  GROUP BY GROUPING SETS(('机动车','机动车登记证', gg.LOAN_TYPE),())
 	</select>
 	<select id="queryTime" parameterClass="java.util.HashMap" resultMap="timeMap">
