@@ -426,7 +426,7 @@
 					</isNotEmpty>
 					<isNotEmpty prepend="and" property="checkBoxStatus">
 					<![CDATA[
-						a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+						a.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
 		            where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
 		            and m.type='1' and m.operating_matters <> '2')
 					]]>
@@ -472,7 +472,7 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				a.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
@@ -557,7 +557,7 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				a.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				a.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
@@ -662,7 +662,7 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				d.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
@@ -723,7 +723,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				d.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
@@ -786,7 +786,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				d.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
@@ -847,7 +847,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				d.id in (select  t.id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
+				d.warrants_id in (select  t.warrants_id from T_MORTGAGE_LIST t,T_MORTGAGE_LIST m  
             where  t.warrants_id=m.warrants_id and t.type='1' and t.operating_matters='2'
             and m.type='1' and m.operating_matters <> '2')
 			]]>
