@@ -233,7 +233,7 @@
 				<!-- <td style="vnd.ms-excel.numberformat:@"> 
 					<b:write iterateId="id1" property="otherType" />
 				</td> -->
-				<td style="vnd.ms-excel.numberformat:@"> 
+				<td> 
 					<b:write iterateId="id1" property="num" />
 				</td>
 			</tr>
