@@ -54,7 +54,7 @@ String str_date = TimeUtil.today();
 						</d:select>
 					</td>
 					 -->
-					 <td class="form_label" align="right">注销是否入库：</td>
+					 <td class="form_label" align="right">已注销未入库：</td>
 					<td >
 						<!-- <input id="checkboxStatus" name="checkboxStatus" type="checkbox"  align="left"> -->
 						<input type="checkbox" name="mortgageList.checkboxStatus"  value="${mortgageList.checkboxStatus}" onclick="this.value=this.checked?1:-1" />
@@ -207,6 +207,8 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">产权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">产权人</th>
+		  <th nowrap="nowrap" style="text-align: center">产权证数</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>	
@@ -234,6 +236,12 @@ String str_date = TimeUtil.today();
 			    	<b:write iterateId="issued" property="propertyName"/>			    
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyNums"/>			    
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="otherWarrantsNumber"/>			   
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
@@ -258,6 +266,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
 		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
 		  <th nowrap="nowrap" style="text-align: center">备注</th> 
@@ -288,6 +297,9 @@ String str_date = TimeUtil.today();
 			    	<b:write iterateId="issued" property="carName"/>			    
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="operatingUserId"/>			    
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
@@ -311,8 +323,10 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">产权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">产权人</th>
+		  <th nowrap="nowrap" style="text-align: center">产权证数</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">外借数量</th>
-		  <th nowrap="nowrap" style="text-align: center">外借是否归还</th>
+		 <!--  <th nowrap="nowrap" style="text-align: center">外借是否归还</th> -->
 		  <th nowrap="nowrap" style="text-align: center">他项权证号</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
@@ -343,11 +357,17 @@ String str_date = TimeUtil.today();
 			    	<b:write iterateId="issued" property="propertyName"/>			  
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
-			    	<b:write iterateId="issued" property="borrowerNums"/>			    
+			    	<b:write iterateId="issued" property="propertyNums"/>			    
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
-			    	<d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>			    
+			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
 			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="borrowerNums"/>			    
+			  </td>
+			<!--  <td nowrap="nowrap" style="text-align: center">			    
+			    	<d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>			    
+			  </td> --> 
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="otherWarrantsNumber"/>
 			  </td>
@@ -375,8 +395,9 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
 		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">外借数量</th>
-		  <th nowrap="nowrap" style="text-align: center">外借是否归还</th>
+		<!--   <th nowrap="nowrap" style="text-align: center">外借是否归还</th> -->
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
 		  <th nowrap="nowrap" style="text-align: center">备注</th>
@@ -401,12 +422,15 @@ String str_date = TimeUtil.today();
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="carName"/>
 			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
+			  </td>
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="borrowerNums"/>   
 			  </td>
-			  <td nowrap="nowrap" style="text-align: center">    
+			 <!--  <td nowrap="nowrap" style="text-align: center">    
 			    	<d:write iterateId="issued" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>    
-			  </td>
+			  </td> -->
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="operatingUserId"/>
 			  </td>

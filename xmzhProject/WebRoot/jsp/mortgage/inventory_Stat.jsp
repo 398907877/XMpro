@@ -617,7 +617,16 @@ String str_date = TimeUtil.today();
 			}
 
           //导出excel 	
-            function excelExport(){
+        function excelExport(){
+          if($id("inTimeStart").value == "" || $id("inTimeStart").value ==null ){                
+   			 alert("开始时间不能为空！");
+			 return;
+		    }
+			if($id("inTimeEnd").value == "" || $id("inTimeEnd").value ==null){
+      			 alert("截止时间不能为空！");
+      			 return;
+      		}
+    		
    				//var statTime = $id("statTime").value;
    				var inTimeStart = $id("inTimeStart").value;
    				var inTimeEnd = $id("inTimeEnd").value;

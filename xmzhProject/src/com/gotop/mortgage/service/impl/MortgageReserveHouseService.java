@@ -564,13 +564,8 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			}//else{
 			//	map.put("status", "1");
 			//}
-		}
-		//外借情况查询
-		if ("1".equals(mortgageList.getOperatingMatters())) {
-			lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList1(map, page);
-		}else {
+		}	
 			lists = mortgageReserveHouseDao.queryMortgageReserveHouseDetailInOutList(map, page);
-		}
 		return lists;
 	}
 	@Override
@@ -617,12 +612,8 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 			//	map.put("status", "1");
 		//	}
 		}
-		//外借情况查询
-		if ("1".equals(mortgageList.getOperatingMatters())) {
-			lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList1(map, page);
-		}else {
 			lists = mortgageReserveHouseDao.queryMortgageReserveCarDetailInOutList(map, page);
-		}
+		
 		return lists;
 	}
     

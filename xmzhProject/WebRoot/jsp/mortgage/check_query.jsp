@@ -33,10 +33,10 @@ String str_date = TimeUtil.today();
 					<td width="30%">
 					从	
 					<w:date  format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeStart" name="loanInfo.inTimeStart" 
-					property="loanInfo.inTimeStart" value="<%=str_date%>"/> 
+					property="loanInfo.inTimeStart"/> 
                                                             到
 					    <w:date format="yyyy-MM-dd" submitFormat="yyyyMMdd" id="inTimeEnd" name="loanInfo.inTimeEnd" 
-					property="loanInfo.inTimeEnd" value="<%=str_date%>"/></td>
+					property="loanInfo.inTimeEnd"/></td>
 					<td class="form_label" align="right">是否超限：</td>
 					<td >
 						<!-- <select id="whetherOverrun" name="loanInfo.whetherOverrun" property="loanInfo.whetherOverrun" style="width:80px;">
@@ -309,22 +309,25 @@ String str_date = TimeUtil.today();
         if (month < 10) month = '0' + month;  
         if (day < 10) day = '0' + day;  
         var str = year + '-' + month + '-' + day;
-        $("#inTimeStart_input").val(str);
-        $("#inTimeEnd_input").val(str);
-        $id("inTimeStart").value=str;
-        $id("inTimeEnd").value=str;
-        $name("loanInfo.inTimeStart").value =aaa;
-		$name("loanInfo.inTimeEnd").value =aaa;
-		//$("#inTimeStart_input").val("");
-		//$name("loanInfo.inTimeStart").value ="";
-		//$("#inTimeEnd_input").val("");
-		//$name("loanInfo.inTimeEnd").value ="";
+      //  $("#inTimeStart_input").val(str);
+      //  $("#inTimeEnd_input").val(str);
+      //  $id("inTimeStart").value=str;
+      //  $id("inTimeEnd").value=str;
+      //  $name("loanInfo.inTimeStart").value =aaa;
+	//	$name("loanInfo.inTimeEnd").value =aaa;
 		
+		
+		$id("inTimeStart").value="";
+	    $id("inTimeEnd").value="";
+	    
 		$("#whetherOverrun").val("");
 		//清空JSP页面时间控件显示的值
-		//$("#queryTime_input").val("");
+		$("#inTimeStart_input").val("");
+		$("#inTimeEnd_input").val("");
 		//清空传入后台的时间控件的值
-		//$name("loanInfo.queryTime").value = "";
+		
+		$name("loanInfo.inTimeStart").value ="";	
+		$name("loanInfo.inTimeEnd").value ="";
 		
 	}
 

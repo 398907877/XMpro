@@ -73,19 +73,13 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 			Map<String, Object> map, Page page) {
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseDetailInOutList",map,page);
 	}
-	public List<MortgageList> queryMortgageReserveHouseDetailInOutList1(
-			Map<String, Object> map, Page page) {
-		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseDetailInOutList1",map,page);
-	}
+	
 	@Override
 	public List<MortgageList> queryMortgageReserveCarDetailInOutList(
 			Map<String, Object> map, Page page) {
 		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveCarDetailInOutList",map,page);
 	}
-	public List<MortgageList> queryMortgageReserveCarDetailInOutList1(
-			Map<String, Object> map, Page page) {
-		return this.queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveCarDetailInOutList1",map,page);
-	}
+	
 	@Override
 	public List<MortgageList> queryMortgageReserveCarDetailInOutForExcel(
 			Map<String, Object> map) {

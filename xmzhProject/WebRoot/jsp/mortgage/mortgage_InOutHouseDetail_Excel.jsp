@@ -21,6 +21,8 @@
 		<th height="34" width="100" align="center" class="form_label">库存序号</th>
 		<th height="34" width="100" align="center" class="form_label">产权证号</th>
 		<th height="34" width="100" align="center" class="form_label">产权人</th>
+		<th height="34" width="100" align="center" class="form_label">产权证数</th>
+		<th height="34" width="100" align="center" class="form_label">他项权证数</th>
 		<th height="34" width="200" align="center" class="form_label">他项权证号</th>
 		<th height="34" width="100" align="center" class="form_label">操作人员</th>
 		<th height="34" width="100" align="center" class="form_label">交接人员</th>
@@ -48,6 +50,12 @@
 			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="propertyName"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			   <b:write iterateId="id1" property="propertyNums"/>
+			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			   <b:write iterateId="id1" property="otherWarrantsNums"/>
 			  </td>
 			    <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="otherWarrantsNumber"/>

@@ -72,33 +72,28 @@ public class InventoryStatService implements IInventoryStatService {
 					inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
 				}
 			}
-		}	
+		}
 		
-		
-//		if (inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())) {
-//			map.put("statTime", inventoryStat.getStatTime());
-//			if(inserttime.equals(inventoryStat.getStatTime())){
-//				
-//				//inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
-//				if("1".equals(inventoryStat.getMortgageType())){
-//					inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatList(map,page);
-//				}
-//				if("2".equals(inventoryStat.getMortgageType())){
-//					inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatList(map,page);
-//				}
-//			}else{
-//				
-//				inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
-//			}
-//	    }else{
-//	    	map.put("statTime", inserttime);
-//	    	if("1".equals(inventoryStat.getMortgageType())){
+//		if(inventoryStat.getInTimeStart() !=null&&!"".equals(inventoryStat.getInTimeStart())){
+//			 map.put("inTimeStart", inventoryStat.getInTimeStart());
+//		}
+//		if (inventoryStat.getInTimeEnd() !=null&&!"".equals(inventoryStat.getInTimeEnd())) {
+//			 map.put("inTimeEnd", inventoryStat.getInTimeEnd());
+//		}
+//		//如果开始时间等于结束时间,并且是当天时间
+//		if(inventoryStat.getInTimeStart().equals(inventoryStat.getInTimeEnd()) && inventoryStat.getInTimeStart().equals(inserttime)){
+//			map.put("statTime", inventoryStat.getInTimeStart());
+//			if("1".equals(inventoryStat.getMortgageType())){
 //				inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatList(map,page);
 //			}
 //			if("2".equals(inventoryStat.getMortgageType())){
 //				inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatList(map,page);
 //			}
-//	    }
+//		}else{
+//			inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTable(map,page);
+//		}
+		
+
 
 				return inventoryStatLists2;
 	}
@@ -150,35 +145,8 @@ public class InventoryStatService implements IInventoryStatService {
 					}
 					
 				} catch (ParseException e) {
-					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 				}
-//				try {
-//					if(inserttime.equals(sdf1.format(sdf.parse(inventoryStat.getStatTime())))){
-//						
-//						//inventoryStatLists2 =inventoryStatDao.queryInventoryStatList(map,page);
-//						if("1".equals(inventoryStat.getMortgageType())){
-//							inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
-//						}else if("2".equals(inventoryStat.getMortgageType())){
-//							inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
-//						}else{
-//							inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
-//						}
-//					}else{
-//						System.out.println("aaaaaaaaaaHHH");
-//						inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTableForExcel(map);
-//					}
-//				} catch (ParseException e) {
-//					e.printStackTrace();
-//				}
-//		    }else{
-//		    	map.put("statTime", inserttime);
-//		    	if("1".equals(inventoryStat.getMortgageType())){
-//					inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
-//				}
-//				if("2".equals(inventoryStat.getMortgageType())){
-//					inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
-//				}
 		    }else{
 		    	try {
 					map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
@@ -187,6 +155,36 @@ public class InventoryStatService implements IInventoryStatService {
 				}
 		    	inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
 		    }
+			
+//			try {
+//			if(inventoryStat.getInTimeStart() !=null&&!"".equals(inventoryStat.getInTimeStart())){
+//				map.put("inTimeStart", sdf1.format(sdf.parse(inventoryStat.getInTimeStart())));
+//			}
+//			if (inventoryStat.getInTimeEnd() !=null&&!"".equals(inventoryStat.getInTimeEnd())) {
+//				map.put("inTimeEnd", sdf1.format(sdf.parse(inventoryStat.getInTimeEnd())));
+//			}
+//			//如果开始时间等于结束时间,并且是当天时间
+//			if(inventoryStat.getInTimeStart().equals(inventoryStat.getInTimeEnd()) && sdf1.format(sdf.parse(inventoryStat.getInTimeStart())).equals(inserttime)){
+//				map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getInTimeStart())));
+//				if("1".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryHouseInventoryStatListForExcel(map);
+//				}
+//				if("2".equals(inventoryStat.getMortgageType())){
+//					inventoryStatLists2 =inventoryStatDao.queryCarInventoryStatListForExcel(map);
+//				}
+//			}else{
+//				inventoryStatLists2 =inventoryStatDao.queryInventoryStatListByTableForExcel(map);
+//			}
+//			
+//			if(inventoryStat.getStatTime() !=null&&!"".equals(inventoryStat.getStatTime())){
+//				map.put("statTime", sdf1.format(sdf.parse(inventoryStat.getStatTime())));
+//				inventoryStatLists2 =inventoryStatDao.queryInventoryStatListForExcel(map);
+//			}
+//			  } catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//			
+			
 		
 		return inventoryStatLists2;
 	}

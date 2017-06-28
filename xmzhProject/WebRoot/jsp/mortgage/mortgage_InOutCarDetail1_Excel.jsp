@@ -21,8 +21,9 @@
 		<th height="34" width="100" align="center" class="form_label">库存序号</th>
 		<th height="34" width="100" align="center" class="form_label">车牌号</th>
 		<th height="34" width="100" align="center" class="form_label">车主姓名</th>
+		<th height="34" width="100" align="center" class="form_label">他项权证数</th>
 		<th height="34" width="100" align="center" class="form_label">外借数量</th>
-		<th height="34" width="100" align="center" class="form_label">是否外借</th>
+		<!-- <th height="34" width="100" align="center" class="form_label">是否外借</th> -->
 		<th height="34" width="100" align="center" class="form_label">操作人员</th>
 		<th height="34" width="100" align="center" class="form_label">交接人员</th>
 	<th height="34" width="100" align="center" class="form_label">备注</th>
@@ -50,12 +51,15 @@
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="carName"/>
 			  </td>
+			  <td style="vnd.ms-excel.numberformat:@">
+			   <b:write iterateId="id1" property="otherWarrantsNums"/>
+			  </td>
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="borrowerNums"/>
 			  </td>
-			   <td style="vnd.ms-excel.numberformat:@">
+			<!--  <td style="vnd.ms-excel.numberformat:@">
 			   <d:write iterateId="id1" dictTypeId="OUT_BORROWER_LOG" property="borrowerLog"/>
-			  </td>
+			  </td> -->
 			   <td style="vnd.ms-excel.numberformat:@">
 			   <b:write iterateId="id1" property="operatingUserId"/>
 			  </td>

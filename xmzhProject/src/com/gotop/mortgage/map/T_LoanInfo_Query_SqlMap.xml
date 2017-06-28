@@ -119,7 +119,7 @@ from(
       ) M left join
       OM_ORGANIZATION    Y
    on M.ORG_CODE = Y.ORGCODE 
-   order by M.INSERT_TIME desc
+   order by M.INSERT_TIME 
 	</select>
   <!-- 外借情况查询  机动车-->
  <select id="queryCarLoanInfoList" parameterClass="java.util.HashMap" resultMap="carLoanInfoMap">
@@ -199,6 +199,6 @@ from(
       OM_ORGANIZATION    Y
    on M.ORG_CODE = Y.ORGCODE
      
-     order by M.INSERT_TIME desc
+     order by M.INSERT_TIME 
 	</select>
 </sqlMap>
