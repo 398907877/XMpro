@@ -23,12 +23,21 @@ public interface IMortgageReserveDao {
 	
 	
 	/**
-	 * 查询抵押品库存导出
+	 * 查询抵押品房产类型库存导出
 	 * @param mortgageReserve
 	 * @param page
 	 * @return
 	 */
 	List<MortgageReserveRes> queryMortgageReserveListExcel(Map<String, Object> map);
+	
+	
+	/**
+	 * 查询抵押品机动车类型库存导出
+	 * @param mortgageReserve
+	 * @param page
+	 * @return
+	 */
+	List<MortgageReserveRes> queryMortgageReserveListCarExcel(Map<String, Object> map);
 
 	/**
 	 * 查询权证信息详情

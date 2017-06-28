@@ -1160,26 +1160,14 @@ select o.id,
        kk.INSERTTIME,
        kk.status STATUS,
        kk.after_mortgage_status AFTER_MORTGAGE_STATUS,
-       
-       <isEqual property="mortgageType" compareValue="1">
+      
        kk.property_no PROPERTYNO,
        kk.property_name PROPERTYNAME,
        kk.property_cardno PROPERTYCARDNO,
        kk.property_addres PROPERTYADDRES,
        kk.property_nums PROPERTYNUMS,
        kk.property_date PROPERTYDATE,
-       </isEqual>
-       
-       <isEqual property="mortgageType" compareValue="2">
-       kk.car_name CARNAME,
-       kk.car_cardno CARCARDNO,
-       kk.car_registerno CARREGISTERNO,
-       kk.car_no CARNO,
-       kk.car_frameno CARFRAMENO,
-       kk.car_invoiceno CARINVOICENO,
-       kk.car_duesno CARDUESNO,
-       kk.car_safeno CARSAFENO,
-       </isEqual>
+     
        row_number() OVER(PARTITION BY kk.id ORDER BY kk.project_number) RN
   FROM (select t.id ,
                t.mortgage_type,
@@ -1204,33 +1192,16 @@ select o.id,
                to_char(to_date(t.insert_time, 'yyyy-mm-dd hh24:mi:ss'),
                        'yyyy-mm-dd') INSERTTIME,
                t.after_mortgage_status,
-                <isEqual property="mortgageType" compareValue="1">
                o.property_no,
                o.property_name,
                o.property_cardno,
                o.property_addres,
                o.property_nums,
                o.property_date
-               </isEqual>
                
-                <isEqual property="mortgageType" compareValue="2">
-               o.car_name,
-               o.car_cardno,
-               o.car_registerno,
-               o.car_no,
-               o.car_frameno,
-               o.car_invoiceno,
-               o.car_duesno,
-               o.car_safeno
-               </isEqual>
           from t_warrants_info t
           left join
-            <isEqual property="mortgageType" compareValue="1">
            t_mortgage_house_info o
-           </isEqual>
-            <isEqual property="mortgageType" compareValue="2">
-           t_mortgage_car_info o
-           </isEqual>
             on t.id = o.warrants_id) kk
   left join OM_ORGANIZATION om
     on kk.org_code = om.ORGCODE
@@ -1280,6 +1251,115 @@ select o.id,
 	 where kk.id=h.warrants_id and  h.property_addres like '%$propertyAddres$%'
 	  )
 	 </isNotNull>
+  </select>  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	  
+  <select id="queryMortgageReserveListCarExcel" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	select kk.id,
+	   kk.mortgage_type,
+       kk.other_type OTHERTYPE,
+       kk.project_number PROJECTNUMBER,
+       kk.other_warrants_number OTHERWARRANTSNUMBER,
+       kk.other_warrants_date OTHERWARRANTSDATE,
+       kk.borrower_name BORROWERNAME,
+       kk.borrower_cardno BORROWERCARDNO,
+       OM.ORGNAME,
+       kk.manger_name MANGERNAME,
+       kk.loan_type LOANTYPE,
+       kk.borrower_contractno BORROWERCONTRACTNO,
+       kk.loan_years LOANYEARS,
+       kk.record_value RECORDVALUE,
+       kk.packet_number PACKETNUMBER,
+       kk.next_name NEXTNAME,
+       kk.purchase_number PURCHASENUMBER,
+       kk.remark REMARK,
+       kk.no_register_sign NOREGISTERSIGN,
+       kk.INSERTTIME,
+       kk.status STATUS,
+       kk.after_mortgage_status AFTER_MORTGAGE_STATUS,
+    
+       kk.car_name CARNAME,
+       kk.car_cardno CARCARDNO,
+       kk.car_registerno CARREGISTERNO,
+       kk.car_no CARNO,
+       kk.car_frameno CARFRAMENO,
+       kk.car_invoiceno CARINVOICENO,
+       kk.car_duesno CARDUESNO,
+       kk.car_safeno CARSAFENO,
+       row_number() OVER(PARTITION BY kk.id ORDER BY kk.project_number) RN
+  FROM (select t.id ,
+               t.mortgage_type,
+               t.other_type,
+               t.project_number,
+               t.other_warrants_number,
+               t.other_warrants_date,
+               t.borrower_name,
+               t.borrower_cardno,
+               t.org_code,
+               t.manger_name,
+               t.loan_type,
+               t.borrower_contractno,
+               t.loan_years,
+               t.record_value,
+               t.packet_number,
+               t.next_name,
+               t.purchase_number,
+               t.remark,
+               t.no_register_sign,
+               t.status,
+               to_char(to_date(t.insert_time, 'yyyy-mm-dd hh24:mi:ss'),
+                       'yyyy-mm-dd') INSERTTIME,
+               t.after_mortgage_status,
+               o.car_name,
+               o.car_cardno,
+               o.car_registerno,
+               o.car_no,
+               o.car_frameno,
+               o.car_invoiceno,
+               o.car_duesno,
+               o.car_safeno
+          from t_warrants_info t
+          left join
+           t_mortgage_car_info o
+            on t.id = o.warrants_id) kk
+  left join OM_ORGANIZATION om
+    on kk.org_code = om.ORGCODE
+ where 1 = 1
+	 <isNotNull prepend="and" property="mortgageType" >
+	  kk.mortgage_type='$mortgageType$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="projectNumber" >
+	  kk.project_number='$projectNumber$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="status" >
+	  kk.status='$status$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerName" >
+	  kk.borrower_name='$borrowerName$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="borrowerCardNo" >
+	  kk.borrower_cardno='$borrowerCardNo$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="otherWarrantsNumber" >
+	  kk.other_warrants_number='$otherWarrantsNumber$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="loanType" >
+	  kk.loan_type='$loanType$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="orgCode" >
+	  kk.org_code='$orgCode$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="noRegisterSign" >
+	  kk.no_register_sign='$noRegisterSign$'
+	 </isNotNull>
 	 <isNotNull prepend="and" property="carRegisterno" >
 	  exists (select o.warrants_id
 		  from t_mortgage_car_info o
@@ -1311,6 +1391,15 @@ select o.id,
 		 where kk.id=o.warrants_id and o.car_safeno like '%$carSafeNo$%')
 	 </isNotNull>
   </select>  
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

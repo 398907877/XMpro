@@ -936,6 +936,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 				map.put("status", "2");
 				map.put("afterMortgageStatus", "2");
 			}
+			mortgageReserveList=mortgageReserveDao.queryMortgageReserveListExcel(map);
 		}else if("2".equals(mortgageType)){
 			if(!"".equals(mortgageReserveCar.getCarRegisterNo())&&mortgageReserveCar.getCarRegisterNo()!=null){
 				map.put("carRegisterno", mortgageReserveCar.getCarRegisterNo());
@@ -955,8 +956,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 			if(!"".equals(mortgageReserveCar.getCarSafeNo())&&mortgageReserveCar.getCarSafeNo()!=null){
 				map.put("carSafeNo", mortgageReserveCar.getCarSafeNo());
 			}
+			mortgageReserveList=mortgageReserveDao.queryMortgageReserveListCarExcel(map);
 		}
-		mortgageReserveList=mortgageReserveDao.queryMortgageReserveListExcel(map);
 		return mortgageReserveList;
 	}
 	@Override

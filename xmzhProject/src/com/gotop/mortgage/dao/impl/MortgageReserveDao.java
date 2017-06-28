@@ -305,4 +305,13 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 		return mortgageReserve;
 	}
 
+
+
+
+	@Override
+	public List<MortgageReserveRes> queryMortgageReserveListCarExcel(
+			Map<String, Object> map) {
+		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveListCarExcel", map);
+	}
+
 }
