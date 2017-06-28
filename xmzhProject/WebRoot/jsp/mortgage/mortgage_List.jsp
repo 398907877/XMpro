@@ -177,6 +177,7 @@
 								<td align="center" nowrap="nowrap" width="5%">
 								<w:rowRadio>
 										<h:param name='id' iterateId='id2' property='WARRANTSID' />
+										<h:param name='warrantsidStatus' iterateId='id2' property='STATUS' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -270,6 +271,7 @@
         $("#loanType_jdc").show();
         $("#loanType_fc").hide();
        }
+        clears();
         callBackFunc();
        }
 
@@ -389,6 +391,11 @@
 	  		}else{
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
+    			var warrantsidStatus=row.getParam("warrantsidStatus");
+    			if(warrantsidStatus==2){
+    			 alert("库存状态为注销,不能进行库存变更操作!");
+    			 return;
+    			}
 			    var url="/mortgage/mortgageReserveAction_toUpdColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
 			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存变更');
 			  }

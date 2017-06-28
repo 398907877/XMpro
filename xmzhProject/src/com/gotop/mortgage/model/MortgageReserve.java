@@ -28,6 +28,8 @@ public class MortgageReserve {
 	private String status;
 	private String afterMortgageStatus;
 	private String insertTime;
+	private String empId;
+	private String empName;
 	private String updateTime;
 	private String logOutSign;
 	private String otherTypeFC;
@@ -39,6 +41,18 @@ public class MortgageReserve {
 	private String propertyName;//产权人姓名
 	private String propertyCardNo;//产权人身份证
 	
+	public String getEmpId() {
+		return empId;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	public String getOrgName() {
 		return orgName;
 	}

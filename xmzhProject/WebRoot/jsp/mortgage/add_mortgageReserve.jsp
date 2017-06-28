@@ -58,7 +58,7 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">他项登记日期：</td>
 				<td colspan="1" width="30%">
-				<w:date id="otherWarrantsDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserve.otherWarrantsDate" />
+				<h:text id="otherWarrantsDate"  property="mortgageReserve.otherWarrantsDate" /> <font style="color: red">(格式：20170101)</font>
 				</td>			
 				<td class="form_label" align="right" width="15%">借款人姓名：</td>
 				<td colspan="1" width="30%">
@@ -68,7 +68,7 @@
 			<tr>	
 				<td class="form_label" align="right" width="17%">借款人身份证号：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo"/><font style="color: red">*</font>
+				<h:text id="borrowerCardNo" property="mortgageReserve.borrowerCardNo"/>
 				</td>		
 				<td class="form_label" align="right" width="15%">经办机构：</td>
 				<td colspan="1" width="30%">
@@ -80,7 +80,7 @@
 			<tr>	
 				<td class="form_label" align="right" width="15%">经办客户经理：</td>
 				<td colspan="1" width="30%">
-				<h:text id="mangerName" property="mortgageReserve.mangerName"/><font style="color: red">*</font>
+				<h:text id="mangerName" property="mortgageReserve.mangerName"/>
 				</td>	
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">贷款种类：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
@@ -178,7 +178,7 @@
 				</td>	
 				<td class="form_label" align="right" width="17%">产权证填发日期：</td>
 				<td colspan="1" width="30%">
-				<w:date id="propertyDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserveHouse.propertyDate" />
+				<h:text id="propertyDate"  property="mortgageReserveHouse.propertyDate" /> <font style="color: red">(格式：20170101)</font>
 				</td>					
 			</tr>
 			</tbody>
@@ -351,6 +351,32 @@ function changeMortgageType(val){
 		
 	}
 	
+	
+	//清空
+		function clears(){
+           $id("otherType").value="";
+           $id("projectNumber").value="";
+           $id("status").value="";
+           $id("borrowerName").value="";
+           $id("borrowerCardNo").value="";
+           $id("propertyName").value="";
+           $id("propertyCardNo").value="";
+           $id("propertyNo").value="";
+           $id("otherWarrantsNumber").value="";
+           $id("propertyAddres").value="";
+           $id("loanType").value="";
+           $id("orgCode").value="";
+           $id("orgName").value="";
+           $id("logOutSign").value="";
+           $id("noRegisterSign").value="";
+           $id("carRegisterNo").value="";
+           $id("carNo").value="";
+           $id("carFrameNo").value="";
+           $id("carInvoiceNo").value="";
+           $id("carDuesNo").value="";
+           $id("carSafeNo").value="";
+		}
+	
 	//验证表单非空
     function check_sumbmit(){
         var flag=false;
@@ -375,24 +401,23 @@ function changeMortgageType(val){
 				$id("otherWarrantsNumber").focus();
 				return flag;
 			}
+			
+			var otherWarrantsDate=$id("otherWarrantsDate").value;
+				if(otherWarrantsDate!=""){
+					if(otherWarrantsDate.length !=8||!validatInteger(otherWarrantsDate)){
+				         alert("请输入正确的他项登记日期!");  
+					     $id("otherWarrantsDate").focus();
+					     return flag;
+				    }
+				}
 		   if($id("borrowerName").value == ""){
 				alert("借款人姓名不能为空！");
 				$id("borrowerName").focus();
 				return flag;
 			}
-		   if($id("borrowerCardNo").value == ""){
-				alert("借款人身份证号不能为空！");
-				$id("borrowerCardNo").focus();
-				return flag;
-			}
 		   if($id("orgCode").value == ""){
 				alert("经办机构不能为空！");
 				$id("orgCode").focus();
-				return flag;
-			}
-		   if($id("mangerName").value == ""){
-				alert("经办客户经理不能为空！");
-				$id("mangerName").focus();
 				return flag;
 			}
 			
@@ -476,6 +501,15 @@ function changeMortgageType(val){
 				     return flag;
 				  }
 				}
+				var propertyDate=$id("propertyDate").value;
+				if(propertyDate!=""){
+					if(propertyDate.length !=8||!validatInteger(propertyDate)){
+				         alert("请输入正确的产权证填发日期!");  
+					     $id("propertyDate").focus();
+					     return flag;
+				    }
+				}
+				
 			}else if($id("mortgageType").value == "2"){
 			   if($id("carName").value == ""){
 					alert("车主姓名不能为空！");
@@ -585,7 +619,7 @@ function changeMortgageType(val){
 					         $("#loanTypeJDC").val(obj.loanType);
 					       }
 					       $("#recordValue").val(obj.recordValue);
-					       file_app(obj.id)
+					       //file_app(obj.id)
 					      }
 				      
 				      },

@@ -55,7 +55,7 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">他项登记日期：</td>
 				<td colspan="1" width="30%">
-				<w:date id="otherWarrantsDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserve.otherWarrantsDate" />
+				<h:text id="otherWarrantsDate"  property="mortgageReserve.otherWarrantsDate" />
 				</td>		
 				<td class="form_label" align="right" width="15%">借款人姓名：</td>
 				<td colspan="1" width="30%">
@@ -180,7 +180,7 @@
 		            <h:text id="propertyNums"  size="5"  iterateId="id3" property="mortgageReserveHouse.propertyNums" value="${id3.PROPERTYNUMS }"  validateAttr="type=naturalNumber;"/>
 		            </td>
 		            <td nowrap="nowrap"> 
-		            <w:date  iterateId="id3"  submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserveHouse.propertyDate" value="${id3.PROPERTYDATE }" /> 
+		            <h:text  iterateId="id3"    property="mortgageReserveHouse.propertyDate" value="${id3.PROPERTYDATE }" validateAttr="type=naturalNumber;maxLength=8;"/> 
 		            </td>
 		        </tr>
 		       </l:iterate>

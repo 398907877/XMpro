@@ -12,15 +12,22 @@ public class MortgageReserveOut {
 	private String insertTime;
 	private String operatingId;
 	private String nextName;
+	private String tmpName;
 	private String outInType;
 	private String proNextName;//产权人栏
 	private String outBorrowerLog;//产权人栏
 	private String inBorrowerLog;//产权人栏
 	private String inBorrowerNums;//入库显示外借数量
 	private String inBorrowerLogInfo;//入库时显示外借操作事项
-	private String logRemark;//备注信息
+	private String logRemark;//备注信息  产权证数
 	private String signType;//标志出入库显示操作事项状态
 	
+	public String getTmpName() {
+		return tmpName;
+	}
+	public void setTmpName(String tmpName) {
+		this.tmpName = tmpName;
+	}
 	public String getSignType() {
 		return signType;
 	}

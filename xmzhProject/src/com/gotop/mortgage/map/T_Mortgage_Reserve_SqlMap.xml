@@ -45,7 +45,7 @@
        t.other_type OTHERTYPE,
        t.project_number PROJECTNUMBER,
        t.other_warrants_number OTHERWARRANTSNUMBER,
-       to_char(to_date(t.other_warrants_date,'yyyy-mm-dd'),'yyyy-mm-dd') OTHERWARRANTSDATE,
+       t.other_warrants_date OTHERWARRANTSDATE,
        t.borrower_name BORROWERNAME,
        t.borrower_cardno BORROWERCARDNO,
        t.org_code ORGCODE,
@@ -146,7 +146,7 @@
        t.other_type OTHERTYPE, 
        t.project_number PROJECTNUMBER,
        t.other_warrants_number OTHERWARRANTSNUMBER,
-       to_char(to_date(t.other_warrants_date,'yyyy-mm-dd'),'yyyy-mm-dd') OTHERWARRANTSDATE,
+       t.other_warrants_date OTHERWARRANTSDATE,
        t.borrower_name BORROWERNAME,
        t.borrower_cardno BORROWERCARDNO,
        t.org_code ORGCODE,
@@ -179,6 +179,9 @@
 	 <isNotNull prepend="and" property="projectNumber" >
 	  gg.PROJECTNUMBER='$projectNumber$'
 	 </isNotNull>
+	 <![CDATA[
+	  and rownum<2
+	    ]]>
   </select>  
   
   
@@ -211,7 +214,7 @@
        o.property_cardno PROPERTYCARDNO,
        o.property_addres PROPERTYADDRES,
        o.property_nums PROPERTYNUMS,
-       to_char(to_date(o.property_date,'yyyy-mm-dd'),'yyyy-mm-dd') PROPERTYDATE,
+       o.property_date PROPERTYDATE,
        rownum NOWCOUNT
   from t_mortgage_house_info o
  where 1=1
@@ -267,6 +270,9 @@
 	 </isNotNull>
 	 <isNotNull prepend="and" property="status" >
 	  t.status='$status$'
+	 </isNotNull>
+	 <isNotNull prepend="and" property="afterMortgageStatus" >
+	  t.after_mortgage_status='$afterMortgageStatus$'
 	 </isNotNull>
 	 <isNotNull prepend="and" property="borrowerName" >
 	  t.borrower_name like '%$borrowerName$%'
@@ -676,7 +682,7 @@
    ORG_NAME,
    empname,
    EMPID)
-select o.id,
+select    o.id,
           o.mortgage_type,
           other_type,
           project_number,
@@ -701,38 +707,12 @@ select o.id,
           property_nums,
           property_date,
           o.INSERT_TIME,
-          om.orgname,
-          t.empname,
-          t.operating_userid
+          o.orgname,
+          o.empname,
+          o.empid
      from t_warrants_info o
-     left join (select warrants_id,
-        property_no,
-        property_name,
-        property_cardno,
-        property_addres,
-        property_nums,
-        property_date,
-        operating_userid,
-        ee.EMPNAME
-        from
-(select distinct o.warrants_id,
-                o.property_no,
-                o.property_name,
-                o.property_cardno,
-                o.property_addres,
-                o.property_nums,
-                o.property_date,
-                g.operating_userid
-  from t_mortgage_house_info o
-  left join t_mortgage_log g
-    on o.warrants_id = g.operating_mortgag_id
- where o.warrants_id = 45
-   and g.operating_type = '4') uu
-   left join om_employee ee
-   on uu.operating_userid=ee.EMPID) t
-       on o.id = t.warrants_id
-     left join OM_ORGANIZATION om
-       on o.org_code = om.orgcode
+     left join t_mortgage_house_info t
+       on o.id=t.warrants_id
     where o.id = '$warrantsId$'
 
 		
@@ -800,42 +780,13 @@ select o.id,
        CAR_DUESNO,
        CAR_SAFENO,
        o.INSERT_TIME,
-       om.orgname,
-       t.empname,
-       t.operating_userid
+       o.orgname,
+       o.empname,
+       o.empid
   from t_warrants_info o
-  left join (select warrants_id,
-                    CAR_NAME,
-                    CAR_CARDNO,
-                    CAR_REGISTERNO,
-                    CAR_NO,
-                    CAR_FRAMENO,
-                    CAR_INVOICENO,
-                    CAR_DUESNO,
-                    CAR_SAFENO,
-                    operating_userid,
-                    ee.EMPNAME
-               from (select distinct o.warrants_id,
-                                     CAR_NAME,
-                                     CAR_CARDNO,
-                                     CAR_REGISTERNO,
-                                     CAR_NO,
-                                     CAR_FRAMENO,
-                                     CAR_INVOICENO,
-                                     CAR_DUESNO,
-                                     CAR_SAFENO,
-                                     g.operating_userid
-                       from t_mortgage_car_info o
-                       left join t_mortgage_log g
-                         on o.warrants_id = g.operating_mortgag_id
-                      where o.warrants_id = '$warrantsId$'
-                        and g.operating_type = '4') uu
-               left join om_employee ee
-                 on uu.operating_userid = ee.EMPID) t
+  left join t_mortgage_car_info t
     on o.id = t.warrants_id
-  left join OM_ORGANIZATION om
-    on o.org_code = om.orgcode
- where o.warrants_id = '$warrantsId$'
+ where o.id = '$warrantsId$'
 		
 	]]>
 	</isEqual>
@@ -895,7 +846,8 @@ select o.id,
 	<insert id="insertMortgageHouse" parameterClass="java.util.HashMap">
     <![CDATA[
 		insert into T_MORTGAGE_house_INFO 
-			(WARRANTS_ID, 
+			(id,
+			WARRANTS_ID, 
 			PROPERTY_NO, 
 			PROPERTY_NAME, 
 			PROPERTY_CARDNO,  
@@ -903,7 +855,8 @@ select o.id,
 			PROPERTY_NUMS,  
 			PROPERTY_DATE)
 		values
-			('$warrantsId$', 
+			('$id$',
+			 '$warrantsId$', 
 			'$propertyNo$', 
 			'$propertyName$', 
 			'$propertyCardNo$', 
@@ -918,7 +871,8 @@ select o.id,
 	<insert id="insertMortgageCar" parameterClass="java.util.HashMap">
     <![CDATA[
 		insert into T_MORTGAGE_CAR_INFO 
-			(WARRANTS_ID, 
+			(id,
+			WARRANTS_ID, 
 			CAR_NAME, 
 			CAR_CARDNO, 
 			CAR_REGISTERNO,  
@@ -928,7 +882,8 @@ select o.id,
 			CAR_DUESNO, 
 			CAR_SAFENO)
 		values
-			('$warrantsId$', 
+			('$id$', 
+			'$warrantsId$', 
 			'$carName$', 
 			'$carCardNo$', 
 			'$carRegisterNo$', 
@@ -1118,6 +1073,8 @@ select o.id,
 			INSERT_TIME,
 			type,
 			borrower_next_name,
+			house_warrants_nums,
+			other_warrants_nums,
 			OPERATING_ID)
 		values
 			('$warrantsId$',
@@ -1128,6 +1085,8 @@ select o.id,
 			'$insertTime$',
 			'$outInType$',
 			'$nextName$',
+			'$houseWarrantsNums$',
+			'$otherWarrantsNums$',
 			'$operatingId$')
 		
 	]]>

@@ -166,7 +166,7 @@
 				</td>	
 				<td class="form_label" align="right" width="17%">产权证填发日期：</td>
 				<td colspan="1" width="30%">
-				<w:date id="propertyDate" submitFormat="yyyyMMdd" format="yyyy-MM-dd"  readonly="true" property="mortgageReserveHouse.propertyDate" />
+				<h:text id="propertyDate"   property="mortgageReserveHouse.propertyDate" /> <font style="color: red">(格式：20170101)</font>
 				</td>					
 			</tr>
 			</tbody>
@@ -302,6 +302,15 @@ function save(){
 				     return flag;
 				  }
 				}
+				var propertyDate=$id("propertyDate").value;
+				if(propertyDate!=""){
+					if(propertyDate.length !=8||!validatInteger(propertyDate)){
+				         alert("请输入正确的产权证填发日期!");  
+					     $id("propertyDate").focus();
+					     return flag;
+				    }
+				}
+				
 			}else if($id("mortgageType").value == "2"){
 			   if($id("carName").value == ""){
 					alert("车主姓名不能为空！");

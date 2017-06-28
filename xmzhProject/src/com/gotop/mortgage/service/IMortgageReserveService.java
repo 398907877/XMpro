@@ -188,5 +188,5 @@ public interface IMortgageReserveService {
 	 * @param id
 	 * @return
 	 */
-	List<MortgageReserveUpdLog> queryDetailColl(MortgageReserveRes mortgageReserveRes,Page page);
+	List<MortgageReserveUpdLog> queryDetailColl(MortgageReserveRes mortgageReserveRes);
 }

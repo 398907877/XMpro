@@ -11,11 +11,12 @@
 </head>
 <body topmargin="0" leftmargin="0">
 <h:form name="data_form"  id="data_form" action="/mortgage/mortgageReserveAction_outInCollateral.action"  enctype="multipart/form-data" method="post" >
-		<h:hidden id="id" property="mortgageReserveOut.warrantsId"  />
+		<h:hidden id="warrantsId" property="mortgageReserveOut.warrantsId"  />
 		<h:hidden id="operatingId" property="mortgageReserveOut.operatingId"  />
 		<h:hidden id="outInType" property="mortgageReserveOut.outInType"  />
 		<h:hidden id="logRemark" property="mortgageReserveOut.logRemark"  />
 		<h:hidden id="signType" property="mortgageReserveOut.signType"  />
+		<h:hidden id="tmpName" property="mortgageReserveOut.tmpName"  />
 		<table align="center" border="0" width="100%" class="form_table">
 		
 			<tbody id="out_log_type">
@@ -125,10 +126,11 @@
 	
 	}
 function changeNextNmae(param){
-  if(param!="产权人"){
+  if(param!=""){
     $("#nextName").val(param);
   }else{
-    $("#nextName").val("");
+   var tempName=$id("tmpName").value;
+    $("#nextName").val(tempName);
   }
 }
 function save(){

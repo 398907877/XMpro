@@ -72,6 +72,7 @@
 										<h:param name='id' iterateId='id2' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id2' property='HOUSEID' />
 										<h:param name='logRemark' iterateId='id2' property='PROPERTYNUMS' />
+										<h:param name='nextName' iterateId='id2' property='PROPERTYNAME' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -122,7 +123,8 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id3' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id3' property='CARID' />
-										<h:param name='logRemark' iterateId='id3' property='CARREGISTERNO' />
+										<h:param name='logRemark' iterateId='id3' value="1" />
+										<h:param name='nextName' iterateId='id2' property='CARNAME' />
 									</w:rowRadio>
 								</td>
 								<td nowrap="nowrap"> 
@@ -208,6 +210,7 @@
     			var id = row.getParam("id");
     			var operatingId=row.getParam("operatingId");
     			var logRemark=row.getParam("logRemark");
+    			var nextName=row.getParam("nextName");
     			var textName="出库处理";
     			//if(param==1&&mortgageType==1){
     			 // logRemark=row.getParam("logRemark");
@@ -258,7 +261,7 @@
     			
 			    var url="/mortgage/mortgageReserveAction_toInsertOutInColl.action?mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId;
 			    url=url+"&mortgageReserveOut.outInType="+param+"&mortgageReserveOut.logRemark="+logRemark+"&mortgageReserveOut.signType="+signType;
-			   
+			    url=url+"&mortgageReserveOut.nextName="+nextName+"&mortgageReserveOut.tmpName="+nextName;
 			  
     			if(!checkIsLog(id,operatingId,param)){
     			  return;

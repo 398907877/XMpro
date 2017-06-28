@@ -290,7 +290,7 @@ public interface IMortgageReserveDao {
 	 * @param page
 	 * @return
 	 */
-	List<MortgageReserveUpdLog> queryDetailColl(Map<String, Object> map, Page page);
+	List<MortgageReserveUpdLog> queryDetailColl(Map<String, Object> map);
 	
 
 	/**

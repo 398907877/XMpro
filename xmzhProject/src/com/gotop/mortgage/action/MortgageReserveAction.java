@@ -213,17 +213,13 @@ public class MortgageReserveAction extends BaseAction {
 	 * @return
 	 */
 	public String toDetailColl(){
-		return "mortgage_detail_List";
-	}
-	
-	
-	public String queryDetailColl(){
-		 mortgageReserveListLog=mortgageReserveService.queryDetailColl(mortgageReserveRes,this.getPage());
-		 this.setPage(page);
+		 mortgageReserveListLog=mortgageReserveService.queryDetailColl(mortgageReserveRes);
 	     this.setMortgageReserveListLog(mortgageReserveListLog);
 		return "mortgage_detail_List";
-		
 	}
+	
+	
+	
 	
 	
 

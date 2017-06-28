@@ -10,25 +10,13 @@
 		<title>库存变更浏览列表</title>
 	</head>
 	<body topmargin="0" leftmargin="0">
-	<h:form name="query_form"	action="/mortgage/mortgageReserveAction_queryDetailColl.action" method="post">
+	<h:form name="query_form"	>
 		                	<h:hidden id="mortgageType" property="mortgageReserveRes.mortgageType"/>
 		                	<h:hidden id="warrantsId" property="mortgageReserveRes.warrantsId"/>
 		<w:panel id="panel1" title="查询条件">
 			<table align="center" border="0" width="100%" class="form_table">
-				<tr>
-					<td class="form_label" align="right" width="20%">操作员工姓名：</td>
-					<td colspan="1"  width="30%">
-						<h:text id="empName" property="mortgageReserveRes.empName"   />
-					</td>
-				</tr>
 				<tr class="form_bottom">
-						<td colspan="6" class="form_bottom">
-						    <b:message key="l_display_per_page"></b:message>
-					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
-					        <input type="hidden" name="page.begin" value="0">
-					        <input type="hidden" name="page.isCount" value="true">
-							<input id="querys" type="submit" value="查 询" class="button" >
-							<input type="button" value="清 空" class="button" onclick="clears();"></td>
+						<td colspan="6" class="form_bottom"></td>
 					</tr>			
 			</table>
 		</w:panel>
@@ -367,28 +355,7 @@
 					</tbody>
               <td colspan="23" class="command_sort_area">
 							
-                <div class="h4">
-	                <l:equal property="page.isCount" targetValue="true" >
-	                  <b:message key="l_total"></b:message>
-	                  <b:write property="page.count" />
-	                  <b:message key="l_recordNO."></b:message>
-	                  <b:write property="page.currentPage" />
-	                  <b:message key="l_page"></b:message>
-	                  <b:write property="page.totalPage" />
-	                  <b:message key="l_page"></b:message>
-	                </l:equal>
-	                <l:equal property="page.isCount" targetValue="false" >
-	                  <b:message key="l_NO."></b:message>
-	                  <b:write property="page.currentPage" />
-	                  <b:message key="l_page"></b:message>
-	                </l:equal>
-	                <input type="button" class="button" onclick="firstPage('page', '', null, null, 'page_form');" value='<b:message key="l_firstPage"></b:message>'  <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="prevPage('page', '', null, null, 'page_form');" value='<b:message key="l_upPage"></b:message>' <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="nextPage('page', '', null, null, 'page_form');" value='<b:message key="l_nextPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
-	                <l:equal property="page.isCount" targetValue="true">
-	                  <input type="button" class="button" onclick="lastPage('page', '', null, null, 'page_form');" value='<b:message key="l_lastPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
-	                </l:equal>
-              </div>
+               
               </td>
             </tr>
 					</table>
@@ -403,10 +370,7 @@
 	      init(valType);
 
         };
-		//清空
-		function clears(){
-          $id("empName").value="";
-		}
+		
 		
 		
        //抵押类型改变事件

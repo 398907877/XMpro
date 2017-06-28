@@ -78,10 +78,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 			if(!"".equals(mortgageReserve.getNoRegisterSign())&&mortgageReserve.getNoRegisterSign()!=null){
 				map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			}
+			System.out.println("getLogOutSign="+mortgageReserve.getLogOutSign());
 			if("1".equals(mortgageReserve.getLogOutSign())){
-				map.put("status", "1");
-				map.put("afterMortgageStatus", "3");
-			}else if("2".equals(mortgageReserve.getLogOutSign())){
 				map.put("status", "2");
 				map.put("afterMortgageStatus", "2");
 			}
@@ -164,7 +162,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
     		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
-			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime,muo);
 			result=mortgageReserveDao.insertMortgage(map);
             try {
    	    		 //上传文件,不为空时
@@ -178,19 +176,30 @@ public class MortgageReserveService implements IMortgageReserveService {
 			}
     		if(result){
     			String mortgageType= mortgageReserve.getMortgageType();
+    			String nextName=mortgageReserve.getNextName();
+    			HashMap<String, String> hmpkey=new HashMap<String, String>();
+    			Long idKey = null;
     			String logName="";
+    			String houseWarrantsNums="0";
     			//判断押品类型
     			if("1".equals(mortgageType)){
-        			mapHouse=resMortgageReserveHouseMap(pkey, mortgageReserveHouse);
+    				houseWarrantsNums=mortgageReserveHouse.getPropertyNums();
+    				hmpkey.put("seqName", "seq_t_mortgage_house_info");
+    				idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
+        			mapHouse=resMortgageReserveHouseMap(idKey,pkey, mortgageReserveHouse);
         			result=mortgageReserveDao.insertMortgageHouse(mapHouse);
         			logName="新增入库押品类型为房产时";
     			}else if("2".equals(mortgageType)){
-        			mapCar=resMortgageReserveCarMap(pkey, mortgageReserveCar);
+    				houseWarrantsNums="0";
+    				hmpkey.put("seqName", "seq_t_mortgage_car_info");
+    				idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
+        			mapCar=resMortgageReserveCarMap(idKey,pkey, mortgageReserveCar);
         			result=mortgageReserveDao.insertMortgageCar(mapCar);
         			logName="新增入库押品类型为机动车时";
     			}
 				if(result){
 					String operatingType="4";//新增入库
+					updMortgageReserveOutMap(idKey,pkey,inserttime,houseWarrantsNums,nextName,logName);
 					//插入日志
 					result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, logName);
 				}
@@ -210,9 +219,12 @@ public class MortgageReserveService implements IMortgageReserveService {
 	public boolean insertCollateralHouse(
 			Long pkey,MortgageReserveHouse mortgageReserveHouse, MUOUserSession muo) throws Exception {
 		Map<String, Object>mapHouse=new HashMap<String, Object>();
+		HashMap<String, String>hmpkey=new HashMap<String, String>();
 		boolean result=false;
 		try {
-			mapHouse=resMortgageReserveHouseMap(pkey, mortgageReserveHouse);
+			hmpkey.put("seqName", "seq_t_mortgage_house_info");
+		    Long idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
+			mapHouse=resMortgageReserveHouseMap(idKey,pkey, mortgageReserveHouse);
 			result=mortgageReserveDao.insertMortgageHouse(mapHouse);
 			if(result){
 				String operatingType="4";//新增入库
@@ -220,6 +232,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 				Date d=new Date();
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 				String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
+				updMortgageReserveOutMap(idKey,pkey,inserttime,mortgageReserveHouse.getPropertyNums(),mortgageReserveHouse.getPropertyName(),"添加房产押品信息");
 				//插入日志
 				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加房产押品信息");
 			}
@@ -234,9 +247,12 @@ public class MortgageReserveService implements IMortgageReserveService {
 	public boolean insertCollateralCar(Long pkey,MortgageReserveCar mortgageReserveCar,
 			MUOUserSession muo) throws Exception{
 		Map<String, Object>mapCar=new HashMap<String, Object>();
+		HashMap<String, String>hmpkey=new HashMap<String, String>();
 		boolean result=false;
 		try {
-			mapCar=resMortgageReserveCarMap(pkey, mortgageReserveCar);
+			hmpkey.put("seqName", "seq_t_mortgage_house_info");
+		    Long idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
+			mapCar=resMortgageReserveCarMap(idKey,pkey, mortgageReserveCar);
 			result=mortgageReserveDao.insertMortgageCar(mapCar);
 			if(result){
 				String operatingType="4";//新增入库
@@ -245,6 +261,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 				String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
 				//插入日志
+				updMortgageReserveOutMap(idKey,pkey,inserttime,"1",mortgageReserveCar.getCarName(),"添加房产押品信息");
 				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加房产押品信息");
 			}
 		} catch (Exception e) {
@@ -268,7 +285,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
     		String address=ServletActionContext.getServletContext().getRealPath("/uploadWarrantsInfofileName");
-			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime);
+			map=resMortgageReserveMap(pkey,mortgageReserve,inserttime, muo);
 			String mortgageType= mortgageReserve.getMortgageType();
 			//判断是否已经有记录了
 			isLog(pkey,mortgageType);
@@ -312,7 +329,37 @@ public class MortgageReserveService implements IMortgageReserveService {
 		return result;
 	}
 	
+	
+	
 	//判断是否已经有记录
+	public void updMortgageReserveOutMap(Long idKey,Long pkey,String insertTime, 
+			String houseWarrantsNums,String nextName,String logName){
+		try {
+			Map<String, Object>map=new HashMap<String, Object>();
+			MortgageReserveOut mortgageReserveOut=new MortgageReserveOut();
+			mortgageReserveOut.setWarrantsId(String.valueOf(pkey));
+			mortgageReserveOut.setBorrowerNums("0");//外借数量标志为0
+			mortgageReserveOut.setBorrowerLog("5");//新增入库
+			mortgageReserveOut.setOperatingMatters("5");//新增入库
+			mortgageReserveOut.setRemark(logName);
+			mortgageReserveOut.setInsertTime(insertTime);
+			mortgageReserveOut.setOperatingId(String.valueOf(idKey));
+			mortgageReserveOut.setOutInType("2");//入库
+			mortgageReserveOut.setNextName(nextName);
+			mortgageReserveOut.setLogRemark(houseWarrantsNums);
+			map=resMortgageReserveOutMap(mortgageReserveOut);
+			mortgageReserveDao.insertMortgageReserveOutMap(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 判断是否已经有记录
+	 * @param pkey
+	 * @param mortgageType
+	 */
 	public void isLog(Long pkey,String mortgageType){
 		Map<String, Object>map=new HashMap<String, Object>();
 		map.put("warrantsId", pkey);
@@ -518,7 +565,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	public Map<String, Object> resMortgageReserveMap(Long pkey,MortgageReserve mortgageReserve,String inserttime)  throws Exception{
+	public Map<String, Object> resMortgageReserveMap(Long pkey,MortgageReserve mortgageReserve,String inserttime,MUOUserSession muo)  throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		try {
 			String mortgageType= mortgageReserve.getMortgageType();
@@ -553,6 +600,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("borrowerName", mortgageReserve.getBorrowerName());
 			map.put("borrowerCardNo", mortgageReserve.getBorrowerCardNo());
 			map.put("orgCode", mortgageReserve.getOrgCode());
+			map.put("orgName", mortgageReserve.getOrgName());
 			map.put("mangerName", mortgageReserve.getMangerName());
 			map.put("borrowerContractNo", mortgageReserve.getBorrowerContractNo());
 			map.put("loanYears", mortgageReserve.getLoanYears());
@@ -564,6 +612,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 			map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			map.put("status", mortgageReserve.getStatus());
 			map.put("inserttime", inserttime);
+			map.put("empId", muo.getEmpid());
+			map.put("empName", muo.getEmpname());
 			map.put("otherType", mortgageReserve.getOtherType());
 			map.put("loanType", mortgageReserve.getLoanType());
 		} catch (Exception e) {
@@ -580,9 +630,10 @@ public class MortgageReserveService implements IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	public Map<String, Object> resMortgageReserveHouseMap(Long pkey,MortgageReserveHouse mortgageReserveHouse) throws Exception{
+	public Map<String, Object> resMortgageReserveHouseMap(Long idKey,Long pkey,MortgageReserveHouse mortgageReserveHouse) throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		try {
+			map.put("id", idKey);
 			map.put("warrantsId", pkey);
 			map.put("propertyNo", mortgageReserveHouse.getPropertyNo());
 			map.put("propertyName", mortgageReserveHouse.getPropertyName());
@@ -604,9 +655,10 @@ public class MortgageReserveService implements IMortgageReserveService {
 	 * @param mortgageReserve
 	 * @return
 	 */
-	public Map<String, Object> resMortgageReserveCarMap(Long pkey,MortgageReserveCar mortgageReserveCar) throws Exception{
+	public Map<String, Object> resMortgageReserveCarMap(Long idKey,Long pkey,MortgageReserveCar mortgageReserveCar) throws Exception{
 		Map<String, Object>map=new HashMap<String, Object>();
 		try {
+			map.put("id", idKey);
 			map.put("warrantsId", pkey);
 			map.put("carName", mortgageReserveCar.getCarName());
 			map.put("carCardNo", mortgageReserveCar.getCarCardNo());
@@ -652,7 +704,14 @@ public class MortgageReserveService implements IMortgageReserveService {
 					map.put("borrowerLog", "4");//注销已完成
 				}
 			}
-			
+			String otherWarrantsNums="1";
+			String houseWarrantsNums=mortgageReserveOut.getLogRemark();
+			if("1".equals(mortgageReserveOut.getOperatingMatters())||"4".equals(mortgageReserveOut.getOperatingMatters())){
+				otherWarrantsNums="0";
+				houseWarrantsNums="0";
+			}
+			map.put("houseWarrantsNums",houseWarrantsNums);
+			map.put("otherWarrantsNums", otherWarrantsNums);
 			map.put("operatingMatters", mortgageReserveOut.getOperatingMatters());
 			map.put("remark", mortgageReserveOut.getRemark());
 			map.put("operatingId", mortgageReserveOut.getOperatingId());
@@ -930,9 +989,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 				map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			}
 			if("1".equals(mortgageReserve.getLogOutSign())){
-				map.put("status", "1");
-				map.put("afterMortgageStatus", "3");
-			}else if("2".equals(mortgageReserve.getLogOutSign())){
 				map.put("status", "2");
 				map.put("afterMortgageStatus", "2");
 			}
@@ -1025,7 +1081,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 	}
 	@Override
 	public List<MortgageReserveUpdLog> queryDetailColl(
-			MortgageReserveRes mortgageReserveRes, Page page) {
+			MortgageReserveRes mortgageReserveRes) {
 		Map<String, Object>map=new HashMap<String, Object>();
 		List<MortgageReserveUpdLog> mortgageReserveList =new ArrayList<MortgageReserveUpdLog>();
 		map.put("warrantsId", mortgageReserveRes.getWarrantsId());
@@ -1033,7 +1089,7 @@ public class MortgageReserveService implements IMortgageReserveService {
        if(!"".equals(mortgageReserveRes.getEmpName())&&mortgageReserveRes.getEmpName()!=null){
    		map.put("empName", mortgageReserveRes.getEmpName());
        }
-		mortgageReserveList=mortgageReserveDao.queryDetailColl(map, page);
+		mortgageReserveList=mortgageReserveDao.queryDetailColl(map);
 		return mortgageReserveList;
 	}
 	@Override
