@@ -360,7 +360,8 @@
 						and 
 						not exists (select distinct t.warrants_id
 					  from T_MORTGAGE_LIST t
-					 where t.borrower_log = '4')
+					 where a.warrants_id = t.warrants_id
+					 and t.borrower_log = '4')
 					]]>
 					</isNotEmpty>
                  group by a.type, a.operating_matters) F
@@ -404,8 +405,9 @@
 				a.operating_matters='2' 
 				and 
 				not exists (select distinct t.warrants_id
-			  from T_MORTGAGE_LIST t
-			 where t.borrower_log = '4')
+			  from T_MORTGAGE_LIST t 
+			 where a.warrants_id = t.warrants_id
+			       and t.borrower_log = '4')
 			]]>
 			</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
@@ -539,7 +541,8 @@
 				and 
 			   not exists (select distinct t.warrants_id
 			from T_MORTGAGE_LIST t
-			where t.borrower_log = '4')
+			where a.warrants_id = t.warrants_id
+				  and t.borrower_log = '4')
 			]]>
 			</isNotEmpty>
                  group by a.type, a.operating_matters) F
@@ -584,7 +587,8 @@
 				and 
 			    not exists (select distinct t.warrants_id
 			  from T_MORTGAGE_LIST t
-			 where t.borrower_log = '4')
+			 where a.warrants_id = t.warrants_id
+			       and t.borrower_log = '4')
 			]]>
 		</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
@@ -649,7 +653,8 @@
         and 
         not exists (select distinct t.warrants_id
 	  from T_MORTGAGE_LIST t
-	 where t.borrower_log = '4')
+	 where d.warrants_id = t.warrants_id
+		   and t.borrower_log = '4')
       ]]>
     </isNotEmpty>
   </dynamic>
@@ -715,7 +720,8 @@ select T.*, E.EMPNAME as OPERATING_USERID
         and 
         not exists (select distinct t.warrants_id
 	  from T_MORTGAGE_LIST t
-	 where t.borrower_log = '4')
+	 where d.warrants_id = t.warrants_id
+		and t.borrower_log = '4')
       ]]>
     </isNotEmpty>
   </dynamic>
