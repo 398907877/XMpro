@@ -356,7 +356,11 @@
 					</isNotEmpty>
 					<isNotEmpty prepend="and" property="checkBoxStatus">
 					<![CDATA[
-						a.operating_matters='2' and a.borrower_log <> 4
+						a.operating_matters='2' 
+						and 
+						not exists (select distinct t.warrants_id
+					  from T_MORTGAGE_LIST t
+					 where t.borrower_log = '4')
 					]]>
 					</isNotEmpty>
                  group by a.type, a.operating_matters) F
@@ -397,7 +401,11 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				a.operating_matters='2' and a.borrower_log <> 4
+				a.operating_matters='2' 
+				and 
+				not exists (select distinct t.warrants_id
+			  from T_MORTGAGE_LIST t
+			 where t.borrower_log = '4')
 			]]>
 			</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
@@ -527,7 +535,11 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				a.operating_matters='2' and a.borrower_log <> 4
+				a.operating_matters='2' 
+				and 
+			   not exists (select distinct t.warrants_id
+			from T_MORTGAGE_LIST t
+			where t.borrower_log = '4')
 			]]>
 			</isNotEmpty>
                  group by a.type, a.operating_matters) F
@@ -568,7 +580,11 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="and" property="checkBoxStatus">
 			<![CDATA[
-				a.operating_matters='2' and a.borrower_log <> 4
+				a.operating_matters='2' 
+				and 
+			    not exists (select distinct t.warrants_id
+			  from T_MORTGAGE_LIST t
+			 where t.borrower_log = '4')
 			]]>
 		</isNotEmpty>
          group by a.warrants_id, a.type, a.operating_matters) T
@@ -629,7 +645,11 @@
     </isNotEmpty>
     <isNotEmpty prepend="and" property="checkBoxStatus">
       <![CDATA[
-        d.operating_matters='2' and d.borrower_log <> 4
+        d.operating_matters='2' 
+        and 
+        not exists (select distinct t.warrants_id
+	  from T_MORTGAGE_LIST t
+	 where t.borrower_log = '4')
       ]]>
     </isNotEmpty>
   </dynamic>
@@ -691,7 +711,11 @@ select T.*, E.EMPNAME as OPERATING_USERID
     </isNotEmpty>
     <isNotEmpty prepend="and" property="checkBoxStatus">
       <![CDATA[
-        d.operating_matters='2' and d.borrower_log <> 4
+        d.operating_matters='2' 
+        and 
+        not exists (select distinct t.warrants_id
+	  from T_MORTGAGE_LIST t
+	 where t.borrower_log = '4')
       ]]>
     </isNotEmpty>
   </dynamic>
