@@ -661,7 +661,7 @@
      ) T,
        OM_EMPLOYEE                 E
    WHERE T.OPERATING_USERID2 = E.EMPID
-   order by T.OPERATING_TIME desc
+   order by T.OPERATING_TIME,T.TYPE,T.PROJECT_NUMBER
    
 </select>
 <!-- 押品类型为机动车的出入库明细表-->
@@ -728,7 +728,7 @@ select T.*, E.EMPNAME as OPERATING_USERID
        ) T,
        OM_EMPLOYEE                 E
    WHERE T.OPERATING_USERID2 = E.EMPID
-   order by T.OPERATING_TIME desc
+   order by T.OPERATING_TIME,T.TYPE,T.PROJECT_NUMBER
 </select>
 <select id="byOrgcodeFindParentorgid"   parameterClass="java.lang.String" resultClass="java.util.HashMap">
 	<![CDATA[
