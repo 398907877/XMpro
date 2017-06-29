@@ -82,7 +82,8 @@
      	<result column="NEXT_NAME" property="nextName" jdbcType="VARCHAR"/>
      	<result column="BORROWER_NUMS" property="borrowerNums" jdbcType="VARCHAR"/>
      	<result column="OPERATING_REMARK" property="operatingRemark" jdbcType="VARCHAR"/>
-  		
+  		<result column="HOUSE_WARRANTS_NUMS" property="propertyNums" jdbcType="VARCHAR"/>
+     	<result column="OTHER_WARRANTS_NUMS" property="otherWarrantsNums" jdbcType="VARCHAR"/>
   </resultMap>  
      <resultMap class="com.gotop.mortgage.model.MortgageList" id="mortgageList1">
      	<result column="type" property="type" jdbcType="VARCHAR"/>
@@ -537,7 +538,7 @@
   from (select a.warrants_id,
                a.type as type,
                a.operating_matters as operating_matters,
-               count(a.warrants_id) as cars,
+               MAX(a.house_warrants_nums) as cars,
                MAX(a.other_warrants_nums) as otherWarrants_nums
           from T_MORTGAGE_LIST a
           left join T_WARRANTS_INFO c
@@ -653,7 +654,9 @@ select T.*, E.EMPNAME as OPERATING_USERID
            a.operating_userid  AS operating_userid2,
            d.BORROWER_NEXT_NAME    AS next_name,
            d.borrower_nums         as borrower_nums,
-           d.REMARK   AS operating_remark
+           d.REMARK   AS operating_remark,
+		   d.house_warrants_nums as HOUSE_WARRANTS_NUMS,
+           d.other_warrants_nums as OTHER_WARRANTS_NUMS
       from T_MORTGAGE_LIST d
       left join T_MORTGAGE_CAR_INFO b
         on d.warrants_id = b.warrants_id and d.OPERATING_ID = b.ID

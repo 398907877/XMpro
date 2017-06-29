@@ -266,6 +266,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
 		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">机动车数</th>
 		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">操作人员</th>
 		  <th nowrap="nowrap" style="text-align: center">交接人员</th>
@@ -295,6 +296,9 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="carName"/>			    
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">			    
+			    	<b:write iterateId="issued" property="propertyNums"/>			    
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
@@ -395,6 +399,7 @@ String str_date = TimeUtil.today();
 		  <th nowrap="nowrap" style="text-align: center">库存序号</th>
 		  <th nowrap="nowrap" style="text-align: center">车牌号</th>
 		  <th nowrap="nowrap" style="text-align: center">车主姓名</th>
+		  <th nowrap="nowrap" style="text-align: center">机动车数</th>
 		  <th nowrap="nowrap" style="text-align: center">他项权证数</th>
 		  <th nowrap="nowrap" style="text-align: center">外借数量</th>
 		<!--   <th nowrap="nowrap" style="text-align: center">外借是否归还</th> -->
@@ -421,6 +426,9 @@ String str_date = TimeUtil.today();
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">
 			    	<b:write iterateId="issued" property="carName"/>
+			  </td>
+			  <td nowrap="nowrap" style="text-align: center">
+			    	<b:write iterateId="issued" property="propertyNums"/>
 			  </td>
 			  <td nowrap="nowrap" style="text-align: center">			    
 			    	<b:write iterateId="issued" property="otherWarrantsNums"/>			    
