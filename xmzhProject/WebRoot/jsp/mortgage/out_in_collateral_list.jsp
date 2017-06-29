@@ -123,7 +123,7 @@
 								<w:rowRadio>
 										<h:param name='id' iterateId='id3' property='WARRANTSID' />
 										<h:param name='operatingId' iterateId='id3' property='CARID' />
-										<h:param name='logRemark' iterateId='id3' value="1" />
+										<h:param name='logRemark' iterateId='id3' property="CARREGISTERNO" />
 										<h:param name='nextName' iterateId='id2' property='CARNAME' />
 									</w:rowRadio>
 								</td>
@@ -223,6 +223,9 @@
     			var testParam=2;
     			if(param==2){
     			  testParam=1;
+    			}
+    			if(mortgageType==2){
+    			  logRemark=1;
     			}
     		    showBorrowerNums(id,operatingId,testParam);
     			var inBorrowerNums="";

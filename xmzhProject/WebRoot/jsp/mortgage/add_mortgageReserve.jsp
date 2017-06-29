@@ -28,7 +28,7 @@
 				<td class="form_label" align="right" width="15%" nowrap="nowrap">他项类型：</td>
 				<td colspan="1" width="30%" nowrap="nowrap">
 				<div id="otherType_fc">
-					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="mortgageReserve.otherTypeFC"  nullLabel="请选择"  onchange="changeOtherTypeFC(this.value)" ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
+					<d:select id="otherTypeFC" dictTypeId="OTHER_TYPE_HOUSE" property="mortgageReserve.otherTypeFC"   onchange="changeOtherTypeFC(this.value)" ></d:select><font id="otherTypeFC_msg" style="color: red">*</font>
 				</div>
 				<div id="otherType_jdc"  style="display:none">
 					<d:select id="otherTypeJDC" dictTypeId="OTHER_TYPE_CAR" property="mortgageReserve.otherTypeJDC" ></d:select>
@@ -300,6 +300,8 @@ function changeMortgageType(val){
 	        $("#dzypxx_jdc").show();
 	        $("#dzypxx_fc").hide();
 	       }
+	       
+         clears();
 }
 
     function changeOtherTypeFC(param){
@@ -354,21 +356,29 @@ function changeMortgageType(val){
 	
 	//清空
 		function clears(){
-           $id("otherType").value="";
+           $id("noticeRegisterRelation").value="";
            $id("projectNumber").value="";
-           $id("status").value="";
+           $id("otherWarrantsNumber").value="";
+           $id("otherWarrantsDate").value="";
            $id("borrowerName").value="";
            $id("borrowerCardNo").value="";
-           $id("propertyName").value="";
-           $id("propertyCardNo").value="";
-           $id("propertyNo").value="";
-           $id("otherWarrantsNumber").value="";
-           $id("propertyAddres").value="";
-           $id("loanType").value="";
            $id("orgCode").value="";
            $id("orgName").value="";
-           $id("logOutSign").value="";
-           $id("noRegisterSign").value="";
+           $id("mangerName").value="";
+           $id("borrowerContractNo").value="";
+           $id("loanYears").value="";
+           $id("recordValue").value="";
+           $id("packetNumber").value="";
+           $id("nextName").value="";
+           $id("purchaseNumber").value="";
+           $id("propertyNo").value="";
+           $id("propertyName").value="";
+           $id("propertyCardNo").value="";
+           $id("propertyAddres").value="";
+           $id("propertyNums").value="";
+           $id("propertyDate").value="";
+           $id("carName").value="";
+           $id("carCardNo").value="";
            $id("carRegisterNo").value="";
            $id("carNo").value="";
            $id("carFrameNo").value="";

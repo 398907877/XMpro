@@ -180,7 +180,7 @@ public class MortgageReserveService implements IMortgageReserveService {
     			HashMap<String, String> hmpkey=new HashMap<String, String>();
     			Long idKey = null;
     			String logName="";
-    			String houseWarrantsNums="0";
+    			String houseWarrantsNums="1";
     			//判断押品类型
     			if("1".equals(mortgageType)){
     				houseWarrantsNums=mortgageReserveHouse.getPropertyNums();
@@ -190,7 +190,7 @@ public class MortgageReserveService implements IMortgageReserveService {
         			result=mortgageReserveDao.insertMortgageHouse(mapHouse);
         			logName="新增入库押品类型为房产时";
     			}else if("2".equals(mortgageType)){
-    				houseWarrantsNums="0";
+    				houseWarrantsNums="1";
     				hmpkey.put("seqName", "seq_t_mortgage_car_info");
     				idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
         			mapCar=resMortgageReserveCarMap(idKey,pkey, mortgageReserveCar);
@@ -704,11 +704,17 @@ public class MortgageReserveService implements IMortgageReserveService {
 					map.put("borrowerLog", "4");//注销已完成
 				}
 			}
+			//默认他項都是为1，产权证数为实际填写所有
 			String otherWarrantsNums="1";
 			String houseWarrantsNums=mortgageReserveOut.getLogRemark();
+			//外借和领取时,他项数、产权证数都是为0
 			if("1".equals(mortgageReserveOut.getOperatingMatters())||"4".equals(mortgageReserveOut.getOperatingMatters())){
 				otherWarrantsNums="0";
 				houseWarrantsNums="0";
+			}
+			if("5".equals(mortgageReserveOut.getOperatingMatters())){
+				otherWarrantsNums="1";
+				System.out.println("wwwwwww:"+houseWarrantsNums);
 			}
 			map.put("houseWarrantsNums",houseWarrantsNums);
 			map.put("otherWarrantsNums", otherWarrantsNums);

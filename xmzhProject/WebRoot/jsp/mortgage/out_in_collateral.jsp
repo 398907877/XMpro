@@ -104,6 +104,7 @@
 	        $("#in_log_type").hide();
 	        $("#out_log").show();
 	        $("#in_log").hide();
+	        $("#operatingMatters option[value='5']").remove(); 
 	        if(signType=="3"){
 	        $("#operatingMatters option[value='1']").remove(); 
 	        }
