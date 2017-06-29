@@ -353,7 +353,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toAddColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '添加押品');
+			    showModalCenter(url, mortgageType,"", 1050, 520, '添加押品');
 			  }
 		}
 		
@@ -414,7 +414,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toViewInfos.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, mortgageType,callBackFunc, 1050, 520, '库存详情');
+			    showModalCenter(url, mortgageType,"", 1050, 520, '库存详情');
 			  }
 		}
 		
@@ -431,7 +431,7 @@
 	  			var row=gop.getSelectRow();
     			var id = row.getParam("id");
 			    var url="/mortgage/mortgageReserveAction_toDetailColl.action?mortgageReserveRes.warrantsId="+id+"&mortgageReserveRes.mortgageType="+mortgageType;
-			    showModalCenter(url, mortgageType,callBackFunc, 1000, 500, '库存变更明细');
+			    showModalCenter(url, mortgageType,"", 1000, 500, '库存变更明细');
 			  }
 		}   
              

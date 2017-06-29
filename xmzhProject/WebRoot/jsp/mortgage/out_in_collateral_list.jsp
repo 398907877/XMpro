@@ -277,7 +277,7 @@
 			        url=url+"&mortgageReserveOut.inBorrowerNums="+inBorrowerNums+"&mortgageReserveOut.inBorrowerLogInfo="+inBorrowerLogInfo+"&mortgageReserveOut.insertTime="+insertTime+"&mortgageReserveOut.operatingMatters="+operatingMatters;
     			  
     			}
-			    showModalCenter(url,param,callBackFunc, 700, 300, textName);
+			    showModalCenter(encodeURI(url),param,callBackFunc, 700, 300, textName);
 			  }
 		}
 		

@@ -280,7 +280,6 @@ $(document).ready(function(){
         
              
    $("#orgName").blur(function(){
-   
         var orgName =$("#orgName").val();
 		$.ajax({
 			url : "/mortgage/mortgageReserveAction_queryOrgs.action",
