@@ -31,15 +31,28 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Map<String, Object>map=new HashMap<String, Object>();
 		
 		String orgcode = muo.getOrgcode();
-		List list  = mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构
+		long orgid=muo.getOrgid();
+		String parentorgid  = "";
+		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构	
+		 String	 orgOneid = mortgageReserveHouseDao.queryOneOrgCode(orgcode);//一类支行的orgid
+			 System.out.println("一类支行的orgid:"+orgOneid);
+			 System.out.println("当前登陆用户的orgid："+Long.toString(orgid));
+			 System.out.println("parentorgid："+parentorgid);
+			 if(Long.toString(orgid) !=null && !"".equals(Long.toString(orgid))){
+				 if(!"null".equals(parentorgid)){
+					 if(orgOneid.equals(parentorgid)){
+						 map.put("parentorgid", orgid);
+						 System.out.println("1111");
+					 }else{
+						 map.put("parentorgid", parentorgid);
+						 System.out.println("222");
+					 }	
+				 }	 	 
+				 
+			 }
+			 
+			
 		
-		if (list.size() != 0){
-			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
-			 //if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
-			//	 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
-			// }
-			 map.put("PARENTORGID", hp.get("PARENTORGID"));
-		}
 		
 		//MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
 		if(mortgageReserveHouseCar.getPropertyName()!=null && !"".equals(mortgageReserveHouseCar.getPropertyName())){
@@ -101,21 +114,31 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     @Override
 	public List<MortgageReserveHouseCar> queryMortgageHouseForExcel(MUOUserSession muo,
 			MortgageReserveHouseCar mortgageReserveHouseCar) {
-    	List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>();
-    	//List<MortgageReserveHouseCar> mortgageReserveList2 =new ArrayList<MortgageReserveHouseCar>();
+    	List<MortgageReserveHouseCar> mortgageReserveList =new ArrayList<MortgageReserveHouseCar>(); 	
     	Map<String, Object> map = new HashMap<String, Object>();
-    	//MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
+    	
     	
     	String orgcode = muo.getOrgcode();
-		List list  = mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构
-		
-		if (list.size() != 0){
-			 HashMap<String, Object>  hp = (HashMap<String, Object>) list.get(0);
-			 //if("no".equals(hp.get("IS_DEP"))) { //当前机构不是部门，说明是支行
-			//	 map.put("defaultOrgcode", hp.get("ORGCODE")); //查询列表默认显示本级及下级的数据
-			// }
-			 map.put("PARENTORGID", hp.get("PARENTORGID"));
-		}
+		long orgid=muo.getOrgid();
+		String parentorgid  = "";
+		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构	
+		 String	 orgOneid = mortgageReserveHouseDao.queryOneOrgCode(orgcode);//一类支行的orgid
+			 System.out.println("一类支行的orgid:"+orgOneid);
+			 System.out.println("当前登陆用户的orgid："+Long.toString(orgid));
+			 System.out.println("parentorgid："+parentorgid);
+			 if(Long.toString(orgid) !=null && !"".equals(Long.toString(orgid))){
+				 if(!"null".equals(parentorgid)){
+					 if(orgOneid.equals(parentorgid)){
+						 map.put("parentorgid", orgid);
+						 System.out.println("1111");
+					 }else{
+						 map.put("parentorgid", parentorgid);
+						 System.out.println("222");
+					 }	
+				 }	 	 
+				 
+			 }
+			 
     	
     	
     	if (mortgageReserveHouseCar!=null) {

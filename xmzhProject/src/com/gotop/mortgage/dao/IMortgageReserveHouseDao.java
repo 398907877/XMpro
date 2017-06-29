@@ -94,5 +94,6 @@ public interface IMortgageReserveHouseDao {
 	 */
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutForExcel(Map<String, Object> map);
 	
-	List byOrgcodeFindParentorgid(String orgcode);
+	String byOrgcodeFindParentorgid(String orgcode);
+	String queryOneOrgCode(String orgcode);
 }

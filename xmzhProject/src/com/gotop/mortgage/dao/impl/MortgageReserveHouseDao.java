@@ -91,9 +91,14 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 		return queryForList("T_Mortgage_Reserve_House_SqlMap.queryMortgageReserveHouseDetailInOutList",map);
 	}
 	@Override
-	public List byOrgcodeFindParentorgid(String orgcode) {
-		
-		return queryForList("T_Mortgage_Reserve_House_SqlMap.byOrgcodeFindParentorgid",orgcode);
+	public String byOrgcodeFindParentorgid(String orgcode) {
+		Object obj=queryForObject("T_Mortgage_Reserve_House_SqlMap.byOrgcodeFindParentorgid",orgcode);
+		return String.valueOf(obj);
+	}
+	@Override
+	public String queryOneOrgCode(String orgcode) {
+		Object obj=queryForObject("T_Mortgage_Reserve_House_SqlMap.queryOneOrgCode",orgcode);
+		return String.valueOf(obj);
 	}
 
 }

@@ -144,10 +144,10 @@
              t.NO_REGISTER_SIGN = '$noRegisterSign$'
                ]]>
       </isNotNull>
-      <isNotNull prepend="and" property="PARENTORGID">
+      <isNotNull prepend="and" property="parentorgid">
 			t.ORG_CODE in (select orgcode
 			  from om_organization o
-			 start with orgid = '$PARENTORGID$'
+			 start with orgid = '$parentorgid$'
 			connect by prior orgid = parentorgid)
       </isNotNull>
       group by t.id
@@ -730,16 +730,17 @@ select T.*, E.EMPNAME as OPERATING_USERID
    WHERE T.OPERATING_USERID2 = E.EMPID
    order by T.OPERATING_TIME,T.TYPE,T.PROJECT_NUMBER
 </select>
-<select id="byOrgcodeFindParentorgid"   parameterClass="java.lang.String" resultClass="java.util.HashMap">
+<select id="byOrgcodeFindParentorgid"   parameterClass="java.lang.String" resultClass="java.lang.String">
 	<![CDATA[
-	select o.*,
-	case when parentorgid = 5425 and orgname <> '一类支行'
-	  then 'yes'
-	    else 'no'
-	      end as is_dep
+	select o.PARENTORGID
 	 from om_organization o
   where o.orgcode = '$orgcode$'
 	
+	   ]]>
+	</select>
+	<select id="queryOneOrgCode"  parameterClass="java.lang.String" resultClass="java.lang.String">
+	<![CDATA[
+	  select orgid from OM_ORGANIZATION where orgname='一类支行'
 	   ]]>
 	</select>
 
