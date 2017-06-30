@@ -78,7 +78,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 			if(!"".equals(mortgageReserve.getNoRegisterSign())&&mortgageReserve.getNoRegisterSign()!=null){
 				map.put("noRegisterSign", mortgageReserve.getNoRegisterSign());
 			}
-			System.out.println("getLogOutSign="+mortgageReserve.getLogOutSign());
 			if("1".equals(mortgageReserve.getLogOutSign())){
 				map.put("status", "2");
 				map.put("afterMortgageStatus", "2");
@@ -714,7 +713,6 @@ public class MortgageReserveService implements IMortgageReserveService {
 			}
 			if("5".equals(mortgageReserveOut.getOperatingMatters())){
 				otherWarrantsNums="1";
-				System.out.println("wwwwwww:"+houseWarrantsNums);
 			}
 			map.put("houseWarrantsNums",houseWarrantsNums);
 			map.put("otherWarrantsNums", otherWarrantsNums);
