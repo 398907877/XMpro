@@ -860,6 +860,7 @@ select
 	         MORTGAGETYPE = '$mortgageType$'
 	               ]]>
 	     </isNotNull>
+	     order by statid
 	</select>
 	
 	<insert id="insertInventoryStat" parameterClass="java.util.HashMap">

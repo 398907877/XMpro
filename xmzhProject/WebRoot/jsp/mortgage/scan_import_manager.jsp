@@ -48,7 +48,7 @@ function addFile(tabid,varName){
     var zs=$("#tabtest tbody tr").length;
     tab = $id(tabid);
     if (zs>=10){
-    	alert("新增附件不能超过10个");
+    	alert("新增扫描件不能超过10个");
     	return false;
     }
     fName = varName;
