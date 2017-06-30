@@ -555,8 +555,9 @@
 			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2";
 			objName="选择受理支行";  
 			var paramEntity = new ParamEntity('Organization');
-				paramEntity.setProperty('orgname',$id("orgCode").value);
-				peArgument[3]=[paramEntity];			
+				paramEntity.setProperty('orgcode',$id("orgCode").value);
+				paramEntity.setProperty('orgname',$id("orgName").value);
+				peArgument[3]=[paramEntity,'orgname','orgcode',"orgid"];	
 			showModalCenter(strUrl,peArgument,open_slzhej_callback1,600,430,objName); 
 			}
 		
