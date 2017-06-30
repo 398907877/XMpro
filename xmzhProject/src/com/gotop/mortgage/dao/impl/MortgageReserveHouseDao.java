@@ -100,5 +100,10 @@ public class MortgageReserveHouseDao extends SqlMapClientDao implements IMortgag
 		Object obj=queryForObject("T_Mortgage_Reserve_House_SqlMap.queryOneOrgCode",orgcode);
 		return String.valueOf(obj);
 	}
+	@Override
+	public String judgeYesAndNoOneOrgCode(String orgcode) {
+		Object obj=queryForObject("T_Mortgage_Reserve_House_SqlMap.judgeYesAndNoOneOrgCode",orgcode);
+		return String.valueOf(obj);
+	}
 
 }

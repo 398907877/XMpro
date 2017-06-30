@@ -31,28 +31,23 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
 		Map<String, Object>map=new HashMap<String, Object>();
 		
 		String orgcode = muo.getOrgcode();
-		long orgid=muo.getOrgid();
+		long orgid=muo.getOrgid();//当前登陆用户的orgid
 		String parentorgid  = "";
-		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构	
+		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //根据当前登陆用户的orgcode查找上级orgid	
 		 String	 orgOneid = mortgageReserveHouseDao.queryOneOrgCode(orgcode);//一类支行的orgid
-			 System.out.println("一类支行的orgid:"+orgOneid);
-			 System.out.println("当前登陆用户的orgid："+Long.toString(orgid));
-			 System.out.println("parentorgid："+parentorgid);
+		 String judgeYesAndNoOneOrgCode=mortgageReserveHouseDao.judgeYesAndNoOneOrgCode(orgcode);//判断登陆用户的机构id是否属于一类支行 属于就返回1，不属于就返回0
+		 if("1".equals(judgeYesAndNoOneOrgCode)){
 			 if(Long.toString(orgid) !=null && !"".equals(Long.toString(orgid))){
 				 if(!"null".equals(parentorgid)){
 					 if(orgOneid.equals(parentorgid)){
 						 map.put("parentorgid", orgid);
-						 System.out.println("1111");
 					 }else{
 						 map.put("parentorgid", parentorgid);
-						 System.out.println("222");
 					 }	
-				 }	 	 
-				 
+				 }	 	 			 
 			 }
-			 
-			
-		
+		 }
+		 	
 		
 		//MortgageReserveHouseCar mortgageReserveHouseCar2=new MortgageReserveHouseCar();
 		if(mortgageReserveHouseCar.getPropertyName()!=null && !"".equals(mortgageReserveHouseCar.getPropertyName())){
@@ -119,25 +114,22 @@ public class MortgageReserveHouseService implements IMortgageReserveHouseService
     	
     	
     	String orgcode = muo.getOrgcode();
-		long orgid=muo.getOrgid();
+		long orgid=muo.getOrgid();//当前登陆用户的orgid
 		String parentorgid  = "";
-		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //查询当前机构是部门还是机构	
+		  parentorgid=mortgageReserveHouseDao.byOrgcodeFindParentorgid(orgcode); //根据当前登陆用户的orgcode查找上级orgid	
 		 String	 orgOneid = mortgageReserveHouseDao.queryOneOrgCode(orgcode);//一类支行的orgid
-			 System.out.println("一类支行的orgid:"+orgOneid);
-			 System.out.println("当前登陆用户的orgid："+Long.toString(orgid));
-			 System.out.println("parentorgid："+parentorgid);
+		 String judgeYesAndNoOneOrgCode=mortgageReserveHouseDao.judgeYesAndNoOneOrgCode(orgcode);//判断登陆用户的机构id是否属于一类支行 属于就返回1，不属于就返回0
+		 if("1".equals(judgeYesAndNoOneOrgCode)){
 			 if(Long.toString(orgid) !=null && !"".equals(Long.toString(orgid))){
 				 if(!"null".equals(parentorgid)){
 					 if(orgOneid.equals(parentorgid)){
 						 map.put("parentorgid", orgid);
-						 System.out.println("1111");
 					 }else{
 						 map.put("parentorgid", parentorgid);
-						 System.out.println("222");
 					 }	
-				 }	 	 
-				 
+				 }	 	 			 
 			 }
+		 }
 			 
     	
     	

@@ -93,7 +93,22 @@ public interface IMortgageReserveHouseDao {
 	 * @return
 	 */
 	public List<MortgageList> queryMortgageReserveHouseDetailInOutForExcel(Map<String, Object> map);
-	
+	/**
+	 * 通过登录用户id找到上级机构id
+	 * @param orgcode
+	 * @return
+	 */
 	String byOrgcodeFindParentorgid(String orgcode);
+	/**
+	 * 找到一类支行的orgid
+	 * @param orgcode
+	 * @return
+	 */
 	String queryOneOrgCode(String orgcode);
+	/**
+	 * 判断登陆用户的机构id是否属于一类支行 属于就返回1，不属于就返回0
+	 * @param orgcode
+	 * @return
+	 */
+	String judgeYesAndNoOneOrgCode(String orgcode);
 }

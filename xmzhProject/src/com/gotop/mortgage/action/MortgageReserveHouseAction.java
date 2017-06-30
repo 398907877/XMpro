@@ -48,9 +48,6 @@ public class MortgageReserveHouseAction extends BaseAction{
 	public String noRegisterSignConfirm() throws Exception
 	{
 		String warrantsId=getRequest().getParameter("warrantsId");
-		//String noSignString=getRequest().getParameter("noRegisterSign");
-		//System.out.println("补登记确认标志:------>"+mortgageReserveHouseCar.getNoRegisterSign());
-		//System.out.println("aaa==="+warrantsId);
 		String info = "success";
 		try {
 			 mortgageReserve = this.mortgageReserveHouseService.queryMortgageReserveHouseById(warrantsId);
@@ -129,13 +126,11 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 */
 	public String queryMortgageTotalInOutForExcel(){
 		if ("2".equals(mortgageList.getMortgageType())) {
-			//System.out.println("机动车汇总导出");
 			mortgageLists= mortgageReserveHouseService.queryMortgageReserveCarInOutForExcel(mortgageList);
 			this.setMortgageLists(mortgageLists);
 			this.setResult_flag("1");
 			return "queryMortgageReserveCarInOutForExcel";
 		}
-		//System.out.println("房产汇总导出");
 		mortgageLists = mortgageReserveHouseService.queryMortgageReserveHouseInOutForExcel(mortgageList);
 		this.setMortgageLists(mortgageLists);
 		this.setResult_flag("1");

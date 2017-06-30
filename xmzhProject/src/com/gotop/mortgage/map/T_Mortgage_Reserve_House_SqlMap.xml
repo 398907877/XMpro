@@ -743,5 +743,16 @@ select T.*, E.EMPNAME as OPERATING_USERID
 	  select orgid from OM_ORGANIZATION where orgname='一类支行'
 	   ]]>
 	</select>
+	<!-- 判断登陆用户的机构id是否属于一类支行 属于就返回1，不属于就返回0 -->
+	<select id="judgeYesAndNoOneOrgCode"  parameterClass="java.lang.String" resultClass="java.lang.String">
+	<![CDATA[
+	  select count(orgcode) from 
+      (select  o.orgcode
+        from om_organization o
+       start with orgid = (select orgid from OM_ORGANIZATION where orgname='一类支行')
+      connect by prior orgid = parentorgid) tt
+      where tt.orgcode='$orgcode$'
+	   ]]>
+	</select>
 
 </sqlMap>
