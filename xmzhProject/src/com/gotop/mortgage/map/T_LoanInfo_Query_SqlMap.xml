@@ -61,7 +61,7 @@ from(
                    1
                 end as WHETHEROVERRUN
            from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
-                                'yyyy-mm-dd hh24:mi') AS INSERT_TIME,
+                                'yyyy-mm-dd') AS INSERT_TIME,
                         d.OTHER_TYPE,
                         d.PROJECT_NUMBER,
                         d.MORTGAGE_TYPE,
@@ -71,11 +71,8 @@ from(
                         a.BORROWER_NUMS,
                         d.ORG_CODE,
                         d.MANGER_NAME,
-                        trunc(to_char(round(sysdate -
-                                      to_date(a.INSERT_TIME,
-                                              'yyyy-mm-dd hh24:mi:ss'),
-                                      2),
-                                'fm99990.0099')) as ALREADYLOANDAY,
+                        to_date(to_char(sysdate,'yyyymmdd'),'yyyymmdd')-to_date(substr(a.insert_time,0,8),
+                                              'yyyymmdd') as ALREADYLOANDAY,
                         a.REMARK
                    
              from T_MORTGAGE_LIST       a
@@ -139,7 +136,7 @@ from(
                    1
                 end as WHETHEROVERRUN
            from (select to_char(TO_DATE(a.INSERT_TIME, 'yyyyMMddhh24miss'),
-                                'yyyy-mm-dd hh24:mi') AS INSERT_TIME,
+                                'yyyy-mm-dd') AS INSERT_TIME,
                         d.OTHER_TYPE,
                         d.PROJECT_NUMBER,
                         d.MORTGAGE_TYPE,
@@ -149,11 +146,8 @@ from(
                         a.BORROWER_NEXT_NAME,
                         d.ORG_CODE,
                         d.MANGER_NAME,
-                        trunc(to_char(round(sysdate -
-                                      to_date(a.INSERT_TIME,
-                                              'yyyy-mm-dd hh24:mi:ss'),
-                                      2),
-                                'fm99990.0099')) as ALREADYLOANDAY,
+                        to_date(to_char(sysdate,'yyyymmdd'),'yyyymmdd')-to_date(substr(a.insert_time,0,8),
+                                              'yyyymmdd') as ALREADYLOANDAY,
                         a.REMARK
                    from T_MORTGAGE_LIST a
                    left join T_MORTGAGE_CAR_INFO c
