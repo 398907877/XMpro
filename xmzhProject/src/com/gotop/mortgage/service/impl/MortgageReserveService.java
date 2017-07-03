@@ -851,20 +851,25 @@ public class MortgageReserveService implements IMortgageReserveService {
 			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
 			mortgageReserveOut.setInsertTime(inserttime);
 			//String remark=mortgageReserveOut.getRemark();
-			String textNmae="产权证本数:"+mortgageReserveOut.getLogRemark();
+			String textNmae="产权证本数/机动车登记号:"+mortgageReserveOut.getLogRemark();
 			map=resMortgageReserveOutMap(mortgageReserveOut);
 			result=mortgageReserveDao.insertMortgageReserveOutMap(map);
 			if(result){
 				String outInType=mortgageReserveOut.getOutInType();
 				
 				if("2".equals(outInType)){
-					textNmae="机动车登记号:"+mortgageReserveOut.getLogRemark();
 					if("1".equals(mortgageReserveOut.getOperatingMatters())){
 						Map<String, Object>mapHouse=new HashMap<String, Object>();
 						mapHouse.put("operatingId", mortgageReserveOut.getOperatingId());
 						mapHouse.put("warrantsId", mortgageReserveOut.getWarrantsId());
 						mortgageReserveDao.updMortgageOutIn(mapHouse);//入库归还时修改出库状态为已归还
 						
+					}
+					if("2".equals(mortgageReserveOut.getOperatingMatters())){
+						Map<String, Object>mapHouse=new HashMap<String, Object>();
+						mapHouse.put("id", mortgageReserveOut.getWarrantsId());
+						mapHouse.put("afterMortgageStatus", "2");//未领取
+						mortgageReserveDao.updMortgageAfterMortgageStatus(mapHouse);
 					}
 				}else if("1".equals(outInType)){
 					//更改主表信息

@@ -88,7 +88,7 @@
 			<tr>			
 				<td class="form_label" align="right" width="15%">入账价值：</td>
 				<td colspan="1" width="30%">
-				<b:write  property="mortgageReserve.recordValue" />
+				<b:write  property="mortgageReserve.recordValue" />万元
 				</td>	
 				<td class="form_label" align="right" width="15%">封包编号：</td>
 				<td colspan="1" width="30%">
