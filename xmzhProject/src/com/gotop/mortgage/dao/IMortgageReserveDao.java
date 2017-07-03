@@ -300,4 +300,11 @@ public interface IMortgageReserveDao {
 	 * @return
 	 */
 	public MortgageReserveRes showStatus(Map<String, Object> map);
+	
+	/**
+	 *  查看是否可以入库注销
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkIsBack(Map<String, Object> map);
 }

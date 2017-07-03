@@ -129,6 +129,14 @@ public interface IMortgageReserveService {
 	 */
 	boolean insertMortgageReserveOut(MortgageReserveOut mortgageReserveOut,MUOUserSession muo);
 	
+
+	/**
+	 * 入库撤销变更操作
+	 * @param mortgageReserve
+	 * @param mortgageReserveHouse
+	 */
+	boolean insertMortgageReserveOutBack(MortgageReserveOut mortgageReserveOut,MUOUserSession muo);
+	
 	/**
 	 * 检验 机动车登记证号是否已存在
 	 * @param mortgageReserve
@@ -189,4 +197,13 @@ public interface IMortgageReserveService {
 	 * @return
 	 */
 	List<MortgageReserveUpdLog> queryDetailColl(MortgageReserveRes mortgageReserveRes);
+	
+
+	/**
+	 * 查看是否可以入库注销
+	 * @param mortgageReserve
+	 * @return
+	 */
+	String checkIsBack(MortgageReserveOut mortgageReserveOut);
+	
 }

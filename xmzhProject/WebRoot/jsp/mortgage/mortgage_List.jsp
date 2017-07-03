@@ -552,7 +552,7 @@
 			var strUrl ="";
 			var objName="";
 			var peArgument = [];
-			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2";
+			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2&changeTree.checkcount=1";
 			objName="选择受理支行";  
 			var paramEntity = new ParamEntity('Organization');
 				paramEntity.setProperty('orgcode',$id("orgCode").value);

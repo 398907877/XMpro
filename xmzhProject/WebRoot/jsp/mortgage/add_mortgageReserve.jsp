@@ -105,7 +105,7 @@
 			<tr>		
 				<td class="form_label" align="right" width="15%">入账价值：</td>
 				<td colspan="1" width="30%">
-				<h:text id="recordValue"   property="mortgageReserve.recordValue" />
+				<h:text id="recordValue"   property="mortgageReserve.recordValue" />万元
 				</td>		
 				<td class="form_label" align="right" width="15%">封包编号：</td>
 				<td colspan="1" width="30%">
@@ -672,7 +672,7 @@ function changeMortgageType(val){
 			var strUrl ="";
 			var objName="";
 			var peArgument = [];
-			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2";
+			strUrl = "/deviceManagement/myMainTreeAction_initMainTree.action?changeTree.showTabOrg=1&changeTree.orgType=4&changeTree.showSelBox=4&orgflag=2&changeTree.checkcount=1";
 			objName="选择受理支行";  
 			var paramEntity = new ParamEntity('Organization');
 				paramEntity.setProperty('orgcode',$id("orgCode").value);

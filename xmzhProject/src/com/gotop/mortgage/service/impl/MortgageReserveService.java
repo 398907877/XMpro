@@ -714,6 +714,12 @@ public class MortgageReserveService implements IMortgageReserveService {
 			if("5".equals(mortgageReserveOut.getOperatingMatters())){
 				otherWarrantsNums="1";
 			}
+			if("6".equals(mortgageReserveOut.getOperatingMatters())){
+				if(!"0".equals(houseWarrantsNums)){
+					houseWarrantsNums="-"+houseWarrantsNums;
+				}
+				otherWarrantsNums="-"+otherWarrantsNums;
+			}
 			map.put("houseWarrantsNums",houseWarrantsNums);
 			map.put("otherWarrantsNums", otherWarrantsNums);
 			map.put("operatingMatters", mortgageReserveOut.getOperatingMatters());
@@ -893,6 +899,43 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		return result;
 	}
+	
+	
+	
+	@Override
+	public boolean insertMortgageReserveOutBack(
+			MortgageReserveOut mortgageReserveOut, MUOUserSession muo) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		boolean result=false;
+		try {
+			long pkey=Long.valueOf(mortgageReserveOut.getWarrantsId());
+			Date d=new Date();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
+			mortgageReserveOut.setInsertTime(inserttime);
+			//String remark=mortgageReserveOut.getRemark();
+			String textNmae="产权证本数:"+mortgageReserveOut.getLogRemark();
+			map=resMortgageReserveOutMap(mortgageReserveOut);
+			String outInType=mortgageReserveOut.getOutInType();
+				Map<String, Object>mapHouse=new HashMap<String, Object>();
+				mapHouse.put("id", mortgageReserveOut.getWarrantsId());//注销
+				mapHouse.put("status", "1");//注销
+				mortgageReserveDao.updMortgageStatus(mapHouse);
+				result=mortgageReserveDao.insertMortgageReserveOutMap(map);
+				Long userID=muo.getEmpid();
+				if(result){
+					//插入日志
+					result=insertMortgageOperatingLog(outInType, userID, pkey, inserttime, textNmae);
+			  }
+		} catch (Exception e) {
+			result=false;
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
 	@Override
 	public String checkCarRegisterNo(MortgageReserveCar mortgageReserveCar) {
 		 String reslutNums="fails";
@@ -1104,6 +1147,22 @@ public class MortgageReserveService implements IMortgageReserveService {
 		}
 		MortgageReserveRes mortgageReserve=mortgageReserveDao.showStatus(map);
 		return mortgageReserve;
+	}
+	@Override
+	public String checkIsBack(MortgageReserveOut mortgageReserveOut) {
+		 String reslut="0";//0表示没有此记录，只有查询到有记录才可以做入库撤销动作
+			Map<String, Object>map=new HashMap<String, Object>();
+			try {
+				map.put("warrantsId", mortgageReserveOut.getWarrantsId());
+				map.put("operatingId",mortgageReserveOut.getOperatingId());
+				
+				reslut=mortgageReserveDao.checkIsBack(map);
+				
+			} catch (Exception e) {
+				reslut="0";
+				e.printStackTrace();
+			}
+			return reslut;
 	}
 	
 	

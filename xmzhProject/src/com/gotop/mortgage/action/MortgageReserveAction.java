@@ -454,7 +454,25 @@ public class MortgageReserveAction extends BaseAction {
 	
 	
 	
-	
+
+	/**
+	 * 查看是否可以入库注销
+	 */
+	public void checkIsBack() throws Exception{
+		String 	info ="0";
+    	try {
+    		info = this.mortgageReserveService.checkIsBack(mortgageReserveOut);
+    	} catch (Exception e) {
+			info="0";
+			log.error("[失败！]", e);
+			throw e;
+		}finally{
+             
+			Struts2Utils.renderText(info);
+		}
+    	
+		
+	}
 	
 	
 	
@@ -503,6 +521,30 @@ public class MortgageReserveAction extends BaseAction {
 
 			MUOUserSession muo=getCurrentOnlineUser();
 			reslut=mortgageReserveService.insertMortgageReserveOut(mortgageReserveOut, muo);
+			if(reslut){
+				info="success";	
+			}
+			
+		} catch (Exception e) {
+			info="fails";
+			log.error("[失败！]", e);
+			throw e;
+		}finally{	
+			Struts2Utils.renderText(info);
+		}
+	}
+	
+	/**
+	 * 出入库处理
+	 * @throws Exception
+	 */
+	public void outInCollateralBack() throws Exception{
+       String info ="fails";
+       boolean reslut=false;
+		try {
+
+			MUOUserSession muo=getCurrentOnlineUser();
+			reslut=mortgageReserveService.insertMortgageReserveOutBack(mortgageReserveOut, muo);
 			if(reslut){
 				info="success";	
 			}

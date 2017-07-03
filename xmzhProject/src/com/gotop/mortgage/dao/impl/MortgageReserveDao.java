@@ -313,4 +313,13 @@ public class MortgageReserveDao extends SqlMapClientDao implements
 		return this.queryForList("T_Mortgage_Reserve_SqlMap.queryMortgageReserveListCarExcel", map);
 	}
 
+
+
+
+	@Override
+	public String checkIsBack(Map<String, Object> map) {
+		Object obj =this.queryForObject("T_Mortgage_Reserve_SqlMap.checkIsBack", map);
+		return String.valueOf(obj);
+	}
+
 }

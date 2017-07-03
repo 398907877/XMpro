@@ -444,7 +444,7 @@
 	<![CDATA[
 	select count(t.Project_Number) as reslutProjectNums
   from T_WARRANTS_INFO t
- where STATUS = '1'
+ where 1=1
 	   ]]>
    <isNotNull prepend="and" property="projectNumber" >
 	 t.Project_Number = '$projectNumber$'
@@ -497,6 +497,42 @@
 	</select>
 	
 	
+	<!--  查看是否可以入库注销 -->
+	<select id="checkIsBack"   parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+	   select count(1) as NUMS
+		 from T_MORTGAGE_LIST t
+		 where 1=1
+		 <isNotNull prepend="and" property="warrantsId" >
+		 t.warrants_id = '$warrantsId$'
+		 </isNotNull>
+		  <isNotNull prepend="and" property="operatingId" >
+		 t.operating_id = '$operatingId$'
+		 </isNotNull>
+		  and t.operating_matters='2'
+		  and t.borrower_log='2'
+		  and t.type='1'
+		  and t.operating_id not in (
+		  select operating_id from T_MORTGAGE_LIST  g
+		  where 1=1
+		  <isNotNull prepend="and" property="warrantsId" >
+		   g.warrants_id = '$warrantsId$'
+		 </isNotNull>
+		  <isNotNull prepend="and" property="operatingId" >
+		   g.operating_id = '$operatingId$'
+		 </isNotNull>
+		    and g.operating_matters='2'
+		    and g.borrower_log='4'
+		    and g.type='2'
+		  )
+		  and t.warrants_id  in (select o.id from t_warrants_info o where 1=1 
+		  and o.status='2'
+		  <isNotNull prepend="and" property="warrantsId" >
+		   o.id = '$warrantsId$'
+		 </isNotNull>
+		  )
+
+		
+	</select>
 	
 	<resultMap id="tShowBorrowerNums" class="com.gotop.mortgage.model.MortgageReserveOut" >
     <!--Bean方式返回全表-->
@@ -808,6 +844,7 @@ select o.id,
 			BORROWER_NAME, 
 			BORROWER_CARDNO, 
 			ORG_CODE, 
+			ORGNAME, 
 			MANGER_NAME, 
 			LOAN_TYPE, 
 			BORROWER_CONTRACTNO, 
@@ -817,7 +854,9 @@ select o.id,
 			NEXT_NAME, 
 			PURCHASE_NUMBER, 
 			REMARK, 
-			INSERT_TIME)
+			INSERT_TIME, 
+			EMPID, 
+			EMPNAME)
 		values
 			($id$, 
 			'$mortgageType$', 
@@ -828,6 +867,7 @@ select o.id,
 			'$borrowerName$',
 			'$borrowerCardNo$',
 			'$orgCode$',
+			'$orgName$',
 			'$mangerName$',
 			'$loanType$',
 			'$borrowerContractNo$',
@@ -837,7 +877,9 @@ select o.id,
 			'$nextName$',
 			'$purchaseNumber$',
 			'$remark$',
-			'$inserttime$')
+			'$inserttime$',
+			'$empId$',
+			'$empName$')
 		
 	]]>
 	</insert>

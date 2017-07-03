@@ -148,6 +148,7 @@
               	<div class="h3"> 
 							<input type="button" class="button" value="出库处理" onclick="outIn_coll(1);"/>
 							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
+							<input type="button" class="button" value="入库撤销" onclick="outIn_back();"/>
 							<input type="button" class="button" value="返回" onclick="back_coll();" />
 		                	<h:hidden id="inBorrowerNums" property="mortgageReserveRes.inBorrowerNums"/>
 		                	<h:hidden id="inBorrowerLogInfo" property="mortgageReserveRes.inBorrowerLogInfo"/>
@@ -192,6 +193,40 @@
 	        $("#list_fc").hide();
 	       }
        }
+       
+       //入库撤销
+       function outIn_back(){
+		  var gop;
+		  var mortgageType=$("#mortgageType").val();
+		  if(mortgageType=="1"){
+		    gop= $id("group1");
+		  }else if(mortgageType=="2"){
+		    gop= $id("group2");
+		  }
+          var len= gop.getSelectLength();
+		  if(len == 0){
+	  			alert("请选择一条库存信息");
+	  			return;
+	  		}else{
+	  			var row=gop.getSelectRow();
+    			var id = row.getParam("id");
+    			var operatingId=row.getParam("operatingId");
+    			if(checkIsBack(id,operatingId)){
+	    			var logRemark=row.getParam("logRemark");
+	    			var nextName=row.getParam("nextName");
+	    			if (confirm("确认是否要进行入库撤销!")==true){ 
+    			       outInCollatera(id,operatingId,logRemark,nextName);
+					 }else{ 
+					  return false; 
+					 }
+	    			
+				 
+    			}else{
+    			 alert("未进行出库注销,不能进行入库撤销动作");
+    			}
+	  		}
+       }
+       
         //出库处理
 		function outIn_coll(param){
 		  var gop;
@@ -315,6 +350,24 @@
 		}
 		
 		
+		function checkIsBack(id,operatingId){
+		    var flag=false;
+			$.ajax({
+				      url: "/mortgage/mortgageReserveAction_checkIsBack.action",
+				      async: false,
+				      type: 'post',
+				      data: "mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId,
+				      timeout: 60000,
+				      success: function (data) {
+					      if(data!=0){
+					       flag=true;
+					      }
+				      }
+				}); 
+				
+				return flag;
+		}
+		
 		
 		function showBorrowerNums(id,operatingId,outInType){
 		 var flag=false;
@@ -361,6 +414,30 @@
 				      }
 				}); 
 			return flag;	
+		}
+		
+		
+		//查询系统状态,用于判断出入库操作事项
+		function outInCollatera(id,operatingId,logRemark,nextName){
+			var flag=false;
+			$.ajax({
+				      url: "/mortgage/mortgageReserveAction_outInCollateralBack.action",
+				      async: false,
+				      type: 'post',
+				      data: "mortgageReserveOut.warrantsId="+id+"&mortgageReserveOut.operatingId="+operatingId+"&mortgageReserveOut.operatingMatters=6&mortgageReserveOut.outInType=2"+"&mortgageReserveOut.logRemark="+logRemark+"&mortgageReserveOut.nextName="+nextName,
+				      timeout: 60000,
+				      success: function (data) {
+					      if (data.indexOf("success") >= 0) {
+						    alert("撤销成功!");
+					 } else if (data.indexOf("fails") >= 0) {
+						alert("保存失败!");
+					 } else {
+						alert("操作失败!");
+					 }
+				      }
+				}); 
+				
+				return flag;
 		}
 		
 		
