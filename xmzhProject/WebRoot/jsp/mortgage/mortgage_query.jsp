@@ -131,6 +131,9 @@
 			  		<h:param name='id' iterateId='id1' property='id'/>
 	               <h:param name='warrantsId' iterateId='id1' property='warrantsId'/>
 	               <h:param name='noRegisterSign' iterateId='id1' property='noRegisterSign'/>
+	               <h:param name='propertyName' iterateId='id1' property='propertyName'/>
+	               <h:param name='propertyNo' iterateId='id1' property='propertyNo'/>
+	               
 	            </w:rowRadio>
 	            </td>
 			  <!-- 		
@@ -310,7 +313,19 @@
 	  				alert("该记录已确认");
 	  			}else if(noSign=='2'){	  				
 	  		  		var warrantsId=rows.getParam("warrantsId");
-		  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId+"&mortgageReserveHouseCar.noRegisterSign="+noSign;
+	  		  	    var propertyName=rows.getParam("propertyName");
+	  		        var propertyNo=rows.getParam("propertyNo");
+	  		       var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId+"&mortgageReserveHouseCar.noRegisterSign="+noSign;
+	  		        if(propertyName!=null){
+	  		        	strUrl=strUrl+"&mortgageReserveHouseCar.propertyName="+propertyName;
+		  		     }
+	  		        if(propertyNo!=null){
+	  		        	strUrl=strUrl+"&mortgageReserveHouseCar.propertyNo="+propertyNo;
+		  		     }
+	  		  	//	alert(warrantsId);
+		  			
+
+		  			
 		  			showModalCenter(strUrl, null, callBackFunc, 600, 100, '补登记确认');  
 	  			}
 	  			
