@@ -298,19 +298,18 @@
 		function checkConfirm()
 		{
 			var gop = $id("group1");
-	  		var len = gop.getSelectLength();
-	  		var rows=gop.getSelectRow();
-	  		var noSign=rows.getParam("noRegisterSign");
-	  		var warrantsId=rows.getParam("warrantsId");
+	  		var len = gop.getSelectLength();  		
 	  		if(len == 0){
 	  			alert("请选择一条记录");
 	  			return;
 	  		}else{
+	  			var rows=gop.getSelectRow();
+	  			var noSign=rows.getParam("noRegisterSign");
 	  			if(noSign=='1')
 	  			{
 	  				alert("该记录已确认");
-	  			}
-	  			else if(noSign=='2'){
+	  			}else if(noSign=='2'){	  				
+	  		  		var warrantsId=rows.getParam("warrantsId");
 		  			var strUrl = "/mortgage/mortgageReserveHouseAction_toRegisterSignConfirm.action?mortgageReserveHouseCar.warrantsId="+warrantsId+"&mortgageReserveHouseCar.noRegisterSign="+noSign;
 		  			showModalCenter(strUrl, null, callBackFunc, 600, 100, '补登记确认');  
 	  			}
