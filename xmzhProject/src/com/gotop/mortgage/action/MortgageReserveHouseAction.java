@@ -45,6 +45,8 @@ public class MortgageReserveHouseAction extends BaseAction{
 		//mortgageReserveHouseList=mortgageReserveHouseService.queryMortgageHouseForExcel(muo,mortgageReserveHouseCar);
 		
 		//this.setMortgageReserveHouseCar(mortgageReserveHouseList.get(0));
+		this.setMortgageReserveHouseCar(mortgageReserveHouseCar);
+
 		return "RegisterSignConfirm";
 	}
 	//补登记确认

@@ -16,13 +16,13 @@
 				<tr>
 					<td class="form_label" align="right">补登记标志：</td>
 					<td >
-					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserveHouseCar.noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" nullLabel="全部"  value="2" style="width:80px;">
+					<d:select id="noRegisterSign" dictTypeId="MORTGAG_REGISTER" property="mortgageReserveHouseCar.noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" nullLabel="全部" value="2" style="width:80px;">
 					</d:select>
-					<!-- ><select id="noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" property="mortgageReserveHouseCar.noRegisterSign" style="width:80px;">
+					<!-- <select id="noRegisterSign" name="mortgageReserveHouseCar.noRegisterSign" property="mortgageReserveHouseCar.noRegisterSign" style="width:80px;">
 						<option value="">全部</option>
 						<option value="1">已确认</option>
-						<option value="2">未确认</option>
-						</select>  -->
+						<option value="2" selected="selected">未确认</option>
+						</select>-->
 					</td>
 					<td class="form_label" align="right" >产权人姓名：</td>
 					<td>
@@ -51,7 +51,7 @@
 					        <h:text size="2" property="page.length" value="10" validateAttr="minValue=1;maxValue=100;type=integer;isNull=true" />
 					        <input type="hidden" name="page.begin" value="0">
 					        <input type="hidden" name="page.isCount" value="true">
-							<input id="query" type="button" value="查 询" class="button" onclick="querys();">
+							<input id="query" type="submit" value="查 询" class="button">
 							<input type="button" value="清空" class="button" onclick="clears();">
 							<input type="button" value="导出" class="button" onclick="downExl();">
 							<input type="button" value="补登记确认" class="button" onclick="checkConfirm();">
@@ -64,6 +64,7 @@
     <w:panel width="100%" title="库存查询列表">
     <viewlist id="e2c61865-3b56-470d-bd42-fff792fb9493">
   	<h:form name="form1" action="/mortgage/mortgageReserveHouseAction_queryMortgageHouseReserveList.action" method="post">
+  	<h:hiddendata property="mortgageReserveHouseCar"/>
 		  <h:hidden property="page.begin"/>
 		    <h:hidden property="page.length"/>
 		    <h:hidden property="page.count"/>
@@ -208,11 +209,11 @@
 	                  <b:write property="page.currentPage" />
 	                  <b:message key="l_page"></b:message>
 	                </l:equal>
-	                <input type="button" class="button" onclick="firstPage('page', '', null, null, 'page_form');" value='<b:message key="l_firstPage"></b:message>'  <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="prevPage('page', '', null, null, 'page_form');" value='<b:message key="l_upPage"></b:message>' <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
-	                <input type="button" class="button" onclick="nextPage('page', '', null, null, 'page_form');" value='<b:message key="l_nextPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
+	                <input type="button" class="button" onclick="firstPage('page', '', null, null, 'form1');" value='<b:message key="l_firstPage"></b:message>'  <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
+	                <input type="button" class="button" onclick="prevPage('page', '', null, null, 'form1');" value='<b:message key="l_upPage"></b:message>' <l:equal property="page.isFirst"  targetValue="true">disabled</l:equal> >
+	                <input type="button" class="button" onclick="nextPage('page', '', null, null, 'form1');" value='<b:message key="l_nextPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
 	                <l:equal property="page.isCount" targetValue="true">
-	                  <input type="button" class="button" onclick="lastPage('page', '', null, null, 'page_form');" value='<b:message key="l_lastPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
+	                  <input type="button" class="button" onclick="lastPage('page', '', null, null, 'form1');" value='<b:message key="l_lastPage"></b:message>' <l:equal property="page.isLast"  targetValue="true">disabled</l:equal> >
 	                </l:equal>
               </div>
 		        </td>
@@ -243,11 +244,11 @@
 		function querys()
 		{  
 			
-			//var noRegisterSign=$id("noRegisterSign").value;
-			// alert(noRegisterSign);
+			var noRegisterSign=$id("noRegisterSign").value;
+			 alert(noRegisterSign);
 			// $("#noRegisterSign option[value='"+ noRegisterSign+"']").attr("selected",true);
-			//$("#noRegisterSign").val(noRegisterSign);
-			
+			$("#noRegisterSign").val(noRegisterSign);
+			$id("noRegisterSign").value=noRegisterSign;
 			var frm = $name("houseQuery");
 			//frm.action="/mortgage/mortgageReserveHouseAction_queryMortgageHouseReserveList.action";
 			frm.submit();
@@ -330,11 +331,10 @@
 		}
 		
 		function callBackFunc(){
-			//var frm = $name("houseQuery");
-           // frm.submit();
-			  location.reload(); //就算页面直接关闭，也会重新加载页面
-			}
-		
+			var frm = $name("houseQuery");
+            frm.submit();
+		   // window.location.reload(); //就算页面直接关闭，也会重新加载页面
+		}
 		</script>
   </body>
 </html>
