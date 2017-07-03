@@ -321,11 +321,7 @@
 		  		     }
 	  		        if(propertyNo!=null){
 	  		        	strUrl=strUrl+"&mortgageReserveHouseCar.propertyNo="+propertyNo;
-		  		     }
-	  		  	//	alert(warrantsId);
-		  			
-
-		  			
+		  		     }	
 		  			showModalCenter(strUrl, null, callBackFunc, 600, 100, '补登记确认');  
 	  			}
 	  			
@@ -334,9 +330,9 @@
 		}
 		
 		function callBackFunc(){
-			var frm = $name("houseQuery");
-            frm.submit();
-			//  location.reload(); //就算页面直接关闭，也会重新加载页面
+			//var frm = $name("houseQuery");
+           // frm.submit();
+			  location.reload(); //就算页面直接关闭，也会重新加载页面
 			}
 		
 		</script>
