@@ -37,7 +37,7 @@ public class MortgageReserveHouseAction extends BaseAction{
 	 * @return
 	 */
 	public String toRegisterSignConfirm() {
-		System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
+		//System.out.println("toRegisterSignConfirm:"+mortgageReserveHouseCar.getWarrantsId());
 		MUOUserSession muo = getCurrentOnlineUser();
 		mortgageReserveHouseCar.setWarrantsId(mortgageReserveHouseCar.getWarrantsId());
 		mortgageReserveHouseCar.setPropertyName(mortgageReserveHouseCar.getPropertyName());

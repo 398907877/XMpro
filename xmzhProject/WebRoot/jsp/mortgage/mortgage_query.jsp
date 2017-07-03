@@ -322,7 +322,7 @@
 	  		        if(propertyNo!=null){
 	  		        	strUrl=strUrl+"&mortgageReserveHouseCar.propertyNo="+propertyNo;
 		  		     }	
-		  			showModalCenter(strUrl, null, callBackFunc, 600, 100, '补登记确认');  
+		  			showModalCenter(encodeURI(strUrl), null, callBackFunc, 600, 100, '补登记确认');  
 	  			}
 	  			
 		  	}
