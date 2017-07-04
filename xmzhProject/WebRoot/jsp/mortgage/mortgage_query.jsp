@@ -157,33 +157,33 @@
 			    	<d:write iterateId="id1" dictTypeId="MORTGAG_STATUS" property="status"/>
 			  </td>	
 			   -->	
-			   <td style="text-align: center">
+			   <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="otherWarrantsNumber"/>
 			  </td>
 			   
-			  <td style="text-align: center">
+			  <td nowrap="nowrap">
 			    	<d:write iterateId="id1" dictTypeId="LOAN_TYPE_VIEW"  property="loanType"/>
 			  </td>
-			   <td style="text-align: center">
+			   <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="borrowerName"/>
 			  </td>	
-			  <td style="text-align: center">
+			  <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="borrowerCardNo"/>
 			  </td>
-			   <td style="text-align: center">
+			   <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="borrowerContractno"/>
 			  </td>	
 			 
-			  <td style="text-align: center">
+			  <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="propertyName"/>
 			  </td>	
-			   <td style="text-align: center">
+			   <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="propertyNo"/>
 			  </td>	
-			   <td style="text-align: center">
+			   <td nowrap="nowrap">
 			    	<b:write iterateId="id1" property="insertTime"/>
 			  </td>	
-			  <td style="text-align: center">
+			  <td nowrap="nowrap">
 			    	<d:write iterateId="id1" property="noRegisterSign" dictTypeId="MORTGAG_REGISTER"/>
 			  </td>	
 			</tr>
