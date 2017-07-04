@@ -148,7 +148,7 @@
               	<div class="h3"> 
 							<input type="button" class="button" value="出库处理" onclick="outIn_coll(1);"/>
 							<input type="button" class="button" value="入库处理" onclick="outIn_coll(2);"/>
-							<input type="button" class="button" value="入库撤销" onclick="outIn_back();"/>
+							<input type="button" class="button" value="注销撤销" onclick="outIn_back();"/>
 							<input type="button" class="button" value="返回" onclick="back_coll();" />
 		                	<h:hidden id="inBorrowerNums" property="mortgageReserveRes.inBorrowerNums"/>
 		                	<h:hidden id="inBorrowerLogInfo" property="mortgageReserveRes.inBorrowerLogInfo"/>
