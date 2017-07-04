@@ -142,7 +142,7 @@
 		     <td class="form_label" align="right">抵质押品列表：</td>
 		     <td colspan="3">
 		     <form id="form1" runat="server">
-		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		    <table width="100%" id="ListArea" border="0" class="EOS_table"  >
 		        <tr align="center">
 		            <th nowrap="nowrap">产权证号</th>
 		            <th nowrap="nowrap">产权人姓名</th>
@@ -153,16 +153,16 @@
 		        </tr>
 		       <l:iterate property="mortgageReserveListHouseInfo" id="id1" >
 		        <tr align="center">
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 			    	 <b:write iterateId="id1" property="PROPERTYNO" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td  style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; " > 
 		            <b:write iterateId="id1" property="PROPERTYNAME" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td  style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "> 
 		            <b:write iterateId="id1" property="PROPERTYCARDNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td  style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; " > 
 		            <b:write iterateId="id1" property="PROPERTYADDRES" />
 		            </td>
 		            <td nowrap="nowrap"> 
@@ -183,7 +183,7 @@
 		     <td class="form_label" align="right">抵质押品列表：</td>
 		     <td colspan="3">
 		     <form id="form2" runat="server">
-		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		    <table width="100%" id="ListArea" border="0" class="EOS_table"  >
 		        <tr align="center">
 		            <th nowrap="nowrap">车主姓名</th>
 		            <th nowrap="nowrap">车主身份证号</th>
@@ -196,28 +196,28 @@
 		        </tr>
 		       <l:iterate property="mortgageReserveListCarInfo" id="id2" >
 		        <tr align="center">
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  >  
 			    	 <b:write iterateId="id2" property="CARNAME" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id2" property="CARCARDNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id2" property="CARREGISTERNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id2" property="CARNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write  iterateId="id2" property="CARFRAMENO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  >  
 		            <b:write  iterateId="id2" property="CARINVOICENO" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write  iterateId="id2" property="CARDUESNO" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write  iterateId="id2" property="CARSAFENO" /> 
 		            </td>
 		        </tr>
@@ -259,10 +259,10 @@
 		            <td nowrap="nowrap"> 
 			    	 <d:write iterateId="id7" dictTypeId="OPERATING_MORTGAGE_TYPE" property="OPERATINGMATTERS" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id7" property="PROPERTYNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id7" property="PROPERTYNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
@@ -271,7 +271,7 @@
 		            <td nowrap="nowrap"> 
 		            <b:write  iterateId="id7" property="EMPNAME" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write  iterateId="id7" property="OPERATINGREMARK" />
 		            </td>
 		        </tr>
@@ -286,7 +286,7 @@
 		     <td class="form_label" align="right">出入库列表：</td>
 		     <td colspan="3">
 		     <form id="form4" runat="server">
-		    <table width="100%" id="ListArea" border="0" class="EOS_table" >
+		    <table width="100%" id="ListArea" border="0" class="EOS_table"  >
 		        <tr align="center">
 		            <th nowrap="nowrap">操作时间</th>
 		            <th nowrap="nowrap">出入库</th>
@@ -309,10 +309,10 @@
 		            <td nowrap="nowrap"> 
 			    	 <d:write iterateId="id8" dictTypeId="OPERATING_MORTGAGE_TYPE" property="OPERATINGMATTERS" /> 
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id8" property="CARNO" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write iterateId="id8" property="CARNAME" />
 		            </td>
 		            <td nowrap="nowrap"> 
@@ -321,7 +321,7 @@
 		            <td nowrap="nowrap"> 
 		            <b:write  iterateId="id8" property="EMPNAME" />
 		            </td>
-		            <td nowrap="nowrap"> 
+		            <td style="min-width: 10px; max-width: 30px; word-break:break-all;word-wrap:break-word;white-space: pre-wrap; "  > 
 		            <b:write  iterateId="id8" property="OPERATINGREMARK" />
 		            </td>
 		        </tr>
