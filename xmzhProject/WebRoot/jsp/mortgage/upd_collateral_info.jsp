@@ -59,7 +59,7 @@
 				</td>		
 				<td class="form_label" align="right" width="15%">借款人姓名：</td>
 				<td colspan="1" width="30%">
-				<h:text id="borrowerName" property="mortgageReserve.borrowerName" /><font style="color: red">*</font>
+				<h:text id="borrowerName" property="mortgageReserve.borrowerName" />
 				</td>					
 			</tr>
 			<tr>
