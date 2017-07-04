@@ -249,7 +249,7 @@ public class MortgageReserveService implements IMortgageReserveService {
 		HashMap<String, String>hmpkey=new HashMap<String, String>();
 		boolean result=false;
 		try {
-			hmpkey.put("seqName", "seq_t_mortgage_house_info");
+			hmpkey.put("seqName", "seq_t_mortgage_car_info");
 		    Long idKey = mortgageReserveDao.getNextSeqVal(hmpkey);
 			mapCar=resMortgageReserveCarMap(idKey,pkey, mortgageReserveCar);
 			result=mortgageReserveDao.insertMortgageCar(mapCar);
@@ -260,8 +260,8 @@ public class MortgageReserveService implements IMortgageReserveService {
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 				String inserttime = sdf2.format(d);  //此时的survey_time格式为yyyyMMddHHmmss， 如：20160217000000
 				//插入日志
-				updMortgageReserveOutMap(idKey,pkey,inserttime,"1",mortgageReserveCar.getCarName(),"添加房产押品信息");
-				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加房产押品信息");
+				updMortgageReserveOutMap(idKey,pkey,inserttime,"1",mortgageReserveCar.getCarName(),"添加机动车押品信息");
+				result=insertMortgageOperatingLog(operatingType, userID, pkey, inserttime, "添加机动车押品信息");
 			}
 		} catch (Exception e) {
 			result=false;
