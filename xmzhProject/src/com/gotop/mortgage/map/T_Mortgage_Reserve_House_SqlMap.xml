@@ -372,7 +372,7 @@
   from (select a.warrants_id,
                a.type as type,
                a.operating_matters as operating_matters,
-               MAX(a.house_warrants_nums) as property_nums,
+               sum(a.house_warrants_nums) as property_nums,
                MAX(a.other_warrants_nums) as otherWarrants_nums
           from T_MORTGAGE_LIST a
           left join T_WARRANTS_INFO c
@@ -553,7 +553,7 @@
   from (select a.warrants_id,
                a.type as type,
                a.operating_matters as operating_matters,
-               MAX(a.house_warrants_nums) as cars,
+               sum(a.house_warrants_nums) as cars,
                MAX(a.other_warrants_nums) as otherWarrants_nums
           from T_MORTGAGE_LIST a
           left join T_WARRANTS_INFO c
