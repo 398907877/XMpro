@@ -48,6 +48,9 @@
 						  <th nowrap="nowrap">
 								库存序号
 						  </th>
+						  <th nowrap="nowrap">
+								他项权证号
+						  </th>
 						   <th nowrap="nowrap">
 								产权证号
 						  </th>
@@ -79,6 +82,9 @@
 									<b:write iterateId="id2" property="PROJECTNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
+									<b:write iterateId="id2" property="OTHERWARRANTSNUMBER" />
+								</td>
+								<td nowrap="nowrap"> 
 									<b:write iterateId="id2" property="PROPERTYNO" />
 								</td>
 								<td nowrap="nowrap"> 
@@ -106,6 +112,9 @@
 						  <th nowrap="nowrap">
 								库存序号
 						  </th>
+						  <th nowrap="nowrap">
+								他项权证号
+						  </th>
 						   <th nowrap="nowrap">
 								机动车登记号
 						  </th>
@@ -129,6 +138,9 @@
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id3" property="PROJECTNUMBER" />
+								</td>
+								<td nowrap="nowrap"> 
+									<b:write iterateId="id3" property="OTHERWARRANTSNUMBER" />
 								</td>
 								<td nowrap="nowrap"> 
 									<b:write iterateId="id3" property="CARREGISTERNO" />
